@@ -18,7 +18,7 @@
 :root{
   --navy:#0d1b3e;--gold:#b8963e;--gold-l:#d4af6a;
   --cream:#f9f6f0;--cream-d:#f2ede4;--white:#fff;
-  --muted:#6b7280;--border:#e5e0d5;--text:#1a1a2e;
+  --muted:#424E66;--border:#e5e0d5;--text:#1a1a2e; --muted-l:#AFAFAF;
 }
 html{scroll-behavior:smooth}
 body{font-family:Georgia,'Times New Roman',serif;background:var(--white);color:var(--text);overflow-x:hidden}
@@ -31,14 +31,15 @@ nav.navig{position:fixed;width:100%;z-index:200;background:rgba(13,27,62,.97);pa
 
 .navi-links a{color:rgba(255,255,255,.75);text-decoration:none;font-family:Georgia,'Times New Roman',sans-serif;font-size:1rem;letter-spacing:.07em;transition:color .2s;white-space:nowrap}
 .navi-links a:hover{color:var(--gold-l)}
-.nav-cta{background:var(--gold)!important;color:var(--white)!important;padding:.5rem 1.1rem!important;transition:background .2s!important}
-.nav-cta:hover{background:var(--gold-l)!important}
+.nav-cta{background:var(--gold-l)!important;color:var(--navy)!important;padding:.5rem 1.1rem!important;transition:background .2s!important}
+.nav-cta:hover{background:var(--gold)!important}
 .burger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;background:none;border:none;flex-shrink:0;margin-left:auto}
 .burger span{display:block;width:22px;height:2px;background:var(--white);transition:all .3s;transform-origin:center}
 .burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
 .burger.open span:nth-child(2){opacity:0}
 .burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
-.menu-close{display:none;position:absolute;top:1rem;right:1rem;background:none;border:none;color:rgba(255,255,255,.6);font-size:1.5rem;cursor:pointer;line-height:1;padding:.25rem}
+.menu-close{display:none;position:fixed;top:1rem;right:1rem;z-index: 199;background:none;border:none;color:rgba(255,255,255,.6);font-size:1.5rem;cursor:pointer;line-height:1;padding:.25rem}
+.menu-close.open {display: block;}
 .menu-close:hover{color:var(--white)}
 .overlay{display:none;position:fixed;inset:0;z-index:197;background:rgba(0,0,0,.5)}
 
@@ -50,7 +51,7 @@ nav.navig{position:fixed;width:100%;z-index:200;background:rgba(13,27,62,.97);pa
   .navi-links li{width:100%}
   .navi-links a{display:block;width:100%;padding:.9rem 1.5rem;font-size:.95rem;letter-spacing:.08em;border-bottom:1px solid rgba(255,255,255,.07)}
   .navi-links .nav-cta{margin:1.5rem 1.5rem 0;width:calc(100% - 3rem);padding:.75rem 1rem!important;text-align:center;display:block}
-  .menu-close{display:block}
+  .menu-close{display:none}
   .overlay{display:block;opacity:0;pointer-events:none;transition:opacity .3s}
   .overlay.open{opacity:1;pointer-events:all}
 }
@@ -69,8 +70,8 @@ nav.navig{position:fixed;width:100%;z-index:200;background:rgba(13,27,62,.97);pa
 .hero-search input{flex:1;padding:.9rem 1.2rem;background:rgba(255,255,255,.1);border:1px solid rgba(184,150,62,.4);border-right:none;color:var(--white);font-family:Arial,sans-serif;font-size:.9rem;outline:none;transition:border-color .2s}
 .hero-search input::placeholder{color:rgba(255,255,255,.35)}
 .hero-search input:focus{border-color:var(--gold);background:rgba(255,255,255,.12)}
-.hero-search button{background:var(--gold);color:var(--white);border:none;padding:.9rem 1.4rem;font-family:Arial,sans-serif;font-size:.85rem;letter-spacing:.08em;cursor:pointer;transition:background .2s;white-space:nowrap}
-.hero-search button:hover{background:var(--gold-l)}
+.hero-search button{background:var(--gold-l);color:var(--navy);border:none;padding:.9rem 1.4rem;font-family:Arial,sans-serif;font-size:.85rem;letter-spacing:.08em;cursor:pointer;transition:background .2s;white-space:nowrap}
+.hero-search button:hover{background:var(--gold)}
 .hero-btns{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;margin-bottom:1.5rem}
 .btn-p{background:var(--gold);color:var(--white);border:none;padding:.85rem 2rem;font-family:Arial,sans-serif;font-size:.85rem;letter-spacing:.1em;cursor:pointer;transition:background .2s,transform .15s}
 .btn-p:hover{background:var(--gold-l);transform:translateY(-1px)}
@@ -100,7 +101,7 @@ section{padding:5rem 2rem}
 .m-point{display:flex;gap:1rem;align-items:flex-start}
 .m-ico{width:36px;height:36px;background:rgba(184,150,62,.12);border:1px solid rgba(184,150,62,.4);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--gold-l);font-size:14px;font-family:Arial,sans-serif}
 .m-txt h3{color:var(--white);font-size:.9rem;font-weight:normal;margin-bottom:.3rem}
-.m-txt p{font-family:Arial,sans-serif;font-size:.8rem;color:rgba(255,255,255,.5);line-height:1.6}
+.m-txt p{font-family:Arial,sans-serif;font-size:.8rem;color:var(--muted-l);line-height:1.6}
 
 /* ── CATÉGORIES ── */
 .categories{background:var(--white)}
@@ -268,8 +269,8 @@ footer{background:#0a1428;padding:3.5rem 2rem 2rem}
 <!-- NAV -->
 <nav aria-label="Navigation principale" class="navig">
   <div class="navi-logo">La <span>Marque</span> Française</div>
+  <button class="menu-close" id="menuClose" aria-label="Fermer le menu">✕</button>
   <ul class="navi-links" id="navLinks" role="list">
-    <button class="menu-close" id="menuClose" aria-label="Fermer le menu">✕</button>
     <li><a href="/epicerie">Épicerie</a></li>
     <li><a href="/mode">Mode</a></li>
     <li><a href="/beaute">Beauté</a></li>
@@ -729,6 +730,7 @@ const closeMenu = () => {
   navLinks.classList.remove('open');
   burger.classList.remove('open');
   overlay.classList.remove('open');
+  closeBtn.classList.remove('open');
   burger.setAttribute('aria-expanded','false');
   document.body.style.overflow = '';
 };
@@ -736,6 +738,7 @@ const openMenu = () => {
   navLinks.classList.add('open');
   burger.classList.add('open');
   overlay.classList.add('open');
+  closeBtn.classList.add('open');
   burger.setAttribute('aria-expanded','true');
   document.body.style.overflow = 'hidden';
 };
