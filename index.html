@@ -37,7 +37,8 @@ nav.navig{position:fixed;top:3px;width:100%;z-index:200;background:rgba(13,27,62
 .burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
 .burger.open span:nth-child(2){opacity:0}
 .burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
-.menu-close{display:none;position:absolute;top:1rem;right:1rem;background:none;border:none;color:rgba(255,255,255,.6);font-size:1.5rem;cursor:pointer;line-height:1;padding:.25rem}
+.menu-close {display: none;position: fixed;top: 1rem;right: 1rem;z-index: 199;background: none;border: none;color: rgba(255,255,255,.6);font-size: 1.5rem;cursor: pointer;line-height: 1;padding: .25rem;}
+.menu-close.open {display: block;}
 .overlay{display:none;position:fixed;inset:0;z-index:197;background:rgba(0,0,0,.5)}
 /* HERO — critique LCP */
 .hero{min-height:100vh;background:var(--navy);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:7rem 2rem 5rem;position:relative;overflow:hidden}
@@ -81,7 +82,7 @@ section{padding:5rem 2rem}
   .navi-links li{width:100%}
   .navi-links a{display:block;width:100%;padding:.9rem 1.5rem;font-size:.95rem;letter-spacing:.08em;border-bottom:1px solid rgba(255,255,255,.07)}
   .navi-links .nav-cta{margin:1.5rem 1.5rem 0;width:calc(100% - 3rem);padding:.75rem 1rem!important;text-align:center;display:block}
-  .menu-close{display:block}
+  .menu-close{display:none}
   .overlay{display:block;opacity:0;pointer-events:none;transition:opacity .3s}
   .overlay.open{opacity:1;pointer-events:all}
 }
@@ -131,8 +132,8 @@ section{padding:5rem 2rem}
 <!-- NAV -->
 <nav aria-label="Navigation principale" class="navig">
   <div class="navi-logo">La <span>Marque</span> Française</div>
-  <ul class="navi-links" id="navLinks">
-    <button class="menu-close" id="menuClose" aria-label="Fermer le menu" type="button">✕</button>
+  <button class="menu-close" id="menuClose" aria-label="Fermer le menu">✕</button>
+  <ul class="navi-links" id="navLinks" role="list">
     <li><a href="/epicerie">Épicerie</a></li>
     <li><a href="/mode">Mode</a></li>
     <li><a href="/beaute">Beauté</a></li>
@@ -636,12 +637,16 @@ const burger  = document.getElementById('burger'),
       closeBtn = document.getElementById('menuClose');
 const closeMenu = () => {
   navLinks.classList.remove('open'); burger.classList.remove('open');
-  overlay.classList.remove('open'); burger.setAttribute('aria-expanded','false');
+  overlay.classList.remove('open'); 
+  closeBtn.classList.remove('open');
+  burger.setAttribute('aria-expanded','false');
   document.body.style.overflow = '';
 };
 const openMenu = () => {
   navLinks.classList.add('open'); burger.classList.add('open');
-  overlay.classList.add('open'); burger.setAttribute('aria-expanded','true');
+  overlay.classList.add('open'); 
+  closeBtn.classList.add('open');
+  burger.setAttribute('aria-expanded','true');
   document.body.style.overflow = 'hidden';
 };
 burger.addEventListener('click', () => navLinks.classList.contains('open') ? closeMenu() : openMenu());
