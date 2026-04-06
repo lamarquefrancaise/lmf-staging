@@ -16,7 +16,7 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --navy:#0d1b3e;--gold:#b8963e;--gold-l:#d4af6a;
+  --navy:#0d1b3e;--gold:#b8963e;--gold-l:#d4af6a; --gold-d:#745300;
   --cream:#f9f6f0;--cream-d:#f2ede4;--white:#fff;
   --muted:#424E66;--border:#e5e0d5;--text:#1a1a2e; --muted-l:#AFAFAF; --text-l:#9EA8BC;
 }
@@ -84,7 +84,7 @@ nav.navig{position:fixed;width:100%;z-index:200;background:rgba(13,27,62,.97);pa
 /* ── SHARED ── */
 section{padding:5rem 2rem}
 .container{max-width:1100px;margin:0 auto}
-.s-label{font-family:Arial,sans-serif;font-size:.72rem;letter-spacing:.25em;color:var(--gold);text-transform:uppercase;margin-bottom:.75rem}
+.s-label{font-family:Arial,sans-serif;font-size:.72rem;letter-spacing:.25em;color:var(--gold-d);text-transform:uppercase;margin-bottom:.75rem}
 .s-title{font-size:clamp(1.6rem,3vw,2.4rem);font-weight:normal;color:var(--navy);line-height:1.2}
 .s-div{width:48px;height:2px;background:var(--gold);margin:1.25rem 0}
 .s-sub{font-family:Arial,sans-serif;font-size:.95rem;color:var(--muted);line-height:1.75;max-width:580px}
@@ -675,7 +675,7 @@ footer{background:#0a1428;padding:3.5rem 2rem 2rem}
       </div>
     </div>
     <div class="ft-bot">
-      <p>© 2025 La Marque Française. Tous droits réservés. · <a href="/sitemap.xml" style="color:rgba(255,255,255,.2);text-decoration:none">Sitemap</a></p>
+      <p>© 2025 La Marque Française. Tous droits réservés. · <a href="/sitemap.xml" style="color:var(--muted-l);text-decoration:none">Sitemap</a></p>
       <div class="ft-flag" aria-hidden="true"><span class="flag-b"></span><span class="flag-w"></span><span class="flag-r"></span></div>
     </div>
   </div>
