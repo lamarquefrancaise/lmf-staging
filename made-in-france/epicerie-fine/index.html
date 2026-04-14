@@ -116,8 +116,8 @@ section{padding:5rem 2rem}
 .sc-card{width:calc((min(100vw - 4rem, 1100px) - 4 * 1rem) / 5);min-width:calc((min(100vw - 4rem, 1100px) - 4 * 1rem) / 5);flex-shrink:0;scroll-snap-align:start}
 .sc-card{position:relative;overflow:hidden;cursor:pointer;text-decoration:none;display:block}
 .sc-card::before{content:'';display:block;padding-bottom:125%}
-.sc-ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:clamp(1.4rem,4vw,2.8rem);background:var(--cream-d);transition:transform .5s,filter .4s;will-change:transform}
-.sc-ph img{width:100%;height:100%;object-fit:contain;object-position:center;display:block}
+.sc-ph{position:absolute;inset:0;align-items:center;justify-content:center;font-size:clamp(1.4rem,4vw,2.8rem);background:var(--cream-d);transition:transform .5s,filter .4s;will-change:transform}
+.sc-ph img{width:100%;height:100%;object-fit:cover;object-position:center;display:block}
 .sc-card:hover .sc-ph{transform:scale(1.07);filter:brightness(.65)}
 .sc-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(13,27,62,.78) 0%,rgba(13,27,62,.1) 60%,transparent 100%)}
 .sc-label{position:absolute;bottom:0;left:0;right:0;padding:.75rem .85rem}
@@ -397,7 +397,7 @@ footer{background:#0a1428;padding:3.5rem 2rem 2rem}
     <div class="s-div"></div>
     <p class="s-sub">Miel français artisanal, confiture de France, chocolat artisanal, biscuits made in France, charcuterie du terroir, vin de France, huile d'olive française… explorez toutes les spécialités de l'épicerie fine française par type de produit.</p>
   </div>
-  <div class="sc-wrap" style="max-width:1140px;margin:0 auto;padding:0 2rem;position:relative">
+  <div class="sc-wrap" style="max-width:1140px;margin:0 auto;position:relative">
     <div class="sc-grid" id="scGrid" role="list">
       <a href="/made-in-france/miel" class="sc-card active" role="listitem"><div class="sc-ph" role="img">
         <picture>
