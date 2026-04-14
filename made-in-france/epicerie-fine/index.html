@@ -210,9 +210,8 @@ section{padding:5rem 2rem}
 .p-card:hover{border-color:var(--gold);box-shadow:0 4px 16px rgba(184,150,62,.12)}
 .p-img{width:100%;position:relative}
 .p-img::before{content:'';display:block;padding-bottom:100%}
-.p-img-inner{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:.4rem;background:var(--cream-d)}
-.p-img-inner .ico{font-size:2.2rem;opacity:.4}
-.p-img-inner .lbl{font-family:Arial,sans-serif;font-size:.58rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase}
+.p-img-inner{position:absolute;inset:0;background:var(--cream-d);overflow:hidden}
+.p-img-inner picture,.p-img-inner img{width:100%;height:100%;display:block;object-fit:cover;object-position:center}
 .p-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(13,27,62,.6),transparent);opacity:0;transition:opacity .3s;display:flex;align-items:flex-end;padding:.7rem}
 .p-card:hover .p-overlay{opacity:1}
 .p-overlay span{font-family:Arial,sans-serif;font-size:.68rem;color:rgba(255,255,255,.9);letter-spacing:.08em}
@@ -260,7 +259,7 @@ section{padding:5rem 2rem}
 .seo-content p{font-family:Arial,sans-serif;font-size:.87rem;color:var(--muted);line-height:1.85;margin-bottom:.95rem}
 .seo-content a{color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(184,150,62,.3);transition:border-color .2s}
 .seo-content a:hover{border-color:var(--gold)}
-.seo-sidebar{display:flex;flex-direction:column;gap:1.5rem}
+.seo-sidebar{display:flex;flex-direction:column;gap:1.5rem;position:sticky;top:70px;}
 .seo-box{background:var(--cream);border:1px solid var(--border);padding:1.4rem}
 .seo-box h4{font-family:Arial,sans-serif;font-size:.7rem;letter-spacing:.2em;color:var(--gold);text-transform:uppercase;margin-bottom:.9rem}
 .seo-box ul{list-style:none}
@@ -289,22 +288,23 @@ section{padding:5rem 2rem}
 .faq-a{font-family:Arial,sans-serif;font-size:.84rem;color:var(--muted);line-height:1.75;max-height:0;overflow:hidden;transition:max-height .4s ease,padding .3s ease;padding:0 1.4rem}
 .faq-a.open{max-height:300px;padding:.8rem 1.4rem 1.2rem}
 
-.categories{background:var(--white)}
-.cat-head{margin-bottom:3rem}
-.cat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);max-width:1110px;margin:auto}
-.cat-card{background:var(--white);cursor:pointer;position:relative;overflow:hidden;display:flex;flex-direction:column}
-.cat-card a{display:flex;flex-direction:column;text-decoration:none;color:inherit;height:100%}
-.cat-label{padding:.85rem 1.1rem .7rem;font-size:.88rem;letter-spacing:.04em;color:var(--navy);font-family:Arial,sans-serif;transition:background .2s;border-bottom:1px solid var(--border);flex-shrink:0}
-.cat-card:hover .cat-label{background:var(--cream-d)}
-.cat-img-wrap{position:relative;width:100%;padding-bottom:75%;overflow:hidden;background:var(--cream);flex-shrink:0}
-.cat-img-wrap img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .55s ease,filter .4s ease;filter:brightness(.9)}
-.cat-card:hover .cat-img-wrap img{transform:scale(1.07);filter:brightness(.65)}
-.cat-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(13,27,62,.72) 0%,transparent 55%);opacity:0;transition:opacity .35s}
-.cat-card:hover .cat-overlay{opacity:1}
-.cat-hover-label{position:absolute;bottom:0;left:0;right:0;padding:.8rem 1.1rem;display:flex;justify-content:space-between;align-items:center;transform:translateY(5px);opacity:0;transition:opacity .3s,transform .3s}
-.cat-card:hover .cat-hover-label{opacity:1;transform:translateY(0)}
-.cat-hover-txt{font-family:Arial,sans-serif;font-size:.75rem;color:rgba(255,255,255,.8);letter-spacing:.06em}
-.cat-hover-arr{color:var(--gold-l);font-size:.9rem}
+.autres-cats{background:var(--white);padding:5rem 2rem;content-visibility:auto;contain-intrinsic-size:0 500px}
+.ac-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-top:3rem}
+.ac-card{position:relative;overflow:hidden;text-decoration:none;display:block}
+.ac-card::before{content:'';display:block;padding-bottom:125%}
+.ac-ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:3.2rem;background:var(--cream-d);transition:transform .5s,filter .4s;will-change:transform}
+.ac-card:hover .ac-ph{transform:scale(1.06);filter:brightness(.65)}
+.ac-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(13,27,62,.82) 0%,rgba(13,27,62,.08) 65%,transparent 100%)}
+.ac-label{position:absolute;bottom:0;left:0;right:0;padding:.85rem 1rem}
+.ac-name{font-family:Arial,sans-serif;font-size:.85rem;color:var(--white);letter-spacing:.06em;display:block;margin-bottom:.18rem}
+.ac-count{font-family:Arial,sans-serif;font-size:.65rem;color:rgba(255,255,255,.5)}
+@media(max-width:900px){
+  .ac-grid{display:flex;overflow-x:auto;gap:.75rem;padding-bottom:10px;scroll-snap-type:x mandatory;scrollbar-width:thin;scrollbar-color:var(--gold) var(--cream-d)}
+  .ac-grid::-webkit-scrollbar{height:4px}
+  .ac-grid::-webkit-scrollbar-track{background:var(--cream-d)}
+  .ac-grid::-webkit-scrollbar-thumb{background:var(--gold);border-radius:2px}
+  .ac-card{width:calc((100vw - 5rem)/2.2);min-width:calc((100vw - 5rem)/2.2);scroll-snap-align:start}
+}
 
 .cta-referer{background:var(--navy);padding:5rem 2rem;position:relative;overflow:hidden}
 .cta-referer::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
@@ -645,14 +645,78 @@ footer{background:#0a1428;padding:3.5rem 2rem 2rem}
     <div class="s-div"></div>
     <p class="s-sub">Miel français, confiture artisanale, chocolat grand cru, foie gras du Périgord, vin de France… une sélection de produits d'épicerie fine issus des marques françaises référencées.</p>
     <div class="products-grid" role="list">
-      <article class="p-card" role="listitem" itemscope itemtype="https://schema.org/Product"><div class="p-img"><div class="p-img-inner"><span class="ico">🍯</span><span class="lbl">Photo produit</span></div><div class="p-overlay"><span>Voir le produit →</span></div></div><div class="p-info"><div class="p-brand" itemprop="brand" itemscope itemtype="https://schema.org/Brand"><span itemprop="name">Apiculture du Mont</span></div><h3 class="p-name" itemprop="name">Miel de Lavande AOP Provence</h3><div class="p-rating"><span class="p-stars">★★★★★</span><span class="p-rcount">(47 avis)</span></div><div class="p-orig"><div class="p-orig-dot"></div><span class="p-orig-lbl">Hautes-Alpes</span></div></div></article>
-      <article class="p-card" role="listitem" itemscope itemtype="https://schema.org/Product"><div class="p-img"><div class="p-img-inner"><span class="ico">🍫</span><span class="lbl">Photo produit</span></div><div class="p-overlay"><span>Voir le produit →</span></div></div><div class="p-info"><div class="p-brand" itemprop="brand" itemscope itemtype="https://schema.org/Brand"><span itemprop="name">Chocolaterie du Belvédère</span></div><h3 class="p-name" itemprop="name">Tablette Noir 75% Grand Cru</h3><div class="p-rating"><span class="p-stars">★★★★★</span><span class="p-rcount">(83 avis)</span></div><div class="p-orig"><div class="p-orig-dot"></div><span class="p-orig-lbl">Lyon, Rhône</span></div></div></article>
-      <article class="p-card" role="listitem" itemscope itemtype="https://schema.org/Product"><div class="p-img"><div class="p-img-inner"><span class="ico">🥐</span><span class="lbl">Photo produit</span></div><div class="p-overlay"><span>Voir le produit →</span></div></div><div class="p-info"><div class="p-brand" itemprop="brand" itemscope itemtype="https://schema.org/Brand"><span itemprop="name">La Biscuiterie Bretonne</span></div><h3 class="p-name" itemprop="name">Galettes Beurre d'Isigny AOP</h3><div class="p-rating"><span class="p-stars">★★★★★</span><span class="p-rcount">(124 avis)</span></div><div class="p-orig"><div class="p-orig-dot"></div><span class="p-orig-lbl">Quimper, Finistère</span></div></div></article>
-      <article class="p-card" role="listitem" itemscope itemtype="https://schema.org/Product"><div class="p-img"><div class="p-img-inner"><span class="ico">🫙</span><span class="lbl">Photo produit</span></div><div class="p-overlay"><span>Voir le produit →</span></div></div><div class="p-info"><div class="p-brand" itemprop="brand" itemscope itemtype="https://schema.org/Brand"><span itemprop="name">Maison Fabre</span></div><h3 class="p-name" itemprop="name">Foie Gras de Canard Entier IGP</h3><div class="p-rating"><span class="p-stars">★★★★★</span><span class="p-rcount">(62 avis)</span></div><div class="p-orig"><div class="p-orig-dot"></div><span class="p-orig-lbl">Périgord, Dordogne</span></div></div></article>
-      <article class="p-card" role="listitem" itemscope itemtype="https://schema.org/Product"><div class="p-img"><div class="p-img-inner"><span class="ico">🍓</span><span class="lbl">Photo produit</span></div><div class="p-overlay"><span>Voir le produit →</span></div></div><div class="p-info"><div class="p-brand" itemprop="brand" itemscope itemtype="https://schema.org/Brand"><span itemprop="name">Confiserie du Moulin</span></div><h3 class="p-name" itemprop="name">Confiture Fraises de Carpentras</h3><div class="p-rating"><span class="p-stars">★★★★☆</span><span class="p-rcount">(38 avis)</span></div><div class="p-orig"><div class="p-orig-dot"></div><span class="p-orig-lbl">Apt, Vaucluse</span></div></div></article>
-      <article class="p-card" role="listitem" itemscope itemtype="https://schema.org/Product"><div class="p-img"><div class="p-img-inner"><span class="ico">🍷</span><span class="lbl">Photo produit</span></div><div class="p-overlay"><span>Voir le produit →</span></div></div><div class="p-info"><div class="p-brand" itemprop="brand" itemscope itemtype="https://schema.org/Brand"><span itemprop="name">Domaine des Collines</span></div><h3 class="p-name" itemprop="name">Rosé AOP Côtes-de-Provence 2023</h3><div class="p-rating"><span class="p-stars">★★★★★</span><span class="p-rcount">(91 avis)</span></div><div class="p-orig"><div class="p-orig-dot"></div><span class="p-orig-lbl">Vidauban, Var</span></div></div></article>
-      <article class="p-card" role="listitem" itemscope itemtype="https://schema.org/Product"><div class="p-img"><div class="p-img-inner"><span class="ico">🫒</span><span class="lbl">Photo produit</span></div><div class="p-overlay"><span>Voir le produit →</span></div></div><div class="p-info"><div class="p-brand" itemprop="brand" itemscope itemtype="https://schema.org/Brand"><span itemprop="name">Moulin de la Roque</span></div><h3 class="p-name" itemprop="name">Huile d'Olive AOP Vallée des Baux</h3><div class="p-rating"><span class="p-stars">★★★★★</span><span class="p-rcount">(54 avis)</span></div><div class="p-orig"><div class="p-orig-dot"></div><span class="p-orig-lbl">Les Baux-de-Provence</span></div></div></article>
-      <article class="p-card" role="listitem" itemscope itemtype="https://schema.org/Product"><div class="p-img"><div class="p-img-inner"><span class="ico">🥩</span><span class="lbl">Photo produit</span></div><div class="p-overlay"><span>Voir le produit →</span></div></div><div class="p-info"><div class="p-brand" itemprop="brand" itemscope itemtype="https://schema.org/Brand"><span itemprop="name">Charcuterie du Pays Basque</span></div><h3 class="p-name" itemprop="name">Jambon de Bayonne IGP 24 mois</h3><div class="p-rating"><span class="p-stars">★★★★★</span><span class="p-rcount">(76 avis)</span></div><div class="p-orig"><div class="p-orig-dot"></div><span class="p-orig-lbl">Bayonne, Pyr.-Atl.</span></div></div></article>
+      <article class="p-card" role="listitem" itemscope itemtype="https://schema.org/Product"><div class="p-img"><div class="p-img-inner">
+        <picture>
+          <source srcset="/img/600x600/avif/miel-lavande-aop-provence.avif" type="image/avif">
+          <img src="/img/600x600/webp/miel-lavande-aop-provence.webp"
+               alt="Miel de Lavande AOP Provence — Apiculture du Mont, Hautes-Alpes"
+               width="600" height="600"
+               loading="lazy" decoding="async">
+        </picture>
+        </div><div class="p-overlay"><span>Voir le produit →</span></div></div><div class="p-info"><div class="p-brand" itemprop="brand" itemscope itemtype="https://schema.org/Brand"><span itemprop="name">Apiculture du Mont</span></div><h3 class="p-name" itemprop="name">Miel de Lavande AOP Provence</h3><div class="p-rating"><span class="p-stars">★★★★★</span><span class="p-rcount">(47 avis)</span></div><div class="p-orig"><div class="p-orig-dot"></div><span class="p-orig-lbl">Hautes-Alpes</span></div></div></article>
+      <article class="p-card" role="listitem" itemscope itemtype="https://schema.org/Product"><div class="p-img"><div class="p-img-inner">
+        <picture>
+          <source srcset="/img/600x600/avif/tablette-noir-75-grand-cru.avif" type="image/avif">
+          <img src="/img/600x600/webp/tablette-noir-75-grand-cru.webp"
+               alt="Tablette Chocolat Noir 75% Grand Cru — Chocolaterie du Belvédère, Lyon"
+               width="600" height="600"
+               loading="lazy" decoding="async">
+        </picture>
+        </div><div class="p-overlay"><span>Voir le produit →</span></div></div><div class="p-info"><div class="p-brand" itemprop="brand" itemscope itemtype="https://schema.org/Brand"><span itemprop="name">Chocolaterie du Belvédère</span></div><h3 class="p-name" itemprop="name">Tablette Noir 75% Grand Cru</h3><div class="p-rating"><span class="p-stars">★★★★★</span><span class="p-rcount">(83 avis)</span></div><div class="p-orig"><div class="p-orig-dot"></div><span class="p-orig-lbl">Lyon, Rhône</span></div></div></article>
+      <article class="p-card" role="listitem" itemscope itemtype="https://schema.org/Product"><div class="p-img"><div class="p-img-inner">
+        <picture>
+          <source srcset="/img/600x600/avif/galettes-beurre-isigny-aop.avif" type="image/avif">
+          <img src="/img/600x600/webp/galettes-beurre-isigny-aop.webp"
+               alt="Galettes au Beurre d'Isigny AOP — La Biscuiterie Bretonne, Quimper"
+               width="600" height="600"
+               loading="lazy" decoding="async">
+        </picture>
+        </div><div class="p-overlay"><span>Voir le produit →</span></div></div><div class="p-info"><div class="p-brand" itemprop="brand" itemscope itemtype="https://schema.org/Brand"><span itemprop="name">La Biscuiterie Bretonne</span></div><h3 class="p-name" itemprop="name">Galettes Beurre d'Isigny AOP</h3><div class="p-rating"><span class="p-stars">★★★★★</span><span class="p-rcount">(124 avis)</span></div><div class="p-orig"><div class="p-orig-dot"></div><span class="p-orig-lbl">Quimper, Finistère</span></div></div></article>
+      <article class="p-card" role="listitem" itemscope itemtype="https://schema.org/Product"><div class="p-img"><div class="p-img-inner">
+        <picture>
+          <source srcset="/img/600x600/avif/foie-gras-canard-entier-igp.avif" type="image/avif">
+          <img src="/img/600x600/webp/foie-gras-canard-entier-igp.webp"
+               alt="Foie Gras de Canard Entier IGP — Maison Fabre, Périgord"
+               width="600" height="600"
+               loading="lazy" decoding="async">
+        </picture>
+        </div><div class="p-overlay"><span>Voir le produit →</span></div></div><div class="p-info"><div class="p-brand" itemprop="brand" itemscope itemtype="https://schema.org/Brand"><span itemprop="name">Maison Fabre</span></div><h3 class="p-name" itemprop="name">Foie Gras de Canard Entier IGP</h3><div class="p-rating"><span class="p-stars">★★★★★</span><span class="p-rcount">(62 avis)</span></div><div class="p-orig"><div class="p-orig-dot"></div><span class="p-orig-lbl">Périgord, Dordogne</span></div></div></article>
+      <article class="p-card" role="listitem" itemscope itemtype="https://schema.org/Product"><div class="p-img"><div class="p-img-inner">
+        <picture>
+          <source srcset="/img/600x600/avif/confiture-fraises-carpentras.avif" type="image/avif">
+          <img src="/img/600x600/webp/confiture-fraises-carpentras.webp"
+               alt="Confiture Fraises de Carpentras — Confiserie du Moulin, Apt"
+               width="600" height="600"
+               loading="lazy" decoding="async">
+        </picture>
+        </div><div class="p-overlay"><span>Voir le produit →</span></div></div><div class="p-info"><div class="p-brand" itemprop="brand" itemscope itemtype="https://schema.org/Brand"><span itemprop="name">Confiserie du Moulin</span></div><h3 class="p-name" itemprop="name">Confiture Fraises de Carpentras</h3><div class="p-rating"><span class="p-stars">★★★★☆</span><span class="p-rcount">(38 avis)</span></div><div class="p-orig"><div class="p-orig-dot"></div><span class="p-orig-lbl">Apt, Vaucluse</span></div></div></article>
+      <article class="p-card" role="listitem" itemscope itemtype="https://schema.org/Product"><div class="p-img"><div class="p-img-inner">
+        <picture>
+          <source srcset="/img/600x600/avif/rose-aop-cotes-de-provence-2023.avif" type="image/avif">
+          <img src="/img/600x600/webp/rose-aop-cotes-de-provence-2023.webp"
+               alt="Rosé AOP Côtes-de-Provence 2023 — Domaine des Collines, Var"
+               width="600" height="600"
+               loading="lazy" decoding="async">
+        </picture>
+        </div><div class="p-overlay"><span>Voir le produit →</span></div></div><div class="p-info"><div class="p-brand" itemprop="brand" itemscope itemtype="https://schema.org/Brand"><span itemprop="name">Domaine des Collines</span></div><h3 class="p-name" itemprop="name">Rosé AOP Côtes-de-Provence 2023</h3><div class="p-rating"><span class="p-stars">★★★★★</span><span class="p-rcount">(91 avis)</span></div><div class="p-orig"><div class="p-orig-dot"></div><span class="p-orig-lbl">Vidauban, Var</span></div></div></article>
+      <article class="p-card" role="listitem" itemscope itemtype="https://schema.org/Product"><div class="p-img"><div class="p-img-inner">
+        <picture>
+          <source srcset="/img/600x600/avif/huile-olive-aop-vallee-des-baux.avif" type="image/avif">
+          <img src="/img/600x600/webp/huile-olive-aop-vallee-des-baux.webp"
+               alt="Huile d'Olive AOP Vallée des Baux — Moulin de la Roque"
+               width="600" height="600"
+               loading="lazy" decoding="async">
+        </picture>
+        </div><div class="p-overlay"><span>Voir le produit →</span></div></div><div class="p-info"><div class="p-brand" itemprop="brand" itemscope itemtype="https://schema.org/Brand"><span itemprop="name">Moulin de la Roque</span></div><h3 class="p-name" itemprop="name">Huile d'Olive AOP Vallée des Baux</h3><div class="p-rating"><span class="p-stars">★★★★★</span><span class="p-rcount">(54 avis)</span></div><div class="p-orig"><div class="p-orig-dot"></div><span class="p-orig-lbl">Les Baux-de-Provence</span></div></div></article>
+      <article class="p-card" role="listitem" itemscope itemtype="https://schema.org/Product"><div class="p-img"><div class="p-img-inner">
+        <picture>
+          <source srcset="/img/600x600/avif/jambon-bayonne-igp-24-mois.avif" type="image/avif">
+          <img src="/img/600x600/webp/jambon-bayonne-igp-24-mois.webp"
+               alt="Jambon de Bayonne IGP 24 mois — Charcuterie du Pays Basque"
+               width="600" height="600"
+               loading="lazy" decoding="async">
+        </picture>
+        </div><div class="p-overlay"><span>Voir le produit →</span></div></div><div class="p-info"><div class="p-brand" itemprop="brand" itemscope itemtype="https://schema.org/Brand"><span itemprop="name">Charcuterie du Pays Basque</span></div><h3 class="p-name" itemprop="name">Jambon de Bayonne IGP 24 mois</h3><div class="p-rating"><span class="p-stars">★★★★★</span><span class="p-rcount">(76 avis)</span></div><div class="p-orig"><div class="p-orig-dot"></div><span class="p-orig-lbl">Bayonne, Pyr.-Atl.</span></div></div></article>
     </div>
     <div style="text-align:center;margin-top:2rem"><button class="btn-ghost" type="button">Voir tous les produits d'épicerie française →</button></div>
   </div>
@@ -786,111 +850,22 @@ footer{background:#0a1428;padding:3.5rem 2rem 2rem}
 </section>
 
 <!-- AUTRES CATÉGORIES — images 4:5 -->
-<section class="categories" id="categories" aria-labelledby="cat-title">
-  <div class="container"><div class="cat-head"><div class="s-label">Explorer par univers</div><h2 class="s-title" id="cat-title">Toutes les catégories de marques françaises</h2></div></div>
-  <!-- Hors container pour permettre le débordement mobile -->
-  <div class="cat-grid" role="list" aria-label="Catégories de marques françaises made in France">
-
-    <article class="cat-card" id="epicerie" role="listitem"><a href="/epicerie" aria-label="Marques françaises Épicerie – Terroir et gastronomie"><div class="cat-label">Épicerie</div><div class="cat-img-wrap"><picture><source srcset="/img/600x450/avif/epicerie-fine-francaise.avif" type="image/avif"><img src="/img/600x450/webp/epicerie-fine-francaise.webp" alt="Produits épicerie fine française – terroir et gastronomie made in France" width="600" height="450" loading="lazy" decoding="async"></picture><div class="cat-overlay" aria-hidden="true"></div><div class="cat-hover-label" aria-hidden="true"><span class="cat-hover-txt">Terroir & gastronomie</span><span class="cat-hover-arr">→</span></div></div></a></article>
-
-    <article class="cat-card" id="mode" role="listitem">
-      <a href="/mode" aria-label="Marques françaises Mode – Vêtements, chaussures, accessoires">
-        <div class="cat-label">Mode</div>
-        <div class="cat-img-wrap">
-          <picture>
-            <source srcset="/img/600x450/avif/mode-made-in-france.avif" type="image/avif">
-            <img src="/img/600x450/webp/mode-made-in-france.webp" alt="Mode française made in France – vêtements, chaussures, accessoires" width="600" height="450" loading="lazy" decoding="async">
-          </picture>
-          <div class="cat-overlay" aria-hidden="true"></div>
-          <div class="cat-hover-label" aria-hidden="true"><span class="cat-hover-txt">Vêtements, chaussures, accessoires</span><span class="cat-hover-arr">→</span></div>
-        </div>
-      </a>
-    </article>
-
-    <article class="cat-card" id="beaute" role="listitem">
-      <a href="/beaute" aria-label="Marques françaises Beauté – Soins et cosmétiques naturels">
-        <div class="cat-label">Beauté</div>
-        <div class="cat-img-wrap">
-          <picture>
-            <source srcset="/img/600x450/avif/beaute-soins.avif" type="image/avif">
-            <img src="/img/600x450/webp/beaute-soins.webp" alt="Beauté française – soins et cosmétiques naturels made in France" width="600" height="450" loading="lazy" decoding="async">
-          </picture>
-          <div class="cat-overlay" aria-hidden="true"></div>
-          <div class="cat-hover-label" aria-hidden="true"><span class="cat-hover-txt">Soins & cosmétiques naturels</span><span class="cat-hover-arr">→</span></div>
-        </div>
-      </a>
-    </article>
-
-    <article class="cat-card" id="bijoux" role="listitem">
-      <a href="/bijoux" aria-label="Marques françaises Bijoux – Joaillerie et créateurs">
-        <div class="cat-label">Bijoux</div>
-        <div class="cat-img-wrap">
-          <picture>
-            <source srcset="/img/600x450/avif/bijoux.avif" type="image/avif">
-            <img src="/img/600x450/webp/bijoux.webp" alt="Bijoux français – joaillerie et créateurs made in France" width="600" height="450" loading="lazy" decoding="async">
-          </picture>
-          <div class="cat-overlay" aria-hidden="true"></div>
-          <div class="cat-hover-label" aria-hidden="true"><span class="cat-hover-txt">Joaillerie & créateurs</span><span class="cat-hover-arr">→</span></div>
-        </div>
-      </a>
-    </article>
-
-    <article class="cat-card" role="listitem">
-      <a href="/bricolage" aria-label="Marques françaises Bricolage – Outils et matériaux">
-        <div class="cat-label">Bricolage</div>
-        <div class="cat-img-wrap">
-          <picture>
-            <source srcset="/img/600x450/avif/outils-bricolage.avif" type="image/avif">
-            <img src="/img/600x450/webp/outils-bricolage.webp" alt="Bricolage français – outils et matériaux made in France" width="600" height="450" loading="lazy" decoding="async">
-          </picture>
-          <div class="cat-overlay" aria-hidden="true"></div>
-          <div class="cat-hover-label" aria-hidden="true"><span class="cat-hover-txt">Outils & matériaux</span><span class="cat-hover-arr">→</span></div>
-        </div>
-      </a>
-    </article>
-
-    <article class="cat-card" id="maison" role="listitem">
-      <a href="/maison" aria-label="Marques françaises Maison – Intérieur et jardin">
-        <div class="cat-label">Maison</div>
-        <div class="cat-img-wrap">
-          <picture>
-            <source srcset="/img/600x450/avif/maison.avif" type="image/avif">
-            <img src="/img/600x450/webp/maison.webp" alt="Maison française – intérieur et jardin made in France" width="600" height="450" loading="lazy" decoding="async">
-          </picture>
-          <div class="cat-overlay" aria-hidden="true"></div>
-          <div class="cat-hover-label" aria-hidden="true"><span class="cat-hover-txt">Intérieur & jardin</span><span class="cat-hover-arr">→</span></div>
-        </div>
-      </a>
-    </article>
-
-    <article class="cat-card" id="sport" role="listitem">
-      <a href="/sport" aria-label="Marques françaises Sport – Équipement et textile">
-        <div class="cat-label">Sport</div>
-        <div class="cat-img-wrap">
-          <picture>
-            <source srcset="/img/600x450/avif/sport.avif" type="image/avif">
-            <img src="/img/600x450/webp/sport.webp" alt="Sport français – équipement et textile made in France" width="600" height="450" loading="lazy" decoding="async">
-          </picture>
-          <div class="cat-overlay" aria-hidden="true"></div>
-          <div class="cat-hover-label" aria-hidden="true"><span class="cat-hover-txt">Équipement & textile</span><span class="cat-hover-arr">→</span></div>
-        </div>
-      </a>
-    </article>
-
-    <article class="cat-card" id="technologie" role="listitem">
-      <a href="/technologie" aria-label="Marques françaises Technologie – Innovation et électronique">
-        <div class="cat-label">Technologie</div>
-        <div class="cat-img-wrap">
-          <picture>
-            <source srcset="/img/600x450/avif/technologie.avif" type="image/avif">
-            <img src="/img/600x450/webp/technologie.webp" alt="Technologie française – innovation et électronique made in France" width="600" height="450" loading="lazy" decoding="async">
-          </picture>
-          <div class="cat-overlay" aria-hidden="true"></div>
-          <div class="cat-hover-label" aria-hidden="true"><span class="cat-hover-txt">Innovation & électronique</span><span class="cat-hover-arr">→</span></div>
-        </div>
-      </a>
-    </article>
-
+<section class="autres-cats" id="autres-categories" aria-labelledby="ac-title">
+  <div class="containeur">
+    <div class="s-label">Explorer l'annuaire</div>
+    <h2 class="s-title" id="ac-title">Toutes les catégories made in France</h2>
+    <div class="s-div"></div>
+    <p class="s-sub">L'épicerie française n'est qu'un volet de notre annuaire. Découvrez toutes les catégories de marques françaises.</p>
+    <div class="ac-grid" role="list">
+      <a href="/made-in-france/mode" class="ac-card" role="listitem"><div class="ac-ph" role="img" aria-hidden="true">👗</div><div class="ac-overlay"></div><div class="ac-label"><span class="ac-name">Mode</span><span class="ac-count">40+ marques françaises</span></div></a>
+      <a href="/made-in-france/beaute" class="ac-card" role="listitem"><div class="ac-ph" role="img" aria-hidden="true">💄</div><div class="ac-overlay"></div><div class="ac-label"><span class="ac-name">Beauté</span><span class="ac-count">28 marques françaises</span></div></a>
+      <a href="/made-in-france/bijoux" class="ac-card" role="listitem"><div class="ac-ph" role="img" aria-hidden="true">💍</div><div class="ac-overlay"></div><div class="ac-label"><span class="ac-name">Bijoux</span><span class="ac-count">22 marques françaises</span></div></a>
+      <a href="/made-in-france/maison" class="ac-card" role="listitem"><div class="ac-ph" role="img" aria-hidden="true">🏠</div><div class="ac-overlay"></div><div class="ac-label"><span class="ac-name">Maison</span><span class="ac-count">35 marques françaises</span></div></a>
+      <a href="/made-in-france/sport" class="ac-card" role="listitem"><div class="ac-ph" role="img" aria-hidden="true">⛷️</div><div class="ac-overlay"></div><div class="ac-label"><span class="ac-name">Sport</span><span class="ac-count">18 marques françaises</span></div></a>
+      <a href="/made-in-france/technologie" class="ac-card" role="listitem"><div class="ac-ph" role="img" aria-hidden="true">💻</div><div class="ac-overlay"></div><div class="ac-label"><span class="ac-name">Technologie</span><span class="ac-count">12 marques françaises</span></div></a>
+      <a href="/made-in-france/bricolage" class="ac-card" role="listitem"><div class="ac-ph" role="img" aria-hidden="true">🔧</div><div class="ac-overlay"></div><div class="ac-label"><span class="ac-name">Bricolage</span><span class="ac-count">15 marques françaises</span></div></a>
+      <a href="/made-in-france/chaussures" class="ac-card" role="listitem"><div class="ac-ph" role="img" aria-hidden="true">👞</div><div class="ac-overlay"></div><div class="ac-label"><span class="ac-name">Chaussures</span><span class="ac-count">30 marques françaises</span></div></a>
+    </div>
   </div>
 </section>
 
