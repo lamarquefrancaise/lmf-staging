@@ -7,6 +7,7 @@ on:
     paths:
       - 'css/nav.css'
       - 'templates/nav.html'
+      - '**/index.html'
 
 jobs:
   build:
