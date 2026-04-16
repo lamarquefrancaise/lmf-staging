@@ -16,8 +16,6 @@ console.log('SUPABASE_URL défini:', !!SUPABASE_URL);
 
 // ─────────────────────────────────────────────
 // PAGES À TRAITER
-// Ajouter ici chaque page avec son chemin et
-// son slug de catégorie pour le lien actif.
 // ─────────────────────────────────────────────
 const PAGES = [
   { fichier: 'made-in-france/epicerie-fine/index.html', actif: 'epicerie-fine' },
@@ -50,11 +48,12 @@ function resoudreNav(actif) {
 }
 
 // ─────────────────────────────────────────────
-// FONCTION : générer l'article #brandFeatured (marque mise en vedette)
+// FONCTION : générer l'article #brandFeatured
 // ─────────────────────────────────────────────
 function genererFeatured(m, categorie) {
   const initiales = m.nom_societe.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
   const badgeVerif = m.verifiee ? '<span class="b-feat-badge-verif">✓ Marque vérifiée</span>' : '';
+  const sousCats   = m.categories ? m.categories.filter(c => c !== categorie).join(' · ') : '';
   return `
 <article id="brandFeatured" class="b-featured" itemscope itemtype="https://schema.org/Brand" tabindex="0">
   <div class="b-feat-img">
@@ -62,10 +61,10 @@ function genererFeatured(m, categorie) {
     <span class="b-feat-badge">⭐ Marque vedette</span>
   </div>
   <div class="b-feat-body">
-    <span class="b-feat-tag">${m.categories ? m.categories.filter(c => c !== data.supabase_categorie).join(' · ') : ''}</span>
+    <span class="b-feat-tag">${sousCats}</span>
     <p class="b-feat-name" itemprop="name">${m.nom_societe}</p>
     ${badgeVerif}
-    <p class="b-feat-desc" itemprop="description">${m.mini_descriptif}</p>
+    <p class="b-feat-desc" itemprop="description">${m.mini_descriptif || m.description || ''}</p>
     <div class="b-feat-footer">
       <div style="display:flex;align-items:center;gap:.5rem">
         <div class="b-dot" aria-hidden="true"></div>
@@ -80,12 +79,13 @@ function genererFeatured(m, categorie) {
 }
 
 // ─────────────────────────────────────────────
-// FONCTION : générer la grille #brandsGrid (jusqu'à 6 marques)
+// FONCTION : générer la grille #brandsGrid
 // ─────────────────────────────────────────────
 function genererGrid(marques, categorie) {
   const cartes = marques.map(m => {
-    const initiales = m.nom.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
+    const initiales = m.nom_societe.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
     const badgeVerif = m.verifiee ? '<span class="b-ver">✓ Vérifié</span>' : '';
+    const sousCats   = m.categories ? m.categories.filter(c => c !== categorie).join(' · ') : '';
     return `
 <article class="b-card" role="listitem" itemscope itemtype="https://schema.org/Brand">
   <div class="b-card-head">
@@ -94,9 +94,9 @@ function genererGrid(marques, categorie) {
   </div>
   <div class="b-meta">
     <p class="b-name" itemprop="name">${m.nom_societe}</p>
-    <span class="b-tag">${m.categories ? m.categories.filter(c => c !== data.supabase_categorie).join(' · ') : ''}</span>
+    <span class="b-tag">${sousCats}</span>
   </div>
-  <p class="b-desc">${m.mini_descriptif}</p>
+  <p class="b-desc">${m.mini_descriptif || m.description || ''}</p>
   <div class="b-footer">
     <div style="display:flex;align-items:center;gap:.42rem">
       <div class="b-dot" aria-hidden="true"></div>
@@ -122,7 +122,7 @@ async function genererSectionMarques(data) {
     return '';
   }
 
-  const url = `${SUPABASE_URL}/rest/v1/entreprises?categories=cs.{${data.supabase_categorie}}&select=nom_societe,description,ville,region,url_site,verifiee,categories`;
+  const url = `${SUPABASE_URL}/rest/v1/entreprises?categories=cs.{${data.supabase_categorie}}&select=nom_societe,description,mini_descriptif,ville,region,url_site,verifiee,categories`;
   console.log('URL appelée:', url);
 
   const res = await fetch(url, {
@@ -142,8 +142,8 @@ async function genererSectionMarques(data) {
   const vedette = marques.find(m => m.verifiee === true) || null;
   const grille  = marques.filter(m => m !== vedette).slice(0, 6);
 
-  const htmlFeatured = vedette ? genererFeatured(vedette, data.supabase_categorie) : '';
-  const htmlGrid = grille.length ? genererGrid(grille, data.supabase_categorie) : '';
+  const htmlFeatured = vedette       ? genererFeatured(vedette, data.supabase_categorie) : '';
+  const htmlGrid     = grille.length ? genererGrid(grille, data.supabase_categorie)      : '';
 
   if (!htmlFeatured && !htmlGrid) return '';
 
