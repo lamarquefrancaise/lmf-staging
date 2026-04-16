@@ -123,7 +123,7 @@ async function genererSectionMarques(data) {
   }
 
   const res = await fetch(
-    `${SUPABASE_URL}/rest/v1/entreprises?categorie=eq.${encodeURIComponent(data.supabase_categorie)}&select=nom,description,ville,region,url,verifiee,sous_categorie`,
+    `${SUPABASE_URL}/rest/v1/entreprises?categories=cs.${encodeURIComponent(`["${data.supabase_categorie}"]`)}&select=nom,description,ville,region,url,verifiee,sous_categorie`,
     { headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}` } }
   );
   if (!res.ok) {
