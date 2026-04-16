@@ -154,13 +154,32 @@ function initMap() {
   })();
 }
 
-// Lazy-init : initialise la carte seulement quand la section est visible
+// Chargement dynamique de D3 et TopoJSON uniquement quand la carte est visible
+function loadScript(src) {
+  return new Promise((resolve, reject) => {
+    const s = document.createElement('script');
+    s.src = src;
+    s.onload = resolve;
+    s.onerror = reject;
+    document.head.appendChild(s);
+  });
+}
+
 const mapSection = document.getElementById('carte');
 if (mapSection && 'IntersectionObserver' in window) {
   const mapObs = new IntersectionObserver((entries) => {
-    if (entries[0].isIntersecting) { initMap(); mapObs.disconnect(); }
+    if (entries[0].isIntersecting) {
+      mapObs.disconnect();
+      Promise.all([
+        loadScript('https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js'),
+        loadScript('https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js')
+      ]).then(() => initMap());
+    }
   }, { threshold: 0.1 });
   mapObs.observe(mapSection);
 } else {
-  window.addEventListener('load', initMap);
+  Promise.all([
+    loadScript('https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js'),
+    loadScript('https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js')
+  ]).then(() => initMap());
 }
