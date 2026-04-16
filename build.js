@@ -58,7 +58,7 @@ for (const page of PAGES) {
 
   // Injection CSS nav
   if (html.includes('{{NAV_CSS}}')) {
-    html = html.replace('{{NAV_CSS}}', `<style>${navCss}</style>`);
+    html = html.replace('{{NAV_CSS}}', navCss);
   } else {
     console.warn(`⚠️  Marqueur {{NAV_CSS}} absent dans : ${page.fichier}`);
   }
