@@ -1,4 +1,4 @@
-name: Build — Injection Nav
+name: Build — Injection Nav & Footer
 
 on:
   workflow_dispatch:
@@ -7,7 +7,9 @@ on:
       - main
     paths:
       - 'css/nav.css'
+      - 'css/footer.css'
       - 'templates/nav.html'
+      - 'templates/footer.html'
       - '**/index.html'
 
 permissions:
@@ -37,5 +39,5 @@ jobs:
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add -A
-          git diff --cached --quiet || git commit -m "build: injection nav [auto]"
+          git diff --cached --quiet || git commit -m "build: injection nav & footer [auto]"
           git push

@@ -12,20 +12,22 @@ const path = require('path');
 // ─────────────────────────────────────────────
 const PAGES = [
   { fichier: 'made-in-france/epicerie-fine/index.html', actif: 'epicerie-fine' },
-  //{ fichier: 'made-in-france/mode/index.html',          actif: 'mode' },
-  //{ fichier: 'made-in-france/beaute/index.html',        actif: 'beaute' },
-  //{ fichier: 'made-in-france/bijoux/index.html',        actif: 'bijoux' },
-  //{ fichier: 'made-in-france/maison/index.html',        actif: 'maison' },
-  //{ fichier: 'made-in-france/sport/index.html',         actif: 'sport' },
-  //{ fichier: 'made-in-france/technologie/index.html',   actif: 'technologie' },
-  //{ fichier: 'index.html',                              actif: '' },
+  { fichier: 'made-in-france/mode/index.html',          actif: 'mode' },
+  { fichier: 'made-in-france/beaute/index.html',        actif: 'beaute' },
+  { fichier: 'made-in-france/bijoux/index.html',        actif: 'bijoux' },
+  { fichier: 'made-in-france/maison/index.html',        actif: 'maison' },
+  { fichier: 'made-in-france/sport/index.html',         actif: 'sport' },
+  { fichier: 'made-in-france/technologie/index.html',   actif: 'technologie' },
+  { fichier: 'index.html',                              actif: '' },
 ];
 
 // ─────────────────────────────────────────────
 // LECTURE DES SOURCES
 // ─────────────────────────────────────────────
-const navCss  = fs.readFileSync(path.join(__dirname, 'css/nav.css'), 'utf8');
-const navHtml = fs.readFileSync(path.join(__dirname, 'templates/nav.html'), 'utf8');
+const navCss    = fs.readFileSync(path.join(__dirname, 'css/nav.css'), 'utf8');
+const navHtml   = fs.readFileSync(path.join(__dirname, 'templates/nav.html'), 'utf8');
+const footerCss = fs.readFileSync(path.join(__dirname, 'css/footer.css'), 'utf8');
+const footerHtml= fs.readFileSync(path.join(__dirname, 'templates/footer.html'), 'utf8');
 
 // ─────────────────────────────────────────────
 // FONCTION : résoudre le nav avec le bon lien actif
@@ -56,7 +58,7 @@ for (const page of PAGES) {
 
   // Injection CSS nav
   if (html.includes('{{NAV_CSS}}')) {
-    html = html.replace('{{NAV_CSS}}', navCss);
+    html = html.replace('{{NAV_CSS}}', `<style>${navCss}</style>`);
   } else {
     console.warn(`⚠️  Marqueur {{NAV_CSS}} absent dans : ${page.fichier}`);
   }
@@ -68,9 +70,23 @@ for (const page of PAGES) {
     console.warn(`⚠️  Marqueur {{NAV}} absent dans : ${page.fichier}`);
   }
 
+  // Injection CSS footer
+  if (html.includes('{{FOOTER_CSS}}')) {
+    html = html.replace('{{FOOTER_CSS}}', footerCss);
+  } else {
+    console.warn(`⚠️  Marqueur {{FOOTER_CSS}} absent dans : ${page.fichier}`);
+  }
+
+  // Injection HTML footer
+  if (html.includes('{{FOOTER}}')) {
+    html = html.replace('{{FOOTER}}', footerHtml);
+  } else {
+    console.warn(`⚠️  Marqueur {{FOOTER}} absent dans : ${page.fichier}`);
+  }
+
   fs.writeFileSync(chemin, html, 'utf8');
   console.log(`✅ ${page.fichier}`);
   succes++;
 }
 
-console.log(`\nBuild terminé : ${succes} page(s) traitée(s), ${erreurs} erreur(s).`);
+console.log(`\nBuild terminé : ${succes} page(s) traitée(s).`);
