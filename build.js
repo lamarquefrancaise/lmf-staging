@@ -148,7 +148,6 @@ function genererSectionCarte(marquesAvecCoords, data) {
   const legende = genererLegende(marquesAvecCoords);
 
   return `
-<!-- CARTE D3 -->
 <section class="carte-section" id="carte" aria-labelledby="carte-title">
   <div class="containeur">
     <div class="s-label">${data.carte_label || 'Terroirs &amp; origines'}</div>
