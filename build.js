@@ -48,7 +48,7 @@ function resoudreNav(actif) {
 }
 
 // ─────────────────────────────────────────────
-// FONCTION : générer l'article #brandFeatured
+// FONCTION : générer l'article #brandFeatured (marque mise en vedette)
 // ─────────────────────────────────────────────
 function genererFeatured(m) {
   const initiales = m.nom.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
@@ -78,7 +78,7 @@ function genererFeatured(m) {
 }
 
 // ─────────────────────────────────────────────
-// FONCTION : générer la grille #brandsGrid
+// FONCTION : générer la grille #brandsGrid (jusqu'à 6 marques)
 // ─────────────────────────────────────────────
 function genererGrid(marques) {
   const cartes = marques.map(m => {
@@ -124,13 +124,13 @@ async function genererSectionMarques(data) {
     `${SUPABASE_URL}/rest/v1/entreprises?categorie=eq.${encodeURIComponent(data.supabase_categorie)}&select=nom,description,ville,region,url,verifiee,sous_categorie`,
     { headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}` } }
   );
-
   if (!res.ok) {
     console.warn(`⚠️  Erreur Supabase (${res.status}) pour : ${data.supabase_categorie}`);
     return '';
   }
 
   const marques = await res.json();
+  console.log('Réponse Supabase:', JSON.stringify(marques));
   if (!marques.length) return '';
 
   const vedette = marques.find(m => m.verifiee === true) || null;
