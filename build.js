@@ -11,8 +11,6 @@ const path = require('path');
 // ─────────────────────────────────────────────
 const SUPABASE_URL = process.env.VITE_SUPABASE_URL;
 const SUPABASE_KEY = process.env.VITE_SUPABASE_ANON_KEY;
-console.log('Node version:', process.version);
-console.log('SUPABASE_URL défini:', !!SUPABASE_URL);
 
 // ─────────────────────────────────────────────
 // PAGES À TRAITER
@@ -64,13 +62,13 @@ function genererFeatured(m, categorie) {
     <span class="b-feat-tag">${sousCats}</span>
     <p class="b-feat-name" itemprop="name">${m.nom_societe}</p>
     ${badgeVerif}
-    <p class="b-feat-desc" itemprop="description">${m.mini_descriptif || m.description || ''}</p>
+    <p class="b-feat-desc" itemprop="description">${m.description || ''}</p>
     <div class="b-feat-footer">
       <div style="display:flex;align-items:center;gap:.5rem">
         <div class="b-dot" aria-hidden="true"></div>
         <span class="b-loc">${m.ville} — ${m.region}</span>
       </div>
-      <a href="${m.url_site}" class="b-link" itemprop="url" target="_blank" rel="noopener noreferrer">
+      <a href="${m.url_site}" class="b-link" itemprop="url">
         Découvrir ${m.nom_societe} →
       </a>
     </div>
@@ -96,13 +94,13 @@ function genererGrid(marques, categorie) {
     <p class="b-name" itemprop="name">${m.nom_societe}</p>
     <span class="b-tag">${sousCats}</span>
   </div>
-  <p class="b-desc">${m.mini_descriptif || m.description || ''}</p>
+  <p class="b-desc">${m.description || ''}</p>
   <div class="b-footer">
     <div style="display:flex;align-items:center;gap:.42rem">
       <div class="b-dot" aria-hidden="true"></div>
       <span class="b-loc">${m.ville} — ${m.region}</span>
     </div>
-    <a href="${m.url_site}" class="b-link" itemprop="url" target="_blank" rel="noopener noreferrer">
+    <a href="${m.url_site}" class="b-link" itemprop="url">
       Découvrir ${m.nom_societe} →
     </a>
   </div>
@@ -123,7 +121,6 @@ async function genererSectionMarques(data) {
   }
 
   const url = `${SUPABASE_URL}/rest/v1/entreprises?categories=cs.{${data.supabase_categorie}}&select=nom_societe,description,mini_descriptif,ville,region,url_site,verifiee,categories`;
-  console.log('URL appelée:', url);
 
   const res = await fetch(url, {
     headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}` }
