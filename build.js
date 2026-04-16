@@ -11,6 +11,8 @@ const path = require('path');
 // ─────────────────────────────────────────────
 const SUPABASE_URL = process.env.VITE_SUPABASE_URL;
 const SUPABASE_KEY = process.env.VITE_SUPABASE_ANON_KEY;
+console.log('Node version:', process.version);
+console.log('SUPABASE_URL défini:', !!SUPABASE_URL);
 
 // ─────────────────────────────────────────────
 // PAGES À TRAITER
