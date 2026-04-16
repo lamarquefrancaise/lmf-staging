@@ -28,6 +28,8 @@ const navCss    = fs.readFileSync(path.join(__dirname, 'css/nav.css'), 'utf8');
 const navHtml   = fs.readFileSync(path.join(__dirname, 'templates/nav.html'), 'utf8');
 const footerCss = fs.readFileSync(path.join(__dirname, 'css/footer.css'), 'utf8');
 const footerHtml= fs.readFileSync(path.join(__dirname, 'templates/footer.html'), 'utf8');
+const globalCss = fs.readFileSync(path.join(__dirname, 'css/global.css'), 'utf8');
+const breadcrumbCss = fs.readFileSync(path.join(__dirname, 'css/breadcrumb.css'), 'utf8');
 
 // ─────────────────────────────────────────────
 // FONCTION : résoudre le nav avec le bon lien actif
@@ -69,6 +71,13 @@ for (const page of PAGES) {
   } else {
     console.warn(`⚠️  Marqueur {{NAV}} absent dans : ${page.fichier}`);
   }
+  
+  //Injection CSS breadcrumb
+  if (html.includes('{{BREADCRUMB_CSS}}')) {
+    html = html.replace('{{BREADCRUMB_CSS}}', breadcrumbCss);
+  } else {
+    console.warn(`⚠️  Marqueur {{BREADCRUMB_CSS}} absent dans : ${page.fichier}`);
+  }
 
   // Injection CSS footer
   if (html.includes('{{FOOTER_CSS}}')) {
@@ -82,6 +91,13 @@ for (const page of PAGES) {
     html = html.replace('{{FOOTER}}', footerHtml);
   } else {
     console.warn(`⚠️  Marqueur {{FOOTER}} absent dans : ${page.fichier}`);
+  }
+
+  //Injection CSS global à toutes les pages
+  if (html.includes('{{GLOBAL_CSS}}')) {
+    html = html.replace('{{GLOBAL_CSS}}', globalCss);
+  } else {
+    console.warn(`⚠️  Marqueur {{GLOBAL_CSS}} absent dans : ${page.fichier}`);
   }
 
   fs.writeFileSync(chemin, html, 'utf8');

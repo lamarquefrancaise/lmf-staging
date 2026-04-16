@@ -11,6 +11,8 @@ on:
       - 'templates/nav.html'
       - 'templates/footer.html'
       - '**/index.html'
+      - 'css/global.css'
+      - 'css/breadcrumb.css'
 
 permissions:
   contents: write

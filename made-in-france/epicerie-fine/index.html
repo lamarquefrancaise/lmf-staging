@@ -48,22 +48,11 @@
 ]
 </script>
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{--navy:#0d1b3e;--gold:#b8963e;--gold-l:#d4af6a;--cream:#f9f6f0;--cream-d:#f2ede4;--white:#fff;--muted:#6b7280;--border:#e5e0d5;--text:#1a1a2e}
-html{scroll-behavior:smooth}
-h2,h3,h4,h5,h6{font-family:Georgia,'Times New Roman',serif}
-.skip-link{position:absolute;top:-50px;left:1rem;background:var(--gold);color:var(--white);padding:.5rem 1rem;font-family:Arial,sans-serif;font-size:.85rem;text-decoration:none;z-index:999;transition:top .2s}
-.skip-link:focus{top:.5rem}
-body{font-family:Georgia,'Times New Roman',serif;background:var(--white);color:var(--text);overflow-x:hidden}
+{{GLOBAL_CSS}}
 
 {{NAV_CSS}}
 
-.breadcrumb-bar{background:var(--navy);padding-top:64px}
-.breadcrumb{max-width:1100px;margin:0 auto;padding:.75rem 2rem;display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
-.breadcrumb a{font-family:Arial,sans-serif;font-size:.75rem;color:rgba(255,255,255,.45);text-decoration:none;transition:color .2s}
-.breadcrumb a:hover{color:var(--gold-l)}
-.breadcrumb-sep{color:rgba(255,255,255,.2);font-size:.7rem}
-.breadcrumb-current{font-family:Arial,sans-serif;font-size:.75rem;color:var(--gold-l);letter-spacing:.06em}
+{{BREADCRUMB_CSS}}
 
 .cat-hero{background:var(--navy);padding:3rem 2rem 4rem;position:relative;overflow:hidden;text-align:center}
 .cat-hero::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent,transparent 59px,rgba(184,150,62,.04) 59px,rgba(184,150,62,.04) 60px);pointer-events:none}
