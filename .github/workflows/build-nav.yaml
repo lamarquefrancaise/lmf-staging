@@ -13,6 +13,7 @@ on:
       - '**/index.html'
       - 'css/global.css'
       - 'css/breadcrumb.css'
+      - 'data/*.json'
 
 permissions:
   contents: write
@@ -35,6 +36,9 @@ jobs:
 
       - name: Lancer le build
         run: node build.js
+        env:
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
 
       - name: Commiter les pages générées
         run: |
