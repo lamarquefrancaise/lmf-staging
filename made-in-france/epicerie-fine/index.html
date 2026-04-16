@@ -18,8 +18,10 @@
 <meta name="theme-color" content="#0d1b3e">
 <!-- Preconnect pour les ressources critiques -->
 <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+<link rel="preconnect" href="https://gqmlwvmdsvtapljpdiyh.supabase.co" crossorigin>
+<link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
 <link rel="preconnect" href="https://unpkg.com" crossorigin>
-<!-- D3 + TopoJSON chargés en defer (non bloquants) -->
+<!-- D3 + TopoJSON + Supabase chargés en defer (non bloquants) -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js" defer></script>
 <script type="application/ld+json">
@@ -54,32 +56,7 @@ h2,h3,h4,h5,h6{font-family:Georgia,'Times New Roman',serif}
 .skip-link:focus{top:.5rem}
 body{font-family:Georgia,'Times New Roman',serif;background:var(--white);color:var(--text);overflow-x:hidden}
 
-nav.navig{position:fixed;width:100%;z-index:200;background:rgba(13,27,62,.97);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:64px;box-shadow:0 1px 0 rgba(184,150,62,.15)}
-.navi-logo{color:var(--white);font-size:1.05rem;letter-spacing:.15em;font-weight:normal;white-space:nowrap;text-decoration:none}
-.navi-logo span{color:var(--gold-l)}
-.navi-links{display:flex;gap:1.5rem;list-style:none;align-items:center;margin:0}
-.navi-links a{color:rgba(255,255,255,.75);text-decoration:none;font-family:Arial,sans-serif;font-size:.9rem;letter-spacing:.07em;transition:color .2s;white-space:nowrap}
-.navi-links a:hover,.navi-links a.active{color:var(--gold-l)}
-.nav-cta{background:var(--gold)!important;color:var(--white)!important;padding:.5rem 1.1rem!important}
-.nav-cta:hover{background:var(--gold-l)!important}
-.burger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;background:none;border:none}
-.burger span{display:block;width:22px;height:2px;background:var(--white);transition:all .3s;transform-origin:center}
-.burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
-.burger.open span:nth-child(2){opacity:0}
-.burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
-.menu-close{display:none;position:absolute;top:1rem;right:1rem;background:none;border:none;color:rgba(255,255,255,.6);font-size:1.5rem;cursor:pointer;padding:.25rem}
-.nav-overlay{display:none;position:fixed;inset:0;z-index:197;background:rgba(0,0,0,.5)}
-@media(max-width:900px){
-  .burger{display:flex}
-  .navi-links{position:fixed;top:0;right:-100%;bottom:0;width:85%;max-width:320px;z-index:198;background:#0d1b3e;flex-direction:column;align-items:flex-start;justify-content:flex-start;gap:0;padding:64px 0 2rem;transition:right .3s ease}
-  .navi-links.open{right:0}
-  .navi-links li{width:100%}
-  .navi-links a{display:block;width:100%;padding:.9rem 1.5rem;font-size:.95rem;border-bottom:1px solid rgba(255,255,255,.07)}
-  .navi-links .nav-cta{margin:1.5rem 1.5rem 0;width:calc(100% - 3rem);text-align:center;display:block}
-  .menu-close{display:block}
-  .nav-overlay{display:block;opacity:0;pointer-events:none;transition:opacity .3s}
-  .nav-overlay.open{opacity:1;pointer-events:all}
-}
+{{NAV_CSS}}
 
 .breadcrumb-bar{background:var(--navy);padding-top:64px}
 .breadcrumb{max-width:1100px;margin:0 auto;padding:.75rem 2rem;display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
@@ -121,8 +98,7 @@ section{padding:5rem 2rem}
 .sc-card:hover .sc-ph{transform:scale(1.07);filter:brightness(.65)}
 .sc-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(13,27,62,.78) 0%,rgba(13,27,62,.1) 60%,transparent 100%)}
 .sc-label{position:absolute;bottom:0;left:0;right:0;padding:.75rem .85rem}
-.sc-name{font-family:Arial,sans-serif;font-size:.8rem;color:var(--white);letter-spacing:.05em;display:block;line-height:1.3}
-.sc-count{font-family:Arial,sans-serif;font-size:.65rem;color:rgba(255,255,255,.5);margin-top:.15rem;display:block}
+.sc-name{font-family:Arial,sans-serif;font-size:1rem;color:var(--white);letter-spacing:.05em;display:block;line-height:1.3}
 .sc-card.active .sc-overlay{background:linear-gradient(to top,rgba(13,27,62,.9) 0%,rgba(184,150,62,.2) 100%)}
 .sc-card.active .sc-name{color:var(--gold-l)}
 
@@ -206,8 +182,9 @@ section{padding:5rem 2rem}
 
 .produits-section{background:var(--white);padding:5rem 2rem}
 .products-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem;margin-top:3rem}
-.p-card{background:var(--cream);border:1px solid var(--border);overflow:hidden;transition:border-color .2s,box-shadow .2s;cursor:pointer}
+.p-card{background:var(--cream);border:1px solid var(--border);overflow:hidden;transition:border-color .2s,box-shadow .2s;cursor:pointer;position:relative}
 .p-card:hover{border-color:var(--gold);box-shadow:0 4px 16px rgba(184,150,62,.12)}
+.p-card-link{position:absolute;inset:0;z-index:1;font-size:0;color:transparent}
 .p-img{width:100%;position:relative}
 .p-img::before{content:'';display:block;padding-bottom:100%}
 .p-img-inner{position:absolute;inset:0;background:var(--cream-d);overflow:hidden}
@@ -218,9 +195,6 @@ section{padding:5rem 2rem}
 .p-info{padding:.8rem}
 .p-brand{font-family:Arial,sans-serif;font-size:.62rem;color:var(--gold);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.18rem}
 .p-name{font-size:.84rem;color:var(--navy);line-height:1.3;margin-bottom:.38rem}
-.p-rating{display:flex;align-items:center;gap:.28rem}
-.p-stars{color:var(--gold);font-size:.7rem}
-.p-rcount{font-family:Arial,sans-serif;font-size:.62rem;color:var(--muted)}
 .p-orig{display:flex;align-items:center;gap:.28rem;margin-top:.38rem}
 .p-orig-dot{width:5px;height:5px;background:var(--gold);border-radius:50%;flex-shrink:0}
 .p-orig-lbl{font-family:Arial,sans-serif;font-size:.62rem;color:var(--muted)}
@@ -343,25 +317,7 @@ footer{background:#0a1428;padding:3.5rem 2rem 2rem}
 <body>
 
 <!-- NAV -->
-<a href="#contenu-principal" class="skip-link">Aller au contenu principal</a>
-<nav aria-label="Navigation principale" class="navig">
-  <a href="/" class="navi-logo" title="La Marque Française — Accueil">La <span>Marque</span> Française</a>
-  <ul class="navi-links" id="navLinks" role="list">
-    <button class="menu-close" id="menuClose" aria-label="Fermer le menu" type="button">✕</button>
-    <li><a href="/made-in-france/epicerie-fine" class="active">Épicerie</a></li>
-    <li><a href="/made-in-france/mode">Mode</a></li>
-    <li><a href="/made-in-france/beaute">Beauté</a></li>
-    <li><a href="/made-in-france/bijoux">Bijoux</a></li>
-    <li><a href="/made-in-france/maison">Maison</a></li>
-    <li><a href="/made-in-france/sport">Sport</a></li>
-    <li><a href="/made-in-france/technologie">Technologie</a></li>
-    <li><a href="/referencer-votre-marque" class="nav-cta">Référencer ma marque</a></li>
-  </ul>
-  <button class="burger" id="burger" aria-label="Ouvrir le menu" aria-expanded="false" type="button">
-    <span></span><span></span><span></span>
-  </button>
-</nav>
-<div class="nav-overlay" id="navOverlay"></div>
+{{NAV}}
 
 <main id="contenu-principal">
 <!-- BREADCRUMB -->
@@ -380,7 +336,7 @@ footer{background:#0a1428;padding:3.5rem 2rem 2rem}
     <h1>Épicerie Fine <em>Française</em></h1>
     <p class="cat-hero-desc">Miel français artisanal, confitures de France, chocolat artisanal, charcuterie du terroir, vins et huile d'olive française — les meilleures marques d'épicerie fine, au cœur de la gastronomie française.</p>
     <div class="cat-hero-stats">
-      <div class="cat-stat"><strong>XX</strong>&nbsp;marques référencées</div>
+      <div class="cat-stat"><strong id="heroCount">5</strong>&nbsp;marques référencées</div>
       <div class="cat-stat" aria-hidden="true">·</div>
       <div class="cat-stat"><strong>10</strong>&nbsp;sous-catégories</div>
       <div class="cat-stat" aria-hidden="true">·</div>
@@ -395,7 +351,7 @@ footer{background:#0a1428;padding:3.5rem 2rem 2rem}
     <div class="s-label">Explorer par type de produit</div>
     <h2 class="s-title" id="sc-title">Sous-catégories d'épicerie fine française</h2>
     <div class="s-div"></div>
-    <p class="s-sub">Miel français artisanal, confiture de France, chocolat artisanal, biscuits made in France, charcuterie du terroir, vin de France, huile d'olive française… explorez toutes les spécialités de l'épicerie fine française par type de produit.</p>
+    <p class="s-sub">Miels français artisanal, confiture de France, chocolat artisanal, biscuits made in France, charcuterie du terroir, vin de France, huile d'olive française… explorez toutes les spécialités de l'épicerie fine française par type de produit.</p>
   </div>
   <div class="sc-wrap" style="max-width:1140px;margin:0 auto;position:relative">
     <div class="sc-grid" id="scGrid" role="list">
@@ -404,61 +360,61 @@ footer{background:#0a1428;padding:3.5rem 2rem 2rem}
           <source srcset="/img/250x310/avif/miel.avif" type="image/avif">
           <img src="/img/250x310/webp/miel.webp" alt="Miel français artisanal" width="250" height="310" loading="lazy" decoding="async">
         </picture>
-        </div><div class="sc-overlay"></div><div class="sc-label"><span class="sc-name">Miel français</span><span class="sc-count">8 marques</span></div></a>
+        </div><div class="sc-overlay"></div><div class="sc-label"><span class="sc-name">Miel français</span></div></a>
       <a href="/made-in-france/confitures" class="sc-card" role="listitem"><div class="sc-ph" role="img">
         <picture>
           <source srcset="/img/250x310/avif/confiture.avif" type="image/avif">
           <img src="/img/250x310/webp/confiture.webp" alt="Confiture de France artisanale" width="250" height="310" loading="lazy" decoding="async">
         </picture>
-        </div><div class="sc-overlay"></div><div class="sc-label"><span class="sc-name">Confiture de France</span><span class="sc-count">6 marques</span></div></a>
+        </div><div class="sc-overlay"></div><div class="sc-label"><span class="sc-name">Confiture de France</span></div></a>
       <a href="/made-in-france/chocolats" class="sc-card" role="listitem"><div class="sc-ph" role="img">
         <picture>
           <source srcset="/img/250x310/avif/chocolat.avif" type="image/avif">
           <img src="/img/250x310/webp/chocolat.webp" alt="Chocolat artisanal français" width="250" height="310" loading="lazy" decoding="async">
         </picture>
-        </div><div class="sc-overlay"></div><div class="sc-label"><span class="sc-name">Chocolat artisanal</span><span class="sc-count">9 marques</span></div></a>
+        </div><div class="sc-overlay"></div><div class="sc-label"><span class="sc-name">Chocolat artisanal</span></div></a>
       <a href="/made-in-france/biscuits" class="sc-card" role="listitem"><div class="sc-ph" role="img">
         <picture>
           <source srcset="/img/250x310/avif/biscuit.avif" type="image/avif">
           <img src="/img/250x310/webp/biscuit.webp" alt="Biscuits et gâteaux made in France" width="250" height="310" loading="lazy" decoding="async">
         </picture>
-        </div><div class="sc-overlay"></div><div class="sc-label"><span class="sc-name">Biscuits &amp; Gâteaux</span><span class="sc-count">11 marques</span></div></a>
+        </div><div class="sc-overlay"></div><div class="sc-label"><span class="sc-name">Biscuits &amp; Gâteaux</span></div></a>
       <a href="/made-in-france/charcuterie" class="sc-card" role="listitem"><div class="sc-ph" role="img">
         <picture>
           <source srcset="/img/250x310/avif/charcuterie.avif" type="image/avif">
           <img src="/img/250x310/webp/charcuterie.webp" alt="Charcuterie du terroir français" width="250" height="310" loading="lazy" decoding="async">
         </picture>
-        </div><div class="sc-overlay"></div><div class="sc-label"><span class="sc-name">Charcuterie du terroir</span><span class="sc-count">7 marques</span></div></a>
+        </div><div class="sc-overlay"></div><div class="sc-label"><span class="sc-name">Charcuterie du terroir</span></div></a>
       <a href="/made-in-france/pâtés-rillettes" class="sc-card" role="listitem"><div class="sc-ph" role="img">
         <picture>
           <source srcset="/img/250x310/avif/pate.avif" type="image/avif">
           <img src="/img/250x310/webp/pate.webp" alt="Pâtés et rillettes français" width="250" height="310" loading="lazy" decoding="async">
         </picture>
-        </div><div class="sc-overlay"></div><div class="sc-label"><span class="sc-name">Pâtés &amp; Rillettes</span><span class="sc-count">5 marques</span></div></a>
+        </div><div class="sc-overlay"></div><div class="sc-label"><span class="sc-name">Pâtés &amp; Rillettes</span></div></a>
       <a href="/made-in-france/vins" class="sc-card" role="listitem"><div class="sc-ph" role="img">
         <picture>
           <source srcset="/img/250x310/avif/vins.avif" type="image/avif">
           <img src="/img/250x310/webp/vins.webp" alt="Vins de France" width="250" height="310" loading="lazy" decoding="async">
         </picture>
-        </div><div class="sc-overlay"></div><div class="sc-label"><span class="sc-name">Vin de France</span><span class="sc-count">14 marques</span></div></a>
+        </div><div class="sc-overlay"></div><div class="sc-label"><span class="sc-name">Vin de France</span></div></a>
       <a href="/made-in-france/huiles-olive" class="sc-card" role="listitem"><div class="sc-ph" role="img">
         <picture>
           <source srcset="/img/250x310/avif/huile-olive.avif" type="image/avif">
           <img src="/img/250x310/webp/huile-olive.webp" alt="Huile d'olive française" width="250" height="310" loading="lazy" decoding="async">
         </picture>
-        </div><div class="sc-overlay"></div><div class="sc-label"><span class="sc-name">Huile d'olive française</span><span class="sc-count">4 marques</span></div></a>
+        </div><div class="sc-overlay"></div><div class="sc-label"><span class="sc-name">Huile d'olive française</span></div></a>
       <a href="/made-in-france/vinaigres" class="sc-card" role="listitem"><div class="sc-ph" role="img">
         <picture>
           <source srcset="/img/250x310/avif/vinaigre.avif" type="image/avif">
           <img src="/img/250x310/webp/vinaigre.webp" alt="Vinaigre artisanal français" width="250" height="310" loading="lazy" decoding="async">
         </picture>
-        </div><div class="sc-overlay"></div><div class="sc-label"><span class="sc-name">Vinaigre artisanal</span><span class="sc-count">3 marques</span></div></a>
+        </div><div class="sc-overlay"></div><div class="sc-label"><span class="sc-name">Vinaigre artisanal</span></div></a>
       <a href="/made-in-france/apéritifs" class="sc-card" role="listitem"><div class="sc-ph" role="img">
         <picture>
           <source srcset="/img/250x310/avif/poivre-et-sel.avif" type="image/avif">
           <img src="/img/250x310/webp/poivre-et-sel.webp" alt="Apéritifs français" width="250" height="310" loading="lazy" decoding="async">
         </picture>
-        </div><div class="sc-overlay"></div><div class="sc-label"><span class="sc-name">Apéritif français</span><span class="sc-count">5 marques</span></div></a>
+        </div><div class="sc-overlay"></div><div class="sc-label"><span class="sc-name">Apéritif français</span></div></a>
     </div>
   </div>
 </section>
@@ -466,13 +422,13 @@ footer{background:#0a1428;padding:3.5rem 2rem 2rem}
 <!-- MARQUES -->
 <section class="marques-section" id="marques" aria-labelledby="marques-title">
   <div class="containeur">
-    <div class="s-label">Marques vérifiées</div>
+    <div class="s-label">Marques d'exception</div>
     <h2 class="s-title" id="marques-title">Marques françaises d'épicerie fine</h2>
     <div class="s-div"></div>
-    <p class="s-sub">Sélectionnées parmi les meilleures marques de gastronomie française — chaque marque d'épicerie fine est vérifiée pour son origine, sa fabrication et son ancrage dans le terroir français.</p>
+    <p class="s-sub">Sélectionnées parmi les meilleures marques de gastronomie française, chaque marque d'épicerie fine est vérifiée pour son origine, sa fabrication et son ancrage dans le terroir français.</p>
 
     <!-- Marque vedette — À remplacer par les vraies données -->
-    <article class="b-featured" itemscope itemtype="https://schema.org/Brand" tabindex="0">
+    <article id="brandFeatured" class="b-featured" itemscope itemtype="https://schema.org/Brand" tabindex="0">
       <div class="b-feat-img">
         <span class="b-feat-logo" aria-hidden="true">XX</span>
         <span class="b-feat-badge">⭐ Marque vedette</span>
@@ -481,7 +437,7 @@ footer{background:#0a1428;padding:3.5rem 2rem 2rem}
         <span class="b-feat-tag">Catégorie · Sous-catégorie</span>
         <p class="b-feat-name" itemprop="name">Nom de la marque vedette</p>
         <!-- Badge vérifié : décommenter si verifiee = true -->
-        <!-- <span class="b-feat-badge-verif">✓ Marque vérifiée</span> -->
+        <span class="b-feat-badge-verif">✓ Marque vérifiée</span>
         <p class="b-feat-desc" itemprop="description">Description de la marque vedette. Présentez ici l'histoire, le savoir-faire et les produits phares de cette marque française d'exception.</p>
         <div class="b-feat-footer">
           <div style="display:flex;align-items:center;gap:.5rem">
@@ -498,16 +454,16 @@ footer{background:#0a1428;padding:3.5rem 2rem 2rem}
 
 
     <!-- 6 dernières marques de la catégorie — À remplacer par les vraies données -->
-    <div class="brands-grid" role="list">
+    <div id="brandsGrid" class="brands-grid" role="list">
       <article class="b-card" role="listitem" itemscope itemtype="https://schema.org/Brand">
         <div class="b-card-head">
           <div class="b-logo" aria-hidden="true">M1</div>
           <!-- Badge vérifié : décommenter si verifiee = true -->
-          <!-- <span class="b-ver">✓ Vérifié</span> -->
+          <span class="b-ver">✓ Vérifié</span>
         </div>
         <div class="b-meta">
           <p class="b-name" itemprop="name">Nom Marque 1</p>
-          <span class="b-tag">Catégorie</span>
+          <span class="b-tag">Catégorie</span> <span class="b-tag">Catégorie</span>
         </div>
         <p class="b-desc">Description de la marque 1. Présentez ici son histoire et ses produits.</p>
         <div class="b-footer">
@@ -631,6 +587,7 @@ footer{background:#0a1428;padding:3.5rem 2rem 2rem}
           </a>
         </div>
       </article>
+    
     </div>
 
     <div class="brands-cta"><button class="btn-ghost" type="button">Voir toutes les marques d'épicerie française →</button></div>
@@ -645,7 +602,8 @@ footer{background:#0a1428;padding:3.5rem 2rem 2rem}
     <div class="s-div"></div>
     <p class="s-sub">Miel français, confiture artisanale, chocolat grand cru, foie gras du Périgord, vin de France… une sélection de produits d'épicerie fine issus des marques françaises référencées.</p>
     <div class="products-grid" role="list">
-      <article class="p-card" role="listitem" itemscope itemtype="https://schema.org/Product"><div class="p-img"><div class="p-img-inner">
+      <article class="p-card" role="listitem" itemscope itemtype="https://schema.org/Product">
+        <a href="/produits/miel-lavande-aop-provence" class="p-card-link" aria-label="Miel de Lavande AOP Provence" tabindex="0">Miel de Lavande AOP Provence</a><div class="p-img"><div class="p-img-inner">
         <picture>
           <source srcset="/img/600x600/avif/miel-lavande-aop-provence.avif" type="image/avif">
           <img src="/img/600x600/webp/miel-lavande-aop-provence.webp"
@@ -653,8 +611,9 @@ footer{background:#0a1428;padding:3.5rem 2rem 2rem}
                width="600" height="600"
                loading="lazy" decoding="async">
         </picture>
-        </div><div class="p-overlay"><span>Voir le produit →</span></div></div><div class="p-info"><div class="p-brand" itemprop="brand" itemscope itemtype="https://schema.org/Brand"><span itemprop="name">Apiculture du Mont</span></div><h3 class="p-name" itemprop="name">Miel de Lavande AOP Provence</h3><div class="p-rating"><span class="p-stars">★★★★★</span><span class="p-rcount">(47 avis)</span></div><div class="p-orig"><div class="p-orig-dot"></div><span class="p-orig-lbl">Hautes-Alpes</span></div></div></article>
-      <article class="p-card" role="listitem" itemscope itemtype="https://schema.org/Product"><div class="p-img"><div class="p-img-inner">
+        </div><div class="p-overlay"><span>Voir le produit →</span></div></div><div class="p-info"><div class="p-brand" itemprop="brand" itemscope itemtype="https://schema.org/Brand"><span itemprop="name">Apiculture du Mont</span></div><h3 class="p-name" itemprop="name">Miel de Lavande AOP Provence</h3><div class="p-orig"><div class="p-orig-dot"></div><span class="p-orig-lbl">Hautes-Alpes</span></div></div></article>
+      <article class="p-card" role="listitem" itemscope itemtype="https://schema.org/Product">
+        <a href="/produits/tablette-noir-75-grand-cru" class="p-card-link" aria-label="Tablette Noir 75% Grand Cru" tabindex="0">Tablette Noir 75% Grand Cru</a><div class="p-img"><div class="p-img-inner">
         <picture>
           <source srcset="/img/600x600/avif/tablette-noir-75-grand-cru.avif" type="image/avif">
           <img src="/img/600x600/webp/tablette-noir-75-grand-cru.webp"
@@ -662,8 +621,9 @@ footer{background:#0a1428;padding:3.5rem 2rem 2rem}
                width="600" height="600"
                loading="lazy" decoding="async">
         </picture>
-        </div><div class="p-overlay"><span>Voir le produit →</span></div></div><div class="p-info"><div class="p-brand" itemprop="brand" itemscope itemtype="https://schema.org/Brand"><span itemprop="name">Chocolaterie du Belvédère</span></div><h3 class="p-name" itemprop="name">Tablette Noir 75% Grand Cru</h3><div class="p-rating"><span class="p-stars">★★★★★</span><span class="p-rcount">(83 avis)</span></div><div class="p-orig"><div class="p-orig-dot"></div><span class="p-orig-lbl">Lyon, Rhône</span></div></div></article>
-      <article class="p-card" role="listitem" itemscope itemtype="https://schema.org/Product"><div class="p-img"><div class="p-img-inner">
+        </div><div class="p-overlay"><span>Voir le produit →</span></div></div><div class="p-info"><div class="p-brand" itemprop="brand" itemscope itemtype="https://schema.org/Brand"><span itemprop="name">Chocolaterie du Belvédère</span></div><h3 class="p-name" itemprop="name">Tablette Noir 75% Grand Cru</h3><div class="p-orig"><div class="p-orig-dot"></div><span class="p-orig-lbl">Lyon, Rhône</span></div></div></article>
+      <article class="p-card" role="listitem" itemscope itemtype="https://schema.org/Product">
+        <a href="/produits/galettes-beurre-isigny-aop" class="p-card-link" aria-label="Galettes Beurre d'Isigny AOP" tabindex="0">Galettes Beurre d'Isigny AOP</a><div class="p-img"><div class="p-img-inner">
         <picture>
           <source srcset="/img/600x600/avif/galettes-beurre-isigny-aop.avif" type="image/avif">
           <img src="/img/600x600/webp/galettes-beurre-isigny-aop.webp"
@@ -671,8 +631,9 @@ footer{background:#0a1428;padding:3.5rem 2rem 2rem}
                width="600" height="600"
                loading="lazy" decoding="async">
         </picture>
-        </div><div class="p-overlay"><span>Voir le produit →</span></div></div><div class="p-info"><div class="p-brand" itemprop="brand" itemscope itemtype="https://schema.org/Brand"><span itemprop="name">La Biscuiterie Bretonne</span></div><h3 class="p-name" itemprop="name">Galettes Beurre d'Isigny AOP</h3><div class="p-rating"><span class="p-stars">★★★★★</span><span class="p-rcount">(124 avis)</span></div><div class="p-orig"><div class="p-orig-dot"></div><span class="p-orig-lbl">Quimper, Finistère</span></div></div></article>
-      <article class="p-card" role="listitem" itemscope itemtype="https://schema.org/Product"><div class="p-img"><div class="p-img-inner">
+        </div><div class="p-overlay"><span>Voir le produit →</span></div></div><div class="p-info"><div class="p-brand" itemprop="brand" itemscope itemtype="https://schema.org/Brand"><span itemprop="name">La Biscuiterie Bretonne</span></div><h3 class="p-name" itemprop="name">Galettes Beurre d'Isigny AOP</h3><div class="p-orig"><div class="p-orig-dot"></div><span class="p-orig-lbl">Quimper, Finistère</span></div></div></article>
+      <article class="p-card" role="listitem" itemscope itemtype="https://schema.org/Product">
+        <a href="/produits/foie-gras-canard-entier-igp" class="p-card-link" aria-label="Foie Gras de Canard Entier IGP" tabindex="0">Foie Gras de Canard Entier IGP</a><div class="p-img"><div class="p-img-inner">
         <picture>
           <source srcset="/img/600x600/avif/foie-gras-canard-entier-igp.avif" type="image/avif">
           <img src="/img/600x600/webp/foie-gras-canard-entier-igp.webp"
@@ -680,8 +641,9 @@ footer{background:#0a1428;padding:3.5rem 2rem 2rem}
                width="600" height="600"
                loading="lazy" decoding="async">
         </picture>
-        </div><div class="p-overlay"><span>Voir le produit →</span></div></div><div class="p-info"><div class="p-brand" itemprop="brand" itemscope itemtype="https://schema.org/Brand"><span itemprop="name">Maison Fabre</span></div><h3 class="p-name" itemprop="name">Foie Gras de Canard Entier IGP</h3><div class="p-rating"><span class="p-stars">★★★★★</span><span class="p-rcount">(62 avis)</span></div><div class="p-orig"><div class="p-orig-dot"></div><span class="p-orig-lbl">Périgord, Dordogne</span></div></div></article>
-      <article class="p-card" role="listitem" itemscope itemtype="https://schema.org/Product"><div class="p-img"><div class="p-img-inner">
+        </div><div class="p-overlay"><span>Voir le produit →</span></div></div><div class="p-info"><div class="p-brand" itemprop="brand" itemscope itemtype="https://schema.org/Brand"><span itemprop="name">Maison Fabre</span></div><h3 class="p-name" itemprop="name">Foie Gras de Canard Entier IGP</h3><div class="p-orig"><div class="p-orig-dot"></div><span class="p-orig-lbl">Périgord, Dordogne</span></div></div></article>
+      <article class="p-card" role="listitem" itemscope itemtype="https://schema.org/Product">
+        <a href="/produits/confiture-fraises-carpentras" class="p-card-link" aria-label="Confiture Fraises de Carpentras" tabindex="0">Confiture Fraises de Carpentras</a><div class="p-img"><div class="p-img-inner">
         <picture>
           <source srcset="/img/600x600/avif/confiture-fraises-carpentras.avif" type="image/avif">
           <img src="/img/600x600/webp/confiture-fraises-carpentras.webp"
@@ -689,8 +651,9 @@ footer{background:#0a1428;padding:3.5rem 2rem 2rem}
                width="600" height="600"
                loading="lazy" decoding="async">
         </picture>
-        </div><div class="p-overlay"><span>Voir le produit →</span></div></div><div class="p-info"><div class="p-brand" itemprop="brand" itemscope itemtype="https://schema.org/Brand"><span itemprop="name">Confiserie du Moulin</span></div><h3 class="p-name" itemprop="name">Confiture Fraises de Carpentras</h3><div class="p-rating"><span class="p-stars">★★★★☆</span><span class="p-rcount">(38 avis)</span></div><div class="p-orig"><div class="p-orig-dot"></div><span class="p-orig-lbl">Apt, Vaucluse</span></div></div></article>
-      <article class="p-card" role="listitem" itemscope itemtype="https://schema.org/Product"><div class="p-img"><div class="p-img-inner">
+        </div><div class="p-overlay"><span>Voir le produit →</span></div></div><div class="p-info"><div class="p-brand" itemprop="brand" itemscope itemtype="https://schema.org/Brand"><span itemprop="name">Confiserie du Moulin</span></div><h3 class="p-name" itemprop="name">Confiture Fraises de Carpentras</h3><div class="p-orig"><div class="p-orig-dot"></div><span class="p-orig-lbl">Apt, Vaucluse</span></div></div></article>
+      <article class="p-card" role="listitem" itemscope itemtype="https://schema.org/Product">
+        <a href="/produits/rose-aop-cotes-de-provence-2023" class="p-card-link" aria-label="Rosé AOP Côtes-de-Provence 2023" tabindex="0">Rosé AOP Côtes-de-Provence 2023</a><div class="p-img"><div class="p-img-inner">
         <picture>
           <source srcset="/img/600x600/avif/rose-aop-cotes-de-provence-2023.avif" type="image/avif">
           <img src="/img/600x600/webp/rose-aop-cotes-de-provence-2023.webp"
@@ -698,8 +661,9 @@ footer{background:#0a1428;padding:3.5rem 2rem 2rem}
                width="600" height="600"
                loading="lazy" decoding="async">
         </picture>
-        </div><div class="p-overlay"><span>Voir le produit →</span></div></div><div class="p-info"><div class="p-brand" itemprop="brand" itemscope itemtype="https://schema.org/Brand"><span itemprop="name">Domaine des Collines</span></div><h3 class="p-name" itemprop="name">Rosé AOP Côtes-de-Provence 2023</h3><div class="p-rating"><span class="p-stars">★★★★★</span><span class="p-rcount">(91 avis)</span></div><div class="p-orig"><div class="p-orig-dot"></div><span class="p-orig-lbl">Vidauban, Var</span></div></div></article>
-      <article class="p-card" role="listitem" itemscope itemtype="https://schema.org/Product"><div class="p-img"><div class="p-img-inner">
+        </div><div class="p-overlay"><span>Voir le produit →</span></div></div><div class="p-info"><div class="p-brand" itemprop="brand" itemscope itemtype="https://schema.org/Brand"><span itemprop="name">Domaine des Collines</span></div><h3 class="p-name" itemprop="name">Rosé AOP Côtes-de-Provence 2023</h3><div class="p-orig"><div class="p-orig-dot"></div><span class="p-orig-lbl">Vidauban, Var</span></div></div></article>
+      <article class="p-card" role="listitem" itemscope itemtype="https://schema.org/Product">
+        <a href="/produits/huile-olive-aop-vallee-des-baux" class="p-card-link" aria-label="Huile d'Olive AOP Vallée des Baux" tabindex="0">Huile d'Olive AOP Vallée des Baux</a><div class="p-img"><div class="p-img-inner">
         <picture>
           <source srcset="/img/600x600/avif/huile-olive-aop-vallee-des-baux.avif" type="image/avif">
           <img src="/img/600x600/webp/huile-olive-aop-vallee-des-baux.webp"
@@ -707,8 +671,9 @@ footer{background:#0a1428;padding:3.5rem 2rem 2rem}
                width="600" height="600"
                loading="lazy" decoding="async">
         </picture>
-        </div><div class="p-overlay"><span>Voir le produit →</span></div></div><div class="p-info"><div class="p-brand" itemprop="brand" itemscope itemtype="https://schema.org/Brand"><span itemprop="name">Moulin de la Roque</span></div><h3 class="p-name" itemprop="name">Huile d'Olive AOP Vallée des Baux</h3><div class="p-rating"><span class="p-stars">★★★★★</span><span class="p-rcount">(54 avis)</span></div><div class="p-orig"><div class="p-orig-dot"></div><span class="p-orig-lbl">Les Baux-de-Provence</span></div></div></article>
-      <article class="p-card" role="listitem" itemscope itemtype="https://schema.org/Product"><div class="p-img"><div class="p-img-inner">
+        </div><div class="p-overlay"><span>Voir le produit →</span></div></div><div class="p-info"><div class="p-brand" itemprop="brand" itemscope itemtype="https://schema.org/Brand"><span itemprop="name">Moulin de la Roque</span></div><h3 class="p-name" itemprop="name">Huile d'Olive AOP Vallée des Baux</h3><div class="p-orig"><div class="p-orig-dot"></div><span class="p-orig-lbl">Les Baux-de-Provence</span></div></div></article>
+      <article class="p-card" role="listitem" itemscope itemtype="https://schema.org/Product">
+        <a href="/produits/jambon-bayonne-igp-24-mois" class="p-card-link" aria-label="Jambon de Bayonne IGP 24 mois" tabindex="0">Jambon de Bayonne IGP 24 mois</a><div class="p-img"><div class="p-img-inner">
         <picture>
           <source srcset="/img/600x600/avif/jambon-bayonne-igp-24-mois.avif" type="image/avif">
           <img src="/img/600x600/webp/jambon-bayonne-igp-24-mois.webp"
@@ -716,7 +681,7 @@ footer{background:#0a1428;padding:3.5rem 2rem 2rem}
                width="600" height="600"
                loading="lazy" decoding="async">
         </picture>
-        </div><div class="p-overlay"><span>Voir le produit →</span></div></div><div class="p-info"><div class="p-brand" itemprop="brand" itemscope itemtype="https://schema.org/Brand"><span itemprop="name">Charcuterie du Pays Basque</span></div><h3 class="p-name" itemprop="name">Jambon de Bayonne IGP 24 mois</h3><div class="p-rating"><span class="p-stars">★★★★★</span><span class="p-rcount">(76 avis)</span></div><div class="p-orig"><div class="p-orig-dot"></div><span class="p-orig-lbl">Bayonne, Pyr.-Atl.</span></div></div></article>
+        </div><div class="p-overlay"><span>Voir le produit →</span></div></div><div class="p-info"><div class="p-brand" itemprop="brand" itemscope itemtype="https://schema.org/Brand"><span itemprop="name">Charcuterie du Pays Basque</span></div><h3 class="p-name" itemprop="name">Jambon de Bayonne IGP 24 mois</h3><div class="p-orig"><div class="p-orig-dot"></div><span class="p-orig-lbl">Bayonne, Pyr.-Atl.</span></div></div></article>
     </div>
     <div style="text-align:center;margin-top:2rem"><button class="btn-ghost" type="button">Voir tous les produits d'épicerie française →</button></div>
   </div>
@@ -857,14 +822,14 @@ footer{background:#0a1428;padding:3.5rem 2rem 2rem}
     <div class="s-div"></div>
     <p class="s-sub">L'épicerie française n'est qu'un volet de notre annuaire. Découvrez toutes les catégories de marques françaises.</p>
     <div class="ac-grid" role="list">
-      <a href="/made-in-france/mode" class="ac-card" role="listitem"><div class="ac-ph" role="img" aria-hidden="true">👗</div><div class="ac-overlay"></div><div class="ac-label"><span class="ac-name">Mode</span><span class="ac-count">40+ marques françaises</span></div></a>
-      <a href="/made-in-france/beaute" class="ac-card" role="listitem"><div class="ac-ph" role="img" aria-hidden="true">💄</div><div class="ac-overlay"></div><div class="ac-label"><span class="ac-name">Beauté</span><span class="ac-count">28 marques françaises</span></div></a>
-      <a href="/made-in-france/bijoux" class="ac-card" role="listitem"><div class="ac-ph" role="img" aria-hidden="true">💍</div><div class="ac-overlay"></div><div class="ac-label"><span class="ac-name">Bijoux</span><span class="ac-count">22 marques françaises</span></div></a>
-      <a href="/made-in-france/maison" class="ac-card" role="listitem"><div class="ac-ph" role="img" aria-hidden="true">🏠</div><div class="ac-overlay"></div><div class="ac-label"><span class="ac-name">Maison</span><span class="ac-count">35 marques françaises</span></div></a>
-      <a href="/made-in-france/sport" class="ac-card" role="listitem"><div class="ac-ph" role="img" aria-hidden="true">⛷️</div><div class="ac-overlay"></div><div class="ac-label"><span class="ac-name">Sport</span><span class="ac-count">18 marques françaises</span></div></a>
-      <a href="/made-in-france/technologie" class="ac-card" role="listitem"><div class="ac-ph" role="img" aria-hidden="true">💻</div><div class="ac-overlay"></div><div class="ac-label"><span class="ac-name">Technologie</span><span class="ac-count">12 marques françaises</span></div></a>
-      <a href="/made-in-france/bricolage" class="ac-card" role="listitem"><div class="ac-ph" role="img" aria-hidden="true">🔧</div><div class="ac-overlay"></div><div class="ac-label"><span class="ac-name">Bricolage</span><span class="ac-count">15 marques françaises</span></div></a>
-      <a href="/made-in-france/chaussures" class="ac-card" role="listitem"><div class="ac-ph" role="img" aria-hidden="true">👞</div><div class="ac-overlay"></div><div class="ac-label"><span class="ac-name">Chaussures</span><span class="ac-count">30 marques françaises</span></div></a>
+      <a href="/made-in-france/mode" class="ac-card" role="listitem"><div class="ac-ph"><picture><source srcset="/img/600x450/avif/mode-made-in-france.avif" type="image/avif"><img src="/img/600x450/webp/mode-made-in-france.webp" alt="Mode française made in France" width="600" height="450" loading="lazy" decoding="async"></picture></div><div class="ac-overlay"></div><div class="ac-label"><span class="ac-name">Mode</span><span class="ac-count">40+ marques françaises</span></div></a>
+      <a href="/made-in-france/beaute" class="ac-card" role="listitem"><div class="ac-ph"><picture><source srcset="/img/600x450/avif/beaute-soins.avif" type="image/avif"><img src="/img/600x450/webp/beaute-soins.webp" alt="Beauté française made in France" width="600" height="450" loading="lazy" decoding="async"></picture></div><div class="ac-overlay"></div><div class="ac-label"><span class="ac-name">Beauté</span><span class="ac-count">28 marques françaises</span></div></a>
+      <a href="/made-in-france/bijoux" class="ac-card" role="listitem"><div class="ac-ph"><picture><source srcset="/img/600x450/avif/bijoux.avif" type="image/avif"><img src="/img/600x450/webp/bijoux.webp" alt="Bijoux français made in France" width="600" height="450" loading="lazy" decoding="async"></picture></div><div class="ac-overlay"></div><div class="ac-label"><span class="ac-name">Bijoux</span><span class="ac-count">22 marques françaises</span></div></a>
+      <a href="/made-in-france/maison" class="ac-card" role="listitem"><div class="ac-ph"><picture><source srcset="/img/600x450/avif/maison.avif" type="image/avif"><img src="/img/600x450/webp/maison.webp" alt="Maison française made in France" width="600" height="450" loading="lazy" decoding="async"></picture></div><div class="ac-overlay"></div><div class="ac-label"><span class="ac-name">Maison</span><span class="ac-count">35 marques françaises</span></div></a>
+      <a href="/made-in-france/sport" class="ac-card" role="listitem"><div class="ac-ph"><picture><source srcset="/img/600x450/avif/sport.avif" type="image/avif"><img src="/img/600x450/webp/sport.webp" alt="Sport made in France" width="600" height="450" loading="lazy" decoding="async"></picture></div><div class="ac-overlay"></div><div class="ac-label"><span class="ac-name">Sport</span><span class="ac-count">18 marques françaises</span></div></a>
+      <a href="/made-in-france/technologie" class="ac-card" role="listitem"><div class="ac-ph"><picture><source srcset="/img/600x450/avif/technologie.avif" type="image/avif"><img src="/img/600x450/webp/technologie.webp" alt="Technologie française made in France" width="600" height="450" loading="lazy" decoding="async"></picture></div><div class="ac-overlay"></div><div class="ac-label"><span class="ac-name">Technologie</span><span class="ac-count">12 marques françaises</span></div></a>
+      <a href="/made-in-france/bricolage" class="ac-card" role="listitem"><div class="ac-ph"><picture><source srcset="/img/600x450/avif/outils-bricolage.avif" type="image/avif"><img src="/img/600x450/webp/outils-bricolage.webp" alt="Bricolage made in France" width="600" height="450" loading="lazy" decoding="async"></picture></div><div class="ac-overlay"></div><div class="ac-label"><span class="ac-name">Bricolage</span><span class="ac-count">15 marques françaises</span></div></a>
+      <a href="/made-in-france/chaussures" class="ac-card" role="listitem"><div class="ac-ph"><picture><source srcset="/img/600x450/avif/chaussures.avif" type="image/avif"><img src="/img/600x450/webp/chaussures.webp" alt="Chaussures made in France" width="600" height="450" loading="lazy" decoding="async"></picture></div><div class="ac-overlay"></div><div class="ac-label"><span class="ac-name">Chaussures</span><span class="ac-count">30 marques françaises</span></div></a>
     </div>
   </div>
 </section>
@@ -930,7 +895,7 @@ footer{background:#0a1428;padding:3.5rem 2rem 2rem}
     </div>
   </div>
 </footer>
-
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.3/dist/umd/supabase.min.js" id="supabaseSDK"></script>
 <script>
 
 
@@ -961,33 +926,33 @@ const VISIBLE=5;
 let legScrollIdx=0;
 let legActiveIdx=0;
 // Fonction live : re-lit les items dans le DOM à chaque appel (chargement dynamique)
-const legItems=Array.from(document.querySelectorAll('.leg-item'));
-
-
-
+const legItems=()=>Array.from(document.querySelectorAll('#legTrack .leg-item'));
+ 
+ 
+ 
 function scrollLeg(scrollIdx){
-  const _li=legItems;
+  const _li=legItems();
   const max=Math.max(0,_li.length-VISIBLE);
   legScrollIdx=Math.max(0,Math.min(scrollIdx,max));
   const h=_li[0]?_li[0].offsetHeight:0;
   legTrack.style.transform=`translateY(-${legScrollIdx*h}px)`;
 }
-
+ 
 function activateLeg(idx){
-  const _li=legItems;
+  const _li=legItems();
   legActiveIdx=Math.max(0,Math.min(idx,_li.length-1));
   if(legActiveIdx<legScrollIdx) scrollLeg(legActiveIdx);
   else if(legActiveIdx>=legScrollIdx+VISIBLE) scrollLeg(legActiveIdx-VISIBLE+1);
   _li.forEach((item,i)=>item.classList.toggle('active',i===legActiveIdx));
   document.querySelectorAll('.leg-dot-nav').forEach((d,i)=>d.classList.toggle('active',i===legActiveIdx));
 }
-
+ 
 document.getElementById('legPrev').addEventListener('click',()=>activateLeg(legActiveIdx-1));
 document.getElementById('legNext').addEventListener('click',()=>activateLeg(legActiveIdx+1));
-legItems.forEach((item,i)=>item.addEventListener('click',()=>activateLeg(i)));
-
+legItems().forEach((item,i)=>item.addEventListener('click',()=>activateLeg(i)));
+ 
 function fixLegHeight(){
-  const _li=legItems;
+  const _li=legItems();
   if(_li[0]&&legWrap){
     legWrap.style.height=(_li[0].offsetHeight*VISIBLE)+'px';
     legWrap.style.overflow='hidden';
@@ -995,9 +960,240 @@ function fixLegHeight(){
 }
 window.addEventListener('load',fixLegHeight);
 window.addEventListener('resize',()=>{fixLegHeight();scrollLeg(legScrollIdx)});
-
+ 
+ 
+// ── CONFIGURATION SUPABASE ──────────────────────────────────────
+const SUPABASE_URL  = 'https://gqmlwvmdsvtapljpdiyh.supabase.co'; 
+const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdxbWx3dm1kc3Z0YXBsanBkaXloIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUzNzc0NjksImV4cCI6MjA5MDk1MzQ2OX0._kQytcNWHst5La971AIL41_kz4ChyUw41eiTrHLUgn0';       // ← À remplacer
+const CAT_DB        = 'Epicerie fine'; // Valeur exacte dans Supabase
+ 
+function echapper(s) {
+  if (!s) return '';
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+ 
+// SDK Supabase chargé juste avant ce script → window.supabase est disponible immédiatement
+(function() {
+  const sdk = window.supabase;
+  if (!sdk || typeof sdk.createClient !== 'function') {
+    console.warn('[LMF] Supabase SDK non disponible — vérifiez la connexion réseau');
+    return;
+  }
+  const client = sdk.createClient(SUPABASE_URL, SUPABASE_ANON);
+  // Lancer dès que le DOM est prêt (ou immédiatement si déjà prêt)
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => lancerRequetes(client));
+  } else {
+    lancerRequetes(client);
+  }
+})();
+ 
+ 
+// ── UTILITAIRES ──────────────────────────────────────────────
+function echapper(s) {
+  if (!s) return '';
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+ 
+function initiales(nom) {
+  if (!nom) return '?';
+  const mots = nom.trim().split(/\s+/).filter(m => m.length > 2);
+  if (mots.length >= 2) return (mots[0][0] + mots[1][0]).toUpperCase();
+  return nom.slice(0, 2).toUpperCase();
+}
+ 
+function localisation(ville, dep, region) {
+  const v = echapper(ville || ''), d = echapper(dep || ''), r = echapper(region || '');
+  if (v && d && r) return `${v} (${d}) — ${r}`;
+  if (v && r)      return `${v} — ${r}`;
+  return v || r || '';
+}
+ 
+function renderVedette(m) {
+  const ini  = echapper(initiales(m.nom_societe));
+  const nom  = echapper(m.nom_societe || '');
+  const desc = echapper(m.description || '');
+  const url  = echapper(m.url_site || '#');
+  const loc  = localisation(m.ville, m.departement, m.region);
+  const cats = Array.isArray(m.categories) ? m.categories.map(echapper).join(' · ') : echapper(m.categories || '');
+  const badgeVerif = m.verifiee ? '<span class="b-feat-badge-verif">✓ Marque vérifiée</span>' : '';
+  return `
+    <div class="b-feat-img">
+      <span class="b-feat-logo" aria-hidden="true">${ini}</span>
+      <span class="b-feat-badge">⭐ Marque vedette</span>
+    </div>
+    <div class="b-feat-body">
+      <span class="b-feat-tag">${cats}</span>
+      <p class="b-feat-name" itemprop="name">${nom}</p>
+      ${badgeVerif}
+      <p class="b-feat-desc" itemprop="description">${desc}</p>
+      <div class="b-feat-footer">
+        <div style="display:flex;align-items:center;gap:.5rem">
+          <div class="b-dot" aria-hidden="true"></div>
+          <span class="b-loc">${loc}</span>
+        </div>
+        <span class="b-link">Découvrir ${nom} →</span>
+      </div>
+    </div>`;
+}
+ 
+function renderCard(m) {
+  const ini  = echapper(initiales(m.nom_societe));
+  const nom  = echapper(m.nom_societe || '');
+  const desc = echapper(m.description || '');
+  const url  = echapper(m.url_site || '#');
+  const loc  = localisation(m.ville, m.departement, m.region);
+  const cats = Array.isArray(m.categories) ? m.categories.map(echapper).join(' · ') : echapper(m.categories || '');
+  const badgeVerif = m.verifiee ? '<span class="b-ver">✓ Vérifié</span>' : '';
+  return `
+    <a href="${url}" class="b-card" role="listitem" itemscope itemtype="https://schema.org/Brand" target="_blank" rel="noopener noreferrer">
+      <div class="b-card-head">
+        <div class="b-logo" aria-hidden="true">${ini}</div>
+        ${badgeVerif}
+      </div>
+      <div class="b-meta">
+        <p class="b-name" itemprop="name">${nom}</p>
+        <span class="b-tag">${cats}</span>
+      </div>
+      <p class="b-desc">${desc}</p>
+      <div class="b-footer">
+        <div style="display:flex;align-items:center;gap:.42rem">
+          <div class="b-dot" aria-hidden="true"></div>
+          <span class="b-loc">${loc}</span>
+        </div>
+        <span class="b-link">Découvrir ${nom} →</span>
+      </div>
+    </a>`;
+}
+ 
+async function lancerRequetes(client) {
+ 
+    // ── Comptage marques hero ──────────────────────────────────
+    const { count } = await client
+      .from('entreprises')
+      .select('id', { count: 'exact', head: true })
+      .contains('categories', [CAT_DB]);
+    const el = document.getElementById('heroCount');
+    if (el && count !== null) el.textContent = count;
+ 
+ 
+    // ── Marque vedette ─────────────────────────────────────────
+    const FIELDS_MARQUE = 'id, nom_societe, description, categories, region, ville, departement, verifiee, vedette, url_site';
+ 
+    // Tentative 1 : vedette = true
+    let { data: dataVedette } = await client
+      .from('entreprises')
+      .select(FIELDS_MARQUE)
+      .contains('categories', [CAT_DB])
+      .eq('vedette', true)
+      .limit(1)
+      .maybeSingle();
+ 
+    // Fallback : première marque de la catégorie
+    if (!dataVedette) {
+      const { data: fallback } = await client
+        .from('entreprises')
+        .select(FIELDS_MARQUE)
+        .contains('categories', [CAT_DB])
+        .limit(1)
+        .maybeSingle();
+      dataVedette = fallback;
+    }
+ 
+    // Injecter si trouvée (sinon garder le HTML statique)
+    if (dataVedette) {
+      const featEl = document.getElementById('brandFeatured');
+      if (featEl) featEl.innerHTML = renderVedette(dataVedette);
+    }
+ 
+    // ── 6 dernières marques (exclure la vedette si trouvée) ────
+    let gridQuery = client
+      .from('entreprises')
+      .select(FIELDS_MARQUE)
+      .contains('categories', [CAT_DB])
+      .order('created_at', { ascending: false })
+      .limit(6);
+ 
+    if (dataVedette && dataVedette.id) {
+      gridQuery = gridQuery.neq('id', dataVedette.id);
+    }
+ 
+    const { data: dataGrid } = await gridQuery;
+ 
+    // Injecter si trouvées (sinon garder le HTML statique)
+    if (dataGrid && dataGrid.length > 0) {
+      const gridEl = document.getElementById('brandsGrid');
+      if (gridEl) gridEl.innerHTML = dataGrid.map(renderCard).join('');
+    }
+ 
+ 
+    // ── Marques avec coordonnées (carte + légende) ─────────────
+    const { data: dataMap } = await client
+      .from('entreprises')
+      .select('nom_societe, mini_descriptif, ville, region, longitude, latitude')
+      .contains('categories', [CAT_DB]);
+ 
+    if (!dataMap || dataMap.length === 0) return;
+ 
+    // Normaliser pour D3
+    window.MAP_DATA_LIVE = dataMap
+      .filter(m => m.longitude && m.latitude)
+      .map(m => ({
+        lon:    parseFloat(m.longitude),
+        lat:    parseFloat(m.latitude),
+        region: echapper(m.region || ''),
+        label:  echapper(m.nom_societe || '')
+      }))
+      .filter(m => !isNaN(m.lon) && !isNaN(m.lat));
+ 
+    // Peupler la légende (uniquement les marques avec coordonnées)
+    const legTrackEl = document.getElementById('legTrack');
+    const dataLeg = dataMap.filter(m => m.longitude && m.latitude && parseFloat(m.longitude) && parseFloat(m.latitude));
+    if (legTrackEl && dataLeg.length > 0) {
+      legTrackEl.innerHTML = dataLeg.map((m, i) => {
+        const nom   = echapper(m.nom_societe || '');
+        const mini  = echapper(m.mini_descriptif || '');
+        const ville = echapper(m.ville || '');
+        const reg   = echapper(m.region || '');
+        const loc   = (ville && reg) ? `${ville} — ${reg}` : (ville || reg);
+        return `<div class="leg-item${i === 0 ? ' active' : ''}" data-region="${reg}">
+          <div class="leg-item-top"><div class="leg-dot"></div><h3>${nom}</h3></div>
+          ${mini ? `<p>${mini}</p>` : ''}
+          ${loc  ? `<span class="leg-tag">${loc}</span>` : ''}
+        </div>`;
+      }).join('');
+ 
+      // Réinit légende
+      const items = Array.from(document.querySelectorAll('.leg-item'));
+      legDots.innerHTML = '';
+      items.forEach((_, i) => {
+        const d = document.createElement('div');
+        d.className = 'leg-dot-nav' + (i === 0 ? ' active' : '');
+        d.addEventListener('click', () => activateLeg(i));
+        legDots.appendChild(d);
+      });
+      fixLegHeight();
+    }
+ 
+    // Relancer initMap avec les vraies données si déjà inité
+    if (window.mapInited) {
+      // Réinitialiser et redessiner avec les nouvelles données
+      const container = document.getElementById('map-container');
+      if (container) {
+        const existingSvg = container.querySelector('svg');
+        if (existingSvg) existingSvg.remove();
+        window.mapInited = false;
+        initMap();
+      }
+    }
+ 
+}
+ 
+ 
 // CARTE D3
-// Données carte — à remplacer par les coordonnées des vraies marques
+// MAP_DATA statique (fallback si Supabase indisponible)
 // Format : { lon: longitude, lat: latitude, region: 'valeur data-region légende', label: 'Nom affiché au survol' }
 // À remplacer par les vraies coordonnées de vos marques
 // lon/lat : coordonnées GPS · region : doit correspondre au data-region des items de légende · label : nom affiché au survol
@@ -1010,7 +1206,7 @@ const MAP_DATA = [
   { lon:  4.83,  lat: 45.74, region: 'Rhône',       label: 'Nom Marque F' },
   { lon: -1.47,  lat: 43.49, region: 'Pays Basque', label: 'Nom Marque G' },
 ];
-
+ 
 // Lazy-init carte : ne charge TopoJSON que quand la section est visible
 let mapInited=false;
 function initMap(){
@@ -1019,7 +1215,7 @@ function initMap(){
   const SZ=500,container=document.getElementById('map-container'),tip=document.getElementById('mapTip');
   const svg=d3.select('#map-container').append('svg').attr('viewBox',`0 0 ${SZ} ${SZ}`).style('width','100%').style('height','auto');
   svg.append('text').attr('x',SZ/2).attr('y',SZ/2).attr('text-anchor','middle').attr('font-family','Arial,sans-serif').attr('font-size','13').attr('fill','#9ca3af').text('Chargement de la carte…');
-
+ 
   (async()=>{
     try{
       const world=await d3.json('https://unpkg.com/world-atlas@2.0.2/countries-50m.json');
@@ -1028,16 +1224,16 @@ function initMap(){
       const proj=d3.geoMercator().rotate([-2.8,-46.7]).scale(2900).translate([SZ/2,SZ/2]);
       const path=d3.geoPath().projection(proj);
       svg.select('text').remove();
-
+ 
       // Pays voisins (contexte)
       svg.append('g').selectAll('path').data(countries.features.filter(d=>d.properties.name!=='France'))
         .enter().append('path').attr('d',path).attr('fill','#f0ece3').attr('stroke','#ddd9d0').attr('stroke-width','.4');
-
+ 
       // France
       svg.append('g').append('path').datum(france).attr('d',path).attr('fill','#e5dfd3').attr('stroke','#c5bba8').attr('stroke-width','1.5');
-
+ 
       // Pins
-      svg.append('g').selectAll('g').data(MAP_DATA).enter().append('g')
+      svg.append('g').selectAll('g').data(window.MAP_DATA_LIVE || MAP_DATA).enter().append('g')
         .attr('transform',d=>{const[x,y]=proj([d.lon,d.lat]);return`translate(${x},${y})`})
         .style('cursor','pointer')
         .each(function(){
@@ -1054,7 +1250,7 @@ function initMap(){
           if(x+250>rect.width)x=event.clientX-rect.left-260;
           tip.style.left=x+'px';tip.style.top=y+'px';
           // sync légende
-          legItems.forEach((item,i)=>{if(item.dataset.region===d.region)activateLeg(i)});
+          legItems().forEach((item,i)=>{if(item.dataset.region===d.region)activateLeg(i)});
         })
         .on('mousemove',function(event){
           const rect=container.getBoundingClientRect();
@@ -1069,7 +1265,7 @@ function initMap(){
     }catch(e){console.warn('Carte non disponible',e)}
   })();
 }
-
+ 
 // IntersectionObserver : initialise la carte seulement quand visible
 const mapSection=document.getElementById('carte');
 if(mapSection && 'IntersectionObserver' in window){
