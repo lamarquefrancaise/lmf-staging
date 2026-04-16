@@ -111,16 +111,100 @@ function genererGrid(marques, categorie) {
 }
 
 // ─────────────────────────────────────────────
-// FONCTION : générer la section marques complète
-// Retourne '' si aucune donnée Supabase
+// FONCTION : générer les items de légende
+// ─────────────────────────────────────────────
+function genererLegende(marques) {
+  return marques.map((m, i) => {
+    const nom  = m.nom_societe || '';
+    const mini = m.mini_descriptif || '';
+    const loc  = m.ville && m.region ? `${m.ville} — ${m.region}` : (m.ville || m.region || '');
+    return `
+<div class="leg-item${i === 0 ? ' active' : ''}" data-region="${m.region || ''}">
+  <div class="leg-item-top"><div class="leg-dot"></div><h3>${nom}</h3></div>
+  ${mini ? `<p>${mini}</p>` : ''}
+  ${loc  ? `<span class="leg-tag">${loc}</span>` : ''}
+</div>`;
+  }).join('');
+}
+
+// ─────────────────────────────────────────────
+// FONCTION : générer la section carte complète
+// Retourne '' si aucune marque avec coordonnées
+// Inclut :
+//   - le <script> MAP_DATA (données dynamiques)
+//   - le <script src="/js/carte.js"> (code statique)
+// ─────────────────────────────────────────────
+function genererSectionCarte(marquesAvecCoords, data) {
+  if (!marquesAvecCoords.length) return '';
+
+  const mapDataJs = marquesAvecCoords.map(m => {
+    const lon    = parseFloat(m.longitude);
+    const lat    = parseFloat(m.latitude);
+    const region = (m.region || '').replace(/'/g, "\\'");
+    const label  = (m.nom_societe || '').replace(/'/g, "\\'");
+    return `  { lon: ${lon}, lat: ${lat}, region: '${region}', label: '${label}' }`;
+  }).join(',\n');
+
+  const legende = genererLegende(marquesAvecCoords);
+
+  return `
+<!-- CARTE D3 -->
+<section class="carte-section" id="carte" aria-labelledby="carte-title">
+  <div class="containeur">
+    <div class="s-label">${data.carte_label || 'Terroirs &amp; origines'}</div>
+    <h2 class="s-title" id="carte-title">${data.carte_titre || 'Les régions françaises'}</h2>
+    <div class="s-div"></div>
+    <p class="s-sub">${data.carte_sous_titre || ''}</p>
+    <div class="carte-layout">
+      <div>
+        <div id="map-container">
+          <div id="mapTip" class="map-tip"></div>
+        </div>
+        <p class="carte-note">${data.carte_note || ''}</p>
+      </div>
+      <div class="legende-box">
+        <div class="legende-track-wrap" id="legWrap">
+          <div class="legende-track" id="legTrack">
+            ${legende}
+          </div>
+        </div>
+        <div class="legende-nav">
+          <button class="leg-nav-btn" id="legPrev" type="button" aria-label="Région précédente">‹</button>
+          <div class="leg-dots" id="legDots"></div>
+          <button class="leg-nav-btn" id="legNext" type="button" aria-label="Région suivante">›</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<script>
+const MAP_DATA = [
+${mapDataJs}
+];
+</script>
+<script src="/js/carte.js" defer></script>`;
+}
+
+// ─────────────────────────────────────────────
+// FONCTION PRINCIPALE : fetch Supabase + génération
 // ─────────────────────────────────────────────
 async function genererSectionMarques(data) {
   if (!SUPABASE_URL || !SUPABASE_KEY) {
     console.warn('⚠️  Variables Supabase manquantes — section marques ignorée.');
-    return '';
+    return { marques: '', carte: '', heroCount: '0' };
   }
 
-  const url = `${SUPABASE_URL}/rest/v1/entreprises?categories=cs.{${data.supabase_categorie}}&select=nom_societe,description,mini_descriptif,ville,region,url_site,verifiee,categories`;
+  // ── Comptage total pour heroCount ──────────────────────────
+  const resCount = await fetch(
+    `${SUPABASE_URL}/rest/v1/entreprises?categories=cs.{${data.supabase_categorie}}&select=id`,
+    { headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}`, Prefer: 'count=exact' } }
+  );
+  const heroCount = resCount.ok
+    ? (resCount.headers.get('content-range') || '').split('/')[1] || '0'
+    : '0';
+
+  // ── Données marques ────────────────────────────────────────
+  const url = `${SUPABASE_URL}/rest/v1/entreprises?categories=cs.{${data.supabase_categorie}}&select=nom_societe,description,mini_descriptif,ville,region,url_site,verifiee,categories,longitude,latitude`;
 
   const res = await fetch(url, {
     headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}` }
@@ -129,26 +213,20 @@ async function genererSectionMarques(data) {
   if (!res.ok) {
     const errBody = await res.text();
     console.warn(`⚠️  Erreur Supabase (${res.status}):`, errBody);
-    return '';
+    return { marques: '', carte: '', heroCount };
   }
 
   const marques = await res.json();
-  console.log('Réponse Supabase:', JSON.stringify(marques));
-  if (!marques.length) return '';
+  if (!marques.length) return { marques: '', carte: '', heroCount };
 
+  // ── Section marques ────────────────────────────────────────
   const vedette = marques.find(m => m.verifiee === true) || null;
   const grille  = marques.filter(m => m !== vedette).slice(0, 6);
 
   const htmlFeatured = vedette       ? genererFeatured(vedette, data.supabase_categorie) : '';
   const htmlGrid     = grille.length ? genererGrid(grille, data.supabase_categorie)      : '';
 
-  if (!htmlFeatured && !htmlGrid) return '';
-
-  const ctaHtml = grille.length
-    ? `<div class="brands-cta"><button class="btn-ghost" type="button">${data.cta_texte}</button></div>`
-    : '';
-
-  return `
+  const htmlMarques = (htmlFeatured || htmlGrid) ? `
 <section class="marques-section" id="marques" aria-labelledby="marques-title">
   <div class="containeur">
     <div class="s-label">${data.section_label}</div>
@@ -157,13 +235,26 @@ async function genererSectionMarques(data) {
     <p class="s-sub">${data.section_sous_titre}</p>
     ${htmlFeatured}
     ${htmlGrid}
-    ${ctaHtml}
+    ${grille.length ? `<div class="brands-cta"><button class="btn-ghost" type="button">${data.cta_texte}</button></div>` : ''}
   </div>
-</section>`;
+</section>` : '';
+
+  // ── Section carte ──────────────────────────────────────────
+  // Uniquement les marques affichées (vedette + grille) avec coordonnées GPS
+  const marquesAffichees  = [vedette, ...grille].filter(Boolean);
+  const marquesAvecCoords = marquesAffichees.filter(m =>
+    m.longitude && m.latitude &&
+    !isNaN(parseFloat(m.longitude)) &&
+    !isNaN(parseFloat(m.latitude))
+  );
+
+  const htmlCarte = genererSectionCarte(marquesAvecCoords, data);
+
+  return { marques: htmlMarques, carte: htmlCarte, heroCount };
 }
 
 // ─────────────────────────────────────────────
-// BUILD PRINCIPAL (async pour Supabase)
+// BUILD PRINCIPAL
 // ─────────────────────────────────────────────
 async function build() {
   let succes = 0;
@@ -220,16 +311,25 @@ async function build() {
       console.warn(`⚠️  Marqueur {{FOOTER}} absent dans : ${page.fichier}`);
     }
 
-    // Injection section marques (Supabase) — uniquement si data JSON existe
+    // Injection section marques + carte + heroCount (Supabase)
     const dataPath = path.join(__dirname, `data/${page.actif}.json`);
     if (html.includes('{{MARQUES_SECTION}}')) {
       if (fs.existsSync(dataPath)) {
         const data = JSON.parse(fs.readFileSync(dataPath, 'utf8'));
-        const sectionHtml = await genererSectionMarques(data);
-        html = html.replace('{{MARQUES_SECTION}}', sectionHtml);
+        const { marques, carte, heroCount } = await genererSectionMarques(data);
+
+        html = html.replace('{{MARQUES_SECTION}}', marques);
+        html = html.replace('{{CARTE_SECTION}}',   carte);
+
+        // Injection heroCount dans <strong id="heroCount">
+        html = html.replace(
+          /<strong id="heroCount">[^<]*<\/strong>/,
+          `<strong id="heroCount">${heroCount}</strong>`
+        );
       } else {
         html = html.replace('{{MARQUES_SECTION}}', '');
-        console.warn(`⚠️  Pas de fichier data/${page.actif}.json — section marques supprimée.`);
+        html = html.replace('{{CARTE_SECTION}}',   '');
+        console.warn(`⚠️  Pas de fichier data/${page.actif}.json — sections supprimées.`);
       }
     }
 
