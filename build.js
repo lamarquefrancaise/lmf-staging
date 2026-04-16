@@ -18,7 +18,7 @@ const PAGES = [
   //{ fichier: 'made-in-france/maison/index.html',        actif: 'maison' },
   //{ fichier: 'made-in-france/sport/index.html',         actif: 'sport' },
   //{ fichier: 'made-in-france/technologie/index.html',   actif: 'technologie' },
-  { fichier: 'index.html',                              actif: '' },
+  //{ fichier: 'index.html',                              actif: '' },
 ];
 
 // ─────────────────────────────────────────────
