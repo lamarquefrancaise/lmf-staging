@@ -122,12 +122,16 @@ async function genererSectionMarques(data) {
     return '';
   }
 
-  const res = await fetch(
-    `${SUPABASE_URL}/rest/v1/entreprises?categories=cs.{${data.supabase_categorie}}&select=nom,description,ville,region,url,verifiee,sous_categorie`,
-    { headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}` } }
-  );
+  const url = `${SUPABASE_URL}/rest/v1/entreprises?categories=cs.{${data.supabase_categorie}}&select=nom,description,ville,region,url,verifiee,sous_categorie`;
+  console.log('URL appelée:', url);
+
+  const res = await fetch(url, {
+    headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}` }
+  });
+
   if (!res.ok) {
-    console.warn(`⚠️  Erreur Supabase (${res.status}) pour : ${data.supabase_categorie}`);
+    const errBody = await res.text();
+    console.warn(`⚠️  Erreur Supabase (${res.status}):`, errBody);
     return '';
   }
 
