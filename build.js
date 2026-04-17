@@ -78,9 +78,7 @@ function genererFeatured(m, categorie) {
         <div class="b-dot" aria-hidden="true"></div>
         <span class="b-loc">${m.ville} — ${m.region}</span>
       </div>
-      <a href="${m.url_site}" class="b-link" itemprop="url">
-        Découvrir ${m.nom_societe} →
-      </a>
+      ${m.url_site ? `<a href="${m.url_site}" class="b-link" itemprop="url">Découvrir ${m.nom_societe} →</a>` : ''}
     </div>
   </div>
 </article>`;
@@ -110,9 +108,7 @@ function genererGrid(marques, categorie) {
       <div class="b-dot" aria-hidden="true"></div>
       <span class="b-loc">${m.ville} — ${m.region}</span>
     </div>
-    <a href="${m.url_site}" class="b-link" itemprop="url">
-      Découvrir ${m.nom_societe} →
-    </a>
+    ${m.url_site ? `<a href="${m.url_site}" class="b-link" itemprop="url">Découvrir ${m.nom_societe} →</a>` : ''}
   </div>
 </article>`;
   }).join('');
