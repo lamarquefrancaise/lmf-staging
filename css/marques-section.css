@@ -1,1 +1,5 @@
 .marques-section{background:var(--cream);padding:5rem 2rem}
+.b-dot{width:6px;height:6px;background:var(--gold);border-radius:50%;flex-shrink:0}
+.b-loc{font-family:Arial,sans-serif;font-size:.68rem;color:var(--gold-d)}
+.b-link{font-family:Arial,sans-serif;font-size:.7rem;color:var(--navy);text-decoration:none;border-bottom:1px solid var(--border);padding-bottom:1px;transition:border-color .2s,color .2s}
+.b-link:hover{color:var(--gold);border-color:var(--gold)}
