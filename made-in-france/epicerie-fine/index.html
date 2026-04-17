@@ -420,13 +420,32 @@
 
 
 <script>
-// NAV MOBILE
-const burger=document.getElementById('burger'),navLinks=document.getElementById('navLinks'),navOverlay=document.getElementById('navOverlay'),menuClose=document.getElementById('menuClose');
-const closeNav=()=>{navLinks.classList.remove('open');burger.classList.remove('open');navOverlay.classList.remove('open');burger.setAttribute('aria-expanded','false');document.body.style.overflow=''};
-const openNav=()=>{navLinks.classList.add('open');burger.classList.add('open');navOverlay.classList.add('open');burger.setAttribute('aria-expanded','true');document.body.style.overflow='hidden'};
-burger.addEventListener('click',()=>navLinks.classList.contains('open')?closeNav():openNav());
-menuClose.addEventListener('click',closeNav);navOverlay.addEventListener('click',closeNav);
-navLinks.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeNav));
+// Mobile menu
+const burger   = document.getElementById('burger'),
+      navLinks = document.getElementById('navLinks'),
+      overlay  = document.getElementById('navOverlay'),
+      closeBtn = document.getElementById('menuClose');
+
+const closeMenu = () => {
+  navLinks.classList.remove('open');
+  burger.classList.remove('open');
+  overlay.classList.remove('open');
+  closeBtn.classList.remove('open');
+  burger.setAttribute('aria-expanded','false');
+  document.body.style.overflow = '';
+};
+const openMenu = () => {
+  navLinks.classList.add('open');
+  burger.classList.add('open');
+  overlay.classList.add('open');
+  closeBtn.classList.add('open');
+  burger.setAttribute('aria-expanded','true');
+  document.body.style.overflow = 'hidden';
+};
+burger.addEventListener('click', () => navLinks.classList.contains('open') ? closeMenu() : openMenu());
+closeBtn.addEventListener('click', closeMenu);
+overlay.addEventListener('click', closeMenu);
+navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
 
 // FAQ
 function toggleFaq(btn){
