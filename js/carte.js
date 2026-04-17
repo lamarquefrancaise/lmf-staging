@@ -83,7 +83,8 @@ function initMap() {
 
   (async () => {
     try {
-      const world     = await d3.json('https://unpkg.com/world-atlas@2.0.2/countries-50m.json');
+      //const world     = await d3.json('https://unpkg.com/world-atlas@2.0.2/countries-50m.json');
+      const world = await d3.json('/js/countries-50m.json');
       const countries = topojson.feature(world, world.objects.countries);
       const [france]  = countries.features.filter(d => d.properties.name === 'France');
       const proj      = d3.geoMercator().rotate([-2.8, -46.7]).scale(2900).translate([SZ / 2, SZ / 2]);
@@ -171,8 +172,10 @@ if (mapSection && 'IntersectionObserver' in window) {
     if (entries[0].isIntersecting) {
       mapObs.disconnect();
       Promise.all([
-        loadScript('https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js'),
-        loadScript('https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js')
+//        loadScript('https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js'),
+//        loadScript('https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js')
+          loadScript('/js/d3.min.js'),
+          loadScript('/js/topojson.min.js')
       ]).then(() => initMap());
     }
   }, { threshold: 0.1 });
