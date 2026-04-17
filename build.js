@@ -29,19 +29,22 @@ const PAGES = [
 // ─────────────────────────────────────────────
 // LECTURE DES SOURCES STATIQUES
 // ─────────────────────────────────────────────
-const navCss            = fs.readFileSync(path.join(__dirname, 'css/nav.css'), 'utf8');
-const navHtml           = fs.readFileSync(path.join(__dirname, 'templates/nav.html'), 'utf8');
-const footerCss         = fs.readFileSync(path.join(__dirname, 'css/footer.css'), 'utf8');
-const footerHtml        = fs.readFileSync(path.join(__dirname, 'templates/footer.html'), 'utf8');
-const globalCss         = fs.readFileSync(path.join(__dirname, 'css/global.css'), 'utf8');
-const breadcrumbCss     = fs.readFileSync(path.join(__dirname, 'css/breadcrumb.css'), 'utf8');
-const heroCategorieCss  = fs.readFileSync(path.join(__dirname, 'css/hero-categories.css'), 'utf8');
-const sousCategorieCss  = fs.readFileSync(path.join(__dirname, 'css/sous-cat-grid.css'), 'utf8');
-const carteCss          = fs.readFileSync(path.join(__dirname, 'css/carte-france-et-legende.css'), 'utf8');
-const seoTextCateCss    = fs.readFileSync(path.join(__dirname, 'css/seo-texte-categories.css'), 'utf8');
-const faqCss            = fs.readFileSync(path.join(__dirname, 'css/faq.css'), 'utf8');
-const autresCateCss     = fs.readFileSync(path.join(__dirname, 'css/autres-categories.css'), 'utf8');
-const bandeauCtaCss     = fs.readFileSync(path.join(__dirname, 'css/bandeau-cta.css'), 'utf8');
+const navCss             = fs.readFileSync(path.join(__dirname, 'css/nav.css'), 'utf8');
+const navHtml            = fs.readFileSync(path.join(__dirname, 'templates/nav.html'), 'utf8');
+const footerCss          = fs.readFileSync(path.join(__dirname, 'css/footer.css'), 'utf8');
+const footerHtml         = fs.readFileSync(path.join(__dirname, 'templates/footer.html'), 'utf8');
+const globalCss          = fs.readFileSync(path.join(__dirname, 'css/global.css'), 'utf8');
+const breadcrumbCss      = fs.readFileSync(path.join(__dirname, 'css/breadcrumb.css'), 'utf8');
+const heroCategorieCss   = fs.readFileSync(path.join(__dirname, 'css/hero-categories.css'), 'utf8');
+const sousCategorieCss   = fs.readFileSync(path.join(__dirname, 'css/sous-cat-grid.css'), 'utf8');
+const carteCss           = fs.readFileSync(path.join(__dirname, 'css/carte-france-et-legende.css'), 'utf8');
+const seoTextCateCss     = fs.readFileSync(path.join(__dirname, 'css/seo-texte-categories.css'), 'utf8');
+const faqCss             = fs.readFileSync(path.join(__dirname, 'css/faq.css'), 'utf8');
+const autresCateCss      = fs.readFileSync(path.join(__dirname, 'css/autres-categories.css'), 'utf8');
+const bandeauCtaCss      = fs.readFileSync(path.join(__dirname, 'css/bandeau-cta.css'), 'utf8');
+const marquesSectionCss  = fs.readFileSync(path.join(__dirname, 'css/marques-section.css'), 'utf8');
+const marqueVedetteCss   = fs.readFileSync(path.join(__dirname, 'css/marque-vedette.css'), 'utf8');
+const marquesGridCss     = fs.readFileSync(path.join(__dirname, 'css/marques-grid.css'), 'utf8');
 
 // ─────────────────────────────────────────────
 // FONCTION : résoudre le nav avec le bon lien actif
@@ -189,20 +192,18 @@ ${mapDataJs}
 
 // ─────────────────────────────────────────────
 // FONCTION : générer le JSON-LD ItemList
-// depuis les marques affichées (vedette + grille)
-// Retourne '' si aucune marque
 // ─────────────────────────────────────────────
 function genererItemListJsonLd(marques, data) {
   if (!marques.length) return '';
 
   const items = marques.map((m, i) => {
-    const url = m.url_site || '';
-    const nom = (m.nom_societe || '').replace(/"/g, '\\"');
+    const url  = m.url_site || '';
+    const nom  = (m.nom_societe || '').replace(/"/g, '\\"');
     const desc = (m.description || m.mini_descriptif || '').replace(/"/g, '\\"');
     return `    {"@type":"ListItem","position":${i + 1},"item":{"@type":"Brand","name":"${nom}","url":"${url}","description":"${desc}"}}`;
   }).join(',\n');
 
-  const nomListe = (data.section_titre || '').replace(/"/g, '\\"');
+  const nomListe  = (data.section_titre      || '').replace(/"/g, '\\"');
   const descListe = (data.section_sous_titre || '').replace(/"/g, '\\"');
 
   return `{"@context":"https://schema.org","@type":"ItemList","name":"${nomListe}","description":"${descListe}","itemListElement":[\n${items}\n]}`;
@@ -210,8 +211,6 @@ function genererItemListJsonLd(marques, data) {
 
 // ─────────────────────────────────────────────
 // FONCTION : générer le JSON-LD FAQPage
-// depuis le tableau data.faq
-// Retourne '' si pas de faq dans le JSON
 // ─────────────────────────────────────────────
 function genererFaqJsonLd(data) {
   if (!data.faq || !data.faq.length) return '';
@@ -227,8 +226,6 @@ function genererFaqJsonLd(data) {
 
 // ─────────────────────────────────────────────
 // FONCTION : générer la section FAQ en HTML
-// depuis le tableau data.faq
-// Retourne '' si pas de faq dans le JSON
 // ─────────────────────────────────────────────
 function genererFaqHtml(data) {
   if (!data.faq || !data.faq.length) return '';
@@ -268,7 +265,7 @@ function genererFaqHtml(data) {
 async function genererSectionMarques(data) {
   if (!SUPABASE_URL || !SUPABASE_KEY) {
     console.warn('⚠️  Variables Supabase manquantes — section marques ignorée.');
-    return { marques: '', carte: '', heroCount: '0', itemListJsonLd: '' };
+    return { marques: '', carte: '', heroCount: '0', itemListJsonLd: '', afficherVedette: false, afficherGrid: false };
   }
 
   // ── Comptage total pour heroCount ──────────────────────────
@@ -290,11 +287,11 @@ async function genererSectionMarques(data) {
   if (!res.ok) {
     const errBody = await res.text();
     console.warn(`⚠️  Erreur Supabase (${res.status}):`, errBody);
-    return { marques: '', carte: '', heroCount, itemListJsonLd: '' };
+    return { marques: '', carte: '', heroCount, itemListJsonLd: '', afficherVedette: false, afficherGrid: false };
   }
 
   const marques = await res.json();
-  if (!marques.length) return { marques: '', carte: '', heroCount, itemListJsonLd: '' };
+  if (!marques.length) return { marques: '', carte: '', heroCount, itemListJsonLd: '', afficherVedette: false, afficherGrid: false };
 
   // ── Section marques ────────────────────────────────────────
   const vedette = marques.find(m => m.verifiee === true) || null;
@@ -303,7 +300,10 @@ async function genererSectionMarques(data) {
   const htmlFeatured = vedette       ? genererFeatured(vedette, data.supabase_categorie) : '';
   const htmlGrid     = grille.length ? genererGrid(grille, data.supabase_categorie)      : '';
 
-  const htmlMarques = (htmlFeatured || htmlGrid) ? `
+  const afficherVedette = !!htmlFeatured;
+  const afficherGrid    = !!htmlGrid;
+
+  const htmlMarques = (afficherVedette || afficherGrid) ? `
 <section class="marques-section" id="marques" aria-labelledby="marques-title">
   <div class="containeur">
     <div class="s-label">${data.section_label}</div>
@@ -312,7 +312,7 @@ async function genererSectionMarques(data) {
     <p class="s-sub">${data.section_sous_titre}</p>
     ${htmlFeatured}
     ${htmlGrid}
-    ${grille.length ? `<div class="brands-cta"><button class="btn-ghost" type="button">${data.cta_texte}</button></div>` : ''}
+    ${afficherGrid ? `<div class="brands-cta"><button class="btn-ghost" type="button">${data.cta_texte}</button></div>` : ''}
   </div>
 </section>` : '';
 
@@ -328,7 +328,7 @@ async function genererSectionMarques(data) {
   );
   const htmlCarte = genererSectionCarte(marquesAvecCoords, data);
 
-  return { marques: htmlMarques, carte: htmlCarte, heroCount, itemListJsonLd };
+  return { marques: htmlMarques, carte: htmlCarte, heroCount, itemListJsonLd, afficherVedette, afficherGrid };
 }
 
 // ─────────────────────────────────────────────
@@ -431,16 +431,26 @@ async function build() {
       console.warn(`⚠️  Marqueur {{FOOTER}} absent dans : ${page.fichier}`);
     }
 
-    // Injection section marques + carte + heroCount + données structurées (Supabase)
+    // Injection section marques + carte + CSS conditionnels + données structurées
     const dataPath = path.join(__dirname, `data/${page.actif}.json`);
     if (html.includes('{{MARQUES_SECTION}}')) {
       if (fs.existsSync(dataPath)) {
         const data = JSON.parse(fs.readFileSync(dataPath, 'utf8'));
-        const { marques, carte, heroCount, itemListJsonLd } = await genererSectionMarques(data);
+        const { marques, carte, heroCount, itemListJsonLd, afficherVedette, afficherGrid } = await genererSectionMarques(data);
 
-        html = html.replace('{{MARQUES_SECTION}}',   marques);
-        html = html.replace('{{CARTE_SECTION}}',     carte);
-        html = html.replace('{{CARTE_CSS}}',         carteCss);
+        const afficherSection = afficherVedette || afficherGrid;
+
+        // Injection HTML sections
+        html = html.replace('{{MARQUES_SECTION}}', marques);
+        html = html.replace('{{CARTE_SECTION}}',   carte);
+
+        // Injection CSS conditionnels marques
+        html = html.replace('{{MARQUES_SECTION_CSS}}', afficherSection  ? marquesSectionCss : '');
+        html = html.replace('{{MARQUE_VEDETTE_CSS}}',  afficherVedette  ? marqueVedetteCss  : '');
+        html = html.replace('{{MARQUES_GRID_CSS}}',    afficherGrid     ? marquesGridCss    : '');
+
+        // Injection CSS carte (conditionnel via présence de la section)
+        html = html.replace('{{CARTE_CSS}}', carte ? carteCss : '');
 
         // Injection JSON-LD ItemList
         html = html.replace('{{ITEMLIST_JSON_LD}}', itemListJsonLd);
@@ -461,10 +471,13 @@ async function build() {
       } else {
         html = html.replace('{{MARQUES_SECTION}}',  '');
         html = html.replace('{{CARTE_SECTION}}',    '');
-        html = html.replace('{{CARTE_CSS}}',        '');
-        html = html.replace('{{ITEMLIST_JSON_LD}}', '');
-        html = html.replace('{{FAQ_JSON_LD}}',      '');
-        html = html.replace('{{FAQ_SECTION}}',      '');
+        html = html.replace('{{MARQUES_SECTION_CSS}}', '');
+        html = html.replace('{{MARQUE_VEDETTE_CSS}}',  '');
+        html = html.replace('{{MARQUES_GRID_CSS}}',    '');
+        html = html.replace('{{CARTE_CSS}}',           '');
+        html = html.replace('{{ITEMLIST_JSON_LD}}',    '');
+        html = html.replace('{{FAQ_JSON_LD}}',         '');
+        html = html.replace('{{FAQ_SECTION}}',         '');
         console.warn(`⚠️  Pas de fichier data/${page.actif}.json — sections supprimées.`);
       }
     }

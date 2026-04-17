@@ -1,0 +1,26 @@
+.brands-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem}
+.b-card{background:var(--white);border:1px solid var(--border);padding:1.5rem;transition:border-color .2s,box-shadow .2s;cursor:pointer}
+.b-card:hover{border-color:var(--gold);box-shadow:0 4px 20px rgba(184,150,62,.1)}
+.b-card-head{display:flex;justify-content:space-between;align-items:flex-start;gap:.5rem;margin-bottom:.85rem}
+.b-ver{background:rgba(184,150,62,.08);border:1px solid rgba(184,150,62,.25);color:var(--gold);font-family:Arial,sans-serif;font-size:.58rem;letter-spacing:.1em;padding:.18rem .42rem;white-space:nowrap;flex-shrink:0;align-self:flex-start}
+.b-card-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:.7rem}
+.b-meta{margin-bottom:.75rem}
+.b-logo{width:42px;height:42px;background:var(--navy);display:flex;align-items:center;justify-content:center;color:var(--gold-l);font-size:.62rem;font-family:Arial,sans-serif;flex-shrink:0}
+.b-name{font-size:.98rem;color:var(--navy)}
+.b-tag{display:inline-block;background:var(--cream);border:1px solid var(--border);color:var(--muted);font-family:Arial,sans-serif;font-size:.6rem;padding:.1rem .38rem;letter-spacing:.06em;margin-top:.2rem}
+.b-desc{font-family:Arial,sans-serif;font-size:.78rem;color:var(--muted);line-height:1.65;margin-bottom:.85rem}
+.b-footer{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--border);padding-top:.75rem}
+.b-dot{width:6px;height:6px;background:var(--gold);border-radius:50%;flex-shrink:0}
+.b-loc{font-family:Arial,sans-serif;font-size:.68rem;color:var(--gold-d)}
+.b-link{font-family:Arial,sans-serif;font-size:.7rem;color:var(--navy);text-decoration:none;border-bottom:1px solid var(--border);padding-bottom:1px;transition:border-color .2s,color .2s}
+.b-link:hover{color:var(--gold);border-color:var(--gold)}
+.brands-cta{text-align:center;margin-top:2rem}
+.btn-ghost{background:transparent;color:var(--navy);border:1px solid var(--border);padding:.75rem 2rem;font-family:Arial,sans-serif;font-size:.82rem;letter-spacing:.1em;cursor:pointer;transition:all .2s}
+.btn-ghost:hover{border-color:var(--navy);background:var(--navy);color:var(--gold-l)}
+@media(max-width:768px){
+  .brands-grid{display:flex;overflow-x:auto;gap:12px;padding-bottom:10px;scroll-snap-type:x mandatory;scrollbar-width:thin;scrollbar-color:var(--gold) var(--cream-d)}
+  .brands-grid::-webkit-scrollbar{height:4px}
+  .brands-grid::-webkit-scrollbar-track{background:var(--cream-d)}
+  .brands-grid::-webkit-scrollbar-thumb{background:var(--gold);border-radius:2px}
+  .b-card{min-width:270px;scroll-snap-align:start}
+}
