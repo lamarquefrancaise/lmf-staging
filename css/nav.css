@@ -25,5 +25,5 @@ nav.navig{position:fixed;width:100%;z-index:200;background:rgba(13,27,62,.97);pa
   .navi-links .nav-cta{margin:1.5rem 1.5rem 0;width:calc(100% - 3rem);padding:.75rem 1rem!important;text-align:center;display:block}
   .menu-close{display:none}
   .nav-overlay{display:block;opacity:0;pointer-events:none;transition:opacity .3s}
-  .navoverlay.open{opacity:1;pointer-events:all}
+  .nav-overlay.open{opacity:1;pointer-events:all}
 }
