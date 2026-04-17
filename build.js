@@ -85,7 +85,7 @@ function genererFeatured(m, categorie) {
 }
 
 // ─────────────────────────────────────────────
-// FONCTION : générer la grille #brandsGrid
+// FONCTION : générer la grille #brandsGrid 
 // ─────────────────────────────────────────────
 function genererGrid(marques, categorie) {
   const cartes = marques.map(m => {
