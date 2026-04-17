@@ -1,0 +1,25 @@
+.carte-section{background:var(--cream);padding:5rem 2rem;content-visibility:auto;contain-intrinsic-size:0 600px}
+.carte-layout{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start;margin-top:3rem}
+#map-container{background:var(--white);border:1px solid var(--border);padding:.85rem;position:relative;aspect-ratio:1/1}
+#map-container svg{display:block;width:100%;height:auto}
+.map-tip{position:absolute;background:var(--navy);color:var(--white);font-family:Arial,sans-serif;font-size:.7rem;padding:.4rem .75rem;pointer-events:none;opacity:0;transition:opacity .15s;white-space:nowrap;border-left:2px solid var(--gold);z-index:10}
+.carte-note{font-family:Arial,sans-serif;font-size:.7rem;color:var(--muted);margin-top:.55rem;font-style:italic}
+
+.legende-box{display:flex;flex-direction:column}
+.legende-track-wrap{border:1px solid var(--border);overflow:hidden;position:relative}
+.legende-track{display:flex;flex-direction:column;transition:transform .35s ease;will-change:transform}
+.leg-item{padding:1rem 1.1rem;background:var(--white);border-bottom:1px solid var(--border);cursor:pointer;transition:background .2s;flex-shrink:0}
+.leg-item:last-child{border-bottom:none}
+.leg-item:hover,.leg-item.active{background:var(--cream-d)}
+.leg-item-top{display:flex;align-items:center;gap:.65rem;margin-bottom:.28rem}
+.leg-dot{width:8px;height:8px;border-radius:50%;background:var(--gold);flex-shrink:0}
+.leg-item-top h3{font-family:Arial,sans-serif;font-size:.8rem;color:var(--navy);font-weight:normal;margin:0}
+.leg-item p{font-family:Arial,sans-serif;font-size:.73rem;color:var(--muted);line-height:1.5;padding-left:1.35rem}
+.leg-tag{font-size:.62rem;color:var(--gold);border:1px solid rgba(184,150,62,.3);padding:.08rem .32rem;letter-spacing:.06em;display:inline-block;margin-top:.3rem;margin-left:1.35rem}
+.legende-nav{display:flex;justify-content:space-between;align-items:center;padding:.55rem .9rem;background:var(--navy)}
+.leg-nav-btn{background:none;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.55);width:26px;height:26px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:.8rem;transition:all .2s}
+.leg-nav-btn:hover{background:var(--gold);border-color:var(--gold);color:var(--white)}
+.leg-dots{display:flex;gap:.35rem}
+.leg-dot-nav{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.2);transition:background .2s;cursor:pointer}
+.leg-dot-nav.active{background:var(--gold-l)}
+@media(max-width:900px){.carte-layout{grid-template-columns:1fr}}

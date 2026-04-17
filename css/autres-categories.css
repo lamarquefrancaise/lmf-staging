@@ -1,0 +1,17 @@
+.autres-cats{background:var(--white);padding:5rem 2rem;content-visibility:auto;contain-intrinsic-size:0 500px}
+.ac-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-top:3rem}
+.ac-card{position:relative;overflow:hidden;text-decoration:none;display:block}
+.ac-card::before{content:'';display:block;padding-bottom:125%}
+.ac-ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:3.2rem;background:var(--cream-d);transition:transform .5s,filter .4s;will-change:transform}
+.ac-card:hover .ac-ph{transform:scale(1.06);filter:brightness(.65)}
+.ac-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(13,27,62,.82) 0%,rgba(13,27,62,.08) 65%,transparent 100%)}
+.ac-label{position:absolute;bottom:0;left:0;right:0;padding:.85rem 1rem}
+.ac-name{font-family:Arial,sans-serif;font-size:.85rem;color:var(--white);letter-spacing:.06em;display:block;margin-bottom:.18rem}
+.ac-count{font-family:Arial,sans-serif;font-size:.65rem;color:rgba(255,255,255,.5)}
+@media(max-width:900px){
+  .ac-grid{display:flex;overflow-x:auto;gap:.75rem;padding-bottom:10px;scroll-snap-type:x mandatory;scrollbar-width:thin;scrollbar-color:var(--gold) var(--cream-d)}
+  .ac-grid::-webkit-scrollbar{height:4px}
+  .ac-grid::-webkit-scrollbar-track{background:var(--cream-d)}
+  .ac-grid::-webkit-scrollbar-thumb{background:var(--gold);border-radius:2px}
+  .ac-card{width:calc((100vw - 5rem)/2.2);min-width:calc((100vw - 5rem)/2.2);scroll-snap-align:start}
+}

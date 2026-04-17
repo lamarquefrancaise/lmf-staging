@@ -7,5 +7,30 @@
   "carte_label": "Terroirs & origines",
   "carte_titre": "Les régions françaises de l'épicerie fine",
   "carte_sous_titre": "Chaque région de France possède ses spécialités de gastronomie française. Survolez les points pour explorer les terroirs des marques référencées.",
-  "carte_note": "Survolez un point pour voir les spécialités régionales."
+  "carte_note": "Survolez un point pour voir les spécialités régionales.",
+  "faq_label": "Questions fréquentes",
+  "faq_titre": "Tout savoir sur l'épicerie fine française",
+  "faq_sous_titre": "Vos questions sur les produits de gastronomie française.",
+  "faq": [
+    {
+      "question": "Qu'est-ce que l'épicerie fine française ?",
+      "reponse": "L'épicerie fine française désigne des produits alimentaires artisanaux de gastronomie française fabriqués en France selon des recettes traditionnelles : miels artisanaux, confitures de France, chocolats artisanaux français, charcuterie du terroir, vins de France et condiments. Ces produits se distinguent par des ingrédients locaux et un mode de fabrication artisanal ancré dans un terroir régional précis."
+    },
+    {
+      "question": "Comment reconnaître une vraie épicerie fine ?",
+      "reponse": "Une épicerie française authentiquement made in France porte les labels AOP, IGP ou Label Rouge. Vérifiez l'origine des ingrédients — pas seulement le lieu de fabrication. Sur La Marque Française, chaque marque de gastronomie française a été contrôlée : origine des ingrédients, lieu de fabrication, engagement qualité."
+    },
+    {
+      "question": "Quelles sont les meilleures régions de gastronomie française ?",
+      "reponse": "La gastronomie France compte de nombreuses régions d'excellence : la Dordogne pour les foies gras et produits du terroir, la Provence pour les huiles d'olive françaises AOP et miels artisanaux, la Bretagne pour les biscuits made in France, la Bourgogne pour les vins de France, et l'Alsace pour les confitures de France et le pain d'épice."
+    },
+    {
+      "question": "Peut-on commander de l'épicerie française en ligne ?",
+      "reponse": "Oui, la plupart des marques d'épicerie fine française référencées proposent la vente en ligne avec livraison en France et en Europe. Acheter directement auprès du producteur garantit la fraîcheur des produits du terroir français et soutient l'économie locale."
+    },
+    {
+      "question": "Comment référencer ma marque de gastronomie française ?",
+      "reponse": "Le référencement est ouvert à toutes les structures françaises. Remplissez le formulaire de référencement ci-dessous. Notre équipe vérifie votre dossier et vous recontacte sous 48 heures. Seules les marques dont les produits sont réellement fabriqués en France sont acceptées."
+    }
+  ]
 }
