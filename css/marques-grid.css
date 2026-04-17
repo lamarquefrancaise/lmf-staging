@@ -11,8 +11,6 @@
 .b-desc{font-family:Arial,sans-serif;font-size:.78rem;color:var(--muted);line-height:1.65;margin-bottom:.85rem}
 .b-footer{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--border);padding-top:.75rem}
 .brands-cta{text-align:center;margin-top:2rem}
-.btn-ghost{background:transparent;color:var(--navy);border:1px solid var(--border);padding:.75rem 2rem;font-family:Arial,sans-serif;font-size:.82rem;letter-spacing:.1em;cursor:pointer;transition:all .2s}
-.btn-ghost:hover{border-color:var(--navy);background:var(--navy);color:var(--gold-l)}
 @media(max-width:768px){
   .brands-grid{display:flex;overflow-x:auto;gap:12px;padding-bottom:10px;scroll-snap-type:x mandatory;scrollbar-width:thin;scrollbar-color:var(--gold) var(--cream-d)}
   .brands-grid::-webkit-scrollbar{height:4px}

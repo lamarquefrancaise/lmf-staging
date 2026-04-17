@@ -15,3 +15,6 @@ section{padding:5rem 2rem}
 .s-title{font-size:clamp(1.5rem,3vw,2.2rem);font-weight:normal;color:var(--navy);line-height:1.2}
 .s-div{width:48px;height:2px;background:var(--gold);margin:1.25rem 0}
 .s-sub{font-family:Arial,sans-serif;font-size:.92rem;color:var(--muted);line-height:1.75}
+/*Bouton sous les marques et sous les produits pour en voir plus, sur les pages catégories*/
+.btn-ghost{background:transparent;color:var(--navy);border:1px solid var(--border);padding:.75rem 2rem;font-family:Arial,sans-serif;font-size:.82rem;letter-spacing:.1em;cursor:pointer;transition:all .2s}
+.btn-ghost:hover{border-color:var(--navy);background:var(--navy);color:var(--gold-l)}
