@@ -1,5 +1,5 @@
 nav.navig{position:fixed;width:100%;z-index:200;background:rgba(13,27,62,.97);padding:0 2rem;display:flex;flex-wrap:wrap;align-items:center;min-height:64px;box-shadow:0 1px 0 rgba(184,150,62,.15)}
-.navi-logo{color:var(--white);font-size:1.05rem;letter-spacing:.15em;font-weight:normal;white-space:nowrap;flex-shrink:0;padding:.5rem 0}
+.navi-logo{color:var(--white);font-size:1.05rem;letter-spacing:.15em;font-weight:normal;white-space:nowrap;flex-shrink:0;padding:.5rem 0;text-decoration: none;}
 .navi-logo span{color:var(--gold-l)}
 .navi-links{display:flex;gap:1.5rem;list-style:none;align-items:center;flex-wrap:wrap;margin-left:auto;min-height: 64px;}
 .navi-links a{color:rgba(255,255,255,.75);text-decoration:none;font-family:Georgia,'Times New Roman',sans-serif;font-size:1rem;letter-spacing:.07em;transition:color .2s;white-space:nowrap}
