@@ -8,6 +8,7 @@
 .seo-sidebar{display:flex;flex-direction:column;gap:1.5rem;position:sticky;top:70px;}
 .seo-box{background:var(--cream);border:1px solid var(--border);padding:1.4rem}
 .seo-box h4{font-family:Arial,sans-serif;font-size:.7rem;letter-spacing:.2em;color:var(--gold-vd);text-transform:uppercase;margin-bottom:.9rem}
+.seo-box h5{font-weight: unset;font-size: .8rem;}
 .seo-box ul{list-style:none}
 .seo-box ul li{font-family:Arial,sans-serif;font-size:.8rem;color:var(--muted);padding:.38rem 0;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:.45rem}
 .seo-box ul li:last-child{border:none}

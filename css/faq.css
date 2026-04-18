@@ -3,7 +3,7 @@
 .faq-item{background:var(--white);border:1px solid var(--border)}
 .faq-q{display:flex;justify-content:space-between;align-items:center;padding:1.15rem 1.4rem;cursor:pointer;gap:1.2rem;border:none;background:none;width:100%;text-align:left;transition:background .2s}
 .faq-q:hover{background:var(--cream)}
-.faq-q-text{font-family:Arial,sans-serif;font-size:.87rem;color:var(--navy);line-height:1.4;flex:1}
+.faq-q-text{font-family:Arial,sans-serif;font-size:.87rem;color:var(--navy);line-height:1.4;flex:1;font-weight: unset;}
 .faq-toggle{width:23px;height:23px;border:1px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--gold);font-size:.85rem;font-family:Arial,sans-serif;transition:all .3s;background:var(--white)}
 .faq-toggle.open{background:var(--navy);border-color:var(--navy);color:var(--gold-l);transform:rotate(45deg)}
 .faq-sep{height:1px;background:var(--border);margin:0 1.4rem;transition:opacity .3s}

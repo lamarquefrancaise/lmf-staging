@@ -253,7 +253,7 @@ function genererFaqHtml(data) {
     return `
       <div class="faq-item" role="listitem">
         <button class="faq-q" aria-expanded="false" type="button" aria-controls="fa${n}" onclick="toggleFaq(this)">
-          <span class="faq-q-text">${q}</span>
+          <h3 class="faq-q-text">${q}</h3>
           <span class="faq-toggle">+</span>
         </button>
         <div class="faq-sep" id="fs${n}"></div>
