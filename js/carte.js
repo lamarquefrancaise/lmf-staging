@@ -70,7 +70,7 @@ function mettreAJourLegende(marques, parRegion = false) {
   if (!legTrack) return;
 
   if (!marques.length) {
-    legTrack.innerHTML = '<div class="leg-item active"><div class="leg-item-top"><div class="leg-dot"></div><h3>Aucune marque géolocalisée</h3></div></div>';
+    legTrack.innerHTML = '<div class="leg-item active"><div class="leg-item-top"><div class="leg-dot"></div><p class="nom-marque">Aucune marque géolocalisée</p></div></div>';
   } else if (parRegion) {
     // Vue nationale : regroupement par région
     const regions = {};
@@ -85,7 +85,7 @@ function mettreAJourLegende(marques, parRegion = false) {
         const loc = m.ville ? `${m.ville} — ${m.region}` : m.region || '';
         return `
 <div class="leg-item" data-region="${m.region || ''}">
-  <div class="leg-item-top"><div class="leg-dot"></div><h3>${m.label}</h3></div>
+  <div class="leg-item-top"><div class="leg-dot"></div><p class="nom-marque">${m.label}</p></div>
   ${m.mini ? `<p>${m.mini}</p>` : ''}
   ${loc ? `<span class="leg-tag">${loc}</span>` : ''}
 </div>`;
@@ -104,7 +104,7 @@ ${itemsHtml}`;
       const loc = m.ville && m.region ? `${m.ville} — ${m.region}` : (m.ville || m.region || '');
       return `
 <div class="leg-item${i === 0 ? ' active' : ''}" data-region="${m.region || ''}">
-  <div class="leg-item-top"><div class="leg-dot"></div><h3>${m.label}</h3></div>
+  <div class="leg-item-top"><div class="leg-dot"></div><p class="nom-marque">${m.label}</p></div>
   ${m.mini ? `<p>${m.mini}</p>` : ''}
   ${loc ? `<span class="leg-tag">${loc}</span>` : ''}
 </div>`;

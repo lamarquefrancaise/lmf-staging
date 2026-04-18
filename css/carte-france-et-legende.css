@@ -14,7 +14,7 @@
 .leg-item-top{display:flex;align-items:center;gap:.65rem;margin-bottom:.28rem}
 .leg-dot{width:8px;height:8px;border-radius:50%;background:var(--gold);flex-shrink:0}
 .leg-item-top h3{font-family:Arial,sans-serif;font-size:.8rem;color:var(--navy);font-weight:normal;margin:0}
-.leg-item-top.nom-marque{font-family:Arial,sans-serif;font-size:.8rem;color:var(--navy);font-weight:normal;margin:0}
+.leg-item-top .nom-marque{font-family:Arial,sans-serif;font-size:.8rem;color:var(--navy);font-weight:normal;margin:0}
 .leg-item p{font-family:Arial,sans-serif;font-size:.73rem;color:var(--muted);line-height:1.5;padding-left:1.35rem}
 .leg-region-header{display:flex;justify-content:space-between;align-items:center;padding:.6rem 1.1rem .3rem;background:var(--navy)}
 .leg-region-titre{font-family:Arial,sans-serif;font-size:.72rem;letter-spacing:.15em;color:var(--gold-l);text-transform:uppercase;font-weight:normal;margin:0}
