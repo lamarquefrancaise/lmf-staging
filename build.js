@@ -4,15 +4,9 @@
 const fs   = require('fs');
 const path = require('path');
 
-// ─────────────────────────────────────────────
-// CREDENTIALS SUPABASE
-// ─────────────────────────────────────────────
 const SUPABASE_URL = process.env.VITE_SUPABASE_URL;
 const SUPABASE_KEY = process.env.VITE_SUPABASE_ANON_KEY;
 
-// ─────────────────────────────────────────────
-// PAGES À TRAITER
-// ─────────────────────────────────────────────
 const PAGES = [
   { fichier: 'made-in-france/epicerie-fine/index.html', actif: 'epicerie-fine' },
   { fichier: 'made-in-france/mode/index.html',          actif: 'mode' },
@@ -24,9 +18,6 @@ const PAGES = [
   { fichier: 'index.html',                              actif: '' },
 ];
 
-// ─────────────────────────────────────────────
-// LECTURE DES SOURCES STATIQUES
-// ─────────────────────────────────────────────
 const navCss             = fs.readFileSync(path.join(__dirname, 'css/nav.css'), 'utf8');
 const navHtml            = fs.readFileSync(path.join(__dirname, 'templates/nav.html'), 'utf8');
 const footerCss          = fs.readFileSync(path.join(__dirname, 'css/footer.css'), 'utf8');
@@ -45,20 +36,12 @@ const marqueVedetteCss   = fs.readFileSync(path.join(__dirname, 'css/marque-vede
 const marquesGridCss     = fs.readFileSync(path.join(__dirname, 'css/marques-grid.css'), 'utf8');
 const produitsSectionCss = fs.readFileSync(path.join(__dirname, 'css/produits-section.css'), 'utf8');
 
-// ─────────────────────────────────────────────
-// FONCTION : résoudre le nav avec le bon lien actif
-// ─────────────────────────────────────────────
 function resoudreNav(actif) {
   return navHtml.replace(/\{\{NAV_ACTIVE:([^}]+)\}\}/g, (_, slug) => {
     return slug === actif ? ' class="active"' : '';
   });
 }
 
-// ─────────────────────────────────────────────
-// FONCTION : générer l'article #brandFeatured
-// La vedette est choisie via le champ "vedette" = true
-// Le badge vérifié s'affiche si "verifiee" = true
-// ─────────────────────────────────────────────
 function genererFeatured(m, categorie) {
   const initiales = m.nom_societe.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
   const badgeVerif = m.verifiee ? '<span class="b-feat-badge-verif">✓ Marque vérifiée</span>' : '';
@@ -85,12 +68,6 @@ function genererFeatured(m, categorie) {
 </article>`;
 }
 
-// ─────────────────────────────────────────────
-// FONCTION : générer la grille #brandsGrid
-// Priorité aux marques mis_en_avant = true (max 6)
-// Complète avec les plus récentes si besoin
-// Exclut toujours la vedette
-// ─────────────────────────────────────────────
 function genererGrid(marques, categorie) {
   const cartes = marques.map(m => {
     const initiales = m.nom_societe.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
@@ -116,33 +93,18 @@ function genererGrid(marques, categorie) {
   </div>
 </article>`;
   }).join('');
-
   return `<div id="brandsGrid" class="brands-grid" role="list">${cartes}</div>`;
 }
 
-// ─────────────────────────────────────────────
-// FONCTION : sélectionner les marques pour la grille
-// Priorité mis_en_avant=true, complète avec récentes
-// Exclut la vedette dans tous les cas
-// ─────────────────────────────────────────────
 function selectionnerGrille(marques, vedette, limite) {
   const idVedette   = vedette ? vedette.id : null;
   const sansVedette = marques.filter(m => m.id !== idVedette);
-
   const misEnAvant  = sansVedette.filter(m => m.mis_en_avant === true);
   const autres      = sansVedette.filter(m => m.mis_en_avant !== true);
-
-  if (misEnAvant.length >= limite) {
-    return misEnAvant.slice(0, limite);
-  }
-
-  const complement = autres.slice(0, limite - misEnAvant.length);
-  return [...misEnAvant, ...complement];
+  if (misEnAvant.length >= limite) return misEnAvant.slice(0, limite);
+  return [...misEnAvant, ...autres.slice(0, limite - misEnAvant.length)];
 }
 
-// ─────────────────────────────────────────────
-// FONCTION : générer les items de légende carte
-// ─────────────────────────────────────────────
 function genererLegende(marques) {
   return marques.map((m, i) => {
     const nom  = m.nom_societe || '';
@@ -157,21 +119,22 @@ function genererLegende(marques) {
   }).join('');
 }
 
-// ─────────────────────────────────────────────
-// FONCTION : générer la section carte
-// ─────────────────────────────────────────────
-function genererSectionCarte(marquesAvecCoords, data) {
-  if (!marquesAvecCoords.length) return '';
+// ── Section carte : toutes les marques géolocalisées ─────────
+function genererSectionCarte(toutesMarquesCoords, data) {
+  if (!toutesMarquesCoords.length) return '';
 
-  const mapDataJs = marquesAvecCoords.map(m => {
+  const mapDataJs = toutesMarquesCoords.map(m => {
     const lon    = parseFloat(m.longitude);
     const lat    = parseFloat(m.latitude);
-    const region = (m.region || '').replace(/'/g, "\\'");
-    const label  = (m.nom_societe || '').replace(/'/g, "\\'");
-    return `  { lon: ${lon}, lat: ${lat}, region: '${region}', label: '${label}' }`;
+    const region = (m.region           || '').replace(/'/g, "\\'");
+    const label  = (m.nom_societe      || '').replace(/'/g, "\\'");
+    const ville  = (m.ville            || '').replace(/'/g, "\\'");
+    const mini   = (m.mini_descriptif  || '').replace(/'/g, "\\'");
+    return `  { lon: ${lon}, lat: ${lat}, region: '${region}', label: '${label}', ville: '${ville}', mini: '${mini}' }`;
   }).join(',\n');
 
-  const legende = genererLegende(marquesAvecCoords);
+  // Légende initiale = toutes les marques géolocalisées
+  const legende = genererLegende(toutesMarquesCoords);
 
   return `
 <section class="carte-section" id="carte" aria-labelledby="carte-title">
@@ -210,18 +173,14 @@ ${mapDataJs}
 <script src="/js/carte.js" defer></script>`;
 }
 
-// ─────────────────────────────────────────────
-// FONCTION : générer une carte produit
-// ─────────────────────────────────────────────
 function genererCarteProduit(p) {
-  const nom      = p.nom_produit || '';
-  const marque   = p.marque || '';
-  const region   = p.region || '';
-  const urlProd  = p.url_produit || '#';
-  const imgAvif  = p.image_avif || '';
-  const imgWebp  = p.image_webp || '';
-  const altImg   = `${nom} — ${marque}${region ? ', ' + region : ''}`;
-
+  const nom     = p.nom_produit || '';
+  const marque  = p.marque || '';
+  const region  = p.region || '';
+  const urlProd = p.url_produit || '#';
+  const imgAvif = p.image_avif || '';
+  const imgWebp = p.image_webp || '';
+  const altImg  = `${nom} — ${marque}${region ? ', ' + region : ''}`;
   return `
 <article class="p-card" role="listitem" itemscope itemtype="https://schema.org/Product">
   <a href="${urlProd}" class="p-card-link" aria-label="${nom}" tabindex="0">${nom}</a>
@@ -244,15 +203,9 @@ function genererCarteProduit(p) {
 </article>`;
 }
 
-// ─────────────────────────────────────────────
-// FONCTION : générer la section produits
-// Retourne '' si aucun produit
-// ─────────────────────────────────────────────
 function genererSectionProduits(produits, data) {
   if (!produits.length) return '';
-
   const cartes = produits.map(genererCarteProduit).join('');
-
   return `
 <section class="produits-section" id="produits" aria-labelledby="produits-title">
   <div class="containeur">
@@ -268,46 +221,31 @@ function genererSectionProduits(produits, data) {
 </section>`;
 }
 
-// ─────────────────────────────────────────────
-// FONCTION : générer le JSON-LD ItemList marques
-// ─────────────────────────────────────────────
 function genererItemListJsonLd(marques, data) {
   if (!marques.length) return '';
-
   const items = marques.map((m, i) => {
     const url  = m.url_site || '';
     const nom  = (m.nom_societe || '').replace(/"/g, '\\"');
     const desc = (m.description || m.mini_descriptif || '').replace(/"/g, '\\"');
     return `    {"@type":"ListItem","position":${i + 1},"item":{"@type":"Brand","name":"${nom}","url":"${url}","description":"${desc}"}}`;
   }).join(',\n');
-
   const nomListe  = (data.section_titre      || '').replace(/"/g, '\\"');
   const descListe = (data.section_sous_titre || '').replace(/"/g, '\\"');
-
   return `{"@context":"https://schema.org","@type":"ItemList","name":"${nomListe}","description":"${descListe}","itemListElement":[\n${items}\n]}`;
 }
 
-// ─────────────────────────────────────────────
-// FONCTION : générer le JSON-LD FAQPage
-// ─────────────────────────────────────────────
 function genererFaqJsonLd(data) {
   if (!data.faq || !data.faq.length) return '';
-
   const items = data.faq.map(item => {
     const q = (item.question || '').replace(/"/g, '\\"');
     const r = (item.reponse  || '').replace(/"/g, '\\"');
     return `  {"@type":"Question","name":"${q}","acceptedAnswer":{"@type":"Answer","text":"${r}"}}`;
   }).join(',\n');
-
   return `{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[\n${items}\n]}`;
 }
 
-// ─────────────────────────────────────────────
-// FONCTION : générer la section FAQ en HTML
-// ─────────────────────────────────────────────
 function genererFaqHtml(data) {
   if (!data.faq || !data.faq.length) return '';
-
   const items = data.faq.map((item, i) => {
     const n = i + 1;
     const q = item.question || '';
@@ -322,7 +260,6 @@ function genererFaqHtml(data) {
         <div class="faq-a" id="fa${n}">${r}</div>
       </div>`;
   }).join('');
-
   return `
 <section class="faq" id="faq" aria-labelledby="faq-title">
   <div class="containeur">
@@ -337,70 +274,48 @@ function genererFaqHtml(data) {
 </section>`;
 }
 
-// ─────────────────────────────────────────────
-// FONCTION : fetch produits depuis Supabase
-// avec jointure région depuis entreprises
-// Priorité mis_en_avant=true, limite 8
-// ─────────────────────────────────────────────
 async function fetchProduits(categorie) {
-  // Récupérer tous les produits de la catégorie
   const url = `${SUPABASE_URL}/rest/v1/produits?categories=cs.{${categorie}}&select=id,nom_produit,marque,description,categories,prix,mis_en_avant,image_avif,image_webp,url_produit,created_at&order=created_at.desc`;
-
   const res = await fetch(url, {
     headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}` }
   });
-
   if (!res.ok) {
     console.warn(`⚠️  Erreur Supabase produits (${res.status})`);
     return [];
   }
-
   const produits = await res.json();
   if (!produits.length) return [];
 
-  // Sélection avec priorité mis_en_avant
   const misEnAvant = produits.filter(p => p.mis_en_avant === true);
   const autres     = produits.filter(p => p.mis_en_avant !== true);
+  const selection  = misEnAvant.length >= 8
+    ? misEnAvant.slice(0, 8)
+    : [...misEnAvant, ...autres.slice(0, 8 - misEnAvant.length)];
 
-  let selection;
-  if (misEnAvant.length >= 8) {
-    selection = misEnAvant.slice(0, 8);
-  } else {
-    selection = [...misEnAvant, ...autres.slice(0, 8 - misEnAvant.length)];
-  }
-
-  // Récupérer les régions depuis entreprises pour les marques uniques
   const marquesUniques = [...new Set(selection.map(p => p.marque).filter(Boolean))];
-
   if (marquesUniques.length) {
-    const marquesParam = marquesUniques.map(m => `"${m}"`).join(',');
+    const marquesParam   = marquesUniques.map(m => `"${m}"`).join(',');
     const urlEntreprises = `${SUPABASE_URL}/rest/v1/entreprises?nom_societe=in.(${marquesParam})&select=nom_societe,region`;
-
     const resE = await fetch(urlEntreprises, {
       headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}` }
     });
-
     if (resE.ok) {
-      const entreprises = await resE.json();
+      const entreprises    = await resE.json();
       const regionParMarque = {};
       entreprises.forEach(e => { regionParMarque[e.nom_societe] = e.region || ''; });
-      selection = selection.map(p => ({ ...p, region: regionParMarque[p.marque] || '' }));
+      return selection.map(p => ({ ...p, region: regionParMarque[p.marque] || '' }));
     }
   }
-
   return selection;
 }
 
-// ─────────────────────────────────────────────
-// FONCTION PRINCIPALE : fetch Supabase + génération
-// ─────────────────────────────────────────────
 async function genererSectionMarques(data) {
   if (!SUPABASE_URL || !SUPABASE_KEY) {
-    console.warn('⚠️  Variables Supabase manquantes — sections ignorées.');
+    console.warn('⚠️  Variables Supabase manquantes.');
     return { marques: '', carte: '', produits: '', heroCount: '0', itemListJsonLd: '', afficherVedette: false, afficherGrid: false, afficherProduits: false };
   }
 
-  // ── Comptage total pour heroCount ──────────────────────────
+  // Comptage heroCount
   const resCount = await fetch(
     `${SUPABASE_URL}/rest/v1/entreprises?categories=cs.{${data.supabase_categorie}}&select=id`,
     { headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}`, Prefer: 'count=exact' } }
@@ -409,9 +324,8 @@ async function genererSectionMarques(data) {
     ? (resCount.headers.get('content-range') || '').split('/')[1] || '0'
     : '0';
 
-  // ── Données marques — triées : vedette d'abord, puis mis_en_avant, puis récentes ──
+  // Toutes les marques de la catégorie pour la grille/vedette
   const url = `${SUPABASE_URL}/rest/v1/entreprises?categories=cs.{${data.supabase_categorie}}&select=id,nom_societe,description,mini_descriptif,ville,region,url_site,verifiee,vedette,mis_en_avant,categories,longitude,latitude&order=created_at.desc`;
-
   const res = await fetch(url, {
     headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}` }
   });
@@ -425,15 +339,12 @@ async function genererSectionMarques(data) {
   const marques = await res.json();
   if (!marques.length) return { marques: '', carte: '', produits: '', heroCount, itemListJsonLd: '', afficherVedette: false, afficherGrid: false, afficherProduits: false };
 
-  // ── Sélection vedette : champ vedette = true, fallback première marque ──
+  // Vedette : champ vedette = true
   const vedette = marques.find(m => m.vedette === true) || null;
+  const grille  = selectionnerGrille(marques, vedette, 6);
 
-  // ── Sélection grille avec priorité mis_en_avant ──
-  const grille = selectionnerGrille(marques, vedette, 6);
-
-  const htmlFeatured = vedette       ? genererFeatured(vedette, data.supabase_categorie) : '';
-  const htmlGrid     = grille.length ? genererGrid(grille, data.supabase_categorie)      : '';
-
+  const htmlFeatured    = vedette       ? genererFeatured(vedette, data.supabase_categorie) : '';
+  const htmlGrid        = grille.length ? genererGrid(grille, data.supabase_categorie)      : '';
   const afficherVedette = !!htmlFeatured;
   const afficherGrid    = !!htmlGrid;
 
@@ -450,35 +361,40 @@ async function genererSectionMarques(data) {
   </div>
 </section>` : '';
 
-  // ── JSON-LD ItemList ───────────────────────────────────────
   const marquesAffichees = [vedette, ...grille].filter(Boolean);
   const itemListJsonLd   = genererItemListJsonLd(marquesAffichees, data);
 
-  // ── Section carte ──────────────────────────────────────────
-  const marquesAvecCoords = marquesAffichees.filter(m =>
-    m.longitude && m.latitude &&
-    !isNaN(parseFloat(m.longitude)) &&
-    !isNaN(parseFloat(m.latitude))
-  );
-  const htmlCarte = genererSectionCarte(marquesAvecCoords, data);
+  // ── Carte : TOUTES les marques géolocalisées de la catégorie ─
+  const urlCarte = `${SUPABASE_URL}/rest/v1/entreprises?categories=cs.{${data.supabase_categorie}}&select=nom_societe,mini_descriptif,ville,region,longitude,latitude&longitude=not.is.null&latitude=not.is.null`;
+  const resCarte = await fetch(urlCarte, {
+    headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}` }
+  });
 
-  // ── Section produits ───────────────────────────────────────
-  const produitsData    = await fetchProduits(data.supabase_categorie);
-  const htmlProduits    = genererSectionProduits(produitsData, data);
+  let toutesMarquesCoords = [];
+  if (resCarte.ok) {
+    const toutesMarques = await resCarte.json();
+    toutesMarquesCoords = toutesMarques.filter(m =>
+      m.longitude && m.latitude &&
+      !isNaN(parseFloat(m.longitude)) &&
+      !isNaN(parseFloat(m.latitude))
+    );
+  }
+
+  const htmlCarte = genererSectionCarte(toutesMarquesCoords, data);
+
+  // Produits
+  const produitsData     = await fetchProduits(data.supabase_categorie);
+  const htmlProduits     = genererSectionProduits(produitsData, data);
   const afficherProduits = !!htmlProduits;
 
   return { marques: htmlMarques, carte: htmlCarte, produits: htmlProduits, heroCount, itemListJsonLd, afficherVedette, afficherGrid, afficherProduits };
 }
 
-// ─────────────────────────────────────────────
-// BUILD PRINCIPAL
-// ─────────────────────────────────────────────
 async function build() {
   let succes = 0;
 
   for (const page of PAGES) {
     const chemin = path.join(__dirname, page.fichier);
-
     if (!fs.existsSync(chemin)) {
       console.warn(`⚠️  Fichier introuvable, ignoré : ${page.fichier}`);
       continue;
@@ -486,7 +402,6 @@ async function build() {
 
     let html = fs.readFileSync(chemin, 'utf8');
 
-    // Injections CSS statiques
     const injectionsCss = [
       ['{{GLOBAL_CSS}}',          globalCss],
       ['{{NAV_CSS}}',             navCss],
@@ -508,20 +423,9 @@ async function build() {
       }
     }
 
-    // Injection HTML nav et footer
-    if (html.includes('{{NAV}}')) {
-      html = html.replace('{{NAV}}', resoudreNav(page.actif));
-    } else {
-      console.warn(`⚠️  Marqueur {{NAV}} absent dans : ${page.fichier}`);
-    }
+    if (html.includes('{{NAV}}'))    html = html.replace('{{NAV}}',    resoudreNav(page.actif));
+    if (html.includes('{{FOOTER}}')) html = html.replace('{{FOOTER}}', footerHtml);
 
-    if (html.includes('{{FOOTER}}')) {
-      html = html.replace('{{FOOTER}}', footerHtml);
-    } else {
-      console.warn(`⚠️  Marqueur {{FOOTER}} absent dans : ${page.fichier}`);
-    }
-
-    // Injection sections dynamiques Supabase
     const dataPath = path.join(__dirname, `data/${page.actif}.json`);
     if (html.includes('{{MARQUES_SECTION}}')) {
       if (fs.existsSync(dataPath)) {
@@ -530,26 +434,20 @@ async function build() {
 
         const afficherSection = afficherVedette || afficherGrid;
 
-        // HTML sections
         html = html.replace('{{MARQUES_SECTION}}',   marques);
         html = html.replace('{{CARTE_SECTION}}',     carte);
         html = html.replace('{{PRODUITS_SECTION}}',  produits);
 
-        // CSS conditionnels marques
-        html = html.replace('{{MARQUES_SECTION_CSS}}', afficherSection   ? marquesSectionCss  : '');
-        html = html.replace('{{MARQUE_VEDETTE_CSS}}',  afficherVedette   ? marqueVedetteCss   : '');
-        html = html.replace('{{MARQUES_GRID_CSS}}',    afficherGrid      ? marquesGridCss     : '');
+        html = html.replace('{{MARQUES_SECTION_CSS}}', afficherSection  ? marquesSectionCss  : '');
+        html = html.replace('{{MARQUE_VEDETTE_CSS}}',  afficherVedette  ? marqueVedetteCss   : '');
+        html = html.replace('{{MARQUES_GRID_CSS}}',    afficherGrid     ? marquesGridCss     : '');
+        html = html.replace('{{CARTE_CSS}}',           carte            ? carteCss           : '');
+        html = html.replace('{{PRODUITS_CSS}}',        afficherProduits ? produitsSectionCss : '');
 
-        // CSS conditionnels carte et produits
-        html = html.replace('{{CARTE_CSS}}',           carte             ? carteCss           : '');
-        html = html.replace('{{PRODUITS_CSS}}',        afficherProduits  ? produitsSectionCss : '');
-
-        // Données structurées
         html = html.replace('{{ITEMLIST_JSON_LD}}', itemListJsonLd);
         html = html.replace('{{FAQ_JSON_LD}}',      genererFaqJsonLd(data));
         html = html.replace('{{FAQ_SECTION}}',      genererFaqHtml(data));
 
-        // heroCount
         html = html.replace(
           /<strong id="heroCount">[^<]*<\/strong>/,
           `<strong id="heroCount">${heroCount}</strong>`

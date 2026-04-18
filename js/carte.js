@@ -1,6 +1,8 @@
 // js/carte.js
-// Gestion de la légende carrousel et de la carte D3
-// MAP_DATA est injecté par le build dans un <script> avant ce fichier
+// Carte de France interactive à deux niveaux :
+// - Vue nationale : un point par région avec le nombre de marques
+// - Vue zoomée : les marques individuelles de la région cliquée
+// MAP_DATA est injecté par le build dans un <script> avant ce fichjet
 
 // ─────────────────────────────────────────────
 // LÉGENDE CARROUSEL
@@ -30,26 +32,28 @@ function activateLeg(idx) {
   document.querySelectorAll('.leg-dot-nav').forEach((d, i) => d.classList.toggle('active', i === legActiveIdx));
 }
 
-document.getElementById('legPrev').addEventListener('click', () => activateLeg(legActiveIdx - 1));
-document.getElementById('legNext').addEventListener('click', () => activateLeg(legActiveIdx + 1));
-legItems().forEach((item, i) => item.addEventListener('click', () => activateLeg(i)));
-
-// Init dots légende
-(function () {
+function initDotsLegende() {
   const dots = document.getElementById('legDots');
   if (!dots) return;
+  dots.innerHTML = '';
   legItems().forEach((_, i) => {
     const d = document.createElement('div');
     d.className = 'leg-dot-nav' + (i === 0 ? ' active' : '');
     d.addEventListener('click', () => activateLeg(i));
     dots.appendChild(d);
   });
-})();
+}
+
+document.getElementById('legPrev').addEventListener('click', () => activateLeg(legActiveIdx - 1));
+document.getElementById('legNext').addEventListener('click', () => activateLeg(legActiveIdx + 1));
+legItems().forEach((item, i) => item.addEventListener('click', () => activateLeg(i)));
+
+initDotsLegende();
 
 function fixLegHeight() {
   const _li = legItems();
   if (_li[0] && legWrap) {
-    legWrap.style.height  = (_li[0].offsetHeight * VISIBLE) + 'px';
+    legWrap.style.height   = (_li[0].offsetHeight * VISIBLE) + 'px';
     legWrap.style.overflow = 'hidden';
   }
 }
@@ -57,18 +61,48 @@ window.addEventListener('load', fixLegHeight);
 window.addEventListener('resize', () => { fixLegHeight(); scrollLeg(legScrollIdx); });
 
 // ─────────────────────────────────────────────
-// CARTE D3
-// MAP_DATA est défini dans le <script> injecté
-// par le build juste avant ce fichier
+// MISE À JOUR LÉGENDE selon les marques visibles
+// ─────────────────────────────────────────────
+function mettreAJourLegende(marques) {
+  legScrollIdx = 0;
+  legActiveIdx = 0;
+
+  if (!legTrack) return;
+
+  if (!marques.length) {
+    legTrack.innerHTML = '<div class="leg-item active"><div class="leg-item-top"><div class="leg-dot"></div><h3>Aucune marque géolocalisée</h3></div></div>';
+  } else {
+    legTrack.innerHTML = marques.map((m, i) => {
+      const loc = m.ville && m.region ? `${m.ville} — ${m.region}` : (m.ville || m.region || '');
+      return `
+<div class="leg-item${i === 0 ? ' active' : ''}" data-region="${m.region || ''}">
+  <div class="leg-item-top"><div class="leg-dot"></div><h3>${m.label}</h3></div>
+  ${m.mini ? `<p>${m.mini}</p>` : ''}
+  ${loc ? `<span class="leg-tag">${loc}</span>` : ''}
+</div>`;
+    }).join('');
+  }
+
+  legItems().forEach((item, i) => item.addEventListener('click', () => activateLeg(i)));
+  initDotsLegende();
+  fixLegHeight();
+  scrollLeg(0);
+}
+
+// ─────────────────────────────────────────────
+// CARTE D3 — deux niveaux de vue
 // ─────────────────────────────────────────────
 let mapInited = false;
+
 function initMap() {
   if (mapInited) return;
   mapInited = true;
+
   const SZ        = 500;
   const container = document.getElementById('map-container');
   const tip       = document.getElementById('mapTip');
-  const svg       = d3.select('#map-container').append('svg')
+
+  const svg = d3.select('#map-container').append('svg')
     .attr('viewBox', `0 0 ${SZ} ${SZ}`)
     .style('width', '100%')
     .style('height', 'auto');
@@ -81,19 +115,42 @@ function initMap() {
     .attr('fill', '#9ca3af')
     .text('Chargement de la carte…');
 
+  // Groupes SVG
+  const gFond    = svg.append('g').attr('class', 'g-fond');
+  const gRegions = svg.append('g').attr('class', 'g-regions');
+  const gPins    = svg.append('g').attr('class', 'g-pins');
+  const gBack    = svg.append('g').attr('class', 'g-back');
+
+  // Projection centrée sur la France
+  const proj = d3.geoMercator().rotate([-2.8, -46.7]).scale(2900).translate([SZ / 2, SZ / 2]);
+  const path = d3.geoPath().projection(proj);
+
+  // État courant
+  let vueActuelle = 'nationale'; // 'nationale' ou 'region'
+  let regionActive = null;
+
+  // ── Regrouper MAP_DATA par région ──────────────────────────
+  const parRegion = {};
+  MAP_DATA.forEach(m => {
+    if (!parRegion[m.region]) parRegion[m.region] = [];
+    parRegion[m.region].push(m);
+  });
+
   (async () => {
     try {
-      //const world     = await d3.json('https://unpkg.com/world-atlas@2.0.2/countries-50m.json');
-      const world = await d3.json('/js/countries-50m.json');
+      // Chargement des données géographiques
+      const [world, regionsGeo] = await Promise.all([
+        d3.json('/js/countries-50m.json'),
+        d3.json('/js/regions-france.json')
+      ]);
+
       const countries = topojson.feature(world, world.objects.countries);
       const [france]  = countries.features.filter(d => d.properties.name === 'France');
-      const proj      = d3.geoMercator().rotate([-2.8, -46.7]).scale(2900).translate([SZ / 2, SZ / 2]);
-      const path      = d3.geoPath().projection(proj);
 
       svg.select('text').remove();
 
       // Pays voisins
-      svg.append('g').selectAll('path')
+      gFond.selectAll('path')
         .data(countries.features.filter(d => d.properties.name !== 'France'))
         .enter().append('path')
         .attr('d', path)
@@ -101,53 +158,237 @@ function initMap() {
         .attr('stroke', '#ddd9d0')
         .attr('stroke-width', '.4');
 
-      // France
-      svg.append('g').append('path')
+      // France fond
+      gFond.append('path')
         .datum(france)
         .attr('d', path)
         .attr('fill', '#e5dfd3')
         .attr('stroke', '#c5bba8')
         .attr('stroke-width', '1.5');
 
-      // Pins
-      svg.append('g').selectAll('g')
-        .data(MAP_DATA)
-        .enter().append('g')
-        .attr('transform', d => {
-          const [x, y] = proj([d.lon, d.lat]);
-          return `translate(${x},${y})`;
-        })
-        .style('cursor', 'pointer')
-        .each(function () {
-          const g = d3.select(this);
-          g.append('circle').attr('r', 13).attr('fill', 'rgba(184,150,62,.12)').attr('class', 'pin-halo');
-          g.append('circle').attr('r', 5.5).attr('fill', '#b8963e');
-          g.append('circle').attr('r', 2.5).attr('fill', '#fff');
-        })
-        .on('mouseenter', function (event, d) {
-          d3.select(this).select('.pin-halo').attr('r', 20).attr('fill', 'rgba(184,150,62,.28)');
-          const rect = container.getBoundingClientRect();
-          tip.textContent = d.label;
+      // ── Régions colorées ────────────────────────────────────
+      gRegions.selectAll('path')
+        .data(regionsGeo.features)
+        .enter().append('path')
+        .attr('d', path)
+        .attr('fill', d => parRegion[d.properties.nom] ? 'rgba(184,150,62,.08)' : 'transparent')
+        .attr('stroke', '#c5bba8')
+        .attr('stroke-width', '.6')
+        .style('cursor', d => parRegion[d.properties.nom] ? 'pointer' : 'default')
+        .on('click', function(event, d) {
+          if (!parRegion[d.properties.nom]) return;
+          event.stopPropagation();
+          zoomerRegion(d, regionsGeo);
+        });
+
+      // ── Points régions (vue nationale) ──────────────────────
+      const pointsRegions = Object.entries(parRegion).map(([nom, marques]) => {
+        // Centroïde de la région depuis le JSON
+        const feature = regionsGeo.features.find(f => f.properties.nom === nom);
+        if (!feature) return null;
+        const centroide = path.centroid(feature);
+        return { nom, marques, cx: centroide[0], cy: centroide[1] };
+      }).filter(Boolean);
+
+      const gPointsNat = gPins.append('g').attr('class', 'pins-nationales');
+
+      pointsRegions.forEach(r => {
+        const g = gPointsNat.append('g')
+          .style('cursor', 'pointer')
+          .on('click', function(event) {
+            event.stopPropagation();
+            const feature = regionsGeo.features.find(f => f.properties.nom === r.nom);
+            if (feature) zoomerRegion(feature, regionsGeo);
+          });
+
+        // Halo
+        g.append('circle')
+          .attr('cx', r.cx).attr('cy', r.cy)
+          .attr('r', 16)
+          .attr('fill', 'rgba(184,150,62,.15)')
+          .attr('class', 'pin-halo');
+
+        // Point
+        g.append('circle')
+          .attr('cx', r.cx).attr('cy', r.cy)
+          .attr('r', 8)
+          .attr('fill', '#b8963e');
+
+        // Nombre de marques
+        g.append('text')
+          .attr('x', r.cx).attr('y', r.cy + 4)
+          .attr('text-anchor', 'middle')
+          .attr('font-family', 'Arial,sans-serif')
+          .attr('font-size', '8')
+          .attr('font-weight', 'bold')
+          .attr('fill', '#fff')
+          .text(r.marques.length);
+
+        // Survol
+        g.on('mouseenter', function() {
+          d3.select(this).select('.pin-halo').attr('r', 22).attr('fill', 'rgba(184,150,62,.3)');
+          tip.textContent = `${r.nom} — ${r.marques.length} marque${r.marques.length > 1 ? 's' : ''}`;
           tip.style.opacity = '1';
-          let x = event.clientX - rect.left + 12;
-          let y = event.clientY - rect.top - 10;
-          if (x + 250 > rect.width) x = event.clientX - rect.left - 260;
-          tip.style.left = x + 'px';
-          tip.style.top  = y + 'px';
-          legItems().forEach((item, i) => { if (item.dataset.region === d.region) activateLeg(i); });
+          positionnerTip(event, container, tip);
         })
-        .on('mousemove', function (event) {
-          const rect = container.getBoundingClientRect();
-          let x = event.clientX - rect.left + 12;
-          let y = event.clientY - rect.top - 10;
-          if (x + 250 > rect.width) x = event.clientX - rect.left - 260;
-          tip.style.left = x + 'px';
-          tip.style.top  = y + 'px';
-        })
-        .on('mouseleave', function () {
-          d3.select(this).select('.pin-halo').attr('r', 13).attr('fill', 'rgba(184,150,62,.12)');
+        .on('mousemove', function(event) { positionnerTip(event, container, tip); })
+        .on('mouseleave', function() {
+          d3.select(this).select('.pin-halo').attr('r', 16).attr('fill', 'rgba(184,150,62,.15)');
           tip.style.opacity = '0';
         });
+      });
+
+      // Mise à jour légende vue nationale
+      mettreAJourLegende(MAP_DATA);
+
+      // ── Clic en dehors → retour vue nationale ───────────────
+      svg.on('click', function() {
+        if (vueActuelle === 'region') retourNationale();
+      });
+
+      // ── ZOOM sur une région ─────────────────────────────────
+      function zoomerRegion(feature, regionsGeo) {
+        vueActuelle  = 'region';
+        regionActive = feature.properties.nom;
+
+        tip.style.opacity = '0';
+
+        // Calculer les bounds de la région pour le zoom
+        const bounds  = path.bounds(feature);
+        const dx      = bounds[1][0] - bounds[0][0];
+        const dy      = bounds[1][1] - bounds[0][1];
+        const x       = (bounds[0][0] + bounds[1][0]) / 2;
+        const y       = (bounds[0][1] + bounds[1][1]) / 2;
+        const scale   = Math.min(8, 0.85 / Math.max(dx / SZ, dy / SZ));
+        const tx      = SZ / 2 - scale * x;
+        const ty      = SZ / 2 - scale * y;
+
+        // Animer le zoom
+        svg.transition().duration(600)
+          .attr('viewBox', `${-tx / scale} ${-ty / scale} ${SZ / scale} ${SZ / scale}`);
+
+        // Masquer les points nationaux
+        gPins.select('.pins-nationales').style('display', 'none');
+
+        // Afficher les régions avec opacité
+        gRegions.selectAll('path')
+          .transition().duration(400)
+          .attr('fill', d => {
+            if (d.properties.nom === regionActive) return 'rgba(184,150,62,.15)';
+            return parRegion[d.properties.nom] ? 'rgba(184,150,62,.04)' : 'transparent';
+          })
+          .attr('stroke-width', d => d.properties.nom === regionActive ? '1.2' : '.4');
+
+        // Pins individuels des marques de la région
+        const marquesRegion = parRegion[regionActive] || [];
+        gPins.selectAll('.pins-region').remove();
+        const gPinsRegion = gPins.append('g').attr('class', 'pins-region');
+
+        marquesRegion.forEach((m, i) => {
+          const [px, py] = proj([m.lon, m.lat]);
+          const g = gPinsRegion.append('g').style('cursor', 'pointer');
+
+          g.append('circle')
+            .attr('cx', px).attr('cy', py)
+            .attr('r', 10 / scale)
+            .attr('fill', 'rgba(184,150,62,.12)')
+            .attr('class', 'pin-halo-zoom');
+
+          g.append('circle')
+            .attr('cx', px).attr('cy', py)
+            .attr('r', 4.5 / scale)
+            .attr('fill', '#b8963e');
+
+          g.append('circle')
+            .attr('cx', px).attr('cy', py)
+            .attr('r', 2 / scale)
+            .attr('fill', '#fff');
+
+          // Survol + clic (info-bulle)
+          const afficherTip = (event) => {
+            tip.textContent = m.label;
+            tip.style.opacity = '1';
+            positionnerTip(event, container, tip);
+            // Sync légende
+            const items = legItems();
+            const idx = items.findIndex(el => el.querySelector('h3') && el.querySelector('h3').textContent === m.label);
+            if (idx >= 0) activateLeg(idx);
+          };
+
+          g.on('mouseenter', afficherTip)
+           .on('mousemove', (event) => positionnerTip(event, container, tip))
+           .on('mouseleave', () => {
+              d3.select(g.node()).select('.pin-halo-zoom').attr('r', 10 / scale).attr('fill', 'rgba(184,150,62,.12)');
+              tip.style.opacity = '0';
+            })
+           .on('click', (event) => {
+              event.stopPropagation();
+              afficherTip(event);
+              d3.select(g.node()).select('.pin-halo-zoom').attr('r', 14 / scale).attr('fill', 'rgba(184,150,62,.3)');
+            });
+        });
+
+        // Bouton retour
+        afficherBoutonRetour();
+
+        // Mettre à jour la légende avec les marques de la région
+        mettreAJourLegende(marquesRegion.map(m => ({
+          label: m.label,
+          region: m.region,
+          ville: m.ville || '',
+          mini: m.mini || ''
+        })));
+      }
+
+      // ── Retour vue nationale ─────────────────────────────────
+      function retourNationale() {
+        vueActuelle  = 'nationale';
+        regionActive = null;
+
+        tip.style.opacity = '0';
+
+        svg.transition().duration(500)
+          .attr('viewBox', `0 0 ${SZ} ${SZ}`);
+
+        gPins.select('.pins-nationales').style('display', null);
+        gPins.selectAll('.pins-region').remove();
+
+        gRegions.selectAll('path')
+          .transition().duration(400)
+          .attr('fill', d => parRegion[d.properties.nom] ? 'rgba(184,150,62,.08)' : 'transparent')
+          .attr('stroke-width', '.6');
+
+        supprimerBoutonRetour();
+        mettreAJourLegende(MAP_DATA);
+      }
+
+      // ── Bouton retour ────────────────────────────────────────
+      function afficherBoutonRetour() {
+        supprimerBoutonRetour();
+        const btn = gBack.append('g')
+          .attr('class', 'btn-retour')
+          .style('cursor', 'pointer')
+          .on('click', (event) => { event.stopPropagation(); retourNationale(); });
+
+        btn.append('rect')
+          .attr('x', 8).attr('y', 8)
+          .attr('width', 80).attr('height', 22)
+          .attr('rx', 3)
+          .attr('fill', '#0d1b3e')
+          .attr('opacity', '.85');
+
+        btn.append('text')
+          .attr('x', 48).attr('y', 23)
+          .attr('text-anchor', 'middle')
+          .attr('font-family', 'Arial,sans-serif')
+          .attr('font-size', '9')
+          .attr('fill', '#d4af6a')
+          .text('← Retour France');
+      }
+
+      function supprimerBoutonRetour() {
+        gBack.selectAll('.btn-retour').remove();
+      }
 
     } catch (e) {
       console.warn('Carte non disponible', e);
@@ -155,7 +396,17 @@ function initMap() {
   })();
 }
 
-// Chargement dynamique de D3 et TopoJSON uniquement quand la carte est visible
+// ── Positionner l'info-bulle ────────────────────────────────
+function positionnerTip(event, container, tip) {
+  const rect = container.getBoundingClientRect();
+  let x = event.clientX - rect.left + 12;
+  let y = event.clientY - rect.top - 10;
+  if (x + 250 > rect.width) x = event.clientX - rect.left - 260;
+  tip.style.left = x + 'px';
+  tip.style.top  = y + 'px';
+}
+
+// ── Chargement dynamique D3 + TopoJSON ──────────────────────
 function loadScript(src) {
   return new Promise((resolve, reject) => {
     const s = document.createElement('script');
@@ -172,17 +423,15 @@ if (mapSection && 'IntersectionObserver' in window) {
     if (entries[0].isIntersecting) {
       mapObs.disconnect();
       Promise.all([
-//        loadScript('https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js'),
-//        loadScript('https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js')
-          loadScript('/js/d3.min.js'),
-          loadScript('/js/topojson.min.js')
+        loadScript('/js/d3.min.js'),
+        loadScript('/js/topojson.min.js')
       ]).then(() => initMap());
     }
   }, { threshold: 0.1 });
   mapObs.observe(mapSection);
 } else {
   Promise.all([
-    loadScript('https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js'),
-    loadScript('https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js')
+    loadScript('/js/d3.min.js'),
+    loadScript('/js/topojson.min.js')
   ]).then(() => initMap());
 }
