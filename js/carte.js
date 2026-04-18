@@ -63,7 +63,7 @@ window.addEventListener('resize', () => { fixLegHeight(); scrollLeg(legScrollIdx
 // ─────────────────────────────────────────────
 // MISE À JOUR LÉGENDE selon les marques visibles
 // ─────────────────────────────────────────────
-function mettreAJourLegende(marques) {
+function mettreAJourLegende(marques, parRegion = false) {
   legScrollIdx = 0;
   legActiveIdx = 0;
 
@@ -71,7 +71,35 @@ function mettreAJourLegende(marques) {
 
   if (!marques.length) {
     legTrack.innerHTML = '<div class="leg-item active"><div class="leg-item-top"><div class="leg-dot"></div><h3>Aucune marque géolocalisée</h3></div></div>';
+  } else if (parRegion) {
+    // Vue nationale : regroupement par région
+    const regions = {};
+    marques.forEach(m => {
+      const r = m.region || 'Autre';
+      if (!regions[r]) regions[r] = [];
+      regions[r].push(m);
+    });
+
+    legTrack.innerHTML = Object.entries(regions).map(([region, items]) => {
+      const itemsHtml = items.map((m, i) => {
+        const loc = m.ville ? `${m.ville} — ${m.region}` : m.region || '';
+        return `
+<div class="leg-item" data-region="${m.region || ''}">
+  <div class="leg-item-top"><div class="leg-dot"></div><h3>${m.label}</h3></div>
+  ${m.mini ? `<p>${m.mini}</p>` : ''}
+  ${loc ? `<span class="leg-tag">${loc}</span>` : ''}
+</div>`;
+      }).join('');
+
+      return `
+<div class="leg-region-header">
+  <h3 class="leg-region-titre">${region}</h3>
+  <span class="leg-region-count">${items.length} marque${items.length > 1 ? 's' : ''}</span>
+</div>
+${itemsHtml}`;
+    }).join('');
   } else {
+    // Vue zoomée : liste simple sans groupement
     legTrack.innerHTML = marques.map((m, i) => {
       const loc = m.ville && m.region ? `${m.ville} — ${m.region}` : (m.ville || m.region || '');
       return `
@@ -239,7 +267,7 @@ function initMap() {
       });
 
       // Mise à jour légende vue nationale
-      mettreAJourLegende(MAP_DATA);
+      mettreAJourLegende(MAP_DATA, true);
 
       // ── Clic en dehors → retour vue nationale ───────────────
       svg.on('click', function() {
@@ -359,7 +387,7 @@ function initMap() {
           .attr('stroke-width', '.6');
 
         supprimerBoutonRetour();
-        mettreAJourLegende(MAP_DATA);
+        mettreAJourLegende(MAP_DATA, true);
       }
 
       // ── Bouton retour ────────────────────────────────────────

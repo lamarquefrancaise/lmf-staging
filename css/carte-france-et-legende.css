@@ -14,7 +14,11 @@
 .leg-item-top{display:flex;align-items:center;gap:.65rem;margin-bottom:.28rem}
 .leg-dot{width:8px;height:8px;border-radius:50%;background:var(--gold);flex-shrink:0}
 .leg-item-top h3{font-family:Arial,sans-serif;font-size:.8rem;color:var(--navy);font-weight:normal;margin:0}
+.leg-item-top.nom-marque{font-family:Arial,sans-serif;font-size:.8rem;color:var(--navy);font-weight:normal;margin:0}
 .leg-item p{font-family:Arial,sans-serif;font-size:.73rem;color:var(--muted);line-height:1.5;padding-left:1.35rem}
+.leg-region-header{display:flex;justify-content:space-between;align-items:center;padding:.6rem 1.1rem .3rem;background:var(--navy)}
+.leg-region-titre{font-family:Arial,sans-serif;font-size:.72rem;letter-spacing:.15em;color:var(--gold-l);text-transform:uppercase;font-weight:normal;margin:0}
+.leg-region-count{font-family:Arial,sans-serif;font-size:.62rem;color:rgba(255,255,255,.4)}
 .leg-tag{font-size:.62rem;color:var(--gold-vd);border:1px solid rgba(184,150,62,.3);padding:.08rem .32rem;letter-spacing:.06em;display:inline-block;margin-top:.3rem;margin-left:1.35rem}
 .legende-nav{display:flex;justify-content:space-between;align-items:center;padding:.55rem .9rem;background:var(--navy)}
 .leg-nav-btn{background:none;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.55);width:26px;height:26px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:.8rem;transition:all .2s}

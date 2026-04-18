@@ -54,7 +54,7 @@ function genererFeatured(m, categorie) {
   </div>
   <div class="b-feat-body">
     <span class="b-feat-tag">${sousCats}</span>
-    <p class="b-feat-name" itemprop="name">${m.nom_societe}</p>
+    <h3 class="b-feat-name" itemprop="name">${m.nom_societe}</h3>
     ${badgeVerif}
     <p class="b-feat-desc" itemprop="description">${m.description || ''}</p>
     <div class="b-feat-footer">
@@ -112,7 +112,7 @@ function genererLegende(marques) {
     const loc  = m.ville && m.region ? `${m.ville} — ${m.region}` : (m.ville || m.region || '');
     return `
 <div class="leg-item${i === 0 ? ' active' : ''}" data-region="${m.region || ''}">
-  <div class="leg-item-top"><div class="leg-dot"></div><h3>${nom}</h3></div>
+  <div class="leg-item-top"><div class="leg-dot"></div><p class="nom-marque">${nom}</p></div>
   ${mini ? `<p>${mini}</p>` : ''}
   ${loc  ? `<span class="leg-tag">${loc}</span>` : ''}
 </div>`;
