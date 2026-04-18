@@ -41,25 +41,7 @@
 {{MARQUE_VEDETTE_CSS}}
 {{MARQUES_GRID_CSS}}
 
-.produits-section{background:var(--white);padding:5rem 2rem}
-.products-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem;margin-top:3rem}
-.p-card{background:var(--cream);border:1px solid var(--border);overflow:hidden;transition:border-color .2s,box-shadow .2s;cursor:pointer;position:relative}
-.p-card:hover{border-color:var(--gold);box-shadow:0 4px 16px rgba(184,150,62,.12)}
-.p-card-link{position:absolute;inset:0;z-index:1;font-size:0;color:transparent}
-.p-img{width:100%;position:relative}
-.p-img::before{content:'';display:block;padding-bottom:100%}
-.p-img-inner{position:absolute;inset:0;background:var(--cream-d);overflow:hidden}
-.p-img-inner picture,.p-img-inner img{width:100%;height:100%;display:block;object-fit:cover;object-position:center}
-.p-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(13,27,62,.6),transparent);opacity:0;transition:opacity .3s;display:flex;align-items:flex-end;padding:.7rem}
-.p-card:hover .p-overlay{opacity:1}
-.p-overlay span{font-family:Arial,sans-serif;font-size:.68rem;color:rgba(255,255,255,.9);letter-spacing:.08em}
-.p-info{padding:.8rem}
-.p-brand{font-family:Arial,sans-serif;font-size:.62rem;color:var(--gold);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.18rem}
-.p-name{font-size:.84rem;color:var(--navy);line-height:1.3;margin-bottom:.38rem}
-.p-orig{display:flex;align-items:center;gap:.28rem;margin-top:.38rem}
-.p-orig-dot{width:5px;height:5px;background:var(--gold);border-radius:50%;flex-shrink:0}
-.p-orig-lbl{font-family:Arial,sans-serif;font-size:.62rem;color:var(--muted)}
-@media(max-width:900px){.products-grid{grid-template-columns:repeat(2,1fr)}}
+{{PRODUITS_CSS}}
 
 {{CARTE_CSS}}
 
@@ -183,97 +165,7 @@
 {{MARQUES_SECTION}}
 
 <!-- PRODUITS -->
-<section class="produits-section" id="produits" aria-labelledby="produits-title">
-  <div class="containeur">
-    <div class="s-label">Coup de cœur</div>
-    <h2 class="s-title" id="produits-title">Produits d'épicerie fine à la une</h2>
-    <div class="s-div"></div>
-    <p class="s-sub">Miel français, confiture artisanale, chocolat grand cru, foie gras du Périgord, vin de France… une sélection de produits d'épicerie fine issus des marques françaises référencées.</p>
-    <div class="products-grid" role="list">
-      <article class="p-card" role="listitem" itemscope itemtype="https://schema.org/Product">
-        <a href="/produits/miel-lavande-aop-provence" class="p-card-link" aria-label="Miel de Lavande AOP Provence" tabindex="0">Miel de Lavande AOP Provence</a><div class="p-img"><div class="p-img-inner">
-        <picture>
-          <source srcset="/img/600x600/avif/miel-lavande-aop-provence.avif" type="image/avif">
-          <img src="/img/600x600/webp/miel-lavande-aop-provence.webp"
-               alt="Miel de Lavande AOP Provence — Apiculture du Mont, Hautes-Alpes"
-               width="600" height="600"
-               loading="lazy" decoding="async">
-        </picture>
-        </div><div class="p-overlay"><span>Voir le produit →</span></div></div><div class="p-info"><div class="p-brand" itemprop="brand" itemscope itemtype="https://schema.org/Brand"><span itemprop="name">Apiculture du Mont</span></div><h3 class="p-name" itemprop="name">Miel de Lavande AOP Provence</h3><div class="p-orig"><div class="p-orig-dot"></div><span class="p-orig-lbl">Hautes-Alpes</span></div></div></article>
-      <article class="p-card" role="listitem" itemscope itemtype="https://schema.org/Product">
-        <a href="/produits/tablette-noir-75-grand-cru" class="p-card-link" aria-label="Tablette Noir 75% Grand Cru" tabindex="0">Tablette Noir 75% Grand Cru</a><div class="p-img"><div class="p-img-inner">
-        <picture>
-          <source srcset="/img/600x600/avif/tablette-noir-75-grand-cru.avif" type="image/avif">
-          <img src="/img/600x600/webp/tablette-noir-75-grand-cru.webp"
-               alt="Tablette Chocolat Noir 75% Grand Cru — Chocolaterie du Belvédère, Lyon"
-               width="600" height="600"
-               loading="lazy" decoding="async">
-        </picture>
-        </div><div class="p-overlay"><span>Voir le produit →</span></div></div><div class="p-info"><div class="p-brand" itemprop="brand" itemscope itemtype="https://schema.org/Brand"><span itemprop="name">Chocolaterie du Belvédère</span></div><h3 class="p-name" itemprop="name">Tablette Noir 75% Grand Cru</h3><div class="p-orig"><div class="p-orig-dot"></div><span class="p-orig-lbl">Lyon, Rhône</span></div></div></article>
-      <article class="p-card" role="listitem" itemscope itemtype="https://schema.org/Product">
-        <a href="/produits/galettes-beurre-isigny-aop" class="p-card-link" aria-label="Galettes Beurre d'Isigny AOP" tabindex="0">Galettes Beurre d'Isigny AOP</a><div class="p-img"><div class="p-img-inner">
-        <picture>
-          <source srcset="/img/600x600/avif/galettes-beurre-isigny-aop.avif" type="image/avif">
-          <img src="/img/600x600/webp/galettes-beurre-isigny-aop.webp"
-               alt="Galettes au Beurre d'Isigny AOP — La Biscuiterie Bretonne, Quimper"
-               width="600" height="600"
-               loading="lazy" decoding="async">
-        </picture>
-        </div><div class="p-overlay"><span>Voir le produit →</span></div></div><div class="p-info"><div class="p-brand" itemprop="brand" itemscope itemtype="https://schema.org/Brand"><span itemprop="name">La Biscuiterie Bretonne</span></div><h3 class="p-name" itemprop="name">Galettes Beurre d'Isigny AOP</h3><div class="p-orig"><div class="p-orig-dot"></div><span class="p-orig-lbl">Quimper, Finistère</span></div></div></article>
-      <article class="p-card" role="listitem" itemscope itemtype="https://schema.org/Product">
-        <a href="/produits/foie-gras-canard-entier-igp" class="p-card-link" aria-label="Foie Gras de Canard Entier IGP" tabindex="0">Foie Gras de Canard Entier IGP</a><div class="p-img"><div class="p-img-inner">
-        <picture>
-          <source srcset="/img/600x600/avif/foie-gras-canard-entier-igp.avif" type="image/avif">
-          <img src="/img/600x600/webp/foie-gras-canard-entier-igp.webp"
-               alt="Foie Gras de Canard Entier IGP — Maison Fabre, Périgord"
-               width="600" height="600"
-               loading="lazy" decoding="async">
-        </picture>
-        </div><div class="p-overlay"><span>Voir le produit →</span></div></div><div class="p-info"><div class="p-brand" itemprop="brand" itemscope itemtype="https://schema.org/Brand"><span itemprop="name">Maison Fabre</span></div><h3 class="p-name" itemprop="name">Foie Gras de Canard Entier IGP</h3><div class="p-orig"><div class="p-orig-dot"></div><span class="p-orig-lbl">Périgord, Dordogne</span></div></div></article>
-      <article class="p-card" role="listitem" itemscope itemtype="https://schema.org/Product">
-        <a href="/produits/confiture-fraises-carpentras" class="p-card-link" aria-label="Confiture Fraises de Carpentras" tabindex="0">Confiture Fraises de Carpentras</a><div class="p-img"><div class="p-img-inner">
-        <picture>
-          <source srcset="/img/600x600/avif/confiture-fraises-carpentras.avif" type="image/avif">
-          <img src="/img/600x600/webp/confiture-fraises-carpentras.webp"
-               alt="Confiture Fraises de Carpentras — Confiserie du Moulin, Apt"
-               width="600" height="600"
-               loading="lazy" decoding="async">
-        </picture>
-        </div><div class="p-overlay"><span>Voir le produit →</span></div></div><div class="p-info"><div class="p-brand" itemprop="brand" itemscope itemtype="https://schema.org/Brand"><span itemprop="name">Confiserie du Moulin</span></div><h3 class="p-name" itemprop="name">Confiture Fraises de Carpentras</h3><div class="p-orig"><div class="p-orig-dot"></div><span class="p-orig-lbl">Apt, Vaucluse</span></div></div></article>
-      <article class="p-card" role="listitem" itemscope itemtype="https://schema.org/Product">
-        <a href="/produits/rose-aop-cotes-de-provence-2023" class="p-card-link" aria-label="Rosé AOP Côtes-de-Provence 2023" tabindex="0">Rosé AOP Côtes-de-Provence 2023</a><div class="p-img"><div class="p-img-inner">
-        <picture>
-          <source srcset="/img/600x600/avif/rose-aop-cotes-de-provence-2023.avif" type="image/avif">
-          <img src="/img/600x600/webp/rose-aop-cotes-de-provence-2023.webp"
-               alt="Rosé AOP Côtes-de-Provence 2023 — Domaine des Collines, Var"
-               width="600" height="600"
-               loading="lazy" decoding="async">
-        </picture>
-        </div><div class="p-overlay"><span>Voir le produit →</span></div></div><div class="p-info"><div class="p-brand" itemprop="brand" itemscope itemtype="https://schema.org/Brand"><span itemprop="name">Domaine des Collines</span></div><h3 class="p-name" itemprop="name">Rosé AOP Côtes-de-Provence 2023</h3><div class="p-orig"><div class="p-orig-dot"></div><span class="p-orig-lbl">Vidauban, Var</span></div></div></article>
-      <article class="p-card" role="listitem" itemscope itemtype="https://schema.org/Product">
-        <a href="/produits/huile-olive-aop-vallee-des-baux" class="p-card-link" aria-label="Huile d'Olive AOP Vallée des Baux" tabindex="0">Huile d'Olive AOP Vallée des Baux</a><div class="p-img"><div class="p-img-inner">
-        <picture>
-          <source srcset="/img/600x600/avif/huile-olive-aop-vallee-des-baux.avif" type="image/avif">
-          <img src="/img/600x600/webp/huile-olive-aop-vallee-des-baux.webp"
-               alt="Huile d'Olive AOP Vallée des Baux — Moulin de la Roque"
-               width="600" height="600"
-               loading="lazy" decoding="async">
-        </picture>
-        </div><div class="p-overlay"><span>Voir le produit →</span></div></div><div class="p-info"><div class="p-brand" itemprop="brand" itemscope itemtype="https://schema.org/Brand"><span itemprop="name">Moulin de la Roque</span></div><h3 class="p-name" itemprop="name">Huile d'Olive AOP Vallée des Baux</h3><div class="p-orig"><div class="p-orig-dot"></div><span class="p-orig-lbl">Les Baux-de-Provence</span></div></div></article>
-      <article class="p-card" role="listitem" itemscope itemtype="https://schema.org/Product">
-        <a href="/produits/jambon-bayonne-igp-24-mois" class="p-card-link" aria-label="Jambon de Bayonne IGP 24 mois" tabindex="0">Jambon de Bayonne IGP 24 mois</a><div class="p-img"><div class="p-img-inner">
-        <picture>
-          <source srcset="/img/600x600/avif/jambon-bayonne-igp-24-mois.avif" type="image/avif">
-          <img src="/img/600x600/webp/jambon-bayonne-igp-24-mois.webp"
-               alt="Jambon de Bayonne IGP 24 mois — Charcuterie du Pays Basque"
-               width="600" height="600"
-               loading="lazy" decoding="async">
-        </picture>
-        </div><div class="p-overlay"><span>Voir le produit →</span></div></div><div class="p-info"><div class="p-brand" itemprop="brand" itemscope itemtype="https://schema.org/Brand"><span itemprop="name">Charcuterie du Pays Basque</span></div><h3 class="p-name" itemprop="name">Jambon de Bayonne IGP 24 mois</h3><div class="p-orig"><div class="p-orig-dot"></div><span class="p-orig-lbl">Bayonne, Pyr.-Atl.</span></div></div></article>
-    </div>
-    <div style="text-align:center;margin-top:2rem"><button class="btn-ghost" type="button">Voir tous les produits d'épicerie française →</button></div>
-  </div>
-</section>
+{{PRODUITS_SECTION}}
 
 <!-- CARTE D3 -->
 {{CARTE_SECTION}}

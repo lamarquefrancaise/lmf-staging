@@ -1,13 +1,11 @@
 // build.js
 // Lance avec : node build.js
-// Injecte le CSS nav, footer, global, breadcrumb et les données Supabase
-// dans toutes les pages déclarées dans PAGES.
 
 const fs   = require('fs');
 const path = require('path');
 
 // ─────────────────────────────────────────────
-// CREDENTIALS SUPABASE (injectés via secrets GitHub Actions)
+// CREDENTIALS SUPABASE
 // ─────────────────────────────────────────────
 const SUPABASE_URL = process.env.VITE_SUPABASE_URL;
 const SUPABASE_KEY = process.env.VITE_SUPABASE_ANON_KEY;
@@ -45,6 +43,7 @@ const bandeauCtaCss      = fs.readFileSync(path.join(__dirname, 'css/bandeau-cta
 const marquesSectionCss  = fs.readFileSync(path.join(__dirname, 'css/marques-section.css'), 'utf8');
 const marqueVedetteCss   = fs.readFileSync(path.join(__dirname, 'css/marque-vedette.css'), 'utf8');
 const marquesGridCss     = fs.readFileSync(path.join(__dirname, 'css/marques-grid.css'), 'utf8');
+const produitsSectionCss = fs.readFileSync(path.join(__dirname, 'css/produits-section.css'), 'utf8');
 
 // ─────────────────────────────────────────────
 // FONCTION : résoudre le nav avec le bon lien actif
@@ -57,6 +56,8 @@ function resoudreNav(actif) {
 
 // ─────────────────────────────────────────────
 // FONCTION : générer l'article #brandFeatured
+// La vedette est choisie via le champ "vedette" = true
+// Le badge vérifié s'affiche si "verifiee" = true
 // ─────────────────────────────────────────────
 function genererFeatured(m, categorie) {
   const initiales = m.nom_societe.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
@@ -85,7 +86,10 @@ function genererFeatured(m, categorie) {
 }
 
 // ─────────────────────────────────────────────
-// FONCTION : générer la grille #brandsGrid 
+// FONCTION : générer la grille #brandsGrid
+// Priorité aux marques mis_en_avant = true (max 6)
+// Complète avec les plus récentes si besoin
+// Exclut toujours la vedette
 // ─────────────────────────────────────────────
 function genererGrid(marques, categorie) {
   const cartes = marques.map(m => {
@@ -117,7 +121,27 @@ function genererGrid(marques, categorie) {
 }
 
 // ─────────────────────────────────────────────
-// FONCTION : générer les items de légende
+// FONCTION : sélectionner les marques pour la grille
+// Priorité mis_en_avant=true, complète avec récentes
+// Exclut la vedette dans tous les cas
+// ─────────────────────────────────────────────
+function selectionnerGrille(marques, vedette, limite) {
+  const idVedette   = vedette ? vedette.id : null;
+  const sansVedette = marques.filter(m => m.id !== idVedette);
+
+  const misEnAvant  = sansVedette.filter(m => m.mis_en_avant === true);
+  const autres      = sansVedette.filter(m => m.mis_en_avant !== true);
+
+  if (misEnAvant.length >= limite) {
+    return misEnAvant.slice(0, limite);
+  }
+
+  const complement = autres.slice(0, limite - misEnAvant.length);
+  return [...misEnAvant, ...complement];
+}
+
+// ─────────────────────────────────────────────
+// FONCTION : générer les items de légende carte
 // ─────────────────────────────────────────────
 function genererLegende(marques) {
   return marques.map((m, i) => {
@@ -134,7 +158,7 @@ function genererLegende(marques) {
 }
 
 // ─────────────────────────────────────────────
-// FONCTION : générer la section carte complète
+// FONCTION : générer la section carte
 // ─────────────────────────────────────────────
 function genererSectionCarte(marquesAvecCoords, data) {
   if (!marquesAvecCoords.length) return '';
@@ -187,7 +211,65 @@ ${mapDataJs}
 }
 
 // ─────────────────────────────────────────────
-// FONCTION : générer le JSON-LD ItemList
+// FONCTION : générer une carte produit
+// ─────────────────────────────────────────────
+function genererCarteProduit(p) {
+  const nom      = p.nom_produit || '';
+  const marque   = p.marque || '';
+  const region   = p.region || '';
+  const urlProd  = p.url_produit || '#';
+  const imgAvif  = p.image_avif || '';
+  const imgWebp  = p.image_webp || '';
+  const altImg   = `${nom} — ${marque}${region ? ', ' + region : ''}`;
+
+  return `
+<article class="p-card" role="listitem" itemscope itemtype="https://schema.org/Product">
+  <a href="${urlProd}" class="p-card-link" aria-label="${nom}" tabindex="0">${nom}</a>
+  <div class="p-img"><div class="p-img-inner">
+    <picture>
+      ${imgAvif ? `<source srcset="${imgAvif}" type="image/avif">` : ''}
+      <img src="${imgWebp}" alt="${altImg}" width="600" height="600" loading="lazy" decoding="async">
+    </picture>
+  </div><div class="p-overlay"><span>Voir le produit →</span></div></div>
+  <div class="p-info">
+    <div class="p-brand" itemprop="brand" itemscope itemtype="https://schema.org/Brand">
+      <span itemprop="name">${marque}</span>
+    </div>
+    <h3 class="p-name" itemprop="name">${nom}</h3>
+    <div class="p-orig">
+      <div class="p-orig-dot"></div>
+      <span class="p-orig-lbl">${region}</span>
+    </div>
+  </div>
+</article>`;
+}
+
+// ─────────────────────────────────────────────
+// FONCTION : générer la section produits
+// Retourne '' si aucun produit
+// ─────────────────────────────────────────────
+function genererSectionProduits(produits, data) {
+  if (!produits.length) return '';
+
+  const cartes = produits.map(genererCarteProduit).join('');
+
+  return `
+<section class="produits-section" id="produits" aria-labelledby="produits-title">
+  <div class="containeur">
+    <div class="s-label">${data.produits_label || 'Coup de cœur'}</div>
+    <h2 class="s-title" id="produits-title">${data.produits_titre || 'Produits à la une'}</h2>
+    <div class="s-div"></div>
+    <p class="s-sub">${data.produits_sous_titre || ''}</p>
+    <div class="products-grid" role="list">
+      ${cartes}
+    </div>
+    ${data.produits_cta ? `<div style="text-align:center;margin-top:2rem"><button class="btn-ghost" type="button">${data.produits_cta}</button></div>` : ''}
+  </div>
+</section>`;
+}
+
+// ─────────────────────────────────────────────
+// FONCTION : générer le JSON-LD ItemList marques
 // ─────────────────────────────────────────────
 function genererItemListJsonLd(marques, data) {
   if (!marques.length) return '';
@@ -256,12 +338,66 @@ function genererFaqHtml(data) {
 }
 
 // ─────────────────────────────────────────────
+// FONCTION : fetch produits depuis Supabase
+// avec jointure région depuis entreprises
+// Priorité mis_en_avant=true, limite 8
+// ─────────────────────────────────────────────
+async function fetchProduits(categorie) {
+  // Récupérer tous les produits de la catégorie
+  const url = `${SUPABASE_URL}/rest/v1/produits?categories=cs.{${categorie}}&select=id,nom_produit,marque,description,categories,prix,mis_en_avant,image_avif,image_webp,url_produit,created_at&order=created_at.desc`;
+
+  const res = await fetch(url, {
+    headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}` }
+  });
+
+  if (!res.ok) {
+    console.warn(`⚠️  Erreur Supabase produits (${res.status})`);
+    return [];
+  }
+
+  const produits = await res.json();
+  if (!produits.length) return [];
+
+  // Sélection avec priorité mis_en_avant
+  const misEnAvant = produits.filter(p => p.mis_en_avant === true);
+  const autres     = produits.filter(p => p.mis_en_avant !== true);
+
+  let selection;
+  if (misEnAvant.length >= 8) {
+    selection = misEnAvant.slice(0, 8);
+  } else {
+    selection = [...misEnAvant, ...autres.slice(0, 8 - misEnAvant.length)];
+  }
+
+  // Récupérer les régions depuis entreprises pour les marques uniques
+  const marquesUniques = [...new Set(selection.map(p => p.marque).filter(Boolean))];
+
+  if (marquesUniques.length) {
+    const marquesParam = marquesUniques.map(m => `"${m}"`).join(',');
+    const urlEntreprises = `${SUPABASE_URL}/rest/v1/entreprises?nom_societe=in.(${marquesParam})&select=nom_societe,region`;
+
+    const resE = await fetch(urlEntreprises, {
+      headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}` }
+    });
+
+    if (resE.ok) {
+      const entreprises = await resE.json();
+      const regionParMarque = {};
+      entreprises.forEach(e => { regionParMarque[e.nom_societe] = e.region || ''; });
+      selection = selection.map(p => ({ ...p, region: regionParMarque[p.marque] || '' }));
+    }
+  }
+
+  return selection;
+}
+
+// ─────────────────────────────────────────────
 // FONCTION PRINCIPALE : fetch Supabase + génération
 // ─────────────────────────────────────────────
 async function genererSectionMarques(data) {
   if (!SUPABASE_URL || !SUPABASE_KEY) {
-    console.warn('⚠️  Variables Supabase manquantes — section marques ignorée.');
-    return { marques: '', carte: '', heroCount: '0', itemListJsonLd: '', afficherVedette: false, afficherGrid: false };
+    console.warn('⚠️  Variables Supabase manquantes — sections ignorées.');
+    return { marques: '', carte: '', produits: '', heroCount: '0', itemListJsonLd: '', afficherVedette: false, afficherGrid: false, afficherProduits: false };
   }
 
   // ── Comptage total pour heroCount ──────────────────────────
@@ -273,8 +409,8 @@ async function genererSectionMarques(data) {
     ? (resCount.headers.get('content-range') || '').split('/')[1] || '0'
     : '0';
 
-  // ── Données marques ────────────────────────────────────────
-  const url = `${SUPABASE_URL}/rest/v1/entreprises?categories=cs.{${data.supabase_categorie}}&select=nom_societe,description,mini_descriptif,ville,region,url_site,verifiee,categories,longitude,latitude`;
+  // ── Données marques — triées : vedette d'abord, puis mis_en_avant, puis récentes ──
+  const url = `${SUPABASE_URL}/rest/v1/entreprises?categories=cs.{${data.supabase_categorie}}&select=id,nom_societe,description,mini_descriptif,ville,region,url_site,verifiee,vedette,mis_en_avant,categories,longitude,latitude&order=created_at.desc`;
 
   const res = await fetch(url, {
     headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}` }
@@ -282,16 +418,18 @@ async function genererSectionMarques(data) {
 
   if (!res.ok) {
     const errBody = await res.text();
-    console.warn(`⚠️  Erreur Supabase (${res.status}):`, errBody);
-    return { marques: '', carte: '', heroCount, itemListJsonLd: '', afficherVedette: false, afficherGrid: false };
+    console.warn(`⚠️  Erreur Supabase marques (${res.status}):`, errBody);
+    return { marques: '', carte: '', produits: '', heroCount, itemListJsonLd: '', afficherVedette: false, afficherGrid: false, afficherProduits: false };
   }
 
   const marques = await res.json();
-  if (!marques.length) return { marques: '', carte: '', heroCount, itemListJsonLd: '', afficherVedette: false, afficherGrid: false };
+  if (!marques.length) return { marques: '', carte: '', produits: '', heroCount, itemListJsonLd: '', afficherVedette: false, afficherGrid: false, afficherProduits: false };
 
-  // ── Section marques ────────────────────────────────────────
-  const vedette = marques.find(m => m.verifiee === true) || null;
-  const grille  = marques.filter(m => m !== vedette).slice(0, 6);
+  // ── Sélection vedette : champ vedette = true, fallback première marque ──
+  const vedette = marques.find(m => m.vedette === true) || null;
+
+  // ── Sélection grille avec priorité mis_en_avant ──
+  const grille = selectionnerGrille(marques, vedette, 6);
 
   const htmlFeatured = vedette       ? genererFeatured(vedette, data.supabase_categorie) : '';
   const htmlGrid     = grille.length ? genererGrid(grille, data.supabase_categorie)      : '';
@@ -324,7 +462,12 @@ async function genererSectionMarques(data) {
   );
   const htmlCarte = genererSectionCarte(marquesAvecCoords, data);
 
-  return { marques: htmlMarques, carte: htmlCarte, heroCount, itemListJsonLd, afficherVedette, afficherGrid };
+  // ── Section produits ───────────────────────────────────────
+  const produitsData    = await fetchProduits(data.supabase_categorie);
+  const htmlProduits    = genererSectionProduits(produitsData, data);
+  const afficherProduits = !!htmlProduits;
+
+  return { marques: htmlMarques, carte: htmlCarte, produits: htmlProduits, heroCount, itemListJsonLd, afficherVedette, afficherGrid, afficherProduits };
 }
 
 // ─────────────────────────────────────────────
@@ -343,137 +486,79 @@ async function build() {
 
     let html = fs.readFileSync(chemin, 'utf8');
 
-    // Injection CSS global
-    if (html.includes('{{GLOBAL_CSS}}')) {
-      html = html.replace('{{GLOBAL_CSS}}', globalCss);
-    } else {
-      console.warn(`⚠️  Marqueur {{GLOBAL_CSS}} absent dans : ${page.fichier}`);
+    // Injections CSS statiques
+    const injectionsCss = [
+      ['{{GLOBAL_CSS}}',          globalCss],
+      ['{{NAV_CSS}}',             navCss],
+      ['{{BREADCRUMB_CSS}}',      breadcrumbCss],
+      ['{{HERO_CATEGORIES_CSS}}', heroCategorieCss],
+      ['{{SOUS_CATEGORIES_CSS}}', sousCategorieCss],
+      ['{{SEO_TEXTE_CATE_CSS}}',  seoTextCateCss],
+      ['{{FAQ_CSS}}',             faqCss],
+      ['{{AUTRE_CATE_CSS}}',      autresCateCss],
+      ['{{BANDEAU_CTA_CSS}}',     bandeauCtaCss],
+      ['{{FOOTER_CSS}}',          footerCss],
+    ];
+
+    for (const [marqueur, contenu] of injectionsCss) {
+      if (html.includes(marqueur)) {
+        html = html.replace(marqueur, contenu);
+      } else {
+        console.warn(`⚠️  Marqueur ${marqueur} absent dans : ${page.fichier}`);
+      }
     }
 
-    // Injection CSS nav
-    if (html.includes('{{NAV_CSS}}')) {
-      html = html.replace('{{NAV_CSS}}', navCss);
-    } else {
-      console.warn(`⚠️  Marqueur {{NAV_CSS}} absent dans : ${page.fichier}`);
-    }
-
-    // Injection CSS breadcrumb
-    if (html.includes('{{BREADCRUMB_CSS}}')) {
-      html = html.replace('{{BREADCRUMB_CSS}}', breadcrumbCss);
-    } else {
-      console.warn(`⚠️  Marqueur {{BREADCRUMB_CSS}} absent dans : ${page.fichier}`);
-    }
-
-    // Injection CSS hero catégories
-    if (html.includes('{{HERO_CATEGORIES_CSS}}')) {
-      html = html.replace('{{HERO_CATEGORIES_CSS}}', heroCategorieCss);
-    } else {
-      console.warn(`⚠️  Marqueur {{HERO_CATEGORIES_CSS}} absent dans : ${page.fichier}`);
-    }
-
-    // Injection CSS sous-catégories grid
-    if (html.includes('{{SOUS_CATEGORIES_CSS}}')) {
-      html = html.replace('{{SOUS_CATEGORIES_CSS}}', sousCategorieCss);
-    } else {
-      console.warn(`⚠️  Marqueur {{SOUS_CATEGORIES_CSS}} absent dans : ${page.fichier}`);
-    }
-
-    // Injection CSS du texte SEO
-    if (html.includes('{{SEO_TEXTE_CATE_CSS}}')) {
-      html = html.replace('{{SEO_TEXTE_CATE_CSS}}', seoTextCateCss);
-    } else {
-      console.warn(`⚠️  Marqueur {{SEO_TEXTE_CATE_CSS}} absent dans : ${page.fichier}`);
-    }
-
-    // Injection CSS FAQ
-    if (html.includes('{{FAQ_CSS}}')) {
-      html = html.replace('{{FAQ_CSS}}', faqCss);
-    } else {
-      console.warn(`⚠️  Marqueur {{FAQ_CSS}} absent dans : ${page.fichier}`);
-    }
-
-    // Injection CSS autres catégories
-    if (html.includes('{{AUTRE_CATE_CSS}}')) {
-      html = html.replace('{{AUTRE_CATE_CSS}}', autresCateCss);
-    } else {
-      console.warn(`⚠️  Marqueur {{AUTRE_CATE_CSS}} absent dans : ${page.fichier}`);
-    }
-
-    // Injection CSS bandeau CTA
-    if (html.includes('{{BANDEAU_CTA_CSS}}')) {
-      html = html.replace('{{BANDEAU_CTA_CSS}}', bandeauCtaCss);
-    } else {
-      console.warn(`⚠️  Marqueur {{BANDEAU_CTA_CSS}} absent dans : ${page.fichier}`);
-    }
-
-    // Injection CSS footer
-    if (html.includes('{{FOOTER_CSS}}')) {
-      html = html.replace('{{FOOTER_CSS}}', footerCss);
-    } else {
-      console.warn(`⚠️  Marqueur {{FOOTER_CSS}} absent dans : ${page.fichier}`);
-    }
-
-    // Injection HTML nav
+    // Injection HTML nav et footer
     if (html.includes('{{NAV}}')) {
       html = html.replace('{{NAV}}', resoudreNav(page.actif));
     } else {
       console.warn(`⚠️  Marqueur {{NAV}} absent dans : ${page.fichier}`);
     }
 
-    // Injection HTML footer
     if (html.includes('{{FOOTER}}')) {
       html = html.replace('{{FOOTER}}', footerHtml);
     } else {
       console.warn(`⚠️  Marqueur {{FOOTER}} absent dans : ${page.fichier}`);
     }
 
-    // Injection section marques + carte + CSS conditionnels + données structurées
+    // Injection sections dynamiques Supabase
     const dataPath = path.join(__dirname, `data/${page.actif}.json`);
     if (html.includes('{{MARQUES_SECTION}}')) {
       if (fs.existsSync(dataPath)) {
         const data = JSON.parse(fs.readFileSync(dataPath, 'utf8'));
-        const { marques, carte, heroCount, itemListJsonLd, afficherVedette, afficherGrid } = await genererSectionMarques(data);
+        const { marques, carte, produits, heroCount, itemListJsonLd, afficherVedette, afficherGrid, afficherProduits } = await genererSectionMarques(data);
 
         const afficherSection = afficherVedette || afficherGrid;
 
-        // Injection HTML sections
-        html = html.replace('{{MARQUES_SECTION}}', marques);
-        html = html.replace('{{CARTE_SECTION}}',   carte);
+        // HTML sections
+        html = html.replace('{{MARQUES_SECTION}}',   marques);
+        html = html.replace('{{CARTE_SECTION}}',     carte);
+        html = html.replace('{{PRODUITS_SECTION}}',  produits);
 
-        // Injection CSS conditionnels marques
-        html = html.replace('{{MARQUES_SECTION_CSS}}', afficherSection  ? marquesSectionCss : '');
-        html = html.replace('{{MARQUE_VEDETTE_CSS}}',  afficherVedette  ? marqueVedetteCss  : '');
-        html = html.replace('{{MARQUES_GRID_CSS}}',    afficherGrid     ? marquesGridCss    : '');
+        // CSS conditionnels marques
+        html = html.replace('{{MARQUES_SECTION_CSS}}', afficherSection   ? marquesSectionCss  : '');
+        html = html.replace('{{MARQUE_VEDETTE_CSS}}',  afficherVedette   ? marqueVedetteCss   : '');
+        html = html.replace('{{MARQUES_GRID_CSS}}',    afficherGrid      ? marquesGridCss     : '');
 
-        // Injection CSS carte (conditionnel via présence de la section)
-        html = html.replace('{{CARTE_CSS}}', carte ? carteCss : '');
+        // CSS conditionnels carte et produits
+        html = html.replace('{{CARTE_CSS}}',           carte             ? carteCss           : '');
+        html = html.replace('{{PRODUITS_CSS}}',        afficherProduits  ? produitsSectionCss : '');
 
-        // Injection JSON-LD ItemList
+        // Données structurées
         html = html.replace('{{ITEMLIST_JSON_LD}}', itemListJsonLd);
+        html = html.replace('{{FAQ_JSON_LD}}',      genererFaqJsonLd(data));
+        html = html.replace('{{FAQ_SECTION}}',      genererFaqHtml(data));
 
-        // Injection JSON-LD FAQPage
-        const faqJsonLd = genererFaqJsonLd(data);
-        html = html.replace('{{FAQ_JSON_LD}}', faqJsonLd);
-
-        // Injection section FAQ HTML
-        const faqHtml = genererFaqHtml(data);
-        html = html.replace('{{FAQ_SECTION}}', faqHtml);
-
-        // Injection heroCount dans <strong id="heroCount">
+        // heroCount
         html = html.replace(
           /<strong id="heroCount">[^<]*<\/strong>/,
           `<strong id="heroCount">${heroCount}</strong>`
         );
       } else {
-        html = html.replace('{{MARQUES_SECTION}}',  '');
-        html = html.replace('{{CARTE_SECTION}}',    '');
-        html = html.replace('{{MARQUES_SECTION_CSS}}', '');
-        html = html.replace('{{MARQUE_VEDETTE_CSS}}',  '');
-        html = html.replace('{{MARQUES_GRID_CSS}}',    '');
-        html = html.replace('{{CARTE_CSS}}',           '');
-        html = html.replace('{{ITEMLIST_JSON_LD}}',    '');
-        html = html.replace('{{FAQ_JSON_LD}}',         '');
-        html = html.replace('{{FAQ_SECTION}}',         '');
+        const marqueurs = ['{{MARQUES_SECTION}}','{{CARTE_SECTION}}','{{PRODUITS_SECTION}}',
+          '{{MARQUES_SECTION_CSS}}','{{MARQUE_VEDETTE_CSS}}','{{MARQUES_GRID_CSS}}',
+          '{{CARTE_CSS}}','{{PRODUITS_CSS}}','{{ITEMLIST_JSON_LD}}','{{FAQ_JSON_LD}}','{{FAQ_SECTION}}'];
+        marqueurs.forEach(m => { html = html.replace(m, ''); });
         console.warn(`⚠️  Pas de fichier data/${page.actif}.json — sections supprimées.`);
       }
     }

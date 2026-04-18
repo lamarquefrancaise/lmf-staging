@@ -1,13 +1,21 @@
 {
   "supabase_categorie": "Epicerie fine",
+  
   "section_label": "Marques d'exception",
   "section_titre": "Marques françaises d'épicerie fine",
   "section_sous_titre": "Sélectionnées parmi les meilleures marques de gastronomie française, chaque marque d'épicerie fine est vérifiée pour son origine, sa fabrication et son ancrage dans le terroir français.",
   "cta_texte": "Voir toutes les marques d'épicerie française →",
+  
+  "produits_label": "Coup de cœur",
+  "produits_titre": "Produits d'épicerie fine à la une",
+  "produits_sous_titre": "Miel français, confiture artisanale, chocolat grand cru, foie gras du Périgord, vin de France… une sélection de produits d'épicerie fine issus des marques françaises référencées.",
+  "produits_cta": "Voir tous les produits d'épicerie française →",
+  
   "carte_label": "Terroirs & origines",
   "carte_titre": "Les régions françaises de l'épicerie fine",
   "carte_sous_titre": "Chaque région de France possède ses spécialités de gastronomie française. Survolez les points pour explorer les terroirs des marques référencées.",
   "carte_note": "Survolez un point pour voir les spécialités régionales.",
+  
   "faq_label": "Questions fréquentes",
   "faq_titre": "Tout savoir sur l'épicerie fine française",
   "faq_sous_titre": "Vos questions sur les produits de gastronomie française.",
