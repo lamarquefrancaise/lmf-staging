@@ -53,12 +53,12 @@ const CATEGORIES = JSON.parse(fs.readFileSync(path.join(__dirname, 'data/categor
 // FONCTION : vérifier si une sous-catégorie
 // a du contenu dans Supabase (entreprises OU produits)
 // ─────────────────────────────────────────────
-async function sousCategorieADuContenu(slug) {
-  const categorie = encodeURIComponent(slug);
+async function sousCategorieADuContenu(sc) {
+  const nom = sc.nom_supabase;
 
   // Vérifier dans entreprises
   const resE = await fetch(
-    `${SUPABASE_URL}/rest/v1/entreprises?categories=cs.{${slug}}&select=id&limit=1`,
+    `${SUPABASE_URL}/rest/v1/entreprises?categories=cs.{${nom}}&select=id&limit=1`,
     { headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}`, Prefer: 'count=exact' } }
   );
   if (resE.ok) {
@@ -69,7 +69,7 @@ async function sousCategorieADuContenu(slug) {
 
   // Vérifier dans produits
   const resP = await fetch(
-    `${SUPABASE_URL}/rest/v1/produits?categories=cs.{${slug}}&select=id&limit=1`,
+    `${SUPABASE_URL}/rest/v1/produits?categories=cs.{${nom}}&select=id&limit=1`,
     { headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}`, Prefer: 'count=exact' } }
   );
   if (resP.ok) {
@@ -94,7 +94,7 @@ async function genererSousCategoriesHtml(categorieSlug, sousCategorieCourante) {
   // Vérifier le contenu de chaque sous-catégorie en parallèle
   const resultats = await Promise.all(
     sous_categories.map(async sc => {
-      const aContenu = await sousCategorieADuContenu(sc.slug);
+      const aContenu = await sousCategorieADuContenu(sc);
       return { ...sc, aContenu };
     })
   );
@@ -119,7 +119,7 @@ async function genererSousCategoriesHtml(categorieSlug, sousCategorieCourante) {
     </picture>
   </div>
   <div class="sc-overlay"></div>
-  <div class="sc-label"><span class="sc-name"><h3>${sc.nom}</h3></span></div>
+  <div class="sc-label"><span class="sc-name"><h3>${sc.nom_affichage}</h3></span></div>
 </div>`;
     }
 
@@ -132,7 +132,7 @@ async function genererSousCategoriesHtml(categorieSlug, sousCategorieCourante) {
     </picture>
   </div>
   <div class="sc-overlay"></div>
-  <div class="sc-label"><span class="sc-name"><h3>${sc.nom}</h3></span></div>
+  <div class="sc-label"><span class="sc-name"><h3>${sc.nom_affichage}</h3></span></div>
 </a>`;
   }).join('');
 
