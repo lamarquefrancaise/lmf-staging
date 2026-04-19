@@ -336,19 +336,21 @@ function initMap() {
             tip.textContent = m.label;
             tip.style.opacity = '1';
             positionnerTip(event, container, tip);
-            // Sync légende
             const items = legItems();
-            const idx = items.findIndex(el => el.querySelector('h3') && el.querySelector('h3').textContent === m.label);
+            const idx = items.findIndex(el => {
+              const p = el.querySelector('.nom-marque');
+              return p && p.textContent === m.label;
+            });
             if (idx >= 0) activateLeg(idx);
           };
 
-          g.on('mouseenter', afficherTip)
-           .on('mousemove', (event) => positionnerTip(event, container, tip))
-           .on('mouseleave', () => {
+          g.on('mouseenter', (event) => afficherTip(event))
+          .on('mousemove',  (event) => positionnerTip(event, container, tip))
+          .on('mouseleave', () => {
               d3.select(g.node()).select('.pin-halo-zoom').attr('r', 10 / scale).attr('fill', 'rgba(184,150,62,.12)');
               tip.style.opacity = '0';
             })
-           .on('click', (event) => {
+          .on('click', (event) => {
               event.stopPropagation();
               afficherTip(event);
               d3.select(g.node()).select('.pin-halo-zoom').attr('r', 14 / scale).attr('fill', 'rgba(184,150,62,.3)');
@@ -417,6 +419,7 @@ function positionnerTip(event, container, tip) {
   let x = event.clientX - rect.left + 12;
   let y = event.clientY - rect.top - 10;
   if (x + 250 > rect.width) x = event.clientX - rect.left - 260;
+  if (y < 0) y = event.clientY - rect.top + 20;
   tip.style.left = x + 'px';
   tip.style.top  = y + 'px';
 }
