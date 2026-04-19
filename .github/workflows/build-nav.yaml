@@ -14,6 +14,7 @@ on:
       - 'css/global.css'
       - 'css/breadcrumb.css'
       - 'data/*.json'
+      - 'data/categories.json
 
 permissions:
   contents: write

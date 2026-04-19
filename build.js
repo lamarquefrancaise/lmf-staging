@@ -7,17 +7,27 @@ const path = require('path');
 const SUPABASE_URL = process.env.VITE_SUPABASE_URL;
 const SUPABASE_KEY = process.env.VITE_SUPABASE_ANON_KEY;
 
+// ─────────────────────────────────────────────
+// PAGES À TRAITER
+// actif      = slug de la catégorie (pour nav + data JSON)
+// categorie  = slug de la catégorie principale (pour sous-cats)
+// sousCategorie = slug si c'est une page sous-catégorie, sinon null
+// ─────────────────────────────────────────────
 const PAGES = [
-  { fichier: 'made-in-france/epicerie-fine/index.html', actif: 'epicerie-fine' },
-  { fichier: 'made-in-france/mode/index.html',          actif: 'mode' },
-  { fichier: 'made-in-france/beaute/index.html',        actif: 'beaute' },
-  { fichier: 'made-in-france/bijoux/index.html',        actif: 'bijoux' },
-  { fichier: 'made-in-france/maison/index.html',        actif: 'maison' },
-  { fichier: 'made-in-france/sport/index.html',         actif: 'sport' },
-  { fichier: 'made-in-france/technologie/index.html',   actif: 'technologie' },
-  { fichier: 'index.html',                              actif: '' },
+  { fichier: 'made-in-france/epicerie-fine/index.html', actif: 'epicerie-fine',  categorie: 'epicerie-fine',  sousCategorie: null },
+  { fichier: 'made-in-france/miel/index.html',          actif: 'miel',           categorie: 'epicerie-fine',  sousCategorie: 'miel' },
+  { fichier: 'made-in-france/mode/index.html',          actif: 'mode',           categorie: 'mode',           sousCategorie: null },
+  { fichier: 'made-in-france/beaute/index.html',        actif: 'beaute',         categorie: 'beaute',         sousCategorie: null },
+  { fichier: 'made-in-france/bijoux/index.html',        actif: 'bijoux',         categorie: 'bijoux',         sousCategorie: null },
+  { fichier: 'made-in-france/maison/index.html',        actif: 'maison',         categorie: 'maison',         sousCategorie: null },
+  { fichier: 'made-in-france/sport/index.html',         actif: 'sport',          categorie: 'sport',          sousCategorie: null },
+  { fichier: 'made-in-france/technologie/index.html',   actif: 'technologie',    categorie: 'technologie',    sousCategorie: null },
+  { fichier: 'index.html',                              actif: '',               categorie: null,             sousCategorie: null },
 ];
 
+// ─────────────────────────────────────────────
+// LECTURE DES SOURCES STATIQUES
+// ─────────────────────────────────────────────
 const navCss             = fs.readFileSync(path.join(__dirname, 'css/nav.css'), 'utf8');
 const navHtml            = fs.readFileSync(path.join(__dirname, 'templates/nav.html'), 'utf8');
 const footerCss          = fs.readFileSync(path.join(__dirname, 'css/footer.css'), 'utf8');
@@ -36,6 +46,102 @@ const marqueVedetteCss   = fs.readFileSync(path.join(__dirname, 'css/marque-vede
 const marquesGridCss     = fs.readFileSync(path.join(__dirname, 'css/marques-grid.css'), 'utf8');
 const produitsSectionCss = fs.readFileSync(path.join(__dirname, 'css/produits-section.css'), 'utf8');
 
+// Chargement du fichier de définition des catégories
+const CATEGORIES = JSON.parse(fs.readFileSync(path.join(__dirname, 'data/categories.json'), 'utf8'));
+
+// ─────────────────────────────────────────────
+// FONCTION : vérifier si une sous-catégorie
+// a du contenu dans Supabase (entreprises OU produits)
+// ─────────────────────────────────────────────
+async function sousCategorieADuContenu(slug) {
+  const categorie = encodeURIComponent(slug);
+
+  // Vérifier dans entreprises
+  const resE = await fetch(
+    `${SUPABASE_URL}/rest/v1/entreprises?categories=cs.{${slug}}&select=id&limit=1`,
+    { headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}`, Prefer: 'count=exact' } }
+  );
+  if (resE.ok) {
+    const countHeader = resE.headers.get('content-range');
+    const count = countHeader ? parseInt(countHeader.split('/')[1]) : 0;
+    if (count > 0) return true;
+  }
+
+  // Vérifier dans produits
+  const resP = await fetch(
+    `${SUPABASE_URL}/rest/v1/produits?categories=cs.{${slug}}&select=id&limit=1`,
+    { headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}`, Prefer: 'count=exact' } }
+  );
+  if (resP.ok) {
+    const countHeader = resP.headers.get('content-range');
+    const count = countHeader ? parseInt(countHeader.split('/')[1]) : 0;
+    if (count > 0) return true;
+  }
+
+  return false;
+}
+
+// ─────────────────────────────────────────────
+// FONCTION : générer le HTML des sous-catégories
+// sousCategorieCourante = slug de la sous-cat active (null si page catégorie)
+// ─────────────────────────────────────────────
+async function genererSousCategoriesHtml(categorieSlug, sousCategorieCourante) {
+  if (!categorieSlug || !CATEGORIES[categorieSlug]) return '';
+
+  const { sous_categories } = CATEGORIES[categorieSlug];
+  if (!sous_categories || !sous_categories.length) return '';
+
+  // Vérifier le contenu de chaque sous-catégorie en parallèle
+  const resultats = await Promise.all(
+    sous_categories.map(async sc => {
+      const aContenu = await sousCategorieADuContenu(sc.slug);
+      return { ...sc, aContenu };
+    })
+  );
+
+  // Filtrer celles sans contenu
+  const avecContenu = resultats.filter(sc => sc.aContenu);
+  if (!avecContenu.length) return '';
+
+  const cartes = avecContenu.map(sc => {
+    const estActive    = sc.slug === sousCategorieCourante;
+    const classeActive = estActive ? ' active' : '';
+    const url          = `/made-in-france/${sc.slug}`;
+
+    // Sur la page sous-catégorie courante : card non cliquable
+    if (estActive) {
+      return `
+<div class="sc-card${classeActive}" role="listitem" aria-current="page">
+  <div class="sc-ph" role="img">
+    <picture>
+      <source srcset="/img/250x310/avif/${sc.image}.avif" type="image/avif">
+      <img src="/img/250x310/webp/${sc.image}.webp" alt="${sc.alt}" width="250" height="310" loading="lazy" decoding="async">
+    </picture>
+  </div>
+  <div class="sc-overlay"></div>
+  <div class="sc-label"><span class="sc-name"><h3>${sc.nom}</h3></span></div>
+</div>`;
+    }
+
+    return `
+<a href="${url}" class="sc-card${classeActive}" role="listitem">
+  <div class="sc-ph" role="img">
+    <picture>
+      <source srcset="/img/250x310/avif/${sc.image}.avif" type="image/avif">
+      <img src="/img/250x310/webp/${sc.image}.webp" alt="${sc.alt}" width="250" height="310" loading="lazy" decoding="async">
+    </picture>
+  </div>
+  <div class="sc-overlay"></div>
+  <div class="sc-label"><span class="sc-name"><h3>${sc.nom}</h3></span></div>
+</a>`;
+  }).join('');
+
+  return cartes;
+}
+
+// ─────────────────────────────────────────────
+// AUTRES FONCTIONS (inchangées)
+// ─────────────────────────────────────────────
 function resoudreNav(actif) {
   return navHtml.replace(/\{\{NAV_ACTIVE:([^}]+)\}\}/g, (_, slug) => {
     return slug === actif ? ' class="active"' : '';
@@ -54,7 +160,7 @@ function genererFeatured(m, categorie) {
   </div>
   <div class="b-feat-body">
     <span class="b-feat-tag">${sousCats}</span>
-    <h3 class="b-feat-name" itemprop="name">${m.nom_societe}</h3>
+    <p class="b-feat-name" itemprop="name">${m.nom_societe}</p>
     ${badgeVerif}
     <p class="b-feat-desc" itemprop="description">${m.description || ''}</p>
     <div class="b-feat-footer">
@@ -112,30 +218,25 @@ function genererLegende(marques) {
     const loc  = m.ville && m.region ? `${m.ville} — ${m.region}` : (m.ville || m.region || '');
     return `
 <div class="leg-item${i === 0 ? ' active' : ''}" data-region="${m.region || ''}">
-  <div class="leg-item-top"><div class="leg-dot"></div><p class="nom-marque">${nom}</p></div>
+  <div class="leg-item-top"><div class="leg-dot"></div><h3>${nom}</h3></div>
   ${mini ? `<p>${mini}</p>` : ''}
   ${loc  ? `<span class="leg-tag">${loc}</span>` : ''}
 </div>`;
   }).join('');
 }
 
-// ── Section carte : toutes les marques géolocalisées ─────────
 function genererSectionCarte(toutesMarquesCoords, data) {
   if (!toutesMarquesCoords.length) return '';
-
   const mapDataJs = toutesMarquesCoords.map(m => {
     const lon    = parseFloat(m.longitude);
     const lat    = parseFloat(m.latitude);
-    const region = (m.region           || '').replace(/'/g, "\\'");
-    const label  = (m.nom_societe      || '').replace(/'/g, "\\'");
-    const ville  = (m.ville            || '').replace(/'/g, "\\'");
-    const mini   = (m.mini_descriptif  || '').replace(/'/g, "\\'");
+    const region = (m.region          || '').replace(/'/g, "\\'");
+    const label  = (m.nom_societe     || '').replace(/'/g, "\\'");
+    const ville  = (m.ville           || '').replace(/'/g, "\\'");
+    const mini   = (m.mini_descriptif || '').replace(/'/g, "\\'");
     return `  { lon: ${lon}, lat: ${lat}, region: '${region}', label: '${label}', ville: '${ville}', mini: '${mini}' }`;
   }).join(',\n');
-
-  // Légende initiale = toutes les marques géolocalisées
   const legende = genererLegende(toutesMarquesCoords);
-
   return `
 <section class="carte-section" id="carte" aria-labelledby="carte-title">
   <div class="containeur">
@@ -145,16 +246,12 @@ function genererSectionCarte(toutesMarquesCoords, data) {
     <p class="s-sub">${data.carte_sous_titre || ''}</p>
     <div class="carte-layout">
       <div>
-        <div id="map-container">
-          <div id="mapTip" class="map-tip"></div>
-        </div>
+        <div id="map-container"><div id="mapTip" class="map-tip"></div></div>
         <p class="carte-note">${data.carte_note || ''}</p>
       </div>
       <div class="legende-box">
         <div class="legende-track-wrap" id="legWrap">
-          <div class="legende-track" id="legTrack">
-            ${legende}
-          </div>
+          <div class="legende-track" id="legTrack">${legende}</div>
         </div>
         <div class="legende-nav">
           <button class="leg-nav-btn" id="legPrev" type="button" aria-label="Région précédente">‹</button>
@@ -191,14 +288,9 @@ function genererCarteProduit(p) {
     </picture>
   </div><div class="p-overlay"><span>Voir le produit →</span></div></div>
   <div class="p-info">
-    <div class="p-brand" itemprop="brand" itemscope itemtype="https://schema.org/Brand">
-      <span itemprop="name">${marque}</span>
-    </div>
+    <div class="p-brand" itemprop="brand" itemscope itemtype="https://schema.org/Brand"><span itemprop="name">${marque}</span></div>
     <h3 class="p-name" itemprop="name">${nom}</h3>
-    <div class="p-orig">
-      <div class="p-orig-dot"></div>
-      <span class="p-orig-lbl">${region}</span>
-    </div>
+    <div class="p-orig"><div class="p-orig-dot"></div><span class="p-orig-lbl">${region}</span></div>
   </div>
 </article>`;
 }
@@ -213,9 +305,7 @@ function genererSectionProduits(produits, data) {
     <h2 class="s-title" id="produits-title">${data.produits_titre || 'Produits à la une'}</h2>
     <div class="s-div"></div>
     <p class="s-sub">${data.produits_sous_titre || ''}</p>
-    <div class="products-grid" role="list">
-      ${cartes}
-    </div>
+    <div class="products-grid" role="list">${cartes}</div>
     ${data.produits_cta ? `<div style="text-align:center;margin-top:2rem"><button class="btn-ghost" type="button">${data.produits_cta}</button></div>` : ''}
   </div>
 </section>`;
@@ -248,16 +338,14 @@ function genererFaqHtml(data) {
   if (!data.faq || !data.faq.length) return '';
   const items = data.faq.map((item, i) => {
     const n = i + 1;
-    const q = item.question || '';
-    const r = item.reponse  || '';
     return `
       <div class="faq-item" role="listitem">
         <button class="faq-q" aria-expanded="false" type="button" aria-controls="fa${n}" onclick="toggleFaq(this)">
-          <h3 class="faq-q-text">${q}</h3>
+          <span class="faq-q-text">${item.question || ''}</span>
           <span class="faq-toggle">+</span>
         </button>
         <div class="faq-sep" id="fs${n}"></div>
-        <div class="faq-a" id="fa${n}">${r}</div>
+        <div class="faq-a" id="fa${n}">${item.reponse || ''}</div>
       </div>`;
   }).join('');
   return `
@@ -267,40 +355,29 @@ function genererFaqHtml(data) {
     <h2 class="s-title" id="faq-title">${data.faq_titre || 'Questions fréquentes'}</h2>
     <div class="s-div"></div>
     <p class="s-sub">${data.faq_sous_titre || ''}</p>
-    <div class="faq-list" role="list">
-      ${items}
-    </div>
+    <div class="faq-list" role="list">${items}</div>
   </div>
 </section>`;
 }
 
 async function fetchProduits(categorie) {
   const url = `${SUPABASE_URL}/rest/v1/produits?categories=cs.{${categorie}}&select=id,nom_produit,marque,description,categories,prix,mis_en_avant,image_avif,image_webp,url_produit,created_at&order=created_at.desc`;
-  const res = await fetch(url, {
-    headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}` }
-  });
-  if (!res.ok) {
-    console.warn(`⚠️  Erreur Supabase produits (${res.status})`);
-    return [];
-  }
+  const res = await fetch(url, { headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}` } });
+  if (!res.ok) return [];
   const produits = await res.json();
   if (!produits.length) return [];
-
   const misEnAvant = produits.filter(p => p.mis_en_avant === true);
   const autres     = produits.filter(p => p.mis_en_avant !== true);
-  const selection  = misEnAvant.length >= 8
-    ? misEnAvant.slice(0, 8)
-    : [...misEnAvant, ...autres.slice(0, 8 - misEnAvant.length)];
-
+  const selection  = misEnAvant.length >= 8 ? misEnAvant.slice(0, 8) : [...misEnAvant, ...autres.slice(0, 8 - misEnAvant.length)];
   const marquesUniques = [...new Set(selection.map(p => p.marque).filter(Boolean))];
   if (marquesUniques.length) {
     const marquesParam   = marquesUniques.map(m => `"${m}"`).join(',');
-    const urlEntreprises = `${SUPABASE_URL}/rest/v1/entreprises?nom_societe=in.(${marquesParam})&select=nom_societe,region`;
-    const resE = await fetch(urlEntreprises, {
-      headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}` }
-    });
+    const resE = await fetch(
+      `${SUPABASE_URL}/rest/v1/entreprises?nom_societe=in.(${marquesParam})&select=nom_societe,region`,
+      { headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}` } }
+    );
     if (resE.ok) {
-      const entreprises    = await resE.json();
+      const entreprises     = await resE.json();
       const regionParMarque = {};
       entreprises.forEach(e => { regionParMarque[e.nom_societe] = e.region || ''; });
       return selection.map(p => ({ ...p, region: regionParMarque[p.marque] || '' }));
@@ -315,34 +392,25 @@ async function genererSectionMarques(data) {
     return { marques: '', carte: '', produits: '', heroCount: '0', itemListJsonLd: '', afficherVedette: false, afficherGrid: false, afficherProduits: false };
   }
 
-  // Comptage heroCount
   const resCount = await fetch(
     `${SUPABASE_URL}/rest/v1/entreprises?categories=cs.{${data.supabase_categorie}}&select=id`,
     { headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}`, Prefer: 'count=exact' } }
   );
-  const heroCount = resCount.ok
-    ? (resCount.headers.get('content-range') || '').split('/')[1] || '0'
-    : '0';
+  const heroCount = resCount.ok ? (resCount.headers.get('content-range') || '').split('/')[1] || '0' : '0';
 
-  // Toutes les marques de la catégorie pour la grille/vedette
   const url = `${SUPABASE_URL}/rest/v1/entreprises?categories=cs.{${data.supabase_categorie}}&select=id,nom_societe,description,mini_descriptif,ville,region,url_site,verifiee,vedette,mis_en_avant,categories,longitude,latitude&order=created_at.desc`;
-  const res = await fetch(url, {
-    headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}` }
-  });
+  const res = await fetch(url, { headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}` } });
 
   if (!res.ok) {
-    const errBody = await res.text();
-    console.warn(`⚠️  Erreur Supabase marques (${res.status}):`, errBody);
+    console.warn(`⚠️  Erreur Supabase marques (${res.status})`);
     return { marques: '', carte: '', produits: '', heroCount, itemListJsonLd: '', afficherVedette: false, afficherGrid: false, afficherProduits: false };
   }
 
   const marques = await res.json();
   if (!marques.length) return { marques: '', carte: '', produits: '', heroCount, itemListJsonLd: '', afficherVedette: false, afficherGrid: false, afficherProduits: false };
 
-  // Vedette : champ vedette = true
-  const vedette = marques.find(m => m.vedette === true) || null;
-  const grille  = selectionnerGrille(marques, vedette, 6);
-
+  const vedette         = marques.find(m => m.vedette === true) || null;
+  const grille          = selectionnerGrille(marques, vedette, 6);
   const htmlFeatured    = vedette       ? genererFeatured(vedette, data.supabase_categorie) : '';
   const htmlGrid        = grille.length ? genererGrid(grille, data.supabase_categorie)      : '';
   const afficherVedette = !!htmlFeatured;
@@ -364,25 +432,15 @@ async function genererSectionMarques(data) {
   const marquesAffichees = [vedette, ...grille].filter(Boolean);
   const itemListJsonLd   = genererItemListJsonLd(marquesAffichees, data);
 
-  // ── Carte : TOUTES les marques géolocalisées de la catégorie ─
   const urlCarte = `${SUPABASE_URL}/rest/v1/entreprises?categories=cs.{${data.supabase_categorie}}&select=nom_societe,mini_descriptif,ville,region,longitude,latitude&longitude=not.is.null&latitude=not.is.null`;
-  const resCarte = await fetch(urlCarte, {
-    headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}` }
-  });
-
+  const resCarte = await fetch(urlCarte, { headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}` } });
   let toutesMarquesCoords = [];
   if (resCarte.ok) {
-    const toutesMarques = await resCarte.json();
-    toutesMarquesCoords = toutesMarques.filter(m =>
-      m.longitude && m.latitude &&
-      !isNaN(parseFloat(m.longitude)) &&
-      !isNaN(parseFloat(m.latitude))
-    );
+    const tm = await resCarte.json();
+    toutesMarquesCoords = tm.filter(m => m.longitude && m.latitude && !isNaN(parseFloat(m.longitude)) && !isNaN(parseFloat(m.latitude)));
   }
-
   const htmlCarte = genererSectionCarte(toutesMarquesCoords, data);
 
-  // Produits
   const produitsData     = await fetchProduits(data.supabase_categorie);
   const htmlProduits     = genererSectionProduits(produitsData, data);
   const afficherProduits = !!htmlProduits;
@@ -390,6 +448,9 @@ async function genererSectionMarques(data) {
   return { marques: htmlMarques, carte: htmlCarte, produits: htmlProduits, heroCount, itemListJsonLd, afficherVedette, afficherGrid, afficherProduits };
 }
 
+// ─────────────────────────────────────────────
+// BUILD PRINCIPAL
+// ─────────────────────────────────────────────
 async function build() {
   let succes = 0;
 
@@ -402,6 +463,7 @@ async function build() {
 
     let html = fs.readFileSync(chemin, 'utf8');
 
+    // Injections CSS statiques
     const injectionsCss = [
       ['{{GLOBAL_CSS}}',          globalCss],
       ['{{NAV_CSS}}',             navCss],
@@ -414,18 +476,21 @@ async function build() {
       ['{{BANDEAU_CTA_CSS}}',     bandeauCtaCss],
       ['{{FOOTER_CSS}}',          footerCss],
     ];
-
     for (const [marqueur, contenu] of injectionsCss) {
-      if (html.includes(marqueur)) {
-        html = html.replace(marqueur, contenu);
-      } else {
-        console.warn(`⚠️  Marqueur ${marqueur} absent dans : ${page.fichier}`);
-      }
+      if (html.includes(marqueur)) html = html.replace(marqueur, contenu);
+      else console.warn(`⚠️  Marqueur ${marqueur} absent dans : ${page.fichier}`);
     }
 
     if (html.includes('{{NAV}}'))    html = html.replace('{{NAV}}',    resoudreNav(page.actif));
     if (html.includes('{{FOOTER}}')) html = html.replace('{{FOOTER}}', footerHtml);
 
+    // ── Injection sous-catégories dynamiques ─────────────────
+    if (html.includes('{{SOUS_CATEGORIES}}')) {
+      const sousCatsHtml = await genererSousCategoriesHtml(page.categorie, page.sousCategorie);
+      html = html.replace('{{SOUS_CATEGORIES}}', sousCatsHtml);
+    }
+
+    // ── Injection sections Supabase ───────────────────────────
     const dataPath = path.join(__dirname, `data/${page.actif}.json`);
     if (html.includes('{{MARQUES_SECTION}}')) {
       if (fs.existsSync(dataPath)) {
@@ -434,9 +499,9 @@ async function build() {
 
         const afficherSection = afficherVedette || afficherGrid;
 
-        html = html.replace('{{MARQUES_SECTION}}',   marques);
-        html = html.replace('{{CARTE_SECTION}}',     carte);
-        html = html.replace('{{PRODUITS_SECTION}}',  produits);
+        html = html.replace('{{MARQUES_SECTION}}',    marques);
+        html = html.replace('{{CARTE_SECTION}}',      carte);
+        html = html.replace('{{PRODUITS_SECTION}}',   produits);
 
         html = html.replace('{{MARQUES_SECTION_CSS}}', afficherSection  ? marquesSectionCss  : '');
         html = html.replace('{{MARQUE_VEDETTE_CSS}}',  afficherVedette  ? marqueVedetteCss   : '');

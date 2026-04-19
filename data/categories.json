@@ -1,0 +1,41 @@
+{
+  "epicerie-fine": {
+    "nom": "Épicerie fine",
+    "sous_categories": [
+      { "slug": "miel",             "nom": "Miel français",          "image": "miel",            "alt": "Miel français artisanal" },
+      { "slug": "confitures",       "nom": "Confiture de France",    "image": "confiture",       "alt": "Confiture de France artisanale" },
+      { "slug": "chocolats",        "nom": "Chocolat artisanal",     "image": "chocolat",        "alt": "Chocolat artisanal français" },
+      { "slug": "biscuits",         "nom": "Biscuits & Gâteaux",     "image": "biscuit",         "alt": "Biscuits et gâteaux made in France" },
+      { "slug": "charcuterie",      "nom": "Charcuterie du terroir", "image": "charcuterie",     "alt": "Charcuterie du terroir français" },
+      { "slug": "pates-rillettes",  "nom": "Pâtés & Rillettes",      "image": "pate",            "alt": "Pâtés et rillettes français" },
+      { "slug": "vins",             "nom": "Vin de France",          "image": "vins",            "alt": "Vins de France" },
+      { "slug": "huiles-olive",     "nom": "Huile d'olive française","image": "huile-olive",     "alt": "Huile d'olive française" },
+      { "slug": "vinaigres",        "nom": "Vinaigre artisanal",     "image": "vinaigre",        "alt": "Vinaigre artisanal français" },
+      { "slug": "aperitifs",        "nom": "Apéritif français",      "image": "poivre-et-sel",   "alt": "Apéritifs français" }
+    ]
+  },
+  "mode": {
+    "nom": "Mode",
+    "sous_categories": []
+  },
+  "beaute": {
+    "nom": "Beauté",
+    "sous_categories": []
+  },
+  "bijoux": {
+    "nom": "Bijoux",
+    "sous_categories": []
+  },
+  "maison": {
+    "nom": "Maison",
+    "sous_categories": []
+  },
+  "sport": {
+    "nom": "Sport",
+    "sous_categories": []
+  },
+  "technologie": {
+    "nom": "Technologie",
+    "sous_categories": []
+  }
+}
