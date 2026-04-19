@@ -379,7 +379,7 @@ function genererCarteProduit(p) {
   const altImg  = `${nom} — ${marque}${region ? ', ' + region : ''}`;
   return `
 <article class="p-card" role="listitem" itemscope itemtype="https://schema.org/Product">
-  <a href="${urlProd}" class="p-card-link" aria-label="${nom}" tabindex="0">${nom}</a>
+  <a href="${urlProd}" class="p-card-link" aria-label="${nom}" tabindex="0" target="_blank">${nom}</a>
   <div class="p-img"><div class="p-img-inner">
     <picture>
       ${imgAvif ? `<source srcset="${imgAvif}" type="image/avif">` : ''}
@@ -615,6 +615,8 @@ async function build() {
         /<strong id="sousCategCount">[^<]*<\/strong>/,
         `<strong id="sousCategCount">${sousCatsCount}</strong>`
       );
+
+      html = html.replace('{{SOUS_CAT_LABEL}}', sousCatsCount > 1 ? 'sous-catégories' : 'sous-catégorie');
     }
 
     // ── Sections Supabase ─────────────────────────────────────
@@ -646,11 +648,15 @@ async function build() {
           `<strong id="heroCount">${heroCount}</strong>`
         );
 
+        html = html.replace('{{MARQUES_LABEL}}', parseInt(heroCount) > 1 ? 'marques référencées' : 'marque référencée');
+
         // produitsCount : produits référencés (remplace "100% made in France vérifié")
         html = html.replace(
           /<strong id="produitsCount">[^<]*<\/strong>/,
           `<strong id="produitsCount">${produitsCount}</strong>`
         );
+
+        html = html.replace('{{PRODUITS_LABEL}}', parseInt(produitsCount) > 1 ? 'produits référencés' : 'produit référencé');
 
       } else {
         const marqueurs = ['{{MARQUES_SECTION}}','{{CARTE_SECTION}}','{{PRODUITS_SECTION}}',

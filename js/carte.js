@@ -147,7 +147,6 @@ function initMap() {
   const gFond    = svg.append('g').attr('class', 'g-fond');
   const gRegions = svg.append('g').attr('class', 'g-regions');
   const gPins    = svg.append('g').attr('class', 'g-pins');
-  const gBack    = svg.append('g').attr('class', 'g-back');
 
   // Projection centrée sur la France
   const proj = d3.geoMercator().rotate([-2.8, -46.7]).scale(2900).translate([SZ / 2, SZ / 2]);
@@ -393,29 +392,17 @@ function initMap() {
       // ── Bouton retour ────────────────────────────────────────
       function afficherBoutonRetour() {
         supprimerBoutonRetour();
-        const btn = gBack.append('g')
-          .attr('class', 'btn-retour')
-          .style('cursor', 'pointer')
-          .on('click', (event) => { event.stopPropagation(); retourNationale(); });
-
-        btn.append('rect')
-          .attr('x', 8).attr('y', 8)
-          .attr('width', 80).attr('height', 22)
-          .attr('rx', 3)
-          .attr('fill', '#0d1b3e')
-          .attr('opacity', '.85');
-
-        btn.append('text')
-          .attr('x', 48).attr('y', 23)
-          .attr('text-anchor', 'middle')
-          .attr('font-family', 'Arial,sans-serif')
-          .attr('font-size', '9')
-          .attr('fill', '#d4af6a')
-          .text('← Retour France');
+        const btn = document.createElement('button');
+        btn.id        = 'carteRetourBtn';
+        btn.type      = 'button';
+        btn.textContent = '← Retour France';
+        btn.addEventListener('click', (event) => { event.stopPropagation(); retourNationale(); });
+        container.appendChild(btn);
       }
 
       function supprimerBoutonRetour() {
-        gBack.selectAll('.btn-retour').remove();
+        const existing = document.getElementById('carteRetourBtn');
+        if (existing) existing.remove();
       }
 
     } catch (e) {

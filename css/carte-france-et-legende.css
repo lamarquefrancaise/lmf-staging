@@ -26,4 +26,7 @@
 .leg-dots{display:flex;gap:.35rem}
 .leg-dot-nav{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.2);transition:background .2s;cursor:pointer}
 .leg-dot-nav.active{background:var(--gold-l)}
+#map-container{position:relative}
+#carteRetourBtn{position:absolute;top:.6rem;left:.6rem;background:#0d1b3e;color:var(--gold-l);border:none;font-family:Arial,sans-serif;font-size:.72rem;padding:.35rem .75rem;cursor:pointer;border-radius:3px;opacity:.9;z-index:10;transition:opacity .2s}
+#carteRetourBtn:hover{opacity:1}
 @media(max-width:900px){.carte-layout{grid-template-columns:1fr}}
