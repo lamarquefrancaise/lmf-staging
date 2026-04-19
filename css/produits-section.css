@@ -16,4 +16,6 @@
 .p-orig{display:flex;align-items:center;gap:.28rem;margin-top:.38rem}
 .p-orig-dot{width:5px;height:5px;background:var(--gold);border-radius:50%;flex-shrink:0}
 .p-orig-lbl{font-family:Arial,sans-serif;font-size:.62rem;color:var(--muted)}
+.p-prix{display:flex;align-items:center;gap:.28rem;margin-top:.38rem}
+.p-prix span{font-family:Arial,sans-serif;font-size:.78rem;color:var(--navy);font-weight:normal}
 @media(max-width:900px){.products-grid{grid-template-columns:repeat(2,1fr)}}

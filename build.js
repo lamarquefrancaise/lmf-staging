@@ -122,7 +122,7 @@ function genererBreadcrumb(page) {
 
 function genererBreadcrumbJsonLd(page) {
   const { categorie, sousCategorie } = page;
-  const base = 'https://www.lamarquefrancaise.fr';
+  const base = 'https://lamarquefrancaise.fr';
 
   const items = [
     `{"@type":"ListItem","position":1,"name":"Accueil","item":"${base}/"}`,
@@ -389,6 +389,11 @@ function genererCarteProduit(p) {
   <div class="p-info">
     <div class="p-brand" itemprop="brand" itemscope itemtype="https://schema.org/Brand"><span itemprop="name">${marque}</span></div>
     <h3 class="p-name" itemprop="name">${nom}</h3>
+    ${p.prix ? `<div class="p-prix" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
+      <span itemprop="price" content="${p.prix}">${p.prix}</span>
+      <meta itemprop="priceCurrency" content="EUR">
+      <meta itemprop="availability" content="https://schema.org/InStock">
+    </div>` : ''}
     <div class="p-orig"><div class="p-orig-dot"></div><span class="p-orig-lbl">${region}</span></div>
   </div>
 </article>`;
