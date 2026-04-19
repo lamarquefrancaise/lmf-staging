@@ -331,28 +331,49 @@ function initMap() {
             .attr('r', 2 / scale)
             .attr('fill', '#fff');
 
-          // Survol + clic (info-bulle)
-          const afficherTip = (event) => {
-            tip.textContent = m.label;
-            tip.style.opacity = '1';
-            positionnerTip(event, container, tip);
+          // Convertit un point SVG en position CSS dans le conteneur
+          function svgVersEcran(svgX, svgY) {
+            const svgEl  = container.querySelector('svg');
+            const pt     = svgEl.createSVGPoint();
+            pt.x = svgX;
+            pt.y = svgY;
+            const ecran  = pt.matrixTransform(svgEl.getScreenCTM());
+            const rect   = container.getBoundingClientRect();
+            return {
+              x: ecran.x - rect.left,
+              y: ecran.y - rect.top
+            };
+          }
+
+          const afficherTip = () => {
+            const pos = svgVersEcran(px, py);
+            let x = pos.x + 12;
+            let y = pos.y - 10;
+            if (x + 250 > container.offsetWidth) x = pos.x - 260;
+            if (y < 0) y = pos.y + 20;
+            tip.textContent    = m.label;
+            tip.style.left     = x + 'px';
+            tip.style.top      = y + 'px';
+            tip.style.opacity  = '1';
+
+            // Sync légende
             const items = legItems();
-            const idx = items.findIndex(el => {
+            const idx   = items.findIndex(el => {
               const p = el.querySelector('.nom-marque');
               return p && p.textContent === m.label;
             });
             if (idx >= 0) activateLeg(idx);
           };
 
-          g.on('mouseenter', (event) => afficherTip(event))
-          .on('mousemove',  (event) => positionnerTip(event, container, tip))
+          g.on('mouseenter', afficherTip)
+          .on('mousemove',  afficherTip)
           .on('mouseleave', () => {
               d3.select(g.node()).select('.pin-halo-zoom').attr('r', 10 / scale).attr('fill', 'rgba(184,150,62,.12)');
               tip.style.opacity = '0';
             })
           .on('click', (event) => {
               event.stopPropagation();
-              afficherTip(event);
+              afficherTip();
               d3.select(g.node()).select('.pin-halo-zoom').attr('r', 14 / scale).attr('fill', 'rgba(184,150,62,.3)');
             });
         });
@@ -419,7 +440,7 @@ function positionnerTip(event, container, tip) {
   let x = event.clientX - rect.left + 12;
   let y = event.clientY - rect.top - 10;
   if (x + 250 > rect.width) x = event.clientX - rect.left - 260;
-  if (y < 0) y = event.clientY - rect.top + 20;
+  if (y < 0) y = 10;
   tip.style.left = x + 'px';
   tip.style.top  = y + 'px';
 }
