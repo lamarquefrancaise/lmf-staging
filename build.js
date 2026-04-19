@@ -383,14 +383,14 @@ function genererCarteProduit(p) {
   <div class="p-img"><div class="p-img-inner">
     <picture>
       ${imgAvif ? `<source srcset="${imgAvif}" type="image/avif">` : ''}
-      <img src="${imgWebp}" alt="${altImg}" width="600" height="600" loading="lazy" decoding="async">
+      <img src="${imgWebp}" alt="${altImg}" width="600" height="600" loading="lazy" decoding="async" itemprop="image">
     </picture>
   </div><div class="p-overlay"><span>Voir le produit →</span></div></div>
   <div class="p-info">
     <div class="p-brand" itemprop="brand" itemscope itemtype="https://schema.org/Brand"><span itemprop="name">${marque}</span></div>
     <h3 class="p-name" itemprop="name">${nom}</h3>
     ${p.prix ? `<div class="p-prix" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
-      <span itemprop="price" content="${p.prix}">${p.prix}</span>
+      <span itemprop="price" content="${p.prix}">${p.prix}€</span>
       <meta itemprop="priceCurrency" content="EUR">
       <meta itemprop="availability" content="https://schema.org/InStock">
     </div>` : ''}
