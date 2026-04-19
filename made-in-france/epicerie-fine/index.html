@@ -19,10 +19,10 @@
 <script type="application/ld+json">
 [
 {"@context":"https://schema.org","@type":"WebPage","name":"Épicerie Fine Française","dateModified":"2025-03-01","description":"Sélection des meilleures marques d'épicerie fine française made in France : miels, confitures, chocolats, charcuterie, vins.","url":"https://www.lamarquefrancaise.fr/made-in-france/epicerie-fine","isPartOf":{"@type":"WebSite","name":"La Marque Française","url":"https://www.lamarquefrancaise.fr"}},
-{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Accueil","item":"https://www.lamarquefrancaise.fr/"},{"@type":"ListItem","position":2,"name":"Made in France","item":"https://www.lamarquefrancaise.fr/made-in-france"},{"@type":"ListItem","position":3,"name":"Épicerie Fine Française","item":"https://www.lamarquefrancaise.fr/made-in-france/epicerie-fine"}]},
+{{BREADCRUMB_JSON_LD}},
 {{ITEMLIST_JSON_LD}},
 {{FAQ_JSON_LD}},
-{"@context":"https://schema.org","@type":"Organization","name":"La Marque Française","url":"https://www.lamarquefrancaise.fr","areaServed":"FR","inLanguage":"fr"},
+{{ORGANIZATION_JSON_LD}},
 {"@context":"https://schema.org","@type":"CollectionPage","name":"Épicerie Fine Française","description":"Annuaire des meilleures marques françaises d'épicerie fine made in France","url":"https://www.lamarquefrancaise.fr/made-in-france/epicerie-fine","numberOfItems":24,"about":{"@type":"Thing","name":"Épicerie fine française","sameAs":"https://fr.wikipedia.org/wiki/%C3%89picerie"}}
 ]
 </script>
@@ -64,13 +64,7 @@
 
 <main id="contenu-principal">
 <!-- BREADCRUMB -->
-<div class="breadcrumb-bar">
-  <nav aria-label="Fil d'Ariane" class="breadcrumb">
-    <a href="/">Accueil</a><span class="breadcrumb-sep">›</span>
-    <a href="/made-in-france">Made in France</a><span class="breadcrumb-sep">›</span>
-    <span class="breadcrumb-current" aria-current="page">Épicerie Fine Française</span>
-  </nav>
-</div>
+{{BREADCRUMB}}
 
 <!-- HERO -->
 <header class="cat-hero">
@@ -81,9 +75,9 @@
     <div class="cat-hero-stats">
       <div class="cat-stat"><strong id="heroCount">5</strong>&nbsp;marques référencées</div>
       <div class="cat-stat" aria-hidden="true">·</div>
-      <div class="cat-stat"><strong>10</strong>&nbsp;sous-catégories</div>
+      <div class="cat-stat"><strong id="sousCategCount">0</strong>&nbsp;sous-catégories</div>
       <div class="cat-stat" aria-hidden="true">·</div>
-      <div class="cat-stat"><strong>100%</strong>&nbsp;made in France vérifié</div>
+      <div class="cat-stat"><strong id="produitsCount">0</strong>&nbsp;produits référencés</div>
     </div>
   </div>
 </header>

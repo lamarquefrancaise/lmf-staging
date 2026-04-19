@@ -7,27 +7,18 @@ const path = require('path');
 const SUPABASE_URL = process.env.VITE_SUPABASE_URL;
 const SUPABASE_KEY = process.env.VITE_SUPABASE_ANON_KEY;
 
-// ─────────────────────────────────────────────
-// PAGES À TRAITER
-// actif      = slug de la catégorie (pour nav + data JSON)
-// categorie  = slug de la catégorie principale (pour sous-cats)
-// sousCategorie = slug si c'est une page sous-catégorie, sinon null
-// ─────────────────────────────────────────────
 const PAGES = [
-  { fichier: 'made-in-france/epicerie-fine/index.html', actif: 'epicerie-fine',  categorie: 'epicerie-fine',  sousCategorie: null },
-  { fichier: 'made-in-france/miel/index.html',          actif: 'miel',           categorie: 'epicerie-fine',  sousCategorie: 'miel' },
-  { fichier: 'made-in-france/mode/index.html',          actif: 'mode',           categorie: 'mode',           sousCategorie: null },
-  { fichier: 'made-in-france/beaute/index.html',        actif: 'beaute',         categorie: 'beaute',         sousCategorie: null },
-  { fichier: 'made-in-france/bijoux/index.html',        actif: 'bijoux',         categorie: 'bijoux',         sousCategorie: null },
-  { fichier: 'made-in-france/maison/index.html',        actif: 'maison',         categorie: 'maison',         sousCategorie: null },
-  { fichier: 'made-in-france/sport/index.html',         actif: 'sport',          categorie: 'sport',          sousCategorie: null },
-  { fichier: 'made-in-france/technologie/index.html',   actif: 'technologie',    categorie: 'technologie',    sousCategorie: null },
-  { fichier: 'index.html',                              actif: '',               categorie: null,             sousCategorie: null },
+  { fichier: 'made-in-france/epicerie-fine/index.html', actif: 'epicerie-fine', categorie: 'epicerie-fine', sousCategorie: null },
+  { fichier: 'made-in-france/miel/index.html',          actif: 'miel',          categorie: 'epicerie-fine', sousCategorie: 'miel' },
+  { fichier: 'made-in-france/mode/index.html',          actif: 'mode',          categorie: 'mode',          sousCategorie: null },
+  { fichier: 'made-in-france/beaute/index.html',        actif: 'beaute',        categorie: 'beaute',        sousCategorie: null },
+  { fichier: 'made-in-france/bijoux/index.html',        actif: 'bijoux',        categorie: 'bijoux',        sousCategorie: null },
+  { fichier: 'made-in-france/maison/index.html',        actif: 'maison',        categorie: 'maison',        sousCategorie: null },
+  { fichier: 'made-in-france/sport/index.html',         actif: 'sport',         categorie: 'sport',         sousCategorie: null },
+  { fichier: 'made-in-france/technologie/index.html',   actif: 'technologie',   categorie: 'technologie',   sousCategorie: null },
+  { fichier: 'index.html',                              actif: '',              categorie: null,            sousCategorie: null },
 ];
 
-// ─────────────────────────────────────────────
-// LECTURE DES SOURCES STATIQUES
-// ─────────────────────────────────────────────
 const navCss             = fs.readFileSync(path.join(__dirname, 'css/nav.css'), 'utf8');
 const navHtml            = fs.readFileSync(path.join(__dirname, 'templates/nav.html'), 'utf8');
 const footerCss          = fs.readFileSync(path.join(__dirname, 'css/footer.css'), 'utf8');
@@ -45,36 +36,138 @@ const marquesSectionCss  = fs.readFileSync(path.join(__dirname, 'css/marques-sec
 const marqueVedetteCss   = fs.readFileSync(path.join(__dirname, 'css/marque-vedette.css'), 'utf8');
 const marquesGridCss     = fs.readFileSync(path.join(__dirname, 'css/marques-grid.css'), 'utf8');
 const produitsSectionCss = fs.readFileSync(path.join(__dirname, 'css/produits-section.css'), 'utf8');
+const organizationJsonLd = fs.readFileSync(path.join(__dirname, 'js/Organization-json-ld.json'), 'utf8');
 
-// Chargement du fichier de définition des catégories
+
 const CATEGORIES = JSON.parse(fs.readFileSync(path.join(__dirname, 'data/categories.json'), 'utf8'));
 
 // ─────────────────────────────────────────────
-// FONCTION : vérifier si une sous-catégorie
-// a du contenu dans Supabase (entreprises OU produits)
+// HELPER : trouver le parent principal d'une sous-catégorie
+// Utilise parent_principal si défini, sinon le premier parent trouvé
+// ─────────────────────────────────────────────
+function trouverParentPrincipal(sousCategSlug) {
+  // Chercher dans toutes les catégories
+  const parentsExplicites = [];
+  for (const [catSlug, catData] of Object.entries(CATEGORIES)) {
+    const found = catData.sous_categories.find(sc => sc.slug === sousCategSlug);
+    if (found) {
+      if (found.parent_principal === catSlug) return { slug: catSlug, nom: catData.nom };
+      parentsExplicites.push({ slug: catSlug, nom: catData.nom, sc: found });
+    }
+  }
+  // Pas de parent_principal explicite → premier trouvé
+  if (parentsExplicites.length) {
+    return { slug: parentsExplicites[0].slug, nom: parentsExplicites[0].nom };
+  }
+  return null;
+}
+
+// ─────────────────────────────────────────────
+// HELPER : trouver le nom d'affichage d'une sous-catégorie
+// ─────────────────────────────────────────────
+function trouverNomAffichageSousCat(sousCategSlug) {
+  for (const catData of Object.values(CATEGORIES)) {
+    const found = catData.sous_categories.find(sc => sc.slug === sousCategSlug);
+    if (found) return found.nom_affichage || found.slug;
+  }
+  return sousCategSlug;
+}
+
+// ─────────────────────────────────────────────
+// FONCTION : générer le fil d'ariane
+// ─────────────────────────────────────────────
+function genererBreadcrumb(page) {
+  const { categorie, sousCategorie } = page;
+
+  // Page d'accueil ou sans catégorie
+  if (!categorie) {
+    return `
+<div class="breadcrumb-bar">
+  <nav aria-label="Fil d'Ariane" class="breadcrumb">
+    <a href="/">Accueil</a>
+  </nav>
+</div>`;
+  }
+
+  const nomCategorie = CATEGORIES[categorie]?.nom || categorie;
+
+  // Page sous-catégorie
+  if (sousCategorie) {
+    const parent         = trouverParentPrincipal(sousCategorie);
+    const nomSousCat     = trouverNomAffichageSousCat(sousCategorie);
+    const slugParent     = parent ? parent.slug : categorie;
+    const nomParent      = parent ? parent.nom  : nomCategorie;
+
+    return `
+<div class="breadcrumb-bar">
+  <nav aria-label="Fil d'Ariane" class="breadcrumb">
+    <a href="/">Accueil</a><span class="breadcrumb-sep">›</span>
+    <a href="/made-in-france">Made in France</a><span class="breadcrumb-sep">›</span>
+    <a href="/made-in-france/${slugParent}">${nomParent}</a><span class="breadcrumb-sep">›</span>
+    <span class="breadcrumb-current" aria-current="page">${nomSousCat}</span>
+  </nav>
+</div>`;
+  }
+
+  // Page catégorie principale
+  return `
+<div class="breadcrumb-bar">
+  <nav aria-label="Fil d'Ariane" class="breadcrumb">
+    <a href="/">Accueil</a><span class="breadcrumb-sep">›</span>
+    <a href="/made-in-france">Made in France</a><span class="breadcrumb-sep">›</span>
+    <span class="breadcrumb-current" aria-current="page">${nomCategorie}</span>
+  </nav>
+</div>`;
+}
+
+function genererBreadcrumbJsonLd(page) {
+  const { categorie, sousCategorie } = page;
+  const base = 'https://www.lamarquefrancaise.fr';
+
+  const items = [
+    `{"@type":"ListItem","position":1,"name":"Accueil","item":"${base}/"}`,
+    `{"@type":"ListItem","position":2,"name":"Made in France","item":"${base}/made-in-france"}`
+  ];
+
+  if (categorie) {
+    if (sousCategorie) {
+      const parent     = trouverParentPrincipal(sousCategorie);
+      const slugParent = parent ? parent.slug : categorie;
+      const nomParent  = parent ? parent.nom  : (CATEGORIES[categorie]?.nom || categorie);
+      const nomSousCat = trouverNomAffichageSousCat(sousCategorie);
+
+      items.push(`{"@type":"ListItem","position":3,"name":"${nomParent}","item":"${base}/made-in-france/${slugParent}"}`);
+      items.push(`{"@type":"ListItem","position":4,"name":"${nomSousCat}","item":"${base}/made-in-france/${sousCategorie}"}`);
+    } else {
+      const nomCategorie = CATEGORIES[categorie]?.nom || categorie;
+      items.push(`{"@type":"ListItem","position":3,"name":"${nomCategorie}","item":"${base}/made-in-france/${categorie}"}`);
+    }
+  }
+
+  return `{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[${items.join(',')}]}`;
+}
+
+// ─────────────────────────────────────────────
+// FONCTION : vérifier si une sous-catégorie a du contenu
 // ─────────────────────────────────────────────
 async function sousCategorieADuContenu(sc) {
   const nom = sc.nom_supabase;
 
-  // Vérifier dans entreprises
   const resE = await fetch(
     `${SUPABASE_URL}/rest/v1/entreprises?categories=cs.{${nom}}&select=id&limit=1`,
     { headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}`, Prefer: 'count=exact' } }
   );
   if (resE.ok) {
-    const countHeader = resE.headers.get('content-range');
-    const count = countHeader ? parseInt(countHeader.split('/')[1]) : 0;
+    const count = parseInt((resE.headers.get('content-range') || '0/0').split('/')[1]);
     if (count > 0) return true;
   }
 
-  // Vérifier dans produits
   const resP = await fetch(
     `${SUPABASE_URL}/rest/v1/produits?categories=cs.{${nom}}&select=id&limit=1`,
     { headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}`, Prefer: 'count=exact' } }
   );
   if (resP.ok) {
-    const countHeader = resP.headers.get('content-range');
-    const count = countHeader ? parseInt(countHeader.split('/')[1]) : 0;
+    const count = parseInt((resP.headers.get('content-range') || '0/0').split('/')[1]);
     if (count > 0) return true;
   }
 
@@ -82,16 +175,14 @@ async function sousCategorieADuContenu(sc) {
 }
 
 // ─────────────────────────────────────────────
-// FONCTION : générer le HTML des sous-catégories
-// sousCategorieCourante = slug de la sous-cat active (null si page catégorie)
+// FONCTION : générer les sous-catégories + retourner le nombre visible
 // ─────────────────────────────────────────────
 async function genererSousCategoriesHtml(categorieSlug, sousCategorieCourante) {
-  if (!categorieSlug || !CATEGORIES[categorieSlug]) return '';
+  if (!categorieSlug || !CATEGORIES[categorieSlug]) return { html: '', count: 0 };
 
   const { sous_categories } = CATEGORIES[categorieSlug];
-  if (!sous_categories || !sous_categories.length) return '';
+  if (!sous_categories || !sous_categories.length) return { html: '', count: 0 };
 
-  // Vérifier le contenu de chaque sous-catégorie en parallèle
   const resultats = await Promise.all(
     sous_categories.map(async sc => {
       const aContenu = await sousCategorieADuContenu(sc);
@@ -99,16 +190,14 @@ async function genererSousCategoriesHtml(categorieSlug, sousCategorieCourante) {
     })
   );
 
-  // Filtrer celles sans contenu
   const avecContenu = resultats.filter(sc => sc.aContenu);
-  if (!avecContenu.length) return '';
+  if (!avecContenu.length) return { html: '', count: 0 };
 
   const cartes = avecContenu.map(sc => {
     const estActive    = sc.slug === sousCategorieCourante;
     const classeActive = estActive ? ' active' : '';
     const url          = `/made-in-france/${sc.slug}`;
 
-    // Sur la page sous-catégorie courante : card non cliquable
     if (estActive) {
       return `
 <div class="sc-card${classeActive}" role="listitem" aria-current="page">
@@ -136,12 +225,22 @@ async function genererSousCategoriesHtml(categorieSlug, sousCategorieCourante) {
 </a>`;
   }).join('');
 
-  return cartes;
+  return { html: cartes, count: avecContenu.length };
 }
 
 // ─────────────────────────────────────────────
-// AUTRES FONCTIONS (inchangées)
+// FONCTION : compter le total de produits de la catégorie
 // ─────────────────────────────────────────────
+async function compterProduits(nomSupabase) {
+  if (!nomSupabase) return '0';
+  const res = await fetch(
+    `${SUPABASE_URL}/rest/v1/produits?categories=cs.{${nomSupabase}}&select=id`,
+    { headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}`, Prefer: 'count=exact' } }
+  );
+  if (!res.ok) return '0';
+  return (res.headers.get('content-range') || '0/0').split('/')[1] || '0';
+}
+
 function resoudreNav(actif) {
   return navHtml.replace(/\{\{NAV_ACTIVE:([^}]+)\}\}/g, (_, slug) => {
     return slug === actif ? ' class="active"' : '';
@@ -371,7 +470,7 @@ async function fetchProduits(categorie) {
   const selection  = misEnAvant.length >= 8 ? misEnAvant.slice(0, 8) : [...misEnAvant, ...autres.slice(0, 8 - misEnAvant.length)];
   const marquesUniques = [...new Set(selection.map(p => p.marque).filter(Boolean))];
   if (marquesUniques.length) {
-    const marquesParam   = marquesUniques.map(m => `"${m}"`).join(',');
+    const marquesParam = marquesUniques.map(m => `"${m}"`).join(',');
     const resE = await fetch(
       `${SUPABASE_URL}/rest/v1/entreprises?nom_societe=in.(${marquesParam})&select=nom_societe,region`,
       { headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}` } }
@@ -389,25 +488,30 @@ async function fetchProduits(categorie) {
 async function genererSectionMarques(data) {
   if (!SUPABASE_URL || !SUPABASE_KEY) {
     console.warn('⚠️  Variables Supabase manquantes.');
-    return { marques: '', carte: '', produits: '', heroCount: '0', itemListJsonLd: '', afficherVedette: false, afficherGrid: false, afficherProduits: false };
+    return { marques: '', carte: '', produits: '', heroCount: '0', produitsCount: '0', itemListJsonLd: '', afficherVedette: false, afficherGrid: false, afficherProduits: false };
   }
 
+  // heroCount : total marques
   const resCount = await fetch(
     `${SUPABASE_URL}/rest/v1/entreprises?categories=cs.{${data.supabase_categorie}}&select=id`,
     { headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}`, Prefer: 'count=exact' } }
   );
-  const heroCount = resCount.ok ? (resCount.headers.get('content-range') || '').split('/')[1] || '0' : '0';
+  const heroCount = resCount.ok ? (resCount.headers.get('content-range') || '0/0').split('/')[1] || '0' : '0';
 
+  // produitsCount : total produits
+  const produitsCount = await compterProduits(data.supabase_categorie);
+
+  // Marques
   const url = `${SUPABASE_URL}/rest/v1/entreprises?categories=cs.{${data.supabase_categorie}}&select=id,nom_societe,description,mini_descriptif,ville,region,url_site,verifiee,vedette,mis_en_avant,categories,longitude,latitude&order=created_at.desc`;
   const res = await fetch(url, { headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}` } });
 
   if (!res.ok) {
     console.warn(`⚠️  Erreur Supabase marques (${res.status})`);
-    return { marques: '', carte: '', produits: '', heroCount, itemListJsonLd: '', afficherVedette: false, afficherGrid: false, afficherProduits: false };
+    return { marques: '', carte: '', produits: '', heroCount, produitsCount, itemListJsonLd: '', afficherVedette: false, afficherGrid: false, afficherProduits: false };
   }
 
   const marques = await res.json();
-  if (!marques.length) return { marques: '', carte: '', produits: '', heroCount, itemListJsonLd: '', afficherVedette: false, afficherGrid: false, afficherProduits: false };
+  if (!marques.length) return { marques: '', carte: '', produits: '', heroCount, produitsCount, itemListJsonLd: '', afficherVedette: false, afficherGrid: false, afficherProduits: false };
 
   const vedette         = marques.find(m => m.vedette === true) || null;
   const grille          = selectionnerGrille(marques, vedette, 6);
@@ -432,6 +536,7 @@ async function genererSectionMarques(data) {
   const marquesAffichees = [vedette, ...grille].filter(Boolean);
   const itemListJsonLd   = genererItemListJsonLd(marquesAffichees, data);
 
+  // Carte
   const urlCarte = `${SUPABASE_URL}/rest/v1/entreprises?categories=cs.{${data.supabase_categorie}}&select=nom_societe,mini_descriptif,ville,region,longitude,latitude&longitude=not.is.null&latitude=not.is.null`;
   const resCarte = await fetch(urlCarte, { headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}` } });
   let toutesMarquesCoords = [];
@@ -441,11 +546,12 @@ async function genererSectionMarques(data) {
   }
   const htmlCarte = genererSectionCarte(toutesMarquesCoords, data);
 
+  // Produits
   const produitsData     = await fetchProduits(data.supabase_categorie);
   const htmlProduits     = genererSectionProduits(produitsData, data);
   const afficherProduits = !!htmlProduits;
 
-  return { marques: htmlMarques, carte: htmlCarte, produits: htmlProduits, heroCount, itemListJsonLd, afficherVedette, afficherGrid, afficherProduits };
+  return { marques: htmlMarques, carte: htmlCarte, produits: htmlProduits, heroCount, produitsCount, itemListJsonLd, afficherVedette, afficherGrid, afficherProduits };
 }
 
 // ─────────────────────────────────────────────
@@ -463,7 +569,7 @@ async function build() {
 
     let html = fs.readFileSync(chemin, 'utf8');
 
-    // Injections CSS statiques
+    // CSS et JS statiques
     const injectionsCss = [
       ['{{GLOBAL_CSS}}',          globalCss],
       ['{{NAV_CSS}}',             navCss],
@@ -475,27 +581,43 @@ async function build() {
       ['{{AUTRE_CATE_CSS}}',      autresCateCss],
       ['{{BANDEAU_CTA_CSS}}',     bandeauCtaCss],
       ['{{FOOTER_CSS}}',          footerCss],
+      ['{{ORGANIZATION_JSON_LD}}',          organizationJsonLd],
     ];
     for (const [marqueur, contenu] of injectionsCss) {
       if (html.includes(marqueur)) html = html.replace(marqueur, contenu);
       else console.warn(`⚠️  Marqueur ${marqueur} absent dans : ${page.fichier}`);
     }
 
+    // Nav + Footer
     if (html.includes('{{NAV}}'))    html = html.replace('{{NAV}}',    resoudreNav(page.actif));
     if (html.includes('{{FOOTER}}')) html = html.replace('{{FOOTER}}', footerHtml);
 
-    // ── Injection sous-catégories dynamiques ─────────────────
-    if (html.includes('{{SOUS_CATEGORIES}}')) {
-      const sousCatsHtml = await genererSousCategoriesHtml(page.categorie, page.sousCategorie);
-      html = html.replace('{{SOUS_CATEGORIES}}', sousCatsHtml);
+    // ── Fil d'ariane ─────────────────────────────────────────
+    if (html.includes('{{BREADCRUMB}}')) {
+      html = html.replace('{{BREADCRUMB}}', genererBreadcrumb(page));
+    }
+    if (html.includes('{{BREADCRUMB_JSON_LD}}')) {
+      html = html.replace('{{BREADCRUMB_JSON_LD}}', genererBreadcrumbJsonLd(page));
     }
 
-    // ── Injection sections Supabase ───────────────────────────
+    // ── Sous-catégories dynamiques ────────────────────────────
+    if (html.includes('{{SOUS_CATEGORIES}}')) {
+      const { html: sousCatsHtml, count: sousCatsCount } = await genererSousCategoriesHtml(page.categorie, page.sousCategorie);
+      html = html.replace('{{SOUS_CATEGORIES}}', sousCatsHtml);
+
+      // Mise à jour du nombre de sous-catégories dans le hero
+      html = html.replace(
+        /<strong id="sousCategCount">[^<]*<\/strong>/,
+        `<strong id="sousCategCount">${sousCatsCount}</strong>`
+      );
+    }
+
+    // ── Sections Supabase ─────────────────────────────────────
     const dataPath = path.join(__dirname, `data/${page.actif}.json`);
     if (html.includes('{{MARQUES_SECTION}}')) {
       if (fs.existsSync(dataPath)) {
         const data = JSON.parse(fs.readFileSync(dataPath, 'utf8'));
-        const { marques, carte, produits, heroCount, itemListJsonLd, afficherVedette, afficherGrid, afficherProduits } = await genererSectionMarques(data);
+        const { marques, carte, produits, heroCount, produitsCount, itemListJsonLd, afficherVedette, afficherGrid, afficherProduits } = await genererSectionMarques(data);
 
         const afficherSection = afficherVedette || afficherGrid;
 
@@ -513,10 +635,18 @@ async function build() {
         html = html.replace('{{FAQ_JSON_LD}}',      genererFaqJsonLd(data));
         html = html.replace('{{FAQ_SECTION}}',      genererFaqHtml(data));
 
+        // heroCount : marques référencées
         html = html.replace(
           /<strong id="heroCount">[^<]*<\/strong>/,
           `<strong id="heroCount">${heroCount}</strong>`
         );
+
+        // produitsCount : produits référencés (remplace "100% made in France vérifié")
+        html = html.replace(
+          /<strong id="produitsCount">[^<]*<\/strong>/,
+          `<strong id="produitsCount">${produitsCount}</strong>`
+        );
+
       } else {
         const marqueurs = ['{{MARQUES_SECTION}}','{{CARTE_SECTION}}','{{PRODUITS_SECTION}}',
           '{{MARQUES_SECTION_CSS}}','{{MARQUE_VEDETTE_CSS}}','{{MARQUES_GRID_CSS}}',
