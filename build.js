@@ -170,7 +170,7 @@ function genererBreadcrumbJsonLd(page) {
 
   const items = [
     `{"@type":"ListItem","position":1,"name":"Accueil","item":"${base}/"}`,
-    `{"@type":"ListItem","position":2,"name":"Made in France","item":"${base}/made-in-france"}`
+    `{"@type":"ListItem","position":2,"name":"Made in France","item":"${base}/made-in-france/"}`
   ];
 
   if (categorie) {
@@ -180,11 +180,11 @@ function genererBreadcrumbJsonLd(page) {
       const nomParent  = parent ? parent.nom  : (CATEGORIES[categorie]?.nom || categorie);
       const nomSousCat = trouverNomAffichageSousCat(sousCategorie);
 
-      items.push(`{"@type":"ListItem","position":3,"name":"${nomParent}","item":"${base}/made-in-france/${slugParent}"}`);
-      items.push(`{"@type":"ListItem","position":4,"name":"${nomSousCat}","item":"${base}/made-in-france/${sousCategorie}"}`);
+      items.push(`{"@type":"ListItem","position":3,"name":"${nomParent}","item":"${base}/made-in-france/${slugParent}/"}`);
+      items.push(`{"@type":"ListItem","position":4,"name":"${nomSousCat}","item":"${base}/made-in-france/${sousCategorie}/"}`);
     } else {
       const nomCategorie = CATEGORIES[categorie]?.nom || categorie;
-      items.push(`{"@type":"ListItem","position":3,"name":"${nomCategorie}","item":"${base}/made-in-france/${categorie}"}`);
+      items.push(`{"@type":"ListItem","position":3,"name":"${nomCategorie}","item":"${base}/made-in-france/${categorie}/"}`);
     }
   }
 
