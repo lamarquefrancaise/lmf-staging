@@ -1,7 +1,7 @@
 .b-featured{background:var(--white);border:1px solid var(--border);display:grid;grid-template-columns:260px 1fr;margin-bottom:2rem;transition:border-color .2s,box-shadow .2s;cursor:pointer;position:relative}
 .b-featured:hover{border-color:var(--gold);box-shadow:0 6px 28px rgba(184,150,62,.12)}
 .b-feat-img{background:var(--navy);display:flex;align-items:center;justify-content:center;min-height:190px;position:relative}
-.b-feat-logo{color:var(--cream-d);font-size:3rem;letter-spacing:.05em;font-family:Georgia,serif;opacity:.45}
+.b-feat-logo{color:var(--gold-l);font-size:3rem;letter-spacing:.05em;font-family:Georgia,serif;}
 .b-feat-badge{position:absolute;top:1rem;left:1rem;background:var(--gold-l);color:var(--navy);font-family:Arial,sans-serif;font-size:.62rem;letter-spacing:.12em;padding:.28rem .65rem}
 .b-feat-badge-verif{display:inline-block;background:var(--gold-l);border:1px solid rgba(184,150,62,.35);color:var(--navy);font-family:Arial,sans-serif;font-size:.62rem;letter-spacing:.1em;padding:.22rem .55rem;margin-bottom:.75rem;max-width: 150px;}
 .b-feat-body{padding:2rem 2.5rem;display:flex;flex-direction:column;justify-content:center}

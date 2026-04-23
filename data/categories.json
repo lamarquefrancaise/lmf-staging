@@ -3,7 +3,7 @@
     "nom": "Épicerie fine",
     "sous_categories": [
       { "slug": "miel",             "nom_affichage": "Miel français",          "nom_supabase": "Miel",                      "image": "miel",            "alt": "Miel français artisanal" },
-      { "slug": "confitures",       "nom_affichage": "Confiture de France",    "nom_supabase": "Confiture de France",       "image": "confiture",       "alt": "Confiture de France artisanale" },
+      { "slug": "confiture",        "nom_affichage": "Confiture de France",    "nom_supabase": "Confiture",                 "image": "confiture",       "alt": "Confiture de France artisanale" },
       { "slug": "chocolats",        "nom_affichage": "Chocolat artisanal",     "nom_supabase": "Chocolat artisanal",        "image": "chocolat",        "alt": "Chocolat artisanal français" },
       { "slug": "biscuits",         "nom_affichage": "Biscuits & Gâteaux",     "nom_supabase": "Biscuits & Gâteaux",        "image": "biscuit",         "alt": "Biscuits et gâteaux made in France" },
       { "slug": "charcuterie",      "nom_affichage": "Charcuterie du terroir", "nom_supabase": "Charcuterie du terroir",    "image": "charcuterie",     "alt": "Charcuterie du terroir français" },
