@@ -1,6 +1,14 @@
 {
   "supabase_categorie": "Epicerie fine",
   
+  "page_title":         "Épicerie Fine Française | Meilleures Marques Made in France",
+  "page_description":   "Épicerie fine française : miels artisanaux, confitures, chocolats, charcuterie du terroir, vins de France. Meilleures marques made in France vérifiées.",
+  "page_canonical":     "https://www.lamarquefrancaise.fr/made-in-france/epicerie-fine",
+  "og_image":           "https://www.lamarquefrancaise.fr/og-epicerie-fine.jpg",
+  "og_image_alt":       "Épicerie fine française — marques made in France vérifiées",
+  "collection_same_as": "https://fr.wikipedia.org/wiki/%C3%89picerie",
+  "categorie_display":  "Épicerie fine française",
+
   "section_label": "Marques d'exception",
   "section_titre": "Marques françaises d'épicerie fine",
   "section_sous_titre": "Sélectionnées parmi les meilleures marques de gastronomie française, chaque marque d'épicerie fine est vérifiée pour son origine, sa fabrication et son ancrage dans le terroir français.",

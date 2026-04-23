@@ -73,6 +73,50 @@ function trouverNomAffichageSousCat(sousCategSlug) {
   return sousCategSlug;
 }
 
+
+// ─────────────────────────────────────────────
+// FONCTION : générer le JSON-LD WebPage
+// ─────────────────────────────────────────────
+function genererWebPageJsonLd(data, buildDate) {
+  const titre = (data.page_title       || '').replace(/"/g, '\\"');
+  const desc  = (data.page_description || '').replace(/"/g, '\\"');
+  const url   =  data.page_canonical   || '';
+  return `{"@context":"https://schema.org","@type":"WebPage","name":"${titre}","description":"${desc}","url":"${url}","inLanguage":"fr-FR","dateModified":"${buildDate}","isPartOf":{"@type":"WebSite","name":"La Marque Française","url":"https://www.lamarquefrancaise.fr"},"publisher":{"@type":"Organization","name":"La Marque Française","url":"https://www.lamarquefrancaise.fr","logo":"https://www.lamarquefrancaise.fr/img/favicon.svg"}}`;
+}
+
+// ─────────────────────────────────────────────
+// FONCTION : générer le JSON-LD CollectionPage
+// ─────────────────────────────────────────────
+function genererCollectionPageJsonLd(data, heroCount) {
+  const titre    = (data.page_title       || '').replace(/"/g, '\\"');
+  const desc     = (data.page_description || '').replace(/"/g, '\\"');
+  const url      = data.page_canonical    || '';
+  const display  = (data.categorie_display || data.section_titre || '').replace(/"/g, '\\"');
+  const sameAs   = data.collection_same_as ? `,"sameAs":"${data.collection_same_as}"` : '';
+  const count    = parseInt(heroCount) || 0;
+  return `{"@context":"https://schema.org","@type":"CollectionPage","name":"${titre}","description":"${desc}","url":"${url}","numberOfItems":${count},"inLanguage":"fr-FR","about":{"@type":"Thing","name":"${display}"${sameAs}},"isPartOf":{"@type":"WebSite","name":"La Marque Française","url":"https://www.lamarquefrancaise.fr"}}`;
+}
+
+// ─────────────────────────────────────────────
+// FONCTION : injecter les meta SEO du head depuis le JSON
+// ─────────────────────────────────────────────
+function injecterMetaSeo(html, data, heroCount, buildDate) {
+  const injections = [
+    ['{{PAGE_TITLE}}',       data.page_title        || ''],
+    ['{{PAGE_DESCRIPTION}}', data.page_description  || ''],
+    ['{{PAGE_CANONICAL}}',   data.page_canonical    || ''],
+    ['{{OG_IMAGE}}',         data.og_image          || ''],
+    ['{{OG_IMAGE_ALT}}',     data.og_image_alt      || ''],
+    ['{{BUILD_DATE}}',       buildDate],
+    ['{{WEBPAGE_JSON_LD}}',          genererWebPageJsonLd(data, buildDate)],
+    ['{{COLLECTION_PAGE_JSON_LD}}', genererCollectionPageJsonLd(data, heroCount)],
+  ];
+  for (const [marqueur, valeur] of injections) {
+    if (html.includes(marqueur)) html = html.replaceAll(marqueur, valeur);
+  }
+  return html;
+}
+
 // ─────────────────────────────────────────────
 // FONCTION : générer le fil d'ariane
 // ─────────────────────────────────────────────
@@ -658,10 +702,16 @@ async function build() {
 
         html = html.replace('{{PRODUITS_LABEL}}', parseInt(produitsCount) > 1 ? 'produits référencés' : 'produit référencé');
 
+        // ── Injection meta SEO + CollectionPage depuis le JSON ──
+        const buildDate = new Date().toISOString().split('T')[0];
+        html = injecterMetaSeo(html, data, heroCount, buildDate);
+
       } else {
         const marqueurs = ['{{MARQUES_SECTION}}','{{CARTE_SECTION}}','{{PRODUITS_SECTION}}',
           '{{MARQUES_SECTION_CSS}}','{{MARQUE_VEDETTE_CSS}}','{{MARQUES_GRID_CSS}}',
-          '{{CARTE_CSS}}','{{PRODUITS_CSS}}','{{ITEMLIST_JSON_LD}}','{{FAQ_JSON_LD}}','{{FAQ_SECTION}}'];
+          '{{CARTE_CSS}}','{{PRODUITS_CSS}}','{{ITEMLIST_JSON_LD}}','{{FAQ_JSON_LD}}','{{FAQ_SECTION}}',
+          '{{WEBPAGE_JSON_LD}}','{{COLLECTION_PAGE_JSON_LD}}','{{PAGE_TITLE}}','{{PAGE_DESCRIPTION}}','{{PAGE_CANONICAL}}',
+          '{{OG_IMAGE}}','{{OG_IMAGE_ALT}}','{{BUILD_DATE}}'];
         marqueurs.forEach(m => { html = html.replace(m, ''); });
         console.warn(`⚠️  Pas de fichier data/${page.actif}.json — sections supprimées.`);
       }
