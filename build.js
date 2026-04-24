@@ -17,9 +17,9 @@ const PAGES = [
   { fichier: 'made-in-france/maison/index.html',        actif: 'maison',        categorie: 'maison',        sousCategorie: null },
   { fichier: 'made-in-france/sport/index.html',         actif: 'sport',         categorie: 'sport',         sousCategorie: null },
   { fichier: 'made-in-france/technologie/index.html',   actif: 'technologie',   categorie: 'technologie',   sousCategorie: null },
-  { fichier: 'referencer-votre-marque.html',            actif: '',              categorie: null,            sousCategorie: null },
-  { fichier: 'mentions-legales.html',                   actif: '',              categorie: null,            sousCategorie: null },
-  { fichier: 'politique-de-confidentialite.html',       actif: '',              categorie: null,            sousCategorie: null },
+  { fichier: 'referencer-votre-marque/index.html',      actif: '',              categorie: null,            sousCategorie: null },
+  { fichier: 'mentions-legales/index.html',             actif: '',              categorie: null,            sousCategorie: null },
+  { fichier: 'politique-de-confidentialite/index.html', actif: '',              categorie: null,            sousCategorie: null },
   { fichier: 'contact.html',                            actif: '',              categorie: null,            sousCategorie: null },
   
 ];
