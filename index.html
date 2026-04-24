@@ -1,60 +1,37 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<!-- 1. CHARSET ET VIEWPORT — toujours en premier -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<!-- 2. TITLE ET META -->
 <title>La Marque Française | Tout le (vrai) Made in France en un clic</title>
 <meta name="description" content="Découvrez les meilleures marques françaises : mode, épicerie, beauté, bijoux, maison et plus. Référence des marques françaises made in France.">
-<meta name="robots" content="index, follow">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
 <meta name="author" content="La Marque Française">
 <meta name="theme-color" content="#0d1b3e">
+<link rel="alternate" hreflang="fr-FR" href="https://lamarquefrancaise.fr">
+<meta name="geo.region" content="FR">
+<meta name="geo.placename" content="France">
+<link rel="canonical" href="https://lamarquefrancaise.fr">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="La Marque Française">
+<meta property="og:title" content="La Marque Française | Tout le (vrai) Made in France en un clic">
+<meta property="og:description" content="Découvrez les meilleures marques françaises : mode, épicerie, beauté, bijoux, maison et plus. Référence des marques françaises made in France.">
+<meta property="og:url" content="https://lamarquefrancaise.fr">
+<meta property="og:image" content="https://www.lamarquefrancaise.fr/img/1200x630/la-marque-francaise.webp">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="La Marque Française - La référence des marques françaises made in France">
+<meta property="og:locale" content="fr_FR">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@LaMarqueFrancaise">
+<meta name="twitter:title" content="La Marque Française | Tout le (vrai) Made in France en un clic">
+<meta name="twitter:description" content="Découvrez les meilleures marques françaises : mode, épicerie, beauté, bijoux, maison et plus. Référence des marques françaises made in France.">
+<meta name="twitter:image" content="https://www.lamarquefrancaise.fr/img/1200x630/la-marque-francaise.webp">
 
 <!-- 3. CSS CRITIQUE INLINE -->
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --navy:#0d1b3e;--gold:#b8963e;--gold-l:#d4af6a; --gold-d:#745300;
-  --cream:#f9f6f0;--cream-d:#f2ede4;--white:#fff;
-  --muted:#424E66;--border:#e5e0d5;--text:#1a1a2e; --muted-l:#AFAFAF; --text-l:#9EA8BC;
-}
-html{scroll-behavior:smooth}
-body{font-family:Georgia,'Times New Roman',serif;background:var(--white);color:var(--text);overflow-x:hidden}
-
-/* ── NAV ── */
-nav.navig{position:fixed;width:100%;z-index:200;background:rgba(13,27,62,.97);padding:0 2rem;display:flex;flex-wrap:wrap;align-items:center;min-height:64px;box-shadow:0 1px 0 rgba(184,150,62,.15)}
-.navi-logo{color:var(--white);font-size:1.05rem;letter-spacing:.15em;font-weight:normal;white-space:nowrap;flex-shrink:0;padding:.5rem 0}
-.navi-logo span{color:var(--gold-l)}
-.navi-links{display:flex;gap:1.5rem;list-style:none;align-items:center;flex-wrap:wrap;margin-left:auto;min-height: 64px;}
-
-.navi-links a{color:rgba(255,255,255,.75);text-decoration:none;font-family:Georgia,'Times New Roman',sans-serif;font-size:1rem;letter-spacing:.07em;transition:color .2s;white-space:nowrap}
-.navi-links a:hover{color:var(--gold-l)}
-.nav-cta{background:var(--gold-l)!important;color:var(--navy)!important;padding:.5rem 1.1rem!important;transition:background .2s!important}
-.nav-cta:hover{background:var(--gold)!important}
-.burger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;background:none;border:none;flex-shrink:0;margin-left:auto}
-.burger span{display:block;width:22px;height:2px;background:var(--white);transition:all .3s;transform-origin:center}
-.burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
-.burger.open span:nth-child(2){opacity:0}
-.burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
-.menu-close{display:none;position:fixed;top:1rem;right:1rem;z-index: 199;background:none;border:none;color:rgba(255,255,255,.6);font-size:1.5rem;cursor:pointer;line-height:1;padding:.25rem}
-.menu-close.open {display: block;}
-.menu-close:hover{color:var(--white)}
-.overlay{display:none;position:fixed;inset:0;z-index:197;background:rgba(0,0,0,.5)}
-
-@media(max-width:900px){
-  nav.navig{flex-wrap:nowrap;height:64px}
-  .burger{display:flex}
-  .navi-links{position:fixed;top:0;right:-100%;bottom:0;width:85%;max-width:320px;z-index:198;background:#0d1b3e;flex-direction:column;align-items:flex-start;justify-content:flex-start;gap:0;padding:64px 0 2rem;transition:right .3s ease;display:flex;flex-wrap:nowrap;margin-left:0}
-  .navi-links.open{right:0}
-  .navi-links li{width:100%}
-  .navi-links a{display:block;width:100%;padding:.9rem 1.5rem;font-size:.95rem;letter-spacing:.08em;border-bottom:1px solid rgba(255,255,255,.07)}
-  .navi-links .nav-cta{margin:1.5rem 1.5rem 0;width:calc(100% - 3rem);padding:.75rem 1rem!important;text-align:center;display:block}
-  .menu-close{display:none}
-  .overlay{display:block;opacity:0;pointer-events:none;transition:opacity .3s}
-  .overlay.open{opacity:1;pointer-events:all}
-}
+{{GLOBAL_CSS}}
+{{NAV_CSS}}
 
 /* ── HERO ── */
 .hero{min-height:100vh;background:var(--navy);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:7rem 2rem 5rem;position:relative;overflow:hidden}
@@ -104,6 +81,7 @@ section{padding:5rem 2rem}
 .m-txt p{font-family:Arial,sans-serif;font-size:.8rem;color:var(--muted-l);line-height:1.6}
 
 /* ── CATÉGORIES ── */
+{{AUTRE_CATE_CSS}}
 .categories{background:var(--white)}
 .cat-head{margin-bottom:3rem}
 .cat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);max-width:1110px;margin:auto}
@@ -163,49 +141,9 @@ section{padding:5rem 2rem}
 .t-role{font-family:Arial,sans-serif;font-size:.75rem;color:var(--muted)}
 .t-stars{color:var(--gold);font-size:.85rem;margin-bottom:.5rem;letter-spacing:.05em}
 
-/* ── FAQ ── */
-.faq{background:var(--cream)}
-.faq-list{margin-top:3rem;display:flex;flex-direction:column;gap:1rem}
-.faq-item{background:var(--white);border:1px solid var(--border);transition:border-color .2s}
-.faq-q{display:flex;justify-content:space-between;align-items:center;padding:1.4rem 1.75rem;cursor:pointer;gap:1.25rem;border:none;background:none;width:100%;text-align:left;transition:background .2s}
-.faq-q:hover{background:var(--cream)}
-.faq-q-text{font-family:Arial,sans-serif;font-size:.92rem;color:var(--navy);line-height:1.45;flex:1}
-.faq-toggle{width:26px;height:26px;border:1px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--gold);font-size:.95rem;font-family:Arial,sans-serif;transition:all .3s;line-height:1;background:var(--white)}
-.faq-toggle.open{background:var(--navy);border-color:var(--navy);color:var(--gold-l);transform:rotate(45deg)}
-.faq-sep{height:1px;background:var(--border);margin:0 1.75rem;transition:opacity .3s}
-.faq-sep.hidden{opacity:0;pointer-events:none}
-.faq-a{font-family:Arial,sans-serif;font-size:.875rem;color:var(--muted);line-height:1.75;max-height:0;overflow:hidden;transition:max-height .4s ease,padding .3s ease;padding:0 1.75rem}
-.faq-a.open{max-height:300px;padding:1rem 1.75rem 1.5rem}
-
-/* ── RÉFÉRENCER ── */
-.referer{background:var(--navy);padding:5rem 2rem;position:relative;overflow:hidden}
-.referer::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
-.ref-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr auto;gap:3rem;align-items:center}
-.ref-content .s-label{color:var(--gold-l)}
-.ref-content h2{color:var(--white);font-size:clamp(1.4rem,3vw,1.9rem);font-weight:normal;margin-bottom:.75rem;margin-top:.5rem}
-.ref-content p{font-family:Arial,sans-serif;font-size:.9rem;color:rgba(255,255,255,.5);line-height:1.7;max-width:520px}
-.ref-perks{display:flex;gap:1.5rem;margin-top:1.5rem;flex-wrap:wrap}
-.ref-perk{display:flex;align-items:center;gap:.4rem;font-family:Arial,sans-serif;font-size:.78rem;color:rgba(255,255,255,.5)}
-.ref-perk::before{content:'✓';color:var(--gold);font-weight:bold}
-
-/* ── FOOTER ── */
-footer{background:#0a1428;padding:3.5rem 2rem 2rem}
-.ft{max-width:1100px;margin:0 auto}
-.ft-top{display:grid;grid-template-columns:2fr 1fr 1fr;gap:3rem;margin-bottom:2.5rem}
-.ft-brand p.logo{color:var(--white);font-size:1.1rem;letter-spacing:.1em;font-weight:normal;margin-bottom:.75rem}
-.ft-brand p.logo span{color:var(--gold-l)}
-.ft-brand p{font-family:Arial,sans-serif;font-size:.82rem;color:var(--muted-l);line-height:1.75;max-width:280px;margin-bottom:1.25rem}
-.ft-brand-tags{display:flex;gap:.5rem;flex-wrap:wrap}
-.ft-tag{border:1px solid rgba(184,150,62,.2);color:var(--muted-l);font-family:Arial,sans-serif;font-size:.68rem;padding:.2rem .55rem;letter-spacing:.07em}
-.ft-col p{color:var(--gold-l);font-size:.75rem;letter-spacing:.2em;font-family:Arial,sans-serif;font-weight:normal;text-transform:uppercase;margin-bottom:1rem}
-.ft-col ul{list-style:none}
-.ft-col ul li{margin-bottom:.5rem}
-.ft-col ul a{color:var(--muted-l);font-family:Arial,sans-serif;font-size:.82rem;text-decoration:none;transition:color .2s}
-.ft-col ul a:hover{color:var(--gold-l)}
-.ft-bot{border-top:1px solid rgba(255,255,255,.07);padding-top:1.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.75rem}
-.ft-bot p{font-family:Arial,sans-serif;font-size:.75rem;color:var(--muted-l)}
-.ft-flag{display:flex;gap:3px}
-.ft-flag span{display:block;width:3px;height:14px;border-radius:1px}
+{{FAQ_CSS}}
+{{BANDEAU_CTA_CSS}}
+{{FOOTER_CSS}}
 
 /* ── RESPONSIVE GLOBAL ── */
 @media(max-width:768px){
@@ -227,7 +165,6 @@ footer{background:#0a1428;padding:3.5rem 2rem 2rem}
   .r-card,.b-card,.t-card{width:calc(100vw - 5rem);min-width:calc(100vw - 5rem);flex-shrink:0;scroll-snap-align:start;white-space:normal;word-break:break-word}
   .ref-inner{grid-template-columns:1fr;text-align:center}
   .ref-perks{justify-content:center}
-  .ft-top{grid-template-columns:1fr;gap:2rem}
 }
 </style>
 
@@ -343,129 +280,22 @@ footer{background:#0a1428;padding:3.5rem 2rem 2rem}
   </div>
 </section>
 
-<!-- CATÉGORIES PHOTO -->
-<section class="categories" id="categories" aria-labelledby="cat-title">
-  <div class="container">
-    <div class="cat-head">
-      <div class="s-label">Explorer par univers</div>
-      <h2 class="s-title" id="cat-title">Toutes les catégories de marques françaises</h2>
+<!-- CATÉGORIES -->
+<section class="autres-cats" id="autres-categories" aria-labelledby="ac-title">
+  <div class="containeur">
+    <div class="s-label">Explorer par univers</div>
+    <h2 class="s-title" id="ac-title">Toutes les catégories de marques françaises</h2>
+    <div class="s-div"></div>
+    <div class="ac-grid" role="list">
+      <a href="/made-in-france/mode/" class="ac-card" role="listitem"><div class="ac-ph"><picture><source srcset="/img/250x310/avif/mode.avif" type="image/avif"><img src="/img/250x310/webp/mode.webp" alt="Mode française made in France" width="250" height="310" loading="lazy" decoding="async"></picture></div><div class="ac-overlay"></div><div class="ac-label"><h3 class="ac-name">Mode</h3><span class="ac-count">40+ marques françaises</span></div></a>
+      <a href="/made-in-france/beaute/" class="ac-card" role="listitem"><div class="ac-ph"><picture><source srcset="/img/250x310/avif/beaute-soins.avif" type="image/avif"><img src="/img/250x310/webp/beaute-soins.webp" alt="Beauté française made in France" width="250" height="310" loading="lazy" decoding="async"></picture></div><div class="ac-overlay"></div><div class="ac-label"><h3 class="ac-name">Beauté</h3><span class="ac-count">28 marques françaises</span></div></a>
+      <a href="/made-in-france/bijoux/" class="ac-card" role="listitem"><div class="ac-ph"><picture><source srcset="/img/250x310/avif/bijoux.avif" type="image/avif"><img src="/img/250x310/webp/bijoux.webp" alt="Bijoux français made in France" width="250" height="310" loading="lazy" decoding="async"></picture></div><div class="ac-overlay"></div><div class="ac-label"><h3 class="ac-name">Bijoux</h3><span class="ac-count">22 marques françaises</span></div></a>
+      <a href="/made-in-france/maison/" class="ac-card" role="listitem"><div class="ac-ph"><picture><source srcset="/img/250x310/avif/maison.avif" type="image/avif"><img src="/img/250x310/webp/maison.webp" alt="Maison française made in France" width="250" height="310" loading="lazy" decoding="async"></picture></div><div class="ac-overlay"></div><div class="ac-label"><h3 class="ac-name">Maison</h3><span class="ac-count">35 marques françaises</span></div></a>
+      <a href="/made-in-france/sport/" class="ac-card" role="listitem"><div class="ac-ph"><picture><source srcset="/img/250x310/avif/sport.avif" type="image/avif"><img src="/img/250x310/webp/sport.webp" alt="Sport made in France" width="250" height="310" loading="lazy" decoding="async"></picture></div><div class="ac-overlay"></div><div class="ac-label"><h3 class="ac-name">Sport</h3><span class="ac-count">18 marques françaises</span></div></a>
+      <a href="/made-in-france/technologie/" class="ac-card" role="listitem"><div class="ac-ph"><picture><source srcset="/img/250x310/avif/technologie.avif" type="image/avif"><img src="/img/250x310/webp/technologie.webp" alt="Technologie française made in France" width="250" height="310" loading="lazy" decoding="async"></picture></div><div class="ac-overlay"></div><div class="ac-label"><h3 class="ac-name">Technologie</h3><span class="ac-count">12 marques françaises</span></div></a>
+      <a href="/made-in-france/bricolage/" class="ac-card" role="listitem"><div class="ac-ph"><picture><source srcset="/img/250x310/avif/outils-bricolage.avif" type="image/avif"><img src="/img/250x310/webp/outils-bricolage.webp" alt="Bricolage made in France" width="250" height="310" loading="lazy" decoding="async"></picture></div><div class="ac-overlay"></div><div class="ac-label"><h3 class="ac-name">Bricolage</h3><span class="ac-count">15 marques françaises</span></div></a>
+      <a href="/made-in-france/epicerie-fine/" class="ac-card" role="listitem"><div class="ac-ph"><picture><source srcset="/img/250x310/avif/epicerie-fine.avif" type="image/avif"><img src="/img/250x310/webp/epicerie-fine.webp" alt="Produits épicerie fine française – terroir et gastronomie made in France" width="250" height="310" loading="lazy" decoding="async"></picture></div><div class="ac-overlay"></div><div class="ac-label"><h3 class="ac-name">Epicerie fine</h3><span class="ac-count">30 marques françaises</span></div></a>
     </div>
-  </div>
-  <!-- Hors container pour permettre le débordement mobile -->
-  <div class="cat-grid" role="list" aria-label="Catégories de marques françaises made in France">
-
-    <article class="cat-card" id="epicerie" role="listitem">
-      <a href="/epicerie" aria-label="Marques françaises Épicerie – Terroir et gastronomie">
-        <div class="cat-label">Épicerie</div>
-        <div class="cat-img-wrap">
-          <picture>
-            <source srcset="/img/600x450/avif/epicerie-fine-francaise.avif" type="image/avif">
-            <img src="/img/600x450/webp/epicerie-fine-francaise.webp" alt="Produits épicerie fine française – terroir et gastronomie made in France" width="600" height="450" loading="lazy" decoding="async">
-          </picture>
-          <div class="cat-overlay" aria-hidden="true"></div>
-          <div class="cat-hover-label" aria-hidden="true"><span class="cat-hover-txt">Terroir & gastronomie</span><span class="cat-hover-arr">→</span></div>
-        </div>
-      </a>
-    </article>
-
-    <article class="cat-card" id="mode" role="listitem">
-      <a href="/mode" aria-label="Marques françaises Mode – Vêtements, chaussures, accessoires">
-        <div class="cat-label">Mode</div>
-        <div class="cat-img-wrap">
-          <picture>
-            <source srcset="/img/600x450/avif/mode-made-in-france.avif" type="image/avif">
-            <img src="/img/600x450/webp/mode-made-in-france.webp" alt="Mode française made in France – vêtements, chaussures, accessoires" width="600" height="450" loading="lazy" decoding="async">
-          </picture>
-          <div class="cat-overlay" aria-hidden="true"></div>
-          <div class="cat-hover-label" aria-hidden="true"><span class="cat-hover-txt">Vêtements, chaussures, accessoires</span><span class="cat-hover-arr">→</span></div>
-        </div>
-      </a>
-    </article>
-
-    <article class="cat-card" id="beaute" role="listitem">
-      <a href="/beaute" aria-label="Marques françaises Beauté – Soins et cosmétiques naturels">
-        <div class="cat-label">Beauté</div>
-        <div class="cat-img-wrap">
-          <picture>
-            <source srcset="/img/600x450/avif/beaute-soins.avif" type="image/avif">
-            <img src="/img/600x450/webp/beaute-soins.webp" alt="Beauté française – soins et cosmétiques naturels made in France" width="600" height="450" loading="lazy" decoding="async">
-          </picture>
-          <div class="cat-overlay" aria-hidden="true"></div>
-          <div class="cat-hover-label" aria-hidden="true"><span class="cat-hover-txt">Soins & cosmétiques naturels</span><span class="cat-hover-arr">→</span></div>
-        </div>
-      </a>
-    </article>
-
-    <article class="cat-card" id="bijoux" role="listitem">
-      <a href="/bijoux" aria-label="Marques françaises Bijoux – Joaillerie et créateurs">
-        <div class="cat-label">Bijoux</div>
-        <div class="cat-img-wrap">
-          <picture>
-            <source srcset="/img/600x450/avif/bijoux.avif" type="image/avif">
-            <img src="/img/600x450/webp/bijoux.webp" alt="Bijoux français – joaillerie et créateurs made in France" width="600" height="450" loading="lazy" decoding="async">
-          </picture>
-          <div class="cat-overlay" aria-hidden="true"></div>
-          <div class="cat-hover-label" aria-hidden="true"><span class="cat-hover-txt">Joaillerie & créateurs</span><span class="cat-hover-arr">→</span></div>
-        </div>
-      </a>
-    </article>
-
-    <article class="cat-card" role="listitem">
-      <a href="/bricolage" aria-label="Marques françaises Bricolage – Outils et matériaux">
-        <div class="cat-label">Bricolage</div>
-        <div class="cat-img-wrap">
-          <picture>
-            <source srcset="/img/600x450/avif/outils-bricolage.avif" type="image/avif">
-            <img src="/img/600x450/webp/outils-bricolage.webp" alt="Bricolage français – outils et matériaux made in France" width="600" height="450" loading="lazy" decoding="async">
-          </picture>
-          <div class="cat-overlay" aria-hidden="true"></div>
-          <div class="cat-hover-label" aria-hidden="true"><span class="cat-hover-txt">Outils & matériaux</span><span class="cat-hover-arr">→</span></div>
-        </div>
-      </a>
-    </article>
-
-    <article class="cat-card" id="maison" role="listitem">
-      <a href="/maison" aria-label="Marques françaises Maison – Intérieur et jardin">
-        <div class="cat-label">Maison</div>
-        <div class="cat-img-wrap">
-          <picture>
-            <source srcset="/img/600x450/avif/maison.avif" type="image/avif">
-            <img src="/img/600x450/webp/maison.webp" alt="Maison française – intérieur et jardin made in France" width="600" height="450" loading="lazy" decoding="async">
-          </picture>
-          <div class="cat-overlay" aria-hidden="true"></div>
-          <div class="cat-hover-label" aria-hidden="true"><span class="cat-hover-txt">Intérieur & jardin</span><span class="cat-hover-arr">→</span></div>
-        </div>
-      </a>
-    </article>
-
-    <article class="cat-card" id="sport" role="listitem">
-      <a href="/sport" aria-label="Marques françaises Sport – Équipement et textile">
-        <div class="cat-label">Sport</div>
-        <div class="cat-img-wrap">
-          <picture>
-            <source srcset="/img/600x450/avif/sport.avif" type="image/avif">
-            <img src="/img/600x450/webp/sport.webp" alt="Sport français – équipement et textile made in France" width="600" height="450" loading="lazy" decoding="async">
-          </picture>
-          <div class="cat-overlay" aria-hidden="true"></div>
-          <div class="cat-hover-label" aria-hidden="true"><span class="cat-hover-txt">Équipement & textile</span><span class="cat-hover-arr">→</span></div>
-        </div>
-      </a>
-    </article>
-
-    <article class="cat-card" id="technologie" role="listitem">
-      <a href="/technologie" aria-label="Marques françaises Technologie – Innovation et électronique">
-        <div class="cat-label">Technologie</div>
-        <div class="cat-img-wrap">
-          <picture>
-            <source srcset="/img/600x450/avif/technologie.avif" type="image/avif">
-            <img src="/img/600x450/webp/technologie.webp" alt="Technologie française – innovation et électronique made in France" width="600" height="450" loading="lazy" decoding="async">
-          </picture>
-          <div class="cat-overlay" aria-hidden="true"></div>
-          <div class="cat-hover-label" aria-hidden="true"><span class="cat-hover-txt">Innovation & électronique</span><span class="cat-hover-arr">→</span></div>
-        </div>
-      </a>
-    </article>
-
   </div>
 </section>
 
@@ -606,72 +436,28 @@ footer{background:#0a1428;padding:3.5rem 2rem 2rem}
 </section>
 
 <!-- RÉFÉRENCER — pleine largeur -->
-<section class="referer" id="referer" aria-labelledby="ref-title">
-  <div class="ref-inner">
-    <div class="ref-content">
+<section class="cta-referer" id="referer" aria-labelledby="cta-title">
+  <div class="cta-inner">
+    <div class="cta-content">
       <div class="s-label">Vous êtes une marque française ?</div>
-      <h2 id="ref-title">Rejoignez l'annuaire des marques françaises</h2>
+      <h2 id="cta-title">Rejoignez l'annuaire des marques françaises</h2>
       <p>Vous fabriquez en France ? Faites-vous connaître gratuitement auprès de milliers de consommateurs engagés. Le référencement est ouvert à toutes les structures, TPE et PME incluses.</p>
-      <div class="ref-perks">
-        <span class="ref-perk">Référencement 100% gratuit</span>
-        <span class="ref-perk">Marque vérifiée & certifiée</span>
-        <span class="ref-perk">Visibilité immédiate</span>
-        <span class="ref-perk">Ouvert aux TPE & PME</span>
+      <div class="cta-perks">
+        <span class="cta-perk">Référencement 100% gratuit</span>
+        <span class="cta-perk">Visibilité immédiate</span>
+        <span class="cta-perk">Ouvert aux artisans, TPE, PME</span>
       </div>
     </div>
-    <div>
-      <button type="button" class="btn-p" style="font-size:.95rem;padding:1rem 2rem;white-space:nowrap">Référencer ma marque →</button>
+    <div class="cta-btns">
+      <button class="btn-p" type="button">Référencer ma marque →</button>
+      <span class="cta-note">Traitement sous 48h</span>
     </div>
   </div>
 </section>
 
 </main>
 
-<footer role="contentinfo">
-  <div class="ft">
-    <div class="ft-top">
-      <div class="ft-brand">
-        <p class="logo">La <span>Marque</span> Française</p>
-        <p>La référence des marques françaises d'exception. Nous mettons en lumière artisans, créateurs et producteurs qui font la richesse du patrimoine made in France.</p>
-        <div class="ft-brand-tags">
-          <span class="ft-tag">Mode française</span>
-          <span class="ft-tag">Épicerie française</span>
-          <span class="ft-tag">Beauté française</span>
-          <span class="ft-tag">Made in France</span>
-        </div>
-      </div>
-      <div class="ft-col">
-        <p>Catégories</p>
-        <ul>
-          <li><a href="/epicerie">Marques françaises Épicerie</a></li>
-          <li><a href="/mode">Marques françaises Mode</a></li>
-          <li><a href="/beaute">Marques françaises Beauté</a></li>
-          <li><a href="/bijoux">Marques françaises Bijoux</a></li>
-          <li><a href="/maison">Marques françaises Maison</a></li>
-          <li><a href="/sport">Marques françaises Sport</a></li>
-          <li><a href="/bricolage">Marques françaises Bricolage</a></li>
-          <li><a href="/technologie">Marques françaises Technologie</a></li>
-        </ul>
-      </div>
-      <div class="ft-col">
-        <p>La société</p>
-        <ul>
-          <li><a href="#mission">Notre mission</a></li>
-          <li><a href="#referer">Référencer ma marque</a></li>
-          <li><a href="#faq">FAQ</a></li>
-          <li><a href="/presse">Presse</a></li>
-          <li><a href="/contact">Contact</a></li>
-          <li><a href="/mentions-legales">Mentions légales</a></li>
-          <li><a href="/politique-de-confidentialite">Politique de confidentialité</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="ft-bot">
-      <p>© 2025 La Marque Française. Tous droits réservés. · <a href="/sitemap.xml" style="color:var(--muted-l);text-decoration:none">Sitemap</a></p>
-      <div class="ft-flag" aria-hidden="true"><span class="flag-b"></span><span class="flag-w"></span><span class="flag-r"></span></div>
-    </div>
-  </div>
-</footer>
+{{FOOTER}}
 
 <!-- DONNÉES STRUCTURÉES -->
 <script type="application/ld+json">
