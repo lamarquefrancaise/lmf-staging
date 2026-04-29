@@ -28,14 +28,7 @@
 <meta name="twitter:description" content="{{PAGE_DESCRIPTION}}">
 <meta name="twitter:image" content="{{OG_IMAGE}}">
 <script type="application/ld+json">
-[
-{{WEBPAGE_JSON_LD}},
-{{BREADCRUMB_JSON_LD}},
-{{ITEMLIST_JSON_LD}},
-{{FAQ_JSON_LD}},
-{{ORGANIZATION_JSON_LD}},
-{{COLLECTION_PAGE_JSON_LD}}
-]
+[{{WEBPAGE_JSON_LD}},{{BREADCRUMB_JSON_LD}},{{ITEMLIST_JSON_LD}},{{FAQ_JSON_LD}},{{ORGANIZATION_JSON_LD}},{{COLLECTION_PAGE_JSON_LD}}]
 </script>
 <style>
 {{GLOBAL_CSS}}
@@ -60,14 +53,11 @@
 <link rel="manifest" href="/manifest.webmanifest">
 </head>
 <body>
-
 <!-- NAV -->
 {{NAV}}
-
 <main id="contenu-principal">
 <!-- BREADCRUMB -->
 {{BREADCRUMB}}
-
 <!-- HERO -->
 <header class="cat-hero">
   <div class="cat-hero-inner">
@@ -83,7 +73,6 @@
     </div>
   </div>
 </header>
-
 <!-- SOUS-CATÉGORIES — images 4:5 -->
 <section class="sous-cats" id="sous-categories" aria-labelledby="sc-title">
   <div class="containeur">
@@ -98,16 +87,12 @@
     </div>
   </div>
 </section>
-
 <!-- MARQUES -->
 {{MARQUES_SECTION}}
-
 <!-- PRODUITS -->
 {{PRODUITS_SECTION}}
-
 <!-- CARTE D3 -->
 {{CARTE_SECTION}}
-
 <!-- TEXTE SEO -->
 <section class="seo-section" id="guide" aria-labelledby="seo-title">
   <div class="containeur">
@@ -152,12 +137,9 @@
     </div>
   </div>
 </section>
-
 <!-- FAQ -->
 {{FAQ_SECTION}}
-
-
-<!-- AUTRES CATÉGORIES — images 4:5 -->
+<!-- AUTRES CATÉGORIES -->
 <section class="autres-cats" id="autres-categories" aria-labelledby="ac-title">
   <div class="containeur">
     <div class="s-label">Explorer l'annuaire</div>
@@ -176,7 +158,6 @@
     </div>
   </div>
 </section>
-
 </main>
 <!-- CTA RÉFÉRENCER -->
 <section class="cta-referer" id="referer" aria-labelledby="cta-title">
@@ -197,11 +178,8 @@
     </div>
   </div>
 </section>
-
 <!-- FOOTER -->
 {{FOOTER}}
-
-
 <script>
 // Mobile menu
 const burger   = document.getElementById('burger'),
@@ -229,7 +207,6 @@ burger.addEventListener('click', () => navLinks.classList.contains('open') ? clo
 closeBtn.addEventListener('click', closeMenu);
 overlay.addEventListener('click', closeMenu);
 navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
-
 // FAQ
 function toggleFaq(btn){
   const id=btn.getAttribute('aria-controls'),ans=document.getElementById(id),tog=btn.querySelector('.faq-toggle'),num=id.replace('fa',''),sep=document.getElementById('fs'+num),isOpen=ans.classList.contains('open');
@@ -239,7 +216,6 @@ function toggleFaq(btn){
   document.querySelectorAll('.faq-sep').forEach(e=>e.classList.remove('hidden'));
   if(!isOpen){ans.classList.add('open');tog.classList.add('open');btn.setAttribute('aria-expanded','true');if(sep)sep.classList.add('hidden')}
 }
-
 </script>
 </body>
 </html>
