@@ -1344,11 +1344,16 @@ async function submitForm() {
 
   const form = document.getElementById("refForm");
   const data = new FormData(form);
+  const jsonData = {};
+  for (let [key, val] of data.entries()) {
+    jsonData[key] = val;
+  }
 
   try {
     const response = await fetch("https://api.web3forms.com/submit", {
       method: "POST",
-      body: data
+      headers: { "Content-Type": "application/json", "Accept": "application/json" },
+      body: JSON.stringify(jsonData)
     });
     const result = await response.json();
 
