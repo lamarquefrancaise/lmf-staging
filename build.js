@@ -42,7 +42,7 @@ const marqueVedetteCss   = fs.readFileSync(path.join(__dirname, 'css/marque-vede
 const marquesGridCss     = fs.readFileSync(path.join(__dirname, 'css/marques-grid.css'), 'utf8');
 const produitsSectionCss = fs.readFileSync(path.join(__dirname, 'css/produits-section.css'), 'utf8');
 const organizationJsonLd = fs.readFileSync(path.join(__dirname, 'js/Organization-json-ld.json'), 'utf8');
-const menuBurgerJs       = fs.readFileSync(path.join(__dirname, 'js/components/menu_burger.json'), 'utf8');
+const menuBurgerJs       = fs.readFileSync(path.join(__dirname, 'js/components/menu-burger.json'), 'utf8');
 const faqJs              = fs.readFileSync(path.join(__dirname, 'js/components/faq.json'), 'utf8');
 
 
