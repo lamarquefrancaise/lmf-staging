@@ -1369,10 +1369,13 @@ async function submitForm() {
   jsonData["h-captcha-response"] = hcaptchaToken;
 
   try {
+    const bodyStr = JSON.stringify(jsonData);
+    console.log("[LMF] body length:", bodyStr.length);
+    console.log("[LMF] body:", bodyStr.substring(0, 300));
     const response = await fetch("https://lmf-form-handler.bonjour-577.workers.dev", {
       method: "POST",
       headers: { "Content-Type": "application/json", "Accept": "application/json" },
-      body: JSON.stringify(jsonData)
+      body: bodyStr
     });
     const result = await response.json();
 
