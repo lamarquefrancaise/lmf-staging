@@ -181,41 +181,8 @@
 <!-- FOOTER -->
 {{FOOTER}}
 <script>
-// Mobile menu
-const burger   = document.getElementById('burger'),
-      navLinks = document.getElementById('navLinks'),
-      overlay  = document.getElementById('navOverlay'),
-      closeBtn = document.getElementById('menuClose');
-
-const closeMenu = () => {
-  navLinks.classList.remove('open');
-  burger.classList.remove('open');
-  overlay.classList.remove('open');
-  closeBtn.classList.remove('open');
-  burger.setAttribute('aria-expanded','false');
-  document.body.style.overflow = '';
-};
-const openMenu = () => {
-  navLinks.classList.add('open');
-  burger.classList.add('open');
-  overlay.classList.add('open');
-  closeBtn.classList.add('open');
-  burger.setAttribute('aria-expanded','true');
-  document.body.style.overflow = 'hidden';
-};
-burger.addEventListener('click', () => navLinks.classList.contains('open') ? closeMenu() : openMenu());
-closeBtn.addEventListener('click', closeMenu);
-overlay.addEventListener('click', closeMenu);
-navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
-// FAQ
-function toggleFaq(btn){
-  const id=btn.getAttribute('aria-controls'),ans=document.getElementById(id),tog=btn.querySelector('.faq-toggle'),num=id.replace('fa',''),sep=document.getElementById('fs'+num),isOpen=ans.classList.contains('open');
-  document.querySelectorAll('.faq-a').forEach(e=>e.classList.remove('open'));
-  document.querySelectorAll('.faq-toggle').forEach(e=>e.classList.remove('open'));
-  document.querySelectorAll('.faq-q').forEach(e=>e.setAttribute('aria-expanded','false'));
-  document.querySelectorAll('.faq-sep').forEach(e=>e.classList.remove('hidden'));
-  if(!isOpen){ans.classList.add('open');tog.classList.add('open');btn.setAttribute('aria-expanded','true');if(sep)sep.classList.add('hidden')}
-}
+{{MENU_BURGER_JS}}
+{{FAQ_JS}}
 </script>
 </body>
 </html>

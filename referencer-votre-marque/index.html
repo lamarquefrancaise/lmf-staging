@@ -1130,37 +1130,8 @@ footer{background:#0a1428;padding:3.5rem 2rem 2rem}
 
 <script>
 // NAV MOBILE
-const burger = document.getElementById("burger"),
-      nav    = document.getElementById("navLinks"),
-      ol     = document.getElementById("navOverlay"),
-      cb     = document.getElementById("menuClose");
-const cm = () => { nav.classList.remove("open"); burger.classList.remove("open"); ol.classList.remove("open"); burger.setAttribute("aria-expanded","false"); document.body.style.overflow=""; };
-const om = () => { nav.classList.add("open"); burger.classList.add("open"); ol.classList.add("open"); burger.setAttribute("aria-expanded","true"); document.body.style.overflow="hidden"; };
-burger.addEventListener("click", () => nav.classList.contains("open") ? cm() : om());
-cb.addEventListener("click", cm);
-ol.addEventListener("click", cm);
-nav.querySelectorAll("a").forEach(a => a.addEventListener("click", cm));
-
-// FAQ
-function toggleFaq(btn) {
-  const id = btn.getAttribute("aria-controls");
-  const ans = document.getElementById(id);
-  const tog = btn.querySelector(".faq-toggle");
-  const num = id.replace("fa","");
-  const sep = document.getElementById("fs"+num);
-  const isOpen = ans.classList.contains("open");
-  document.querySelectorAll(".faq-a").forEach(e => e.classList.remove("open"));
-  document.querySelectorAll(".faq-toggle").forEach(e => e.classList.remove("open"));
-  document.querySelectorAll(".faq-q").forEach(e => e.setAttribute("aria-expanded","false"));
-  document.querySelectorAll(".faq-sep").forEach(e => e.classList.remove("hidden"));
-  if (!isOpen) {
-    ans.classList.add("open");
-    tog.classList.add("open");
-    btn.setAttribute("aria-expanded","true");
-    if (sep) sep.classList.add("hidden");
-  }
-}
-
+{{MENU_BURGER_JS}}
+{{FAQ_JS}}
 // PLAN SELECTOR
 function selectPlan(plan) {
   const map = { simple: "planOptSimple", avance: "planOptAvance", premium: "planOptPremium" };

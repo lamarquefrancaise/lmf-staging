@@ -464,31 +464,7 @@ section{padding:5rem 2rem}
 <!-- SCRIPTS -->
 <script>
 // Mobile menu
-const burger   = document.getElementById('burger'),
-      navLinks = document.getElementById('navLinks'),
-      overlay  = document.getElementById('overlay'),
-      closeBtn = document.getElementById('menuClose');
-
-const closeMenu = () => {
-  navLinks.classList.remove('open');
-  burger.classList.remove('open');
-  overlay.classList.remove('open');
-  closeBtn.classList.remove('open');
-  burger.setAttribute('aria-expanded','false');
-  document.body.style.overflow = '';
-};
-const openMenu = () => {
-  navLinks.classList.add('open');
-  burger.classList.add('open');
-  overlay.classList.add('open');
-  closeBtn.classList.add('open');
-  burger.setAttribute('aria-expanded','true');
-  document.body.style.overflow = 'hidden';
-};
-burger.addEventListener('click', () => navLinks.classList.contains('open') ? closeMenu() : openMenu());
-closeBtn.addEventListener('click', closeMenu);
-overlay.addEventListener('click', closeMenu);
-navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+{{MENU_BURGER_JS}}
 
 // Hover catégories
 document.querySelectorAll('.cat-card').forEach(card => {
@@ -509,27 +485,7 @@ document.querySelectorAll('.cat-card').forEach(card => {
     if (label) { label.style.opacity = '0'; label.style.transform = 'translateY(5px)'; }
   });
 });
-
-// FAQ accordion
-function toggleFaq(btn) {
-  const id     = btn.getAttribute('aria-controls');
-  const ans    = document.getElementById(id);
-  const tog    = btn.querySelector('.faq-toggle');
-  const sepId  = id.replace('faq-a','faq-sep');
-  const sep    = document.getElementById(sepId);
-  const isOpen = ans.classList.contains('open');
-  document.querySelectorAll('.faq-a').forEach(el => el.classList.remove('open'));
-  document.querySelectorAll('.faq-toggle').forEach(el => el.classList.remove('open'));
-  document.querySelectorAll('.faq-q').forEach(el => el.setAttribute('aria-expanded','false'));
-  document.querySelectorAll('.faq-sep').forEach(el => el.classList.remove('hidden'));
-  if (!isOpen) {
-    ans.classList.add('open');
-    tog.classList.add('open');
-    btn.setAttribute('aria-expanded','true');
-    if (sep) sep.classList.add('hidden');
-  }
-}
-
+{{FAQ_JS}}
 // Compteur animé
 const counters = document.querySelectorAll('[data-target]');
 if (counters.length) {
