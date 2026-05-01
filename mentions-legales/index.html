@@ -12,16 +12,7 @@
 {{GLOBAL_CSS}}
 {{NAV_CSS}}
 {{BREADCRUMB_CSS}}
-/* ── HERO ── */
-.ml-hero{background:var(--navy);padding:3rem 2rem 4rem;position:relative;overflow:hidden;text-align:center}
-.ml-hero::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent,transparent 59px,rgba(184,150,62,.04) 59px,rgba(184,150,62,.04) 60px);pointer-events:none}
-.ml-hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
-.ml-hero-inner{max-width:780px;margin:0 auto;position:relative;z-index:1}
-.ml-hero-badge{display:inline-flex;align-items:center;gap:.5rem;border:1px solid rgba(184,150,62,.5);color:var(--gold-l);font-family:Arial,sans-serif;font-size:.72rem;letter-spacing:.2em;padding:.3rem .9rem;margin-bottom:1.25rem;text-transform:uppercase}
-.ml-hero h1{font-size:clamp(1.8rem,4vw,3rem);color:var(--white);font-weight:normal;line-height:1.2;letter-spacing:.02em;margin-bottom:.75rem}
-.ml-hero h1 em{color:var(--gold-l);font-style:normal}
-.ml-hero-desc{font-family:Arial,sans-serif;font-size:.95rem;color:rgba(255,255,255,.6);line-height:1.75;max-width:580px;margin:0 auto}
-.ml-hero-update{display:inline-block;margin-top:1.5rem;font-family:Arial,sans-serif;font-size:.72rem;color:rgba(255,255,255,.4);letter-spacing:.05em}
+{{HERO_LEGAL_CSS}}
 /* ── BLOCS LÉGAUX (alternance fond clair / cream) ── */
 .legal-block{padding:4rem 2rem}
 .legal-block.alt{background:var(--cream)}
@@ -109,12 +100,12 @@
   </nav>
 </div>
 <!-- HERO -->
-<header class="ml-hero">
-  <div class="ml-hero-inner">
-    <div class="ml-hero-badge">Informations légales · Article 6-III LCEN</div>
+<header class="legal-hero">
+  <div class="legal-hero-inner">
+    <div class="legal-hero-badge">Informations légales · Article 6-III LCEN</div>
     <h1>Mentions <em>Légales</em></h1>
-    <p class="ml-hero-desc">Conformément à la loi n°2004-575 du 21 juin 2004 pour la confiance dans l'économie numérique (LCEN), nous vous communiquons l'ensemble des informations légales relatives au site lamarquefrancaise.fr.</p>
-    <span class="ml-hero-update">Dernière mise à jour : 1<sup>er</sup> mai 2026</span>
+    <p class="legal-hero-desc">Conformément à la loi n°2004-575 du 21 juin 2004 pour la confiance dans l'économie numérique (LCEN), nous vous communiquons l'ensemble des informations légales relatives au site lamarquefrancaise.fr.</p>
+    <span class="legal-hero-update">Dernière mise à jour : 1<sup>er</sup> mai 2026</span>
   </div>
 </header>
 <!-- 1. ÉDITEUR DU SITE -->

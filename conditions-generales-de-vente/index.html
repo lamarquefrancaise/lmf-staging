@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Conditions Générales de Vente — La Marque Française</title>
+<meta name="description" content="Conditions générales de vente de La Marque Française : offres de référencement payantes Avancé et Premium, modalités, paiement, durée, obligations.">
+<meta name="robots" content="noindex, follow">
+<meta name="author" content="La Marque Française">
+<meta name="theme-color" content="#0d1b3e">
+<style>
+{{GLOBAL_CSS}}
+{{NAV_CSS}}
+{{BREADCRUMB_CSS}}
+{{HERO_LEGAL_CSS}}
+/* ── BLOCS LÉGAUX (alternance fond clair / cream) ── */
+.legal-block{padding:4rem 2rem}
+.legal-block.alt{background:var(--cream)}
+.legal-grid{max-width:900px;margin:0 auto}
+.legal-grid h2{font-family:Georgia,'Times New Roman',serif;font-weight:normal;font-size:clamp(1.4rem,2.4vw,1.7rem);color:var(--navy);line-height:1.25;margin-bottom:.6rem}
+.legal-grid h3{font-family:Georgia,'Times New Roman',serif;font-weight:normal;font-size:1.02rem;color:var(--navy);margin:1.7rem 0 .7rem;padding-left:.7rem;border-left:2px solid var(--gold)}
+.legal-grid p{font-family:Arial,sans-serif;font-size:.87rem;color:var(--muted);line-height:1.85;margin-bottom:.95rem}
+.legal-grid ul{list-style:none;margin:.75rem 0 1.25rem;padding:0}
+.legal-grid ul li{font-family:Arial,sans-serif;font-size:.87rem;color:var(--muted);line-height:1.85;padding:.35rem 0;display:flex;gap:.65rem;align-items:flex-start}
+.legal-grid ul li::before{content:'→';color:var(--gold);font-size:.85rem;line-height:1.85;flex-shrink:0}
+.legal-grid a{color:var(--gold-d);text-decoration:none;border-bottom:1px solid rgba(184,150,62,.3);transition:border-color .2s,color .2s}
+.legal-grid a:hover{color:var(--gold);border-color:var(--gold)}
+.legal-grid strong{color:var(--navy);font-weight:normal}
+/* Carte d'identité éditeur (présentation tabulaire propre) */
+.id-card{background:var(--white);border:1px solid var(--border);padding:1.75rem 2rem;margin-top:1.5rem}
+.legal-block.alt .id-card{background:var(--white)}
+.id-row{display:grid;grid-template-columns:200px 1fr;gap:1.25rem;padding:.75rem 0;border-bottom:1px solid var(--border);font-family:Arial,sans-serif}
+.id-row:last-child{border-bottom:none}
+.id-row dt{font-size:.72rem;letter-spacing:.15em;color:var(--gold-d);text-transform:uppercase;padding-top:.15rem}
+.id-row dd{font-size:.88rem;color:var(--muted);line-height:1.7}
+.id-row dd strong{color:var(--navy)}
+/* Email obfusqué */
+.email-protege{display:inline-flex;align-items:center;gap:.5rem;flex-wrap:wrap;margin-top:.35rem}
+.btn-email{background:var(--navy);color:var(--gold-l);border:none;padding:.55rem 1.1rem;font-family:Arial,sans-serif;font-size:.78rem;letter-spacing:.08em;cursor:pointer;transition:background .2s,transform .15s;display:inline-flex;align-items:center;gap:.5rem}
+.btn-email:hover{background:var(--gold);color:var(--white);transform:translateY(-1px)}
+.btn-email.revealed{display:none}
+.email-link{font-family:Arial,sans-serif;font-size:.88rem;color:var(--gold-d);text-decoration:none;border-bottom:1px solid rgba(184,150,62,.3);transition:border-color .2s,color .2s;display:none}
+.email-link.revealed{display:inline-block}
+.email-link:hover{color:var(--gold);border-color:var(--gold)}
+.btn-copy{background:transparent;color:var(--muted);border:1px solid var(--border);padding:.4rem .75rem;font-family:Arial,sans-serif;font-size:.7rem;letter-spacing:.05em;cursor:pointer;transition:all .2s;display:none}
+.btn-copy.revealed{display:inline-block}
+.btn-copy:hover{border-color:var(--navy);color:var(--navy)}
+.btn-copy.copied{background:var(--gold);color:var(--white);border-color:var(--gold)}
+/* Bloc info important */
+.info-box{background:var(--cream);border-left:3px solid var(--gold);padding:1.1rem 1.5rem;margin:1.5rem 0;font-family:Arial,sans-serif;font-size:.83rem;color:var(--muted);line-height:1.75}
+.legal-block.alt .info-box{background:var(--white)}
+.info-box strong{color:var(--navy)}
+/* Tableau tarifs spécifique CGV */
+.cgv-pricing{background:var(--white);border:1px solid var(--border);margin-top:1.5rem;overflow-x:auto}
+.legal-block.alt .cgv-pricing{background:var(--white)}
+.cgv-pricing table{width:100%;border-collapse:collapse;font-family:Arial,sans-serif;min-width:520px}
+.cgv-pricing th,.cgv-pricing td{padding:1rem 1.25rem;text-align:left;border-bottom:1px solid var(--border);font-size:.85rem}
+.cgv-pricing th{background:var(--cream);color:var(--navy);font-weight:normal;font-size:.72rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gold-d)}
+.cgv-pricing tbody tr:last-child td{border-bottom:none}
+.cgv-pricing td:first-child{font-weight:normal;color:var(--navy)}
+.cgv-pricing td:last-child{color:var(--navy);white-space:nowrap}
+.cgv-pricing .price{font-family:Georgia,'Times New Roman',serif;font-size:1.05rem;color:var(--navy)}
+
+{{BANDEAU_CTA_CSS}}
+{{FOOTER_CSS}}
+
+/* ── RESPONSIVE ── */
+@media(max-width:768px){
+  .breadcrumb-bar{padding-top:5rem}
+  .legal-block{padding:3rem 1.25rem}
+  .id-card{padding:1.25rem 1.25rem}
+  .id-row{grid-template-columns:1fr;gap:.25rem;padding:.85rem 0}
+  .id-row dt{font-size:.68rem}
+  .cta-inner{grid-template-columns:1fr;text-align:center}
+  .cta-perks{justify-content:center}
+  .cta-btns{width:100%}
+  .btn-p{width:100%}
+  .ft-top{grid-template-columns:1fr;gap:2rem}
+  .cgv-pricing th,.cgv-pricing td{padding:.75rem .85rem;font-size:.78rem}
+}
+</style>
+
+<!-- 7. FAVICONS ET MANIFEST -->
+<link rel="icon" href="/img/favicon.ico" sizes="32x32">
+<link rel="icon" href="/img/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
+
+<!-- 8. SEO — CANONICAL, OG, TWITTER -->
+<link rel="canonical" href="https://lamarquefrancaise.fr/conditions-generales-de-vente">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="La Marque Française">
+<meta property="og:title" content="Conditions Générales de Vente — La Marque Française">
+<meta property="og:description" content="Conditions générales de vente de La Marque Française : offres de référencement payantes, modalités, paiement, durée, obligations.">
+<meta property="og:url" content="https://lamarquefrancaise.fr/conditions-generales-de-vente">
+<meta property="og:image" content="https://lamarquefrancaise.fr/og-image.jpg">
+<meta property="og:locale" content="fr_FR">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Conditions Générales de Vente — La Marque Française">
+<meta name="twitter:description" content="Conditions générales de vente de La Marque Française : offres de référencement payantes, modalités, paiement, durée, obligations.">
+<meta name="twitter:image" content="https://lamarquefrancaise.fr/og-image.jpg">
+</head>
+<body>
+{{NAV}}
+<main id="contenu-principal">
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb-bar">
+  <nav aria-label="Fil d'Ariane" class="breadcrumb">
+    <a href="/">Accueil</a><span class="breadcrumb-sep" aria-hidden="true">›</span>
+    <span class="breadcrumb-current" aria-current="page">Conditions générales de vente</span>
+  </nav>
+</div>
+
+<!-- HERO -->
+<header class="legal-hero">
+  <div class="legal-hero-inner">
+    <div class="legal-hero-badge">Document contractuel · BtoB</div>
+    <h1>Conditions Générales <em>de Vente</em></h1>
+    <p class="legal-hero-desc">Les présentes conditions générales de vente régissent les offres payantes de référencement (plans Avancé et Premium) proposées par La Marque Française aux marques françaises souhaitant bénéficier d'une visibilité renforcée sur l'annuaire.</p>
+    <span class="legal-hero-update">Date d'entrée en vigueur : 1<sup>er</sup> mai 2026</span>
+  </div>
+</header>
+
+<!-- 1. OBJET -->
+<section class="legal-block" id="objet" aria-labelledby="objet-title">
+  <div class="containeur">
+    <div class="legal-grid">
+      <div class="s-label">Article 1</div>
+      <h2 id="objet-title">Objet et champ d'application</h2>
+      <div class="s-div" aria-hidden="true"></div>
+
+      <p>Les présentes conditions générales de vente (ci-après les « <strong>CGV</strong> ») ont pour objet de définir les droits et obligations des parties dans le cadre des prestations payantes de référencement proposées par La Marque Française (ci-après l'« <strong>Éditeur</strong> ») aux marques françaises clientes (ci-après la « <strong>Marque</strong> » ou le « <strong>Client</strong> ») sur le site lamarquefrancaise.fr (ci-après le « <strong>Site</strong> »).</p>
+
+      <p>Les présentes CGV s'appliquent exclusivement aux offres payantes de référencement, à savoir les plans <strong>Avancé</strong> et <strong>Premium</strong>. L'offre <strong>Essentiel</strong>, gratuite, n'entre pas dans le champ d'application des présentes CGV et est régie par les <a href="/mentions-legales" aria-label="Consulter les mentions légales">mentions légales</a> du Site.</p>
+
+      <p>Les présentes CGV s'appliquent exclusivement à des relations entre professionnels (« <strong>BtoB</strong> »). Toute Marque souscrivant à une offre payante reconnaît agir dans le cadre d'une activité professionnelle.</p>
+
+      <div class="info-box">
+        <strong>Acceptation des CGV —</strong> La signature ou l'acceptation expresse du devis émis par l'Éditeur emporte de plein droit acceptation sans réserve des présentes CGV par la Marque, qui déclare en avoir pris connaissance préalablement à toute commande.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 2. ÉDITEUR -->
+<section class="legal-block alt" id="editeur" aria-labelledby="editeur-title">
+  <div class="containeur">
+    <div class="legal-grid">
+      <div class="s-label">Article 2</div>
+      <h2 id="editeur-title">Identification de l'Éditeur</h2>
+      <div class="s-div" aria-hidden="true"></div>
+
+      <p>Les prestations objet des présentes CGV sont proposées par :</p>
+
+      <dl class="id-card">
+        <div class="id-row">
+          <dt>Forme juridique</dt>
+          <dd>Entrepreneur individuel</dd>
+        </div>
+        <div class="id-row">
+          <dt>Nom commercial</dt>
+          <dd><strong>La Marque Française</strong></dd>
+        </div>
+        <div class="id-row">
+          <dt>Représentant légal</dt>
+          <dd><strong>Alexis LEBEGUE</strong></dd>
+        </div>
+        <div class="id-row">
+          <dt>SIRET</dt>
+          <dd>904 657 764 00026</dd>
+        </div>
+        <div class="id-row">
+          <dt>TVA intracommunautaire</dt>
+          <dd>TVA non applicable, article 293 B du CGI</dd>
+        </div>
+        <div class="id-row">
+          <dt>Siège social</dt>
+          <dd>94440 Villecresnes — France</dd>
+        </div>
+        <div class="id-row">
+          <dt>Contact</dt>
+          <dd>
+            <div class="email-protege">
+              <button type="button" class="btn-email" id="btnEmail" aria-label="Afficher l'adresse email de contact" aria-expanded="false">
+                ✉ Afficher l'adresse email
+              </button>
+              <a href="#" class="email-link" id="emailLink" aria-hidden="true"></a>
+              <button type="button" class="btn-copy" id="btnCopy" aria-label="Copier l'adresse email" aria-hidden="true">Copier</button>
+            </div>
+          </dd>
+        </div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<!-- 3. PRESTATIONS -->
+<section class="legal-block" id="prestations" aria-labelledby="prestations-title">
+  <div class="containeur">
+    <div class="legal-grid">
+      <div class="s-label">Article 3</div>
+      <h2 id="prestations-title">Description des prestations</h2>
+      <div class="s-div" aria-hidden="true"></div>
+
+      <p>L'Éditeur propose deux offres payantes de référencement, dont les caractéristiques sont décrites ci-après :</p>
+
+      <h3>Plan Avancé</h3>
+      <p>Le plan <strong>Avancé</strong> comprend l'ensemble des fonctionnalités du plan Essentiel (page entreprise, classement par catégorie, indexation par les moteurs de recherche), auxquelles s'ajoutent :</p>
+      <ul>
+        <li>Lien actif vers le site internet de la Marque</li>
+        <li>Mise en ligne de cinq (5) produits de la Marque</li>
+        <li>Mise en avant dans les résultats de recherche internes du Site</li>
+        <li>Accès aux statistiques de consultation de la fiche</li>
+        <li>Support par email</li>
+      </ul>
+
+      <h3>Plan Premium</h3>
+      <p>Le plan <strong>Premium</strong> comprend l'ensemble des fonctionnalités du plan Avancé, auxquelles s'ajoutent :</p>
+      <ul>
+        <li>Badge « Marque vedette » dans la catégorie et la sous-catégorie de référencement</li>
+        <li>Mise en ligne de vingt (20) produits de la Marque</li>
+        <li>Mise en avant sur la page d'accueil du Site</li>
+        <li>Article éditorial dédié à la Marque</li>
+        <li>Rapport trimestriel d'audience et de performance</li>
+        <li>Accompagnement personnalisé</li>
+      </ul>
+
+      <h3>Badge « Vérifié »</h3>
+      <p>Le badge « <strong>Vérifié</strong> », distinct des plans payants, atteste de la fabrication, de l'assemblage ou de la transformation principale en France des produits de la Marque, de la traçabilité des matières premières et du respect du droit du travail français. Ce badge ne peut en aucun cas faire l'objet d'un achat. Il est attribué discrétionnairement par l'Éditeur après vérification du dossier de la Marque et peut être retiré dans les conditions prévues à l'article 9 des présentes CGV.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 4. TARIFS -->
+<section class="legal-block alt" id="tarifs" aria-labelledby="tarifs-title">
+  <div class="containeur">
+    <div class="legal-grid">
+      <div class="s-label">Article 4</div>
+      <h2 id="tarifs-title">Tarifs</h2>
+      <div class="s-div" aria-hidden="true"></div>
+
+      <p>Les tarifs des offres payantes de référencement sont les suivants :</p>
+
+      <div class="cgv-pricing" role="region" aria-label="Tableau des tarifs des offres payantes">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Offre</th>
+              <th scope="col">Durée</th>
+              <th scope="col">Tarif</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Plan Avancé</td>
+              <td>Annuel</td>
+              <td><span class="price">250&nbsp;€</span></td>
+            </tr>
+            <tr>
+              <td>Plan Premium</td>
+              <td>Annuel</td>
+              <td><span class="price">750&nbsp;€</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="info-box">
+        <strong>TVA non applicable —</strong> En application de l'article 293 B du Code général des impôts (CGI), l'Éditeur bénéficie de la franchise en base de TVA. Les tarifs indiqués ci-dessus sont par conséquent <strong>nets de TVA</strong>. Aucune TVA ne sera ajoutée au moment de la facturation.
+      </div>
+
+      <h3>Stabilité des tarifs</h3>
+      <p>Les tarifs applicables sont ceux en vigueur à la date d'émission du devis. Une fois le devis accepté et le paiement reçu, le tarif convenu est <strong>figé pour toute la durée d'engagement de douze (12) mois</strong>. L'Éditeur s'interdit toute modification tarifaire en cours d'engagement.</p>
+
+      <h3>Évolution des tarifs</h3>
+      <p>L'Éditeur se réserve le droit de modifier ses tarifs à tout moment pour les nouveaux contrats. Les tarifs applicables à un éventuel renouvellement seront ceux en vigueur à la date d'émission du nouveau devis.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 5. COMMANDE ET FORMATION DU CONTRAT -->
+<section class="legal-block" id="commande" aria-labelledby="commande-title">
+  <div class="containeur">
+    <div class="legal-grid">
+      <div class="s-label">Article 5</div>
+      <h2 id="commande-title">Commande et formation du contrat</h2>
+      <div class="s-div" aria-hidden="true"></div>
+
+      <h3>Demande de référencement</h3>
+      <p>Toute Marque souhaitant bénéficier d'une offre payante de référencement adresse une demande à l'Éditeur via le formulaire de référencement disponible sur le Site. La demande comporte l'ensemble des informations nécessaires à l'étude du dossier (identification de la Marque, SIRET, nature des produits, lieu de fabrication, etc.).</p>
+
+      <h3>Étude du dossier</h3>
+      <p>L'Éditeur dispose d'un délai indicatif de quarante-huit (48) heures ouvrées pour étudier la demande de la Marque et vérifier sa conformité aux critères d'éligibilité du Site. À l'issue de cette étude, l'Éditeur peut accepter, refuser ou demander des compléments d'information.</p>
+
+      <h3>Émission du devis</h3>
+      <p>En cas d'acceptation du dossier, l'Éditeur transmet à la Marque un devis détaillant l'offre choisie, le tarif applicable, la durée d'engagement et les modalités de paiement.</p>
+
+      <h3>Formation du contrat</h3>
+      <p>Le contrat est définitivement formé à la <strong>réception effective du paiement</strong> par l'Éditeur, à la suite de l'acceptation expresse du devis par la Marque. La signature ou l'acceptation expresse du devis emporte acceptation sans réserve des présentes CGV.</p>
+
+      <div class="info-box">
+        <strong>Validité du devis —</strong> Le devis émis par l'Éditeur est valable pendant un délai de quatorze (14) jours calendaires à compter de sa date d'émission. À l'expiration de ce délai sans réception du paiement, le devis devient automatiquement caduc et la Marque devra solliciter l'émission d'un nouveau devis aux tarifs alors en vigueur.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6. PAIEMENT -->
+<section class="legal-block alt" id="paiement" aria-labelledby="paiement-title">
+  <div class="containeur">
+    <div class="legal-grid">
+      <div class="s-label">Article 6</div>
+      <h2 id="paiement-title">Modalités de paiement</h2>
+      <div class="s-div" aria-hidden="true"></div>
+
+      <h3>Mode de paiement</h3>
+      <p>Le paiement des prestations s'effectue exclusivement par <strong>virement bancaire</strong> sur le compte indiqué par l'Éditeur sur le devis. Aucun autre mode de paiement n'est accepté.</p>
+
+      <h3>Délai de paiement</h3>
+      <p>Le virement doit être effectué dans un délai maximum de <strong>quatorze (14) jours calendaires</strong> à compter de la date d'émission du devis. Au-delà de ce délai, le devis devient automatiquement caduc, sans que la Marque puisse prétendre à une quelconque indemnité.</p>
+
+      <h3>Mise en ligne effective</h3>
+      <p>La fiche complète et l'ensemble des fonctionnalités liées à l'offre souscrite ne sont mises en ligne qu'à compter de la <strong>réception effective du paiement</strong> par l'Éditeur. Aucune mise en ligne anticipée n'est possible.</p>
+
+      <h3>Pénalités de retard</h3>
+      <p>Conformément à l'article L.441-10 du Code de commerce, en cas de défaut de paiement à l'échéance et sans qu'une mise en demeure préalable ne soit nécessaire, des pénalités de retard sont applicables au taux d'intérêt appliqué par la Banque centrale européenne à son opération de refinancement la plus récente, majoré de dix (10) points de pourcentage. À ces pénalités s'ajoute une indemnité forfaitaire pour frais de recouvrement d'un montant de <strong>quarante (40) euros</strong>, conformément à l'article D.441-5 du Code de commerce.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 7. DURÉE -->
+<section class="legal-block" id="duree" aria-labelledby="duree-title">
+  <div class="containeur">
+    <div class="legal-grid">
+      <div class="s-label">Article 7</div>
+      <h2 id="duree-title">Durée et fin du contrat</h2>
+      <div class="s-div" aria-hidden="true"></div>
+
+      <h3>Durée d'engagement</h3>
+      <p>Les offres payantes de référencement sont conclues pour une durée ferme de <strong>douze (12) mois</strong>, à compter de la date de réception effective du paiement par l'Éditeur.</p>
+
+      <h3>Absence de reconduction tacite</h3>
+      <p>Le contrat <strong>n'est pas reconduit tacitement</strong>. À l'expiration de la période de douze (12) mois, la prestation prend automatiquement fin, sans qu'aucun préavis ne soit nécessaire de l'une ou l'autre des parties.</p>
+
+      <h3>Renouvellement</h3>
+      <p>La Marque souhaitant renouveler son référencement payant doit en formuler la demande expresse avant la date d'échéance du contrat. Le renouvellement fait l'objet d'un nouveau devis, aux tarifs et conditions en vigueur à la date d'émission du nouveau devis.</p>
+
+      <h3>Effet de la fin du contrat</h3>
+      <p>À l'expiration du contrat, en l'absence de renouvellement, la fiche de la Marque bascule automatiquement sur l'offre <strong>Essentiel</strong> gratuite. Les fonctionnalités spécifiques à l'offre payante (lien vers le site, fiches produits, mise en avant, badge vedette, etc.) sont désactivées sans préavis supplémentaire.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 8. ABSENCE DE REMBOURSEMENT -->
+<section class="legal-block alt" id="remboursement" aria-labelledby="remboursement-title">
+  <div class="containeur">
+    <div class="legal-grid">
+      <div class="s-label">Article 8</div>
+      <h2 id="remboursement-title">Absence de remboursement et de droit de rétractation</h2>
+      <div class="s-div" aria-hidden="true"></div>
+
+      <h3>Absence de droit de rétractation</h3>
+      <p>Conformément aux dispositions de l'article L.221-3 du Code de la consommation, applicable aux relations entre professionnels, et compte tenu du caractère exclusivement BtoB des prestations objet des présentes CGV, la Marque <strong>ne bénéficie d'aucun droit de rétractation</strong> à compter de la formation du contrat.</p>
+
+      <h3>Caractère ferme et définitif du paiement</h3>
+      <p>Le paiement effectué au titre des présentes CGV est <strong>ferme, définitif et non remboursable</strong>, quelle que soit la cause de la cessation de la prestation, et notamment :</p>
+      <ul>
+        <li>En cas de résiliation à l'initiative de la Marque avant le terme du contrat</li>
+        <li>En cas de cessation d'activité ou de liquidation de la Marque</li>
+        <li>En cas de retrait volontaire de la fiche par la Marque</li>
+        <li>En cas de retrait du badge « Vérifié » dans les conditions de l'article 9</li>
+        <li>En cas de retrait de la Marque pour pratiques trompeuses dans les conditions de l'article 10</li>
+      </ul>
+
+      <h3>Pratiques trompeuses — pénalité contractuelle</h3>
+      <p>En particulier, en cas de retrait de la fiche pour pratiques trompeuses sur l'origine française des produits ou pour fournitures d'informations sciemment inexactes lors du référencement, le règlement déjà effectué reste <strong>définitivement acquis à l'Éditeur à titre de pénalité contractuelle</strong>, en réparation forfaitaire du préjudice subi par l'Éditeur, sans préjudice de toute action complémentaire.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 9. BADGE VÉRIFIÉ — RETRAIT -->
+<section class="legal-block" id="badge" aria-labelledby="badge-title">
+  <div class="containeur">
+    <div class="legal-grid">
+      <div class="s-label">Article 9</div>
+      <h2 id="badge-title">Badge « Vérifié » — Conditions de retrait</h2>
+      <div class="s-div" aria-hidden="true"></div>
+
+      <h3>Caractère évolutif des critères</h3>
+      <p>Le badge « <strong>Vérifié</strong> » atteste, à la date de son attribution, du respect par la Marque des critères du « Made in France » définis par l'Éditeur. Ces critères sont par nature <strong>évolutifs</strong> et peuvent être ajustés par l'Éditeur en fonction de l'évolution du cadre réglementaire, des standards de l'industrie ou des bonnes pratiques du secteur.</p>
+
+      <h3>Retrait du badge</h3>
+      <p>Le badge « Vérifié » peut être retiré à tout moment et de manière discrétionnaire par l'Éditeur dans l'un des cas suivants :</p>
+      <ul>
+        <li>La Marque ne respecte plus les critères « Made in France » en vigueur</li>
+        <li>Évolution des critères du badge entraînant la perte d'éligibilité de la Marque</li>
+        <li>Délocalisation totale ou partielle de la fabrication hors du territoire français</li>
+        <li>Modification substantielle des conditions de fabrication ou de la chaîne d'approvisionnement</li>
+        <li>Toute autre situation portant atteinte à la confiance accordée par l'Éditeur lors de l'attribution du badge</li>
+      </ul>
+
+      <h3>Effets du retrait du badge</h3>
+      <p>Le retrait du badge « Vérifié » n'entraîne pas la résiliation automatique du contrat de référencement payant. La Marque continue de bénéficier des fonctionnalités de son offre, à l'exception de l'affichage du badge « Vérifié » sur sa fiche. Le retrait du badge ne donne droit à aucun remboursement, total ou partiel, des sommes déjà versées au titre du référencement payant.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 10. OBLIGATIONS DE LA MARQUE -->
+<section class="legal-block alt" id="obligations" aria-labelledby="obligations-title">
+  <div class="containeur">
+    <div class="legal-grid">
+      <div class="s-label">Article 10</div>
+      <h2 id="obligations-title">Obligations de la Marque</h2>
+      <div class="s-div" aria-hidden="true"></div>
+
+      <p>La Marque s'engage, pendant toute la durée du contrat, à respecter les obligations suivantes :</p>
+
+      <h3>Sincérité et exactitude des informations</h3>
+      <ul>
+        <li>Fournir des informations exactes, complètes, sincères et à jour lors de la demande de référencement</li>
+        <li>Garantir l'authenticité de l'origine française revendiquée pour ses produits</li>
+        <li>Garantir la véracité des labels, certifications et mentions valorisantes communiqués à l'Éditeur</li>
+        <li>Disposer d'un numéro SIRET valide et d'une activité réelle déclarée en France</li>
+      </ul>
+
+      <h3>Mise à jour des informations</h3>
+      <ul>
+        <li>Signaler à l'Éditeur, dans un délai raisonnable, tout changement affectant les informations de la fiche (raison sociale, adresse, gamme de produits, lieu de fabrication, etc.)</li>
+        <li>Signaler immédiatement toute évolution susceptible de remettre en cause l'éligibilité de la Marque au référencement ou au badge « Vérifié »</li>
+        <li>Mettre à jour les visuels et descriptifs produits transmis à l'Éditeur en cas d'évolution de l'offre commerciale</li>
+      </ul>
+
+      <h3>Conformité aux réglementations</h3>
+      <ul>
+        <li>Respecter l'ensemble des réglementations applicables à son activité (droit de la consommation, droit du travail, droit fiscal, propriété intellectuelle, etc.)</li>
+        <li>Respecter les règles relatives aux mentions « Fabriqué en France », « Made in France », « Origine France » et toute mention valorisante équivalente</li>
+        <li>Ne fournir aucun contenu illicite, diffamatoire, contrefaisant ou portant atteinte aux droits de tiers</li>
+      </ul>
+
+      <h3>Conséquences du manquement</h3>
+      <p>Tout manquement de la Marque aux obligations ci-dessus pourra entraîner, selon la gravité du manquement, le retrait du badge « Vérifié » dans les conditions de l'article 9, le retrait pour pratiques trompeuses dans les conditions de l'article 11, ou toute autre mesure que l'Éditeur jugera appropriée, sans préjudice du droit pour l'Éditeur d'engager toute action contre la Marque.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 11. RETRAIT POUR PRATIQUES TROMPEUSES -->
+<section class="legal-block" id="fraude" aria-labelledby="fraude-title">
+  <div class="containeur">
+    <div class="legal-grid">
+      <div class="s-label">Article 11</div>
+      <h2 id="fraude-title">Retrait pour pratiques trompeuses</h2>
+      <div class="s-div" aria-hidden="true"></div>
+
+      <h3>Définition</h3>
+      <p>Sont considérées comme des « <strong>pratiques trompeuses</strong> » au sens des présentes CGV, sans que cette liste soit limitative :</p>
+      <ul>
+        <li>L'usurpation de l'origine française des produits, partielle ou totale</li>
+        <li>La revente de produits non transformés ou non significativement transformés en France, sous une apparence trompeuse de fabrication française</li>
+        <li>La communication de fausses informations ou de documents falsifiés à l'Éditeur lors du référencement ou pendant l'exécution du contrat</li>
+        <li>L'utilisation de mentions valorisantes (« Made in France », « Origine France », « Fabriqué en France », etc.) sans en remplir les conditions légales</li>
+        <li>Toute autre pratique trompeuse au sens des articles L.121-1 et suivants du Code de la consommation</li>
+      </ul>
+
+      <h3>Mesures de l'Éditeur</h3>
+      <p>En cas de constatation par l'Éditeur d'une pratique trompeuse imputable à la Marque, l'Éditeur procède, sans préavis et sans qu'une mise en demeure préalable ne soit nécessaire :</p>
+      <ul>
+        <li>Au <strong>retrait immédiat de la fiche</strong> de la Marque du Site</li>
+        <li>À la résiliation du contrat de référencement aux torts exclusifs de la Marque</li>
+        <li>À la conservation, à titre de pénalité contractuelle, des sommes déjà versées au titre du référencement payant, conformément à l'article 8 des présentes CGV</li>
+      </ul>
+
+      <p>Les mesures ci-dessus sont prises sans préjudice du droit pour l'Éditeur d'engager toute action complémentaire visant à obtenir réparation du préjudice subi du fait des pratiques trompeuses, notamment au titre de l'atteinte portée à la réputation et à la crédibilité du Site.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 12. RESPONSABILITÉ -->
+<section class="legal-block alt" id="responsabilite" aria-labelledby="responsabilite-title">
+  <div class="containeur">
+    <div class="legal-grid">
+      <div class="s-label">Article 12</div>
+      <h2 id="responsabilite-title">Responsabilité de l'Éditeur</h2>
+      <div class="s-div" aria-hidden="true"></div>
+
+      <h3>Obligation de moyens</h3>
+      <p>L'Éditeur est tenu, au titre des présentes CGV, à une obligation de moyens et non à une obligation de résultat. L'Éditeur s'engage à mettre en œuvre les moyens raisonnables pour assurer la disponibilité du Site et la délivrance des prestations souscrites.</p>
+
+      <h3>Disponibilité du Site</h3>
+      <p>Le Site est hébergé sur GitHub Pages. L'Éditeur ne souscrit aucun engagement de niveau de service (SLA) chiffré relatif à la disponibilité du Site et ne saurait être tenu responsable des interruptions de service, ralentissements ou indisponibilités, qu'ils soient liés à l'hébergeur, au CDN, au registrar ou à tout autre prestataire technique. La Marque ne peut prétendre à aucune indemnisation, ni à aucun remboursement, total ou partiel, en cas d'indisponibilité du Site.</p>
+
+      <h3>Limitation de responsabilité</h3>
+      <p>En tout état de cause, et dans toute la mesure permise par la loi, la responsabilité de l'Éditeur au titre des présentes CGV est <strong>limitée au montant effectivement payé par la Marque</strong> au titre des prestations en cause au cours des douze (12) derniers mois. L'Éditeur ne saurait être tenu responsable des préjudices indirects, immatériels, perte de chiffre d'affaires, perte de clientèle, perte d'image, perte de données, ou de tout autre préjudice indirect.</p>
+
+      <h3>Force majeure</h3>
+      <p>L'Éditeur ne pourra être tenu responsable de l'inexécution ou du retard dans l'exécution de ses obligations résultant d'un cas de force majeure tel que défini à l'article 1218 du Code civil, en ce compris notamment : panne d'hébergement, attaque informatique, défaillance des réseaux de communications électroniques, décision des autorités publiques, conflit social, intempérie, pandémie, ou tout autre événement échappant au contrôle raisonnable de l'Éditeur.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 13. PROPRIÉTÉ INTELLECTUELLE -->
+<section class="legal-block" id="propriete" aria-labelledby="propriete-title">
+  <div class="containeur">
+    <div class="legal-grid">
+      <div class="s-label">Article 13</div>
+      <h2 id="propriete-title">Propriété intellectuelle</h2>
+      <div class="s-div" aria-hidden="true"></div>
+
+      <h3>Contenus de l'Éditeur</h3>
+      <p>L'ensemble du Site, sa structure, son design, son code source, sa charte graphique et ses contenus éditoriaux demeurent la propriété exclusive de l'Éditeur. Aucun droit de propriété intellectuelle sur ces éléments n'est cédé à la Marque au titre des présentes CGV.</p>
+
+      <h3>Contenus de la Marque</h3>
+      <p>La Marque demeure titulaire de l'ensemble des droits de propriété intellectuelle attachés aux éléments qu'elle communique à l'Éditeur dans le cadre de son référencement (logo, identité visuelle, photographies de produits, descriptifs, etc.).</p>
+
+      <p>En souscrivant à une offre payante, la Marque concède à l'Éditeur, à titre gratuit, non exclusif et pour la durée de son référencement, le droit d'utiliser, de reproduire, de représenter et de diffuser ces éléments sur le Site et sur les supports de communication associés (newsletter, réseaux sociaux, articles éditoriaux, etc.) aux seules fins de promotion de la Marque sur l'annuaire.</p>
+
+      <h3>Garantie</h3>
+      <p>La Marque garantit à l'Éditeur qu'elle dispose de l'ensemble des droits nécessaires sur les éléments transmis et qu'aucun de ces éléments ne porte atteinte aux droits de tiers (droits d'auteur, droit des marques, droit à l'image, etc.). La Marque s'engage à indemniser l'Éditeur de toute action que des tiers pourraient engager du fait de la diffusion de ces éléments sur le Site.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 14. DONNÉES PERSONNELLES -->
+<section class="legal-block alt" id="donnees" aria-labelledby="donnees-title">
+  <div class="containeur">
+    <div class="legal-grid">
+      <div class="s-label">Article 14</div>
+      <h2 id="donnees-title">Données personnelles</h2>
+      <div class="s-div" aria-hidden="true"></div>
+
+      <p>Dans le cadre de l'exécution des présentes CGV, l'Éditeur est amené à collecter et traiter des données à caractère personnel concernant le représentant légal de la Marque ou ses interlocuteurs (nom, prénom, fonction, adresse email, téléphone). Ces données sont traitées aux fins de gestion du contrat, de la facturation et de la relation commerciale.</p>
+
+      <p>Le traitement de ces données est régi par la <a href="/politique-de-confidentialite" aria-label="Consulter la politique de confidentialité">politique de confidentialité</a> du Site, à laquelle la Marque est invitée à se référer pour toute information détaillée sur les finalités, la durée de conservation et les droits dont elle dispose au titre du Règlement Général sur la Protection des Données (RGPD).</p>
+    </div>
+  </div>
+</section>
+
+<!-- 15. MODIFICATION DES CGV -->
+<section class="legal-block" id="modification" aria-labelledby="modification-title">
+  <div class="containeur">
+    <div class="legal-grid">
+      <div class="s-label">Article 15</div>
+      <h2 id="modification-title">Modification des présentes CGV</h2>
+      <div class="s-div" aria-hidden="true"></div>
+
+      <p>L'Éditeur se réserve le droit de modifier à tout moment les présentes CGV. Les CGV applicables à un contrat en cours sont celles en vigueur à la date d'émission du devis correspondant ; aucune modification ultérieure des CGV ne s'applique rétroactivement aux contrats déjà formés.</p>
+
+      <p>Les nouvelles versions des CGV seront mises en ligne sur le Site et s'appliqueront à tout nouveau devis émis postérieurement à leur date d'entrée en vigueur. La Marque est invitée à consulter régulièrement les CGV en vigueur sur le Site.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 16. DROIT APPLICABLE -->
+<section class="legal-block alt" id="droit" aria-labelledby="droit-title">
+  <div class="containeur">
+    <div class="legal-grid">
+      <div class="s-label">Article 16</div>
+      <h2 id="droit-title">Droit applicable et juridiction compétente</h2>
+      <div class="s-div" aria-hidden="true"></div>
+
+      <p>Les présentes CGV sont soumises au <strong>droit français</strong>.</p>
+
+      <p>En cas de litige relatif à la formation, l'interprétation, l'exécution ou la cessation des présentes CGV, et à défaut de résolution amiable préalable, <strong>compétence exclusive est attribuée au Tribunal de Commerce de Créteil</strong>, nonobstant pluralité de défendeurs ou appel en garantie, y compris pour les procédures d'urgence ou conservatoires en référé ou par requête.</p>
+
+      <div class="info-box">
+        <strong>Résolution amiable —</strong> Préalablement à toute action contentieuse, les parties s'engagent à rechercher une solution amiable au litige par voie de discussion directe. Toute Marque souhaitant engager une démarche amiable adresse une réclamation écrite à l'Éditeur à l'adresse email indiquée à l'article 2 des présentes CGV.
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- CTA RÉFÉRENCER -->
+<section class="cta-referer" id="referer" aria-labelledby="cta-title">
+  <div class="cta-inner">
+    <div class="cta-content">
+      <div class="s-label">Vous êtes une marque française ?</div>
+      <h2 id="cta-title">Rejoignez l'annuaire des marques françaises</h2>
+      <p>Vous fabriquez en France ? Faites-vous connaître auprès de milliers de consommateurs engagés. Le référencement de base est gratuit et ouvert à toutes les structures, TPE et PME incluses.</p>
+      <div class="cta-perks">
+        <span class="cta-perk">Marque vérifiée et certifiée</span>
+        <span class="cta-perk">Visibilité immédiate</span>
+        <span class="cta-perk">Ouvert TPE, PME, artisans</span>
+      </div>
+    </div>
+    <div class="cta-btns">
+      <a href="/referencer-ma-marque" class="btn-p">Référencer ma marque →</a>
+      <span class="cta-note">Traitement sous 48h · Ouvert à tous</span>
+    </div>
+  </div>
+</section>
+
+{{FOOTER}}
+
+<!-- SCRIPTS -->
+<script>
+{{MENU_BURGER_JS}}
+// ── EMAIL OBFUSQUÉ ──────────────────────────────────────────
+(function(){
+  const btnEmail = document.getElementById('btnEmail');
+  const emailLink = document.getElementById('emailLink');
+  const btnCopy = document.getElementById('btnCopy');
+
+  // Fragments encodés Base64 (jamais d'email en clair)
+  const f1 = 'Ym9uam91cg==';                    // partie locale
+  const f2 = 'bGFtYXJxdWVmcmFuY2Fpc2U=';        // domaine
+  const f3 = 'ZnI=';                            // tld
+
+  // Fonction de décodage paresseux (uniquement au clic)
+  const buildEmail = () => {
+    try {
+      return atob(f1) + '@' + atob(f2) + '.' + atob(f3);
+    } catch(e) {
+      return '';
+    }
+  };
+
+  const reveal = () => {
+    const email = buildEmail();
+    if (!email) return;
+    emailLink.textContent = email;
+    emailLink.setAttribute('href', 'mailto:' + email);
+    emailLink.setAttribute('aria-hidden', 'false');
+    emailLink.classList.add('revealed');
+    btnCopy.setAttribute('aria-hidden', 'false');
+    btnCopy.classList.add('revealed');
+    btnEmail.classList.add('revealed');
+    btnEmail.setAttribute('aria-expanded', 'true');
+    // Focus accessibility — déplacer le focus sur le lien email révélé
+    emailLink.focus();
+  };
+
+  btnEmail.addEventListener('click', reveal);
+
+  // Bouton "Copier" — copie l'email reconstitué dans le presse-papier
+  btnCopy.addEventListener('click', async () => {
+    const email = buildEmail();
+    if (!email) return;
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        await navigator.clipboard.writeText(email);
+      } else {
+        // Fallback ancienne API
+        const tmp = document.createElement('textarea');
+        tmp.value = email;
+        tmp.setAttribute('readonly', '');
+        tmp.style.position = 'absolute';
+        tmp.style.left = '-9999px';
+        document.body.appendChild(tmp);
+        tmp.select();
+        document.execCommand('copy');
+        document.body.removeChild(tmp);
+      }
+      const original = btnCopy.textContent;
+      btnCopy.textContent = '✓ Copié';
+      btnCopy.classList.add('copied');
+      setTimeout(() => {
+        btnCopy.textContent = original;
+        btnCopy.classList.remove('copied');
+      }, 2000);
+    } catch(e) {
+      console.warn('[LMF] Impossible de copier l\'email');
+    }
+  });
+})();
+</script>
+</body>
+</html>

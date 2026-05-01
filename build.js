@@ -32,6 +32,7 @@ const footerHtml         = fs.readFileSync(path.join(__dirname, 'templates/foote
 const globalCss          = fs.readFileSync(path.join(__dirname, 'css/global.css'), 'utf8');
 const breadcrumbCss      = fs.readFileSync(path.join(__dirname, 'css/breadcrumb.css'), 'utf8');
 const heroCategorieCss   = fs.readFileSync(path.join(__dirname, 'css/hero-categories.css'), 'utf8');
+const heroLegalCss       = fs.readFileSync(path.join(__dirname, 'css/hero-legal.css'), 'utf8');
 const sousCategorieCss   = fs.readFileSync(path.join(__dirname, 'css/sous-cat-grid.css'), 'utf8');
 const carteCss           = fs.readFileSync(path.join(__dirname, 'css/carte-france-et-legende.css'), 'utf8');
 const seoTextCateCss     = fs.readFileSync(path.join(__dirname, 'css/seo-texte-categories.css'), 'utf8');
@@ -629,19 +630,20 @@ async function build() {
 
     // CSS et JS statiques
     const injectionsCss = [
-      ['{{GLOBAL_CSS}}',          globalCss],
-      ['{{NAV_CSS}}',             navCss],
-      ['{{BREADCRUMB_CSS}}',      breadcrumbCss],
-      ['{{HERO_CATEGORIES_CSS}}', heroCategorieCss],
-      ['{{SOUS_CATEGORIES_CSS}}', sousCategorieCss],
-      ['{{SEO_TEXTE_CATE_CSS}}',  seoTextCateCss],
-      ['{{FAQ_CSS}}',             faqCss],
-      ['{{AUTRE_CATE_CSS}}',      autresCateCss],
-      ['{{BANDEAU_CTA_CSS}}',     bandeauCtaCss],
-      ['{{FOOTER_CSS}}',          footerCss],
-      ['{{ORGANIZATION_JSON_LD}}',          organizationJsonLd],
-      ['{{MENU_BURGER_JS}}',          menuBurgerJs],
-      ['{{FAQ_JS}}',          faqJs],
+      ['{{GLOBAL_CSS}}',            globalCss],
+      ['{{NAV_CSS}}',               navCss],
+      ['{{BREADCRUMB_CSS}}',        breadcrumbCss],
+      ['{{HERO_CATEGORIES_CSS}}',   heroCategorieCss],
+      ['{{HERO_LEGAL_CSS}}',        heroLegalCss],
+      ['{{SOUS_CATEGORIES_CSS}}',   sousCategorieCss],
+      ['{{SEO_TEXTE_CATE_CSS}}',    seoTextCateCss],
+      ['{{FAQ_CSS}}',               faqCss],
+      ['{{AUTRE_CATE_CSS}}',        autresCateCss],
+      ['{{BANDEAU_CTA_CSS}}',       bandeauCtaCss],
+      ['{{FOOTER_CSS}}',            footerCss],
+      ['{{ORGANIZATION_JSON_LD}}',  organizationJsonLd],
+      ['{{MENU_BURGER_JS}}',        menuBurgerJs],
+      ['{{FAQ_JS}}',                faqJs],
       
     ];
     for (const [marqueur, contenu] of injectionsCss) {
