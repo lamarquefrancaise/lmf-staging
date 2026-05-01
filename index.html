@@ -17,7 +17,7 @@
 <meta property="og:title" content="La Marque Française | Tout le (vrai) Made in France en un clic">
 <meta property="og:description" content="Découvrez les meilleures marques françaises : mode, épicerie, beauté, bijoux, maison et plus. Référence des marques françaises made in France.">
 <meta property="og:url" content="https://lamarquefrancaise.fr">
-<meta property="og:image" content="https://www.lamarquefrancaise.fr/img/1200x630/la-marque-francaise.webp">
+<meta property="og:image" content="https://lamarquefrancaise.fr/img/1200x630/la-marque-francaise.webp">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="La Marque Française - La référence des marques françaises made in France">
@@ -26,13 +26,11 @@
 <meta name="twitter:site" content="@LaMarqueFrancaise">
 <meta name="twitter:title" content="La Marque Française | Tout le (vrai) Made in France en un clic">
 <meta name="twitter:description" content="Découvrez les meilleures marques françaises : mode, épicerie, beauté, bijoux, maison et plus. Référence des marques françaises made in France.">
-<meta name="twitter:image" content="https://www.lamarquefrancaise.fr/img/1200x630/la-marque-francaise.webp">
-
+<meta name="twitter:image" content="https://lamarquefrancaise.fr/img/1200x630/la-marque-francaise.webp">
 <!-- 3. CSS CRITIQUE INLINE -->
 <style>
 {{GLOBAL_CSS}}
 {{NAV_CSS}}
-
 /* ── HERO ── */
 .hero{min-height:100vh;background:var(--navy);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:7rem 2rem 5rem;position:relative;overflow:hidden}
 .hero::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent,transparent 59px,rgba(184,150,62,.05) 59px,rgba(184,150,62,.05) 60px);pointer-events:none}
@@ -40,7 +38,7 @@
 .hero-flag span{display:block;width:4px;height:48px;border-radius:2px}
 .flag-b{background:#0055a4}.flag-w{background:#fff}.flag-r{background:#ef4135}
 .hero-badge{display:inline-flex;align-items:center;gap:.5rem;border:1px solid var(--gold);color:var(--gold-l);font-family:Arial,sans-serif;font-size:.72rem;letter-spacing:.2em;padding:.35rem 1rem;margin-bottom:1.5rem}
-.hero h1{font-size:clamp(2rem,5vw,3.8rem);font-family:Georgia,'Times New Roman',serif;color:var(--white);font-weight:normal;line-height:1.15;letter-spacing:.03em;margin-bottom:.75rem}
+.hero h1{font-size:clamp(2rem,5vw,3.8rem);color:var(--white);font-weight:normal;line-height:1.15;letter-spacing:.03em;margin-bottom:.75rem}
 .hero-sub-title{display:block;color:rgba(255,255,255,.7);font-style:normal;font-size:clamp(.95rem,2vw,1.3rem);letter-spacing:.02em;margin-top:.6rem;font-family:Arial,sans-serif;font-weight:300;margin-bottom:.75rem}
 .hero p{font-family:Arial,sans-serif;font-size:1rem;color:rgba(255,255,255,.6);max-width:560px;line-height:1.75;margin-bottom:2rem}
 .hero-search{display:flex;max-width:520px;width:100%;margin:0 auto 2rem;box-shadow:0 4px 24px rgba(0,0,0,.3)}
@@ -57,15 +55,6 @@
 .hero-trust{display:flex;align-items:center;gap:1.5rem;justify-content:center;flex-wrap:wrap}
 .hero-trust-item{font-family:Arial,sans-serif;font-size:.75rem;color:rgba(255,255,255,.4);display:flex;align-items:center;gap:.4rem}
 .hero-trust-item span{color:var(--gold-l)}
-
-/* ── SHARED ── */
-section{padding:5rem 2rem}
-.container{max-width:1100px;margin:0 auto}
-.s-label{font-family:Arial,sans-serif;font-size:.72rem;letter-spacing:.25em;color:var(--gold-d);text-transform:uppercase;margin-bottom:.75rem}
-.s-title{font-size:clamp(1.6rem,3vw,2.4rem);font-weight:normal;color:var(--navy);line-height:1.2}
-.s-div{width:48px;height:2px;background:var(--gold);margin:1.25rem 0}
-.s-sub{font-family:Arial,sans-serif;font-size:.95rem;color:var(--muted);line-height:1.75;max-width:580px}
-
 /* ── MISSION ── */
 .mission{background:var(--cream)}
 .mission-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
@@ -79,8 +68,6 @@ section{padding:5rem 2rem}
 .m-ico{width:36px;height:36px;background:rgba(184,150,62,.12);border:1px solid rgba(184,150,62,.4);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--gold-l);font-size:14px;font-family:Arial,sans-serif}
 .m-txt h3{color:var(--white);font-size:.9rem;font-weight:normal;margin-bottom:.3rem}
 .m-txt p{font-family:Arial,sans-serif;font-size:.8rem;color:var(--muted-l);line-height:1.6}
-
-/* ── CATÉGORIES ── */
 {{AUTRE_CATE_CSS}}
 .categories{background:var(--white)}
 .cat-head{margin-bottom:3rem}
@@ -98,7 +85,6 @@ section{padding:5rem 2rem}
 .cat-card:hover .cat-hover-label{opacity:1;transform:translateY(0)}
 .cat-hover-txt{font-family:Arial,sans-serif;font-size:.75rem;color:rgba(255,255,255,.8);letter-spacing:.06em}
 .cat-hover-arr{color:var(--gold-l);font-size:.9rem}
-
 /* ── POURQUOI ── */
 .pourquoi{background:var(--navy)}
 .pourquoi .s-title{color:var(--white)}
@@ -111,7 +97,6 @@ section{padding:5rem 2rem}
 .r-ico{font-size:1.5rem;margin-bottom:1rem}
 .r-card h3{color:var(--gold-l);font-size:1rem;font-weight:normal;margin-bottom:.75rem}
 .r-card p{font-family:Arial,sans-serif;font-size:.85rem;color:rgba(255,255,255,.5);line-height:1.65}
-
 /* ── MARQUES ── */
 .marques{background:var(--cream)}
 .brands{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3rem}
@@ -128,7 +113,6 @@ section{padding:5rem 2rem}
 .b-loc{font-family:Arial,sans-serif;font-size:.75rem;color:var(--gold-d);letter-spacing:.05em}
 .b-link{font-family:Arial,sans-serif;font-size:.75rem;color:var(--navy);text-decoration:none;border-bottom:1px solid var(--border);padding-bottom:1px;transition:border-color .2s,color .2s}
 .b-link:hover{color:var(--gold);border-color:var(--gold)}
-
 /* ── TÉMOIGNAGES ── */
 .temoignages{background:var(--white)}
 .temo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3rem}
@@ -140,11 +124,9 @@ section{padding:5rem 2rem}
 .t-name{font-family:Arial,sans-serif;font-size:.82rem;color:var(--navy)}
 .t-role{font-family:Arial,sans-serif;font-size:.75rem;color:var(--muted)}
 .t-stars{color:var(--gold);font-size:.85rem;margin-bottom:.5rem;letter-spacing:.05em}
-
 {{FAQ_CSS}}
 {{BANDEAU_CTA_CSS}}
 {{FOOTER_CSS}}
-
 /* ── RESPONSIVE GLOBAL ── */
 @media(max-width:768px){
   .mission-grid{grid-template-columns:1fr}
