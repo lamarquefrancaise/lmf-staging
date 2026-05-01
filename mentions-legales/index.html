@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mentions Légales — La Marque Française</title>
+<meta name="description" content="Mentions légales de La Marque Française : éditeur, hébergeur, propriété intellectuelle, données personnelles. Toutes les informations légales du site.">
+<meta name="robots" content="noindex, follow">
+<meta name="author" content="La Marque Française">
+<meta name="theme-color" content="#0d1b3e">
+<style>
+{{GLOBAL_CSS}}
+{{NAV_CSS}}
+{{BREADCRUMB_CSS}}
+/* ── HERO ── */
+.ml-hero{background:var(--navy);padding:3rem 2rem 4rem;position:relative;overflow:hidden;text-align:center}
+.ml-hero::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent,transparent 59px,rgba(184,150,62,.04) 59px,rgba(184,150,62,.04) 60px);pointer-events:none}
+.ml-hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.ml-hero-inner{max-width:780px;margin:0 auto;position:relative;z-index:1}
+.ml-hero-badge{display:inline-flex;align-items:center;gap:.5rem;border:1px solid rgba(184,150,62,.5);color:var(--gold-l);font-family:Arial,sans-serif;font-size:.72rem;letter-spacing:.2em;padding:.3rem .9rem;margin-bottom:1.25rem;text-transform:uppercase}
+.ml-hero h1{font-size:clamp(1.8rem,4vw,3rem);color:var(--white);font-weight:normal;line-height:1.2;letter-spacing:.02em;margin-bottom:.75rem}
+.ml-hero h1 em{color:var(--gold-l);font-style:normal}
+.ml-hero-desc{font-family:Arial,sans-serif;font-size:.95rem;color:rgba(255,255,255,.6);line-height:1.75;max-width:580px;margin:0 auto}
+.ml-hero-update{display:inline-block;margin-top:1.5rem;font-family:Arial,sans-serif;font-size:.72rem;color:rgba(255,255,255,.4);letter-spacing:.05em}
+/* ── BLOCS LÉGAUX (alternance fond clair / cream) ── */
+.legal-block{padding:4rem 2rem}
+.legal-block.alt{background:var(--cream)}
+.legal-grid{max-width:900px;margin:0 auto}
+.legal-grid h2{font-family:Georgia,'Times New Roman',serif;font-weight:normal;font-size:clamp(1.4rem,2.4vw,1.7rem);color:var(--navy);line-height:1.25;margin-bottom:.6rem}
+.legal-grid h3{font-family:Georgia,'Times New Roman',serif;font-weight:normal;font-size:1.02rem;color:var(--navy);margin:1.7rem 0 .7rem;padding-left:.7rem;border-left:2px solid var(--gold)}
+.legal-grid p{font-family:Arial,sans-serif;font-size:.87rem;color:var(--muted);line-height:1.85;margin-bottom:.95rem}
+.legal-grid ul{list-style:none;margin:.75rem 0 1.25rem;padding:0}
+.legal-grid ul li{font-family:Arial,sans-serif;font-size:.87rem;color:var(--muted);line-height:1.85;padding:.35rem 0;display:flex;gap:.65rem;align-items:flex-start}
+.legal-grid ul li::before{content:'→';color:var(--gold);font-size:.85rem;line-height:1.85;flex-shrink:0}
+.legal-grid a{color:var(--gold-d);text-decoration:none;border-bottom:1px solid rgba(184,150,62,.3);transition:border-color .2s,color .2s}
+.legal-grid a:hover{color:var(--gold);border-color:var(--gold)}
+.legal-grid strong{color:var(--navy);font-weight:normal}
+/* Carte d'identité éditeur (présentation tabulaire propre) */
+.id-card{background:var(--white);border:1px solid var(--border);padding:1.75rem 2rem;margin-top:1.5rem}
+.legal-block.alt .id-card{background:var(--white)}
+.id-row{display:grid;grid-template-columns:200px 1fr;gap:1.25rem;padding:.75rem 0;border-bottom:1px solid var(--border);font-family:Arial,sans-serif}
+.id-row:last-child{border-bottom:none}
+.id-row dt{font-size:.72rem;letter-spacing:.15em;color:var(--gold-d);text-transform:uppercase;padding-top:.15rem}
+.id-row dd{font-size:.88rem;color:var(--muted);line-height:1.7}
+.id-row dd strong{color:var(--navy)}
+/* Email obfusqué */
+.email-protege{display:inline-flex;align-items:center;gap:.5rem;flex-wrap:wrap;margin-top:.35rem}
+.btn-email{background:var(--navy);color:var(--gold-l);border:none;padding:.55rem 1.1rem;font-family:Arial,sans-serif;font-size:.78rem;letter-spacing:.08em;cursor:pointer;transition:background .2s,transform .15s;display:inline-flex;align-items:center;gap:.5rem}
+.btn-email:hover{background:var(--gold);color:var(--white);transform:translateY(-1px)}
+.btn-email.revealed{display:none}
+.email-link{font-family:Arial,sans-serif;font-size:.88rem;color:var(--gold-d);text-decoration:none;border-bottom:1px solid rgba(184,150,62,.3);transition:border-color .2s,color .2s;display:none}
+.email-link.revealed{display:inline-block}
+.email-link:hover{color:var(--gold);border-color:var(--gold)}
+.btn-copy{background:transparent;color:var(--muted);border:1px solid var(--border);padding:.4rem .75rem;font-family:Arial,sans-serif;font-size:.7rem;letter-spacing:.05em;cursor:pointer;transition:all .2s;display:none}
+.btn-copy.revealed{display:inline-block}
+.btn-copy:hover{border-color:var(--navy);color:var(--navy)}
+.btn-copy.copied{background:var(--gold);color:var(--white);border-color:var(--gold)}
+/* Bloc info important */
+.info-box{background:var(--cream);border-left:3px solid var(--gold);padding:1.1rem 1.5rem;margin:1.5rem 0;font-family:Arial,sans-serif;font-size:.83rem;color:var(--muted);line-height:1.75}
+.legal-block.alt .info-box{background:var(--white)}
+.info-box strong{color:var(--navy)}
+
+{{BANDEAU_CTA_CSS}}
+{{FOOTER_CSS}}
+
+/* ── RESPONSIVE ── */
+@media(max-width:768px){
+  .breadcrumb-bar{padding-top:5rem}
+  .legal-block{padding:3rem 1.25rem}
+  .id-card{padding:1.25rem 1.25rem}
+  .id-row{grid-template-columns:1fr;gap:.25rem;padding:.85rem 0}
+  .id-row dt{font-size:.68rem}
+  .cta-inner{grid-template-columns:1fr;text-align:center}
+  .cta-perks{justify-content:center}
+  .cta-btns{width:100%}
+  .btn-p{width:100%}
+  .ft-top{grid-template-columns:1fr;gap:2rem}
+}
+</style>
+
+<!-- 7. FAVICONS ET MANIFEST -->
+<link rel="icon" href="/img/favicon.ico" sizes="32x32">
+<link rel="icon" href="/img/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
+
+<!-- 8. SEO — CANONICAL, OG, TWITTER -->
+<link rel="canonical" href="https://lamarquefrancaise.fr/mentions-legales">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="La Marque Française">
+<meta property="og:title" content="Mentions Légales — La Marque Française">
+<meta property="og:description" content="Mentions légales de La Marque Française : éditeur, hébergeur, propriété intellectuelle, données personnelles.">
+<meta property="og:url" content="https://lamarquefrancaise.fr/mentions-legales">
+<meta property="og:image" content="https://lamarquefrancaise.fr/og-image.jpg">
+<meta property="og:locale" content="fr_FR">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Mentions Légales — La Marque Française">
+<meta name="twitter:description" content="Mentions légales de La Marque Française : éditeur, hébergeur, propriété intellectuelle, données personnelles.">
+<meta name="twitter:image" content="https://lamarquefrancaise.fr/og-image.jpg">
+</head>
+<body>
+{{NAV}}
+<main id="contenu-principal">
+<!-- BREADCRUMB -->
+<div class="breadcrumb-bar">
+  <nav aria-label="Fil d'Ariane" class="breadcrumb">
+    <a href="/">Accueil</a><span class="breadcrumb-sep" aria-hidden="true">›</span>
+    <span class="breadcrumb-current" aria-current="page">Mentions légales</span>
+  </nav>
+</div>
+<!-- HERO -->
+<header class="ml-hero">
+  <div class="ml-hero-inner">
+    <div class="ml-hero-badge">Informations légales · Article 6-III LCEN</div>
+    <h1>Mentions <em>Légales</em></h1>
+    <p class="ml-hero-desc">Conformément à la loi n°2004-575 du 21 juin 2004 pour la confiance dans l'économie numérique (LCEN), nous vous communiquons l'ensemble des informations légales relatives au site lamarquefrancaise.fr.</p>
+    <span class="ml-hero-update">Dernière mise à jour : 1<sup>er</sup> mai 2026</span>
+  </div>
+</header>
+<!-- 1. ÉDITEUR DU SITE -->
+<section class="legal-block" id="editeur" aria-labelledby="editeur-title">
+  <div class="containeur">
+    <div class="legal-grid">
+      <div class="s-label">Article 1</div>
+      <h2 id="editeur-title">Éditeur du site</h2>
+      <div class="s-div" aria-hidden="true"></div>
+      <p>Le site lamarquefrancaise.fr est édité par un entrepreneur individuel domicilié en France et dont les coordonnées sont les suivantes :</p>
+
+      <dl class="id-card">
+        <div class="id-row">
+          <dt>Forme juridique</dt>
+          <dd>Entrepreneur individuel</dd>
+        </div>
+        <div class="id-row">
+          <dt>Nom commercial</dt>
+          <dd><strong>La Marque Française</strong></dd>
+        </div>
+        <div class="id-row">
+          <dt>SIRET</dt>
+          <dd>904 657 764 00026</dd>
+        </div>
+        <div class="id-row">
+          <dt>TVA intracommunautaire</dt>
+          <dd>TVA non applicable, article 293 B du CGI</dd>
+        </div>
+        <div class="id-row">
+          <dt>Siège social</dt>
+          <dd>94440 Villecresnes — France</dd>
+        </div>
+        <div class="id-row">
+          <dt>Contact</dt>
+          <dd>
+            <div class="email-protege">
+              <button type="button" class="btn-email" id="btnEmail" aria-label="Afficher l'adresse email de contact" aria-expanded="false">
+                ✉ Afficher l'adresse email
+              </button>
+              <a href="#" class="email-link" id="emailLink" aria-hidden="true"></a>
+              <button type="button" class="btn-copy" id="btnCopy" aria-label="Copier l'adresse email" aria-hidden="true">Copier</button>
+            </div>
+          </dd>
+        </div>
+      </dl>
+    </div>
+  </div>
+</section>
+<!-- 2. DIRECTEUR DE LA PUBLICATION -->
+<section class="legal-block alt" id="directeur" aria-labelledby="directeur-title">
+  <div class="containeur">
+    <div class="legal-grid">
+      <div class="s-label">Article 2</div>
+      <h2 id="directeur-title">Directeur de la publication</h2>
+      <div class="s-div" aria-hidden="true"></div>
+      <p>Le directeur de la publication du site lamarquefrancaise.fr, au sens de l'article 93-2 de la loi du 29 juillet 1982 sur la communication audiovisuelle, est :</p>
+      <dl class="id-card">
+        <div class="id-row">
+          <dt>Nom et prénom</dt>
+          <dd><strong>Alexis LEBEGUE</strong></dd>
+        </div>
+        <div class="id-row">
+          <dt>Qualité</dt>
+          <dd>Éditeur du site, en sa qualité d'entrepreneur individuel</dd>
+        </div>
+      </dl>
+    </div>
+  </div>
+</section>
+<!-- 3. HÉBERGEUR -->
+<section class="legal-block" id="hebergeur" aria-labelledby="hebergeur-title">
+  <div class="containeur">
+    <div class="legal-grid">
+      <div class="s-label">Article 3</div>
+      <h2 id="hebergeur-title">Hébergement du site</h2>
+      <div class="s-div" aria-hidden="true"></div>
+      <p>Le site lamarquefrancaise.fr est hébergé par <strong>GitHub Pages</strong>, service fourni par GitHub, Inc., conformément à l'article 6-I-2 de la loi LCEN.</p>
+
+      <h3>Hébergeur</h3>
+      <dl class="id-card">
+        <div class="id-row">
+          <dt>Société</dt>
+          <dd><strong>GitHub, Inc.</strong></dd>
+        </div>
+        <div class="id-row">
+          <dt>Adresse</dt>
+          <dd>88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, États-Unis</dd>
+        </div>
+        <div class="id-row">
+          <dt>Téléphone</dt>
+          <dd>+1 (877) 448-4820</dd>
+        </div>
+        <div class="id-row">
+          <dt>Site web</dt>
+          <dd><a href="https://pages.github.com" target="_blank" rel="noopener noreferrer" aria-label="Site officiel GitHub Pages, ouvre dans un nouvel onglet">pages.github.com</a></dd>
+        </div>
+      </dl>
+
+      <h3>Registrar du nom de domaine</h3>
+      <dl class="id-card">
+        <div class="id-row">
+          <dt>Société</dt>
+          <dd><strong>OVH SAS</strong></dd>
+        </div>
+        <div class="id-row">
+          <dt>Adresse</dt>
+          <dd>2 rue Kellermann, 59100 Roubaix — France</dd>
+        </div>
+        <div class="id-row">
+          <dt>Site web</dt>
+          <dd><a href="https://www.ovh.com" target="_blank" rel="noopener noreferrer" aria-label="Site officiel OVH, ouvre dans un nouvel onglet">www.ovh.com</a></dd>
+        </div>
+      </dl>
+    </div>
+  </div>
+</section>
+<!-- 4. PROPRIÉTÉ INTELLECTUELLE -->
+<section class="legal-block alt" id="propriete" aria-labelledby="propriete-title">
+  <div class="containeur">
+    <div class="legal-grid">
+      <div class="s-label">Article 4</div>
+      <h2 id="propriete-title">Propriété intellectuelle</h2>
+      <div class="s-div" aria-hidden="true"></div>
+
+      <h3>Conception et développement du site</h3>
+      <p>La conception, le développement, le design graphique et l'intégration technique du site lamarquefrancaise.fr ont été entièrement réalisés par <strong>Alexis LEBEGUE</strong>.</p>
+
+      <h3>Droits d'auteur</h3>
+      <p>L'ensemble du contenu présent sur le site lamarquefrancaise.fr (structure, textes éditoriaux, code source, charte graphique, logos, identité visuelle) est la propriété exclusive de l'éditeur et est protégé par les lois françaises et internationales relatives à la propriété intellectuelle, notamment le Code de la propriété intellectuelle.</p>
+      <p>Toute reproduction, représentation, modification, publication, adaptation ou exploitation, totale ou partielle, des éléments du site, quel que soit le moyen ou le procédé utilisé, est strictement interdite sans l'autorisation écrite préalable de l'éditeur. Toute exploitation non autorisée est constitutive de contrefaçon, sanctionnée par les articles L.335-2 et suivants du Code de la propriété intellectuelle.</p>
+
+      <h3>Crédits photographiques et visuels</h3>
+      <p>Les visuels présents sur le site lamarquefrancaise.fr proviennent des sources suivantes :</p>
+      <ul>
+        <li>Visuels produits en interne par l'éditeur du site</li>
+        <li>Visuels générés par intelligence artificielle</li>
+        <li>Visuels fournis directement par les marques référencées dans le cadre de leur référencement</li>
+        <li>Visuels issus des sites officiels des marques référencées, utilisés à des fins exclusives de présentation et de promotion desdites marques sur l'annuaire</li>
+      </ul>
+      <div class="info-box">
+        <strong>Marques référencées —</strong> Les marques, logos et visuels appartenant aux marques référencées sur l'annuaire restent la propriété exclusive de leurs détenteurs respectifs. Toute marque référencée souhaitant le retrait de ses visuels peut en faire la demande par email à l'éditeur, qui procédera au retrait dans les meilleurs délais.
+      </div>
+    </div>
+  </div>
+</section>
+<!-- 5. DONNÉES PERSONNELLES & COOKIES -->
+<section class="legal-block" id="donnees" aria-labelledby="donnees-title">
+  <div class="containeur">
+    <div class="legal-grid">
+      <div class="s-label">Article 5</div>
+      <h2 id="donnees-title">Données personnelles et cookies</h2>
+      <div class="s-div" aria-hidden="true"></div>
+
+      <h3>Cookies</h3>
+      <p>Le site lamarquefrancaise.fr <strong>n'utilise aucun cookie</strong>, ni cookies techniques nécessitant le consentement, ni cookies analytiques, ni cookies publicitaires, ni cookies de réseaux sociaux. Aucun traceur tiers n'est déposé sur le terminal des visiteurs.</p>
+
+      <h3>Collecte de données via les formulaires</h3>
+      <p>Les formulaires de contact et de référencement du site collectent des données personnelles strictement nécessaires au traitement de la demande de l'utilisateur (notamment : nom, prénom, adresse email, téléphone, informations relatives à la marque). Le traitement de ces données est régi par la <a href="/politique-de-confidentialite" aria-label="Consulter la politique de confidentialité">politique de confidentialité</a> du site, à laquelle nous vous invitons à vous référer pour toute information détaillée.</p>
+
+      <h3>Vos droits</h3>
+      <p>Conformément au Règlement Général sur la Protection des Données (RGPD - Règlement UE 2016/679) et à la loi Informatique et Libertés du 6 janvier 1978 modifiée, vous disposez d'un droit d'accès, de rectification, d'effacement, de limitation, de portabilité et d'opposition concernant vos données personnelles. Pour exercer ces droits ou pour toute question, vous pouvez contacter l'éditeur via l'adresse email indiquée à l'article 1.</p>
+      <p>Vous disposez également du droit d'introduire une réclamation auprès de la Commission Nationale de l'Informatique et des Libertés (<a href="https://www.cnil.fr" target="_blank" rel="noopener noreferrer" aria-label="Site officiel de la CNIL, ouvre dans un nouvel onglet">CNIL</a>) si vous estimez que le traitement de vos données ne respecte pas la réglementation applicable.</p>
+    </div>
+  </div>
+</section>
+<!-- 6. ACTIVITÉ COMMERCIALE -->
+<section class="legal-block alt" id="commercial" aria-labelledby="commercial-title">
+  <div class="containeur">
+    <div class="legal-grid">
+      <div class="s-label">Article 6</div>
+      <h2 id="commercial-title">Activité commerciale et conditions de vente</h2>
+      <div class="s-div" aria-hidden="true"></div>
+
+      <p>La Marque Française propose aux marques françaises plusieurs offres de référencement, dont des offres payantes (plans <strong>Avancé</strong> et <strong>Premium</strong>). Les conditions générales de vente régissant ces offres, leurs modalités de souscription, de facturation, de résiliation ainsi que les obligations réciproques des parties sont détaillées dans un document distinct.</p>
+
+      <p>Pour toute information sur les offres payantes, leurs tarifs, les modalités de paiement et les engagements contractuels, veuillez consulter nos <a href="/conditions-generales-de-vente/" aria-label="Consulter les conditions générales de vente">conditions générales de vente</a>.</p>
+
+      <div class="info-box">
+        <strong>TVA non applicable —</strong> En application de l'article 293 B du Code général des impôts (CGI), l'éditeur bénéficie de la franchise en base de TVA. Les prix indiqués sur le site et facturés aux marques référencées sont par conséquent <strong>nets de TVA</strong>.
+      </div>
+    </div>
+  </div>
+</section>
+<!-- 7. RESPONSABILITÉ -->
+<section class="legal-block" id="responsabilite" aria-labelledby="responsabilite-title">
+  <div class="containeur">
+    <div class="legal-grid">
+      <div class="s-label">Article 7</div>
+      <h2 id="responsabilite-title">Limitation de responsabilité</h2>
+      <div class="s-div" aria-hidden="true"></div>
+
+      <p>L'éditeur s'efforce de fournir sur le site lamarquefrancaise.fr des informations aussi précises et à jour que possible. Toutefois, il ne peut garantir l'exhaustivité ni l'absence d'erreurs ou d'omissions dans les informations diffusées sur le site, notamment celles relatives aux marques référencées et à leurs produits.</p>
+
+      <p>L'éditeur décline toute responsabilité quant aux informations fournies par les marques référencées dans le cadre de leur dossier de référencement. Chaque marque demeure seule responsable des informations qu'elle communique et de la conformité de ses pratiques aux réglementations en vigueur.</p>
+
+      <p>Le site lamarquefrancaise.fr peut contenir des liens hypertextes vers des sites tiers, notamment vers les sites officiels des marques référencées. L'éditeur n'exerce aucun contrôle sur le contenu de ces sites tiers et décline toute responsabilité quant à leur contenu, leur fonctionnement ou les pratiques mises en œuvre par leurs éditeurs.</p>
+
+      <p>L'éditeur ne pourra être tenu responsable des dommages directs ou indirects résultant de l'accès ou de l'utilisation du site, y compris en cas d'inaccessibilité temporaire, de pertes de données, d'intrusions, de virus ou de tout autre événement à caractère technique nuisant au bon fonctionnement du site.</p>
+    </div>
+  </div>
+</section>
+<!-- 8. DROIT APPLICABLE -->
+<section class="legal-block alt" id="droit" aria-labelledby="droit-title">
+  <div class="containeur">
+    <div class="legal-grid">
+      <div class="s-label">Article 8</div>
+      <h2 id="droit-title">Droit applicable et juridiction compétente</h2>
+      <div class="s-div" aria-hidden="true"></div>
+
+      <p>Les présentes mentions légales sont soumises au <strong>droit français</strong>. En cas de litige relatif à l'interprétation ou à l'exécution des présentes, et à défaut de résolution amiable, les tribunaux français seront seuls compétents.</p>
+
+      <p>Pour toute question relative aux présentes mentions légales ou pour signaler un contenu litigieux sur le site, veuillez contacter l'éditeur à l'adresse email indiquée à l'article 1.</p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- CTA RÉFÉRENCER -->
+<section class="cta-referer" id="referer" aria-labelledby="cta-title">
+  <div class="cta-inner">
+    <div class="cta-content">
+      <div class="s-label">Vous êtes une marque française ?</div>
+      <h2 id="cta-title">Rejoignez l'annuaire des marques françaises</h2>
+      <p>Vous fabriquez en France ? Faites-vous connaître auprès de milliers de consommateurs engagés. Le référencement de base est gratuit et ouvert à toutes les structures, TPE et PME incluses.</p>
+      <div class="cta-perks">
+        <span class="cta-perk">Marque vérifiée et certifiée</span>
+        <span class="cta-perk">Visibilité immédiate</span>
+        <span class="cta-perk">Ouvert TPE, PME, artisans</span>
+      </div>
+    </div>
+    <div class="cta-btns">
+      <a href="/referencer-ma-marque" class="btn-p">Référencer ma marque →</a>
+      <span class="cta-note">Traitement sous 48h · Ouvert à tous</span>
+    </div>
+  </div>
+</section>
+{{FOOTER}}
+<!-- SCRIPTS -->
+<script>
+{{MENU_BURGER_JS}}
+// ── EMAIL OBFUSQUÉ ──────────────────────────────────────────
+(function(){
+  const btnEmail = document.getElementById('btnEmail');
+  const emailLink = document.getElementById('emailLink');
+  const btnCopy = document.getElementById('btnCopy');
+
+  // Fragments encodés Base64 (jamais d'email en clair)
+  const f1 = 'Ym9uam91cg==';                    // partie locale
+  const f2 = 'bGFtYXJxdWVmcmFuY2Fpc2U=';        // domaine
+  const f3 = 'ZnI=';                            // tld
+
+  // Fonction de décodage paresseux (uniquement au clic)
+  const buildEmail = () => {
+    try {
+      return atob(f1) + '@' + atob(f2) + '.' + atob(f3);
+    } catch(e) {
+      return '';
+    }
+  };
+
+  const reveal = () => {
+    const email = buildEmail();
+    if (!email) return;
+    emailLink.textContent = email;
+    emailLink.setAttribute('href', 'mailto:' + email);
+    emailLink.setAttribute('aria-hidden', 'false');
+    emailLink.classList.add('revealed');
+    btnCopy.setAttribute('aria-hidden', 'false');
+    btnCopy.classList.add('revealed');
+    btnEmail.classList.add('revealed');
+    btnEmail.setAttribute('aria-expanded', 'true');
+    // Focus accessibility — déplacer le focus sur le lien email révélé
+    emailLink.focus();
+  };
+
+  btnEmail.addEventListener('click', reveal);
+
+  // Bouton "Copier" — copie l'email reconstitué dans le presse-papier
+  btnCopy.addEventListener('click', async () => {
+    const email = buildEmail();
+    if (!email) return;
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        await navigator.clipboard.writeText(email);
+      } else {
+        // Fallback ancienne API
+        const tmp = document.createElement('textarea');
+        tmp.value = email;
+        tmp.setAttribute('readonly', '');
+        tmp.style.position = 'absolute';
+        tmp.style.left = '-9999px';
+        document.body.appendChild(tmp);
+        tmp.select();
+        document.execCommand('copy');
+        document.body.removeChild(tmp);
+      }
+      const original = btnCopy.textContent;
+      btnCopy.textContent = '✓ Copié';
+      btnCopy.classList.add('copied');
+      setTimeout(() => {
+        btnCopy.textContent = original;
+        btnCopy.classList.remove('copied');
+      }, 2000);
+    } catch(e) {
+      console.warn('[LMF] Impossible de copier l\'email');
+    }
+  });
+})();
+</script>
+</body>
+</html>
