@@ -200,7 +200,7 @@
         </div>
         <div class="id-row">
           <dt>Site web</dt>
-          <dd><a href="https://pages.github.com" target="_blank" rel="noopener noreferrer" aria-label="Site officiel GitHub Pages, ouvre dans un nouvel onglet">pages.github.com</a></dd>
+          <dd><a href="https://pages.github.com" target="_blank" rel="noopener noreferrer nofollow" aria-label="Site officiel GitHub Pages, ouvre dans un nouvel onglet">pages.github.com</a></dd>
         </div>
       </dl>
 
@@ -216,7 +216,7 @@
         </div>
         <div class="id-row">
           <dt>Site web</dt>
-          <dd><a href="https://www.ovh.com" target="_blank" rel="noopener noreferrer" aria-label="Site officiel OVH, ouvre dans un nouvel onglet">www.ovh.com</a></dd>
+          <dd><a href="https://www.ovh.com" target="_blank" rel="noopener noreferrer nofollow" aria-label="Site officiel OVH, ouvre dans un nouvel onglet">www.ovh.com</a></dd>
         </div>
       </dl>
     </div>
@@ -267,7 +267,7 @@
 
       <h3>Vos droits</h3>
       <p>Conformément au Règlement Général sur la Protection des Données (RGPD - Règlement UE 2016/679) et à la loi Informatique et Libertés du 6 janvier 1978 modifiée, vous disposez d'un droit d'accès, de rectification, d'effacement, de limitation, de portabilité et d'opposition concernant vos données personnelles. Pour exercer ces droits ou pour toute question, vous pouvez contacter l'éditeur via l'adresse email indiquée à l'article 1.</p>
-      <p>Vous disposez également du droit d'introduire une réclamation auprès de la Commission Nationale de l'Informatique et des Libertés (<a href="https://www.cnil.fr" target="_blank" rel="noopener noreferrer" aria-label="Site officiel de la CNIL, ouvre dans un nouvel onglet">CNIL</a>) si vous estimez que le traitement de vos données ne respecte pas la réglementation applicable.</p>
+      <p>Vous disposez également du droit d'introduire une réclamation auprès de la Commission Nationale de l'Informatique et des Libertés (<a href="https://www.cnil.fr" target="_blank" rel="noopener noreferrer nofollow" aria-label="Site officiel de la CNIL, ouvre dans un nouvel onglet">CNIL</a>) si vous estimez que le traitement de vos données ne respecte pas la réglementation applicable.</p>
     </div>
   </div>
 </section>
@@ -330,16 +330,16 @@
     <div class="cta-content">
       <div class="s-label">Vous êtes une marque française ?</div>
       <h2 id="cta-title">Rejoignez l'annuaire des marques françaises</h2>
-      <p>Vous fabriquez en France ? Faites-vous connaître auprès de milliers de consommateurs engagés. Le référencement de base est gratuit et ouvert à toutes les structures, TPE et PME incluses.</p>
+      <p>Vous fabriquez en France ? Faites-vous connaître gratuitement auprès de milliers de consommateurs engagés. Le référencement est ouvert à toutes les structures, TPE et PME incluses.</p>
       <div class="cta-perks">
-        <span class="cta-perk">Marque vérifiée et certifiée</span>
+        <span class="cta-perk">Référencement 100% gratuit</span>
         <span class="cta-perk">Visibilité immédiate</span>
-        <span class="cta-perk">Ouvert TPE, PME, artisans</span>
+        <span class="cta-perk">Ouvert aux artisans, TPE, PME</span>
       </div>
     </div>
     <div class="cta-btns">
-      <a href="/referencer-ma-marque" class="btn-p">Référencer ma marque →</a>
-      <span class="cta-note">Traitement sous 48h · Ouvert à tous</span>
+      <button class="btn-p" type="button"><a href="/referencer-votre-marque/" style="text-decoration: none;">Référencer ma marque →</a></button>
+      <span class="cta-note">Traitement sous 48h</span>
     </div>
   </div>
 </section>
@@ -347,74 +347,7 @@
 <!-- SCRIPTS -->
 <script>
 {{MENU_BURGER_JS}}
-// ── EMAIL OBFUSQUÉ ──────────────────────────────────────────
-(function(){
-  const btnEmail = document.getElementById('btnEmail');
-  const emailLink = document.getElementById('emailLink');
-  const btnCopy = document.getElementById('btnCopy');
-
-  // Fragments encodés Base64 (jamais d'email en clair)
-  const f1 = 'Ym9uam91cg==';                    // partie locale
-  const f2 = 'bGFtYXJxdWVmcmFuY2Fpc2U=';        // domaine
-  const f3 = 'ZnI=';                            // tld
-
-  // Fonction de décodage paresseux (uniquement au clic)
-  const buildEmail = () => {
-    try {
-      return atob(f1) + '@' + atob(f2) + '.' + atob(f3);
-    } catch(e) {
-      return '';
-    }
-  };
-
-  const reveal = () => {
-    const email = buildEmail();
-    if (!email) return;
-    emailLink.textContent = email;
-    emailLink.setAttribute('href', 'mailto:' + email);
-    emailLink.setAttribute('aria-hidden', 'false');
-    emailLink.classList.add('revealed');
-    btnCopy.setAttribute('aria-hidden', 'false');
-    btnCopy.classList.add('revealed');
-    btnEmail.classList.add('revealed');
-    btnEmail.setAttribute('aria-expanded', 'true');
-    // Focus accessibility — déplacer le focus sur le lien email révélé
-    emailLink.focus();
-  };
-
-  btnEmail.addEventListener('click', reveal);
-
-  // Bouton "Copier" — copie l'email reconstitué dans le presse-papier
-  btnCopy.addEventListener('click', async () => {
-    const email = buildEmail();
-    if (!email) return;
-    try {
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        await navigator.clipboard.writeText(email);
-      } else {
-        // Fallback ancienne API
-        const tmp = document.createElement('textarea');
-        tmp.value = email;
-        tmp.setAttribute('readonly', '');
-        tmp.style.position = 'absolute';
-        tmp.style.left = '-9999px';
-        document.body.appendChild(tmp);
-        tmp.select();
-        document.execCommand('copy');
-        document.body.removeChild(tmp);
-      }
-      const original = btnCopy.textContent;
-      btnCopy.textContent = '✓ Copié';
-      btnCopy.classList.add('copied');
-      setTimeout(() => {
-        btnCopy.textContent = original;
-        btnCopy.classList.remove('copied');
-      }, 2000);
-    } catch(e) {
-      console.warn('[LMF] Impossible de copier l\'email');
-    }
-  });
-})();
+{{EMAIL_OBFUSQUE_JS}}
 </script>
 </body>
 </html>

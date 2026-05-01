@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Conditions Générales d'Utilisation — La Marque Française</title>
+<meta name="description" content="Conditions générales d'utilisation du site La Marque Française : règles de consultation de l'annuaire, newsletter, formulaires, propriété intellectuelle.">
+<meta name="robots" content="noindex, follow">
+<meta name="author" content="La Marque Française">
+<meta name="theme-color" content="#0d1b3e">
+<style>
+{{GLOBAL_CSS}}
+{{NAV_CSS}}
+{{BREADCRUMB_CSS}}
+{{HERO_LEGAL_CSS}}
+/* ── BLOCS LÉGAUX ── */
+.legal-block{padding:4rem 2rem}
+.legal-block.alt{background:var(--cream)}
+.legal-grid{max-width:900px;margin:0 auto}
+.legal-grid h2{font-family:Georgia,'Times New Roman',serif;font-weight:normal;font-size:clamp(1.4rem,2.4vw,1.7rem);color:var(--navy);line-height:1.25;margin-bottom:.6rem}
+.legal-grid h3{font-family:Georgia,'Times New Roman',serif;font-weight:normal;font-size:1.02rem;color:var(--navy);margin:1.7rem 0 .7rem;padding-left:.7rem;border-left:2px solid var(--gold)}
+.legal-grid p{font-family:Arial,sans-serif;font-size:.87rem;color:var(--muted);line-height:1.85;margin-bottom:.95rem}
+.legal-grid ul{list-style:none;margin:.75rem 0 1.25rem;padding:0}
+.legal-grid ul li{font-family:Arial,sans-serif;font-size:.87rem;color:var(--muted);line-height:1.85;padding:.35rem 0;display:flex;gap:.65rem;align-items:flex-start}
+.legal-grid ul li::before{content:'→';color:var(--gold);font-size:.85rem;line-height:1.85;flex-shrink:0}
+.legal-grid a{color:var(--gold-d);text-decoration:none;border-bottom:1px solid rgba(184,150,62,.3);transition:border-color .2s,color .2s}
+.legal-grid a:hover{color:var(--gold);border-color:var(--gold)}
+.legal-grid strong{color:var(--navy);font-weight:normal}
+/* Cartes d'identité (éditeur, hébergeur, CDN) */
+.id-card{background:var(--white);border:1px solid var(--border);padding:1.75rem 2rem;margin-top:1.5rem}
+.legal-block.alt .id-card{background:var(--white)}
+.id-row{display:grid;grid-template-columns:200px 1fr;gap:1.25rem;padding:.75rem 0;border-bottom:1px solid var(--border);font-family:Arial,sans-serif}
+.id-row:last-child{border-bottom:none}
+.id-row dt{font-size:.72rem;letter-spacing:.15em;color:var(--gold-d);text-transform:uppercase;padding-top:.15rem}
+.id-row dd{font-size:.88rem;color:var(--muted);line-height:1.7}
+.id-row dd strong{color:var(--navy)}
+/* Email obfusqué */
+.email-protege{display:inline-flex;align-items:center;gap:.5rem;flex-wrap:wrap;margin-top:.35rem}
+.btn-email{background:var(--navy);color:var(--gold-l);border:none;padding:.55rem 1.1rem;font-family:Arial,sans-serif;font-size:.78rem;letter-spacing:.08em;cursor:pointer;transition:background .2s,transform .15s;display:inline-flex;align-items:center;gap:.5rem}
+.btn-email:hover{background:var(--gold);color:var(--white);transform:translateY(-1px)}
+.btn-email.revealed{display:none}
+.email-link{font-family:Arial,sans-serif;font-size:.88rem;color:var(--gold-d);text-decoration:none;border-bottom:1px solid rgba(184,150,62,.3);transition:border-color .2s,color .2s;display:none}
+.email-link.revealed{display:inline-block}
+.email-link:hover{color:var(--gold);border-color:var(--gold)}
+.btn-copy{background:transparent;color:var(--muted);border:1px solid var(--border);padding:.4rem .75rem;font-family:Arial,sans-serif;font-size:.7rem;letter-spacing:.05em;cursor:pointer;transition:all .2s;display:none}
+.btn-copy.revealed{display:inline-block}
+.btn-copy:hover{border-color:var(--navy);color:var(--navy)}
+.btn-copy.copied{background:var(--gold);color:var(--white);border-color:var(--gold)}
+/* Bloc info important */
+.info-box{background:var(--cream);border-left:3px solid var(--gold);padding:1.1rem 1.5rem;margin:1.5rem 0;font-family:Arial,sans-serif;font-size:.83rem;color:var(--muted);line-height:1.75}
+.legal-block.alt .info-box{background:var(--white)}
+.info-box strong{color:var(--navy)}
+
+{{BANDEAU_CTA_CSS}}
+{{FOOTER_CSS}}
+
+/* ── RESPONSIVE ── */
+@media(max-width:768px){
+  .breadcrumb-bar{padding-top:5rem}
+  .legal-block{padding:3rem 1.25rem}
+  .id-card{padding:1.25rem 1.25rem}
+  .id-row{grid-template-columns:1fr;gap:.25rem;padding:.85rem 0}
+  .id-row dt{font-size:.68rem}
+  .cta-inner{grid-template-columns:1fr;text-align:center}
+  .cta-perks{justify-content:center}
+  .cta-btns{width:100%}
+  .btn-p{width:100%}
+  .ft-top{grid-template-columns:1fr;gap:2rem}
+}
+</style>
+
+<!-- 7. FAVICONS ET MANIFEST -->
+<link rel="icon" href="/img/favicon.ico" sizes="32x32">
+<link rel="icon" href="/img/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
+
+<!-- 8. SEO — CANONICAL, OG, TWITTER -->
+<link rel="canonical" href="https://lamarquefrancaise.fr/conditions-generales-utilisation">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="La Marque Française">
+<meta property="og:title" content="Conditions Générales d'Utilisation — La Marque Française">
+<meta property="og:description" content="Conditions générales d'utilisation du site La Marque Française : règles de consultation de l'annuaire, newsletter, formulaires, propriété intellectuelle.">
+<meta property="og:url" content="https://lamarquefrancaise.fr/conditions-generales-utilisation">
+<meta property="og:image" content="https://lamarquefrancaise.fr/og-image.jpg">
+<meta property="og:locale" content="fr_FR">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Conditions Générales d'Utilisation — La Marque Française">
+<meta name="twitter:description" content="Conditions générales d'utilisation du site La Marque Française : règles de consultation, newsletter, formulaires, propriété intellectuelle.">
+<meta name="twitter:image" content="https://lamarquefrancaise.fr/og-image.jpg">
+</head>
+<body>
+{{NAV}}
+<main id="contenu-principal">
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb-bar">
+  <nav aria-label="Fil d'Ariane" class="breadcrumb">
+    <a href="/">Accueil</a><span class="breadcrumb-sep" aria-hidden="true">›</span>
+    <span class="breadcrumb-current" aria-current="page">Conditions générales d'utilisation</span>
+  </nav>
+</div>
+
+<!-- HERO -->
+<header class="legal-hero">
+  <div class="legal-hero-inner">
+    <div class="legal-hero-badge">Document contractuel · Tous utilisateurs</div>
+    <h1>Conditions Générales <em>d'Utilisation</em></h1>
+    <p class="legal-hero-desc">Les présentes conditions encadrent l'utilisation du site lamarquefrancaise.fr par toute personne consultant l'annuaire, s'inscrivant à la newsletter ou utilisant les formulaires de contact ou de référencement.</p>
+    <span class="legal-hero-update">Date d'entrée en vigueur : 1<sup>er</sup> mai 2026</span>
+  </div>
+</header>
+
+<!-- 1. OBJET -->
+<section class="legal-block" id="objet" aria-labelledby="objet-title">
+  <div class="containeur">
+    <div class="legal-grid">
+      <div class="s-label">Article 1</div>
+      <h2 id="objet-title">Objet et champ d'application</h2>
+      <div class="s-div" aria-hidden="true"></div>
+
+      <p>Les présentes conditions générales d'utilisation (ci-après les « <strong>CGU</strong> ») ont pour objet de définir les règles applicables à l'utilisation du site lamarquefrancaise.fr (ci-après le « <strong>Site</strong> ») par toute personne y accédant (ci-après l'« <strong>Utilisateur</strong> »).</p>
+
+      <p>Sont concernés par les présentes CGU :</p>
+      <ul>
+        <li>Les visiteurs consultant l'annuaire des marques françaises</li>
+        <li>Les marques utilisant le formulaire de référencement, qu'elles souscrivent ou non à une offre payante</li>
+        <li>Les utilisateurs du formulaire de contact</li>
+        <li>Les abonnés à la newsletter du Site</li>
+      </ul>
+
+      <p>Les marques ayant souscrit à une offre payante de référencement (plans Avancé ou Premium) sont en outre liées par les <a href="/conditions-generales-de-vente" aria-label="Consulter les conditions générales de vente">conditions générales de vente</a> applicables à ces offres. En cas de contradiction entre les CGV et les présentes CGU, les CGV prévalent pour les seules questions relatives à la prestation payante.</p>
+
+      <div class="info-box">
+        <strong>Acceptation des CGU —</strong> L'accès et l'utilisation du Site emportent acceptation pleine et entière des présentes CGU. L'Utilisateur qui n'accepterait pas tout ou partie des présentes CGU est invité à ne pas utiliser le Site.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 2. ÉDITEUR ET HÉBERGEMENT -->
+<section class="legal-block alt" id="editeur" aria-labelledby="editeur-title">
+  <div class="containeur">
+    <div class="legal-grid">
+      <div class="s-label">Article 2</div>
+      <h2 id="editeur-title">Identification et hébergement</h2>
+      <div class="s-div" aria-hidden="true"></div>
+
+      <h3>Éditeur du Site</h3>
+      <dl class="id-card">
+        <div class="id-row">
+          <dt>Forme juridique</dt>
+          <dd>Entrepreneur individuel</dd>
+        </div>
+        <div class="id-row">
+          <dt>Nom commercial</dt>
+          <dd><strong>La Marque Française</strong></dd>
+        </div>
+        <div class="id-row">
+          <dt>Représentant légal</dt>
+          <dd><strong>Alexis LEBEGUE</strong></dd>
+        </div>
+        <div class="id-row">
+          <dt>Directeur de publication</dt>
+          <dd>Alexis LEBEGUE</dd>
+        </div>
+        <div class="id-row">
+          <dt>SIRET</dt>
+          <dd>904 657 764 00026</dd>
+        </div>
+        <div class="id-row">
+          <dt>TVA intracommunautaire</dt>
+          <dd>TVA non applicable, article 293 B du CGI</dd>
+        </div>
+        <div class="id-row">
+          <dt>Siège social</dt>
+          <dd>94440 Villecresnes — France</dd>
+        </div>
+        <div class="id-row">
+          <dt>Contact</dt>
+          <dd>
+            <div class="email-protege">
+              <button type="button" class="btn-email" id="btnEmail" aria-label="Afficher l'adresse email de contact" aria-expanded="false">
+                ✉ Afficher l'adresse email
+              </button>
+              <a href="#" class="email-link" id="emailLink" aria-hidden="true"></a>
+              <button type="button" class="btn-copy" id="btnCopy" aria-label="Copier l'adresse email" aria-hidden="true">Copier</button>
+            </div>
+          </dd>
+        </div>
+      </dl>
+
+      <h3>Hébergeur du Site</h3>
+      <dl class="id-card">
+        <div class="id-row">
+          <dt>Société</dt>
+          <dd><strong>GitHub, Inc.</strong> (GitHub Pages)</dd>
+        </div>
+        <div class="id-row">
+          <dt>Adresse</dt>
+          <dd>88 Colin P Kelly Jr Street<br>San Francisco, CA 94107 — États-Unis</dd>
+        </div>
+        <div class="id-row">
+          <dt>Site internet</dt>
+          <dd><a href="https://github.com" target="_blank" rel="noopener noreferrer">github.com</a></dd>
+        </div>
+      </dl>
+
+      <h3>CDN et sécurité</h3>
+      <dl class="id-card">
+        <div class="id-row">
+          <dt>Société</dt>
+          <dd><strong>Cloudflare, Inc.</strong></dd>
+        </div>
+        <div class="id-row">
+          <dt>Adresse</dt>
+          <dd>101 Townsend Street<br>San Francisco, CA 94107 — États-Unis</dd>
+        </div>
+        <div class="id-row">
+          <dt>Site internet</dt>
+          <dd><a href="https://cloudflare.com" target="_blank" rel="noopener noreferrer">cloudflare.com</a></dd>
+        </div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<!-- 3. ACCÈS AU SITE -->
+<section class="legal-block" id="acces" aria-labelledby="acces-title">
+  <div class="containeur">
+    <div class="legal-grid">
+      <div class="s-label">Article 3</div>
+      <h2 id="acces-title">Accès au Site et services proposés</h2>
+      <div class="s-div" aria-hidden="true"></div>
+
+      <h3>Accès libre et gratuit</h3>
+      <p>L'accès au Site est libre et gratuit. La consultation de l'annuaire, des fiches marques, des fiches produits et de l'ensemble des contenus éditoriaux ne nécessite ni inscription, ni création de compte utilisateur, ni paiement.</p>
+
+      <h3>Services proposés aux Utilisateurs</h3>
+      <p>Le Site met à la disposition des Utilisateurs les services suivants :</p>
+      <ul>
+        <li>Consultation de l'annuaire des marques françaises référencées</li>
+        <li>Consultation des fiches marques détaillées</li>
+        <li>Consultation des fiches produits associées</li>
+        <li>Recherche par catégorie, sous-catégorie ou mot-clé</li>
+        <li>Inscription à la newsletter de La Marque Française</li>
+        <li>Formulaire de contact pour toute demande générale</li>
+        <li>Formulaire de référencement à destination des marques françaises</li>
+      </ul>
+
+      <h3>Disponibilité du Site</h3>
+      <p>L'Éditeur s'efforce de maintenir le Site accessible vingt-quatre (24) heures sur vingt-quatre, sept (7) jours sur sept. Toutefois, l'accès au Site peut être interrompu, notamment pour des raisons de maintenance, de mise à jour, de panne technique de l'hébergeur ou du CDN, ou en cas de force majeure. L'Éditeur ne saurait être tenu responsable des indisponibilités du Site, qu'elles soient temporaires ou prolongées, ni d'aucun préjudice qui en découlerait pour l'Utilisateur.</p>
+
+      <h3>Évolution des services</h3>
+      <p>L'Éditeur se réserve le droit de modifier, suspendre ou supprimer tout ou partie des services proposés sur le Site, à tout moment et sans préavis, sans que cela puisse engager sa responsabilité.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 4. ENGAGEMENT SUR LES CONTENUS MARQUES -->
+<section class="legal-block alt" id="contenus" aria-labelledby="contenus-title">
+  <div class="containeur">
+    <div class="legal-grid">
+      <div class="s-label">Article 4</div>
+      <h2 id="contenus-title">Contenus marques et engagement de l'Éditeur</h2>
+      <div class="s-div" aria-hidden="true"></div>
+
+      <h3>Statut de l'Éditeur au sens de la LCEN</h3>
+      <p>Au sens de la loi n° 2004-575 du 21 juin 2004 pour la confiance dans l'économie numérique (« <strong>LCEN</strong> »), La Marque Française agit selon un statut mixte :</p>
+      <ul>
+        <li>En qualité d'<strong>éditeur</strong> pour les contenus rédigés et mis en ligne par ses soins (textes éditoriaux, articles, descriptions de catégories, FAQ, etc.)</li>
+        <li>En qualité d'<strong>hébergeur</strong>, au sens de l'article 6-I-2 de la LCEN, pour les contenus transmis par les marques référencées (descriptions de marque, descriptifs de produits, visuels, logos, coordonnées, etc.)</li>
+      </ul>
+
+      <h3>Engagement de moyens sur la vérification des marques</h3>
+      <p>Préalablement au référencement de toute marque, l'Éditeur procède à une vérification raisonnable des informations communiquées par la marque (existence du SIRET, vérification de la cohérence des éléments transmis sur le caractère français de la fabrication, contrôle des labels et certifications revendiqués). Cette vérification constitue une <strong>obligation de moyens</strong> et non une obligation de résultat.</p>
+
+      <p>L'Éditeur ne peut garantir de manière absolue l'exactitude, la sincérité ou l'exhaustivité des informations communiquées par les marques. Il incombe à chaque Utilisateur souhaitant entrer en relation commerciale avec une marque référencée d'effectuer ses propres vérifications avant tout achat.</p>
+
+      <h3>Badge « Vérifié »</h3>
+      <p>Le badge « <strong>Vérifié</strong> » apposé sur certaines fiches atteste, à la date de son attribution, du respect par la marque concernée des critères « Made in France » définis par l'Éditeur. Ce badge n'est pas une garantie commerciale mais une appréciation faite par l'Éditeur sur la base des éléments fournis par la marque, et peut être retiré à tout moment dans les conditions définies par l'Éditeur.</p>
+
+      <h3>Limitation de responsabilité</h3>
+      <p>Sous réserve des dispositions légales d'ordre public, l'Éditeur ne saurait être tenu responsable du préjudice subi par un Utilisateur du fait d'informations inexactes communiquées par une marque référencée, dès lors que l'Éditeur a procédé à une vérification raisonnable conformément à son obligation de moyens.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 5. PROCÉDURE DE SIGNALEMENT -->
+<section class="legal-block" id="signalement" aria-labelledby="signalement-title">
+  <div class="containeur">
+    <div class="legal-grid">
+      <div class="s-label">Article 5</div>
+      <h2 id="signalement-title">Procédure de signalement de contenus illicites</h2>
+      <div class="s-div" aria-hidden="true"></div>
+
+      <p>Conformément aux dispositions de l'article 6-I-5 de la LCEN, tout Utilisateur ayant connaissance d'un contenu manifestement illicite mis en ligne sur le Site peut le signaler à l'Éditeur.</p>
+
+      <h3>Contenus pouvant faire l'objet d'un signalement</h3>
+      <p>Sont notamment considérés comme illicites, sans que cette liste soit limitative :</p>
+      <ul>
+        <li>Les contenus portant atteinte aux droits de propriété intellectuelle d'un tiers (droits d'auteur, marques, dessins et modèles)</li>
+        <li>Les pratiques commerciales trompeuses, notamment l'usurpation de l'origine française des produits</li>
+        <li>Les contenus diffamatoires, injurieux ou portant atteinte à la vie privée</li>
+        <li>Les contenus contraires à l'ordre public ou aux bonnes mœurs</li>
+        <li>Les contenus incitant à la haine, à la discrimination ou à la violence</li>
+      </ul>
+
+      <h3>Modalités du signalement</h3>
+      <p>Le signalement doit être adressé à l'Éditeur par email à l'adresse de contact indiquée à l'article 2 des présentes CGU, et comporter, conformément à l'article 6-I-5 de la LCEN :</p>
+      <ul>
+        <li>La date du signalement</li>
+        <li>L'identité du notifiant : nom, prénom, profession, domicile, nationalité, date et lieu de naissance (s'il s'agit d'une personne physique) ; forme, dénomination, siège social et représentant légal (s'il s'agit d'une personne morale)</li>
+        <li>La description précise des faits litigieux et leur localisation exacte sur le Site (URL des contenus concernés)</li>
+        <li>Les motifs pour lesquels le contenu doit être retiré, comprenant la mention des dispositions légales et la justification des faits</li>
+        <li>La copie de la correspondance adressée à l'auteur ou à la marque émettrice du contenu litigieux demandant son interruption, son retrait ou sa modification, ou la justification de ce que l'auteur ou la marque n'a pas pu être contacté</li>
+      </ul>
+
+      <h3>Traitement du signalement</h3>
+      <p>L'Éditeur examine tout signalement reçu dans un délai raisonnable et prend, le cas échéant, les mesures appropriées (retrait du contenu, mise en demeure de la marque concernée, résiliation du référencement). L'Éditeur n'est pas tenu de prendre une mesure si le signalement ne respecte pas les exigences de l'article 6-I-5 de la LCEN ou s'il apparaît manifestement infondé.</p>
+
+      <div class="info-box">
+        <strong>Attention —</strong> Tout signalement abusif ou de mauvaise foi est susceptible d'engager la responsabilité civile de son auteur, conformément à l'article 6-I-4 de la LCEN. Les signalements abusifs sont notamment passibles d'une peine pouvant aller jusqu'à un an d'emprisonnement et 15 000 euros d'amende.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6. NEWSLETTER -->
+<section class="legal-block alt" id="newsletter" aria-labelledby="newsletter-title">
+  <div class="containeur">
+    <div class="legal-grid">
+      <div class="s-label">Article 6</div>
+      <h2 id="newsletter-title">Newsletter</h2>
+      <div class="s-div" aria-hidden="true"></div>
+
+      <h3>Inscription</h3>
+      <p>L'inscription à la newsletter de La Marque Française est libre, gratuite et ouverte à toute personne disposant d'une adresse email valide. L'inscription s'effectue via le formulaire dédié présent sur le Site.</p>
+
+      <p>Lors de l'inscription, l'Utilisateur communique son adresse email et donne son consentement explicite à la réception des communications électroniques de La Marque Française, conformément aux dispositions de l'article L.34-5 du Code des postes et des communications électroniques.</p>
+
+      <h3>Contenu de la newsletter</h3>
+      <p>La newsletter peut comporter notamment :</p>
+      <ul>
+        <li>La présentation de marques nouvellement référencées</li>
+        <li>Des articles éditoriaux relatifs au Made in France</li>
+        <li>Des sélections thématiques ou saisonnières de marques et produits</li>
+        <li>Des informations relatives à l'évolution du Site et de ses services</li>
+      </ul>
+
+      <h3>Désinscription</h3>
+      <p>L'Utilisateur peut se désabonner de la newsletter à tout moment, sans frais et sans avoir à justifier d'un motif, en cliquant sur le lien de désinscription présent au pied de chaque newsletter. La désinscription est immédiate et sans condition.</p>
+
+      <h3>Protection des données</h3>
+      <p>Les données collectées dans le cadre de l'inscription à la newsletter sont traitées conformément à la <a href="/politique-de-confidentialite" aria-label="Consulter la politique de confidentialité">politique de confidentialité</a> du Site.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 7. FORMULAIRES -->
+<section class="legal-block" id="formulaires" aria-labelledby="formulaires-title">
+  <div class="containeur">
+    <div class="legal-grid">
+      <div class="s-label">Article 7</div>
+      <h2 id="formulaires-title">Formulaires de contact et de référencement</h2>
+      <div class="s-div" aria-hidden="true"></div>
+
+      <h3>Formulaire de contact</h3>
+      <p>Le Site met à la disposition des Utilisateurs un formulaire de contact permettant d'adresser toute question, suggestion ou demande à l'Éditeur. L'Utilisateur communique les informations strictement nécessaires au traitement de sa demande (nom, adresse email, objet, message).</p>
+
+      <p>L'Éditeur s'engage à répondre dans un délai raisonnable, sans pour autant souscrire à un quelconque engagement chiffré de délai de réponse.</p>
+
+      <h3>Formulaire de référencement</h3>
+      <p>Le formulaire de référencement est destiné aux marques françaises souhaitant figurer dans l'annuaire du Site. La marque communique l'ensemble des informations nécessaires à l'étude de son dossier (raison sociale, SIRET, nature des produits, lieu de fabrication, etc.).</p>
+
+      <p>L'envoi du formulaire ne vaut pas acceptation du référencement par l'Éditeur. Le dossier est instruit par l'Éditeur, qui se réserve le droit d'accepter, de refuser ou de demander des compléments d'information, sans avoir à motiver sa décision.</p>
+
+      <h3>Engagements de l'Utilisateur</h3>
+      <p>En utilisant les formulaires du Site, l'Utilisateur s'engage à :</p>
+      <ul>
+        <li>Communiquer des informations exactes, sincères et à jour</li>
+        <li>Ne pas usurper l'identité d'un tiers</li>
+        <li>Ne pas adresser de contenus à caractère illicite, diffamatoire, injurieux, ou portant atteinte aux droits de tiers</li>
+        <li>Ne pas utiliser les formulaires à des fins de prospection commerciale non sollicitée, de spam, ou de toute autre pratique abusive</li>
+      </ul>
+
+      <h3>Honeypot et anti-spam</h3>
+      <p>Les formulaires du Site sont protégés par des dispositifs anti-spam (champ honeypot, validation côté client et côté serveur). L'Éditeur se réserve le droit de bloquer ou d'ignorer toute soumission identifiée comme abusive ou automatisée.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 8. COMPORTEMENTS INTERDITS -->
+<section class="legal-block alt" id="interdits" aria-labelledby="interdits-title">
+  <div class="containeur">
+    <div class="legal-grid">
+      <div class="s-label">Article 8</div>
+      <h2 id="interdits-title">Comportements interdits et accès automatisé</h2>
+      <div class="s-div" aria-hidden="true"></div>
+
+      <h3>Comportements interdits</h3>
+      <p>Il est strictement interdit à tout Utilisateur :</p>
+      <ul>
+        <li>D'utiliser le Site à des fins illicites, frauduleuses ou contraires à l'ordre public</li>
+        <li>De porter atteinte au fonctionnement du Site, à sa sécurité ou à son intégrité</li>
+        <li>De tenter de contourner les mesures de sécurité mises en place par l'Éditeur ou ses prestataires (notamment Cloudflare)</li>
+        <li>D'introduire des virus, logiciels malveillants ou tout autre code de nature à porter atteinte au Site ou à ses Utilisateurs</li>
+        <li>De porter atteinte aux droits de propriété intellectuelle de l'Éditeur ou des marques référencées</li>
+        <li>D'usurper l'identité d'un tiers</li>
+        <li>De collecter, conserver ou diffuser des données à caractère personnel relatives à des tiers sans leur consentement</li>
+        <li>D'adresser, via les formulaires ou la newsletter, des messages non sollicités à caractère commercial ou promotionnel</li>
+      </ul>
+
+      <h3>Accès automatisé et scraping</h3>
+      <p>L'accès au Site par des moyens automatisés est strictement encadré. Sont autorisés :</p>
+      <ul>
+        <li>L'indexation par les robots des moteurs de recherche standards (Googlebot, Bingbot, etc.) dans le respect du fichier robots.txt du Site</li>
+      </ul>
+
+      <p>Sont strictement interdits, sauf autorisation écrite et préalable de l'Éditeur :</p>
+      <ul>
+        <li>Le scraping, l'extraction massive ou systématique de tout ou partie des contenus du Site (annuaire, fiches marques, fiches produits, descriptions, visuels, etc.)</li>
+        <li>L'utilisation de robots, scripts ou crawlers tiers non identifiés par les standards usuels du web</li>
+        <li>La copie, la reproduction ou la republication des contenus du Site sur un autre site, qu'il soit commercial ou non</li>
+        <li>Toute opération de moissonnage à des fins d'enrichissement de bases de données tierces ou d'entraînement de modèles d'intelligence artificielle</li>
+      </ul>
+
+      <h3>Sanctions</h3>
+      <p>Tout manquement aux dispositions du présent article expose l'Utilisateur aux mesures suivantes, prises de manière cumulative ou alternative, sans préavis et sans qu'une mise en demeure préalable ne soit nécessaire :</p>
+      <ul>
+        <li>Blocage immédiat de l'adresse IP, de la plage d'adresses IP ou du fournisseur d'accès concerné, via les outils techniques disponibles (Cloudflare notamment)</li>
+        <li>Suspension de l'accès au Site, y compris temporaire</li>
+        <li>Engagement de toute action judiciaire civile en réparation du préjudice subi par l'Éditeur</li>
+        <li>Engagement de toute action pénale, notamment sur le fondement des articles 323-1 et suivants du Code pénal (atteintes aux systèmes de traitement automatisé de données), passibles de peines pouvant aller jusqu'à cinq (5) ans d'emprisonnement et 150 000 euros d'amende</li>
+      </ul>
+
+      <p>L'Éditeur se réserve le droit de conserver et de transmettre aux autorités judiciaires compétentes toute information utile à l'identification de l'Utilisateur et à la qualification des faits litigieux.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 9. PROPRIÉTÉ INTELLECTUELLE -->
+<section class="legal-block" id="propriete" aria-labelledby="propriete-title">
+  <div class="containeur">
+    <div class="legal-grid">
+      <div class="s-label">Article 9</div>
+      <h2 id="propriete-title">Propriété intellectuelle</h2>
+      <div class="s-div" aria-hidden="true"></div>
+
+      <h3>Contenus de l'Éditeur</h3>
+      <p>L'ensemble du Site, sa structure, son design, son code source, sa charte graphique, sa dénomination, son logo et ses contenus éditoriaux sont protégés par le droit de la propriété intellectuelle et demeurent la propriété exclusive de l'Éditeur.</p>
+
+      <p>Toute reproduction, représentation, modification, publication, adaptation ou extraction, totale ou partielle, des éléments du Site, par quelque procédé que ce soit, sans l'autorisation écrite et préalable de l'Éditeur, est strictement interdite et constitue un acte de contrefaçon, sanctionné par les articles L.335-2 et suivants du Code de la propriété intellectuelle.</p>
+
+      <h3>Contenus des marques référencées</h3>
+      <p>Les éléments transmis par les marques référencées (logo, identité visuelle, photographies de produits, descriptifs, etc.) demeurent la propriété de leurs ayants-droit respectifs. Toute utilisation de ces éléments par un Utilisateur en dehors d'une consultation strictement personnelle du Site requiert l'autorisation préalable du titulaire des droits.</p>
+
+      <h3>Utilisation autorisée</h3>
+      <p>L'Éditeur concède à l'Utilisateur un droit personnel et non exclusif de consultation des contenus du Site dans le cadre d'un usage strictement privé. Cette licence n'emporte aucun droit de reproduction, de représentation publique ou de mise à disposition à des tiers.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 10. DONNÉES PERSONNELLES ET COOKIES -->
+<section class="legal-block alt" id="donnees" aria-labelledby="donnees-title">
+  <div class="containeur">
+    <div class="legal-grid">
+      <div class="s-label">Article 10</div>
+      <h2 id="donnees-title">Données personnelles et cookies</h2>
+      <div class="s-div" aria-hidden="true"></div>
+
+      <h3>Traitement des données personnelles</h3>
+      <p>L'Éditeur collecte et traite les données à caractère personnel des Utilisateurs (nom, adresse email, contenu des messages adressés via les formulaires) dans le strict respect du Règlement Général sur la Protection des Données (RGPD) et de la loi Informatique et Libertés.</p>
+
+      <p>Les modalités détaillées du traitement des données (finalités, base légale, durée de conservation, destinataires, droits des personnes concernées) sont décrites dans la <a href="/politique-de-confidentialite" aria-label="Consulter la politique de confidentialité">politique de confidentialité</a> du Site.</p>
+
+      <h3>Cookies et traceurs</h3>
+      <p>Le Site n'utilise aucun cookie publicitaire ni traceur de mesure d'audience nécessitant le consentement préalable de l'Utilisateur. Seuls des cookies strictement techniques, nécessaires au bon fonctionnement du Site et déposés par le CDN Cloudflare à des fins de sécurité et de mise en cache, peuvent être utilisés. Ces cookies sont exemptés de consentement en application de l'article 82 de la loi Informatique et Libertés.</p>
+
+      <h3>Statistiques de consultation</h3>
+      <p>L'Éditeur ne met pas en œuvre de système de mesure d'audience individualisée. La consultation du Site est anonyme et aucun profil utilisateur n'est constitué.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 11. LIENS HYPERTEXTES -->
+<section class="legal-block" id="liens" aria-labelledby="liens-title">
+  <div class="containeur">
+    <div class="legal-grid">
+      <div class="s-label">Article 11</div>
+      <h2 id="liens-title">Liens hypertextes</h2>
+      <div class="s-div" aria-hidden="true"></div>
+
+      <h3>Liens sortants</h3>
+      <p>Le Site contient des liens hypertextes vers des sites tiers, notamment vers les sites internet des marques référencées. Ces liens sont fournis à titre informatif et de convenance pour l'Utilisateur.</p>
+
+      <p>L'Éditeur n'exerce aucun contrôle sur le contenu, les pratiques commerciales, les politiques de confidentialité ou la disponibilité de ces sites tiers et ne saurait être tenu responsable de leur contenu, ni des dommages susceptibles d'en résulter pour l'Utilisateur. La consultation d'un site tiers s'effectue sous la seule responsabilité de l'Utilisateur.</p>
+
+      <h3>Liens entrants</h3>
+      <p>Tout site souhaitant établir un lien hypertexte pointant vers le Site est autorisé à le faire à condition que ce lien :</p>
+      <ul>
+        <li>Pointe vers une URL publique du Site, sans framing ni intégration trompeuse</li>
+        <li>Ne dénature pas le contenu ou l'image de La Marque Française</li>
+        <li>Ne soit pas placé dans un environnement contraire aux bonnes mœurs ou à l'ordre public</li>
+      </ul>
+
+      <p>L'Éditeur se réserve le droit d'exiger la suppression de tout lien entrant ne respectant pas ces conditions, sans préavis et sans avoir à motiver sa décision.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 12. RESPONSABILITÉ -->
+<section class="legal-block alt" id="responsabilite" aria-labelledby="responsabilite-title">
+  <div class="containeur">
+    <div class="legal-grid">
+      <div class="s-label">Article 12</div>
+      <h2 id="responsabilite-title">Responsabilité</h2>
+      <div class="s-div" aria-hidden="true"></div>
+
+      <h3>Responsabilité de l'Éditeur</h3>
+      <p>L'Éditeur s'engage à mettre en œuvre les moyens raisonnables pour assurer la fiabilité du Site et l'exactitude des informations qu'il met à disposition des Utilisateurs. Il ne peut toutefois être tenu responsable :</p>
+      <ul>
+        <li>Des inexactitudes, erreurs ou omissions affectant les informations communiquées par les marques référencées</li>
+        <li>Des indisponibilités, ralentissements ou interruptions du Site, qu'ils soient liés à l'hébergeur, au CDN ou à tout autre prestataire technique</li>
+        <li>Des dommages directs ou indirects résultant de l'utilisation du Site par l'Utilisateur</li>
+        <li>De l'inadéquation du Site ou de ses contenus à un usage particulier de l'Utilisateur</li>
+        <li>De la perte de données ou de tout préjudice immatériel subi par l'Utilisateur</li>
+      </ul>
+
+      <h3>Responsabilité de l'Utilisateur</h3>
+      <p>L'Utilisateur reconnaît utiliser le Site sous sa seule et entière responsabilité. Il lui appartient notamment :</p>
+      <ul>
+        <li>De disposer d'un équipement adapté et d'une connexion internet sécurisée</li>
+        <li>De prendre toutes les mesures appropriées pour protéger ses propres données et son équipement contre toute attaque informatique</li>
+        <li>De vérifier les informations consultées avant toute prise de décision, notamment commerciale</li>
+        <li>De respecter les présentes CGU et la réglementation applicable</li>
+      </ul>
+
+      <h3>Force majeure</h3>
+      <p>L'Éditeur ne pourra être tenu responsable de l'inexécution ou du retard dans l'exécution de ses obligations résultant d'un cas de force majeure tel que défini à l'article 1218 du Code civil, en ce compris notamment : panne d'hébergement, attaque informatique, défaillance des réseaux de communications électroniques, décision des autorités publiques, conflit social, intempérie, pandémie, ou tout autre événement échappant au contrôle raisonnable de l'Éditeur.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 13. MODIFICATION DES CGU -->
+<section class="legal-block" id="modification" aria-labelledby="modification-title">
+  <div class="containeur">
+    <div class="legal-grid">
+      <div class="s-label">Article 13</div>
+      <h2 id="modification-title">Modification des présentes CGU</h2>
+      <div class="s-div" aria-hidden="true"></div>
+
+      <p>L'Éditeur se réserve le droit de modifier à tout moment les présentes CGU, notamment en cas d'évolution du Site, des services proposés ou de la réglementation applicable.</p>
+
+      <p>Les CGU applicables sont celles en vigueur à la date de consultation du Site par l'Utilisateur. La date de dernière mise à jour est indiquée en tête des présentes CGU. L'Utilisateur est invité à consulter régulièrement les CGU en vigueur sur le Site afin de prendre connaissance des éventuelles modifications.</p>
+
+      <p>L'utilisation continue du Site postérieurement à la mise en ligne d'une nouvelle version des CGU emporte acceptation par l'Utilisateur des modifications apportées.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 14. DROIT APPLICABLE -->
+<section class="legal-block alt" id="droit" aria-labelledby="droit-title">
+  <div class="containeur">
+    <div class="legal-grid">
+      <div class="s-label">Article 14</div>
+      <h2 id="droit-title">Droit applicable et juridiction compétente</h2>
+      <div class="s-div" aria-hidden="true"></div>
+
+      <p>Les présentes CGU sont soumises au <strong>droit français</strong>.</p>
+
+      <p>En cas de litige relatif à l'interprétation ou à l'exécution des présentes CGU, les parties s'engagent à rechercher préalablement une solution amiable. À défaut d'accord amiable dans un délai raisonnable, et sous réserve des règles de procédure d'ordre public et notamment des dispositions protectrices des consommateurs, le litige sera porté devant les juridictions du ressort de Créteil (Val-de-Marne).</p>
+
+      <div class="info-box">
+        <strong>Réclamation amiable —</strong> Toute réclamation relative à l'utilisation du Site peut être adressée par email à l'adresse indiquée à l'article 2 des présentes CGU. L'Éditeur s'efforcera de répondre à toute réclamation dans un délai raisonnable.
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- CTA RÉFÉRENCER -->
+<section class="cta-referer" id="referer" aria-labelledby="cta-title">
+  <div class="cta-inner">
+    <div class="cta-content">
+      <div class="s-label">Vous êtes une marque française ?</div>
+      <h2 id="cta-title">Rejoignez l'annuaire des marques françaises</h2>
+      <p>Vous fabriquez en France ? Faites-vous connaître auprès de milliers de consommateurs engagés. Le référencement de base est gratuit et ouvert à toutes les structures, TPE et PME incluses.</p>
+      <div class="cta-perks">
+        <span class="cta-perk">Marque vérifiée et certifiée</span>
+        <span class="cta-perk">Visibilité immédiate</span>
+        <span class="cta-perk">Ouvert TPE, PME, artisans</span>
+      </div>
+    </div>
+    <div class="cta-btns">
+      <a href="/referencer-ma-marque" class="btn-p">Référencer ma marque →</a>
+      <span class="cta-note">Traitement sous 48h · Ouvert à tous</span>
+    </div>
+  </div>
+</section>
+
+{{FOOTER}}
+
+<!-- SCRIPTS -->
+<script>
+{{MENU_BURGER_JS}}
+{{EMAIL_OBFUSQUE_JS}}
+</script>
+</body>
+</html>

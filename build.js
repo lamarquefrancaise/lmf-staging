@@ -8,20 +8,21 @@ const SUPABASE_URL = process.env.VITE_SUPABASE_URL;
 const SUPABASE_KEY = process.env.VITE_SUPABASE_ANON_KEY;
 
 const PAGES = [
-  { fichier: 'index.html',                                actif: '',              categorie: null,            sousCategorie: null },
-  { fichier: 'made-in-france/epicerie-fine/index.html',   actif: 'epicerie-fine', categorie: 'epicerie-fine', sousCategorie: null },
-  { fichier: 'made-in-france/miel/index.html',            actif: 'miel',          categorie: 'epicerie-fine', sousCategorie: 'miel' },
-  { fichier: 'made-in-france/mode/index.html',            actif: 'mode',          categorie: 'mode',          sousCategorie: null },
-  { fichier: 'made-in-france/beaute/index.html',          actif: 'beaute',        categorie: 'beaute',        sousCategorie: null },
-  { fichier: 'made-in-france/bijoux/index.html',          actif: 'bijoux',        categorie: 'bijoux',        sousCategorie: null },
-  { fichier: 'made-in-france/maison/index.html',          actif: 'maison',        categorie: 'maison',        sousCategorie: null },
-  { fichier: 'made-in-france/sport/index.html',           actif: 'sport',         categorie: 'sport',         sousCategorie: null },
-  { fichier: 'made-in-france/technologie/index.html',     actif: 'technologie',   categorie: 'technologie',   sousCategorie: null },
-  { fichier: 'referencer-votre-marque/index.html',        actif: '',              categorie: null,            sousCategorie: null },
-  { fichier: 'mentions-legales/index.html',               actif: '',              categorie: null,            sousCategorie: null },
-  { fichier: 'politique-de-confidentialite/index.html',   actif: '',              categorie: null,            sousCategorie: null },
-  { fichier: 'conditions-generales-de-vente/index.html',  actif: '',              categorie: null,            sousCategorie: null },
-  { fichier: 'contact/index.html',                        actif: '',              categorie: null,            sousCategorie: null },
+  { fichier: 'index.html',                                    actif: '',              categorie: null,            sousCategorie: null },
+  { fichier: 'made-in-france/epicerie-fine/index.html',       actif: 'epicerie-fine', categorie: 'epicerie-fine', sousCategorie: null },
+  { fichier: 'made-in-france/miel/index.html',                actif: 'miel',          categorie: 'epicerie-fine', sousCategorie: 'miel' },
+  { fichier: 'made-in-france/mode/index.html',                actif: 'mode',          categorie: 'mode',          sousCategorie: null },
+  { fichier: 'made-in-france/beaute/index.html',              actif: 'beaute',        categorie: 'beaute',        sousCategorie: null },
+  { fichier: 'made-in-france/bijoux/index.html',              actif: 'bijoux',        categorie: 'bijoux',        sousCategorie: null },
+  { fichier: 'made-in-france/maison/index.html',              actif: 'maison',        categorie: 'maison',        sousCategorie: null },
+  { fichier: 'made-in-france/sport/index.html',               actif: 'sport',         categorie: 'sport',         sousCategorie: null },
+  { fichier: 'made-in-france/technologie/index.html',         actif: 'technologie',   categorie: 'technologie',   sousCategorie: null },
+  { fichier: 'referencer-votre-marque/index.html',            actif: '',              categorie: null,            sousCategorie: null },
+  { fichier: 'mentions-legales/index.html',                   actif: '',              categorie: null,            sousCategorie: null },
+  { fichier: 'politique-de-confidentialite/index.html',       actif: '',              categorie: null,            sousCategorie: null },
+  { fichier: 'conditions-generales-de-vente/index.html',      actif: '',              categorie: null,            sousCategorie: null },
+  { fichier: 'conditions-generales-utilisation/index.html',   actif: '',              categorie: null,            sousCategorie: null },
+  { fichier: 'contact/index.html',                            actif: '',              categorie: null,            sousCategorie: null },
   
 ];
 
@@ -46,6 +47,8 @@ const produitsSectionCss = fs.readFileSync(path.join(__dirname, 'css/produits-se
 const organizationJsonLd = fs.readFileSync(path.join(__dirname, 'js/Organization-json-ld.json'), 'utf8');
 const menuBurgerJs       = fs.readFileSync(path.join(__dirname, 'js/components/menu-burger.js'), 'utf8');
 const faqJs              = fs.readFileSync(path.join(__dirname, 'js/components/faq.js'), 'utf8');
+const emailObfusqueJs    = fs.readFileSync(path.join(__dirname, 'js/components/email-obfusque.js'), 'utf8');
+
 
 
 
@@ -644,6 +647,8 @@ async function build() {
       ['{{ORGANIZATION_JSON_LD}}',  organizationJsonLd],
       ['{{MENU_BURGER_JS}}',        menuBurgerJs],
       ['{{FAQ_JS}}',                faqJs],
+      ['{{EMAIL_OBFUSQUE_JS}}',     emailObfusqueJs],
+      
       
     ];
     for (const [marqueur, contenu] of injectionsCss) {
