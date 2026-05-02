@@ -11,4 +11,5 @@
 .cta-note{font-family:Arial,sans-serif;font-size:.68rem;color:rgba(255,255,255,.25);letter-spacing:.05em}
 .btn-p{background:var(--gold-l);color:var(--navy);border:none;padding:.9rem 2rem;font-family:Arial,sans-serif;font-size:.85rem;letter-spacing:.1em;cursor:pointer;transition:background .2s,transform .15s}
 .btn-p:hover{background:var(--gold);transform:translateY(-1px)}
+.btn-p a{text-decoration: none;color:var(--navy);}
 @media(max-width:768px){.cta-inner{grid-template-columns:1fr;text-align:center}.cta-perks{justify-content:center}.cta-btns{width:100%}.btn-p{width:100%}}

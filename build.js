@@ -160,7 +160,7 @@ function genererBreadcrumb(page) {
 <div class="breadcrumb-bar">
   <nav aria-label="Fil d'Ariane" class="breadcrumb">
     <a href="/">Accueil</a><span class="breadcrumb-sep">›</span>
-    <a href="/made-in-france">Made in France</a><span class="breadcrumb-sep">›</span>
+    <a href="/made-in-france/">Made in France</a><span class="breadcrumb-sep">›</span>
     <a href="/made-in-france/${slugParent}">${nomParent}</a><span class="breadcrumb-sep">›</span>
     <span class="breadcrumb-current" aria-current="page">${nomSousCat}</span>
   </nav>
@@ -172,7 +172,7 @@ function genererBreadcrumb(page) {
 <div class="breadcrumb-bar">
   <nav aria-label="Fil d'Ariane" class="breadcrumb">
     <a href="/">Accueil</a><span class="breadcrumb-sep">›</span>
-    <a href="/made-in-france">Made in France</a><span class="breadcrumb-sep">›</span>
+    <a href="/made-in-france/">Made in France</a><span class="breadcrumb-sep">›</span>
     <span class="breadcrumb-current" aria-current="page">${nomCategorie}</span>
   </nav>
 </div>`;
