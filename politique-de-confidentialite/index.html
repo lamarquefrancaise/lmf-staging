@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Politique de Confidentialité — La Marque Française</title>
+<meta name="description" content="Politique de confidentialité de La Marque Française : finalités, base légale, durée de conservation, sous-traitants et droits RGPD des utilisateurs.">
+<meta name="robots" content="noindex, follow">
+<meta name="author" content="La Marque Française">
+<meta name="theme-color" content="#0d1b3e">
+<style>
+{{GLOBAL_CSS}}
+{{NAV_CSS}}
+{{BREADCRUMB_CSS}}
+{{HERO_LEGAL_CSS}}
+/* ── BLOCS LÉGAUX ── */
+.legal-block{padding:4rem 2rem}
+.legal-block.alt{background:var(--cream)}
+.legal-grid{max-width:900px;margin:0 auto}
+.legal-grid h2{font-family:Georgia,'Times New Roman',serif;font-weight:normal;font-size:clamp(1.4rem,2.4vw,1.7rem);color:var(--navy);line-height:1.25;margin-bottom:.6rem}
+.legal-grid h3{font-family:Georgia,'Times New Roman',serif;font-weight:normal;font-size:1.02rem;color:var(--navy);margin:1.7rem 0 .7rem;padding-left:.7rem;border-left:2px solid var(--gold)}
+.legal-grid p{font-family:Arial,sans-serif;font-size:.87rem;color:var(--muted);line-height:1.85;margin-bottom:.95rem}
+.legal-grid ul{list-style:none;margin:.75rem 0 1.25rem;padding:0}
+.legal-grid ul li{font-family:Arial,sans-serif;font-size:.87rem;color:var(--muted);line-height:1.85;padding:.35rem 0;display:flex;gap:.65rem;align-items:flex-start}
+.legal-grid ul li::before{content:'→';color:var(--gold);font-size:.85rem;line-height:1.85;flex-shrink:0}
+.legal-grid a{color:var(--gold-d);text-decoration:none;border-bottom:1px solid rgba(184,150,62,.3);transition:border-color .2s,color .2s}
+.legal-grid a:hover{color:var(--gold);border-color:var(--gold)}
+.legal-grid strong{color:var(--navy);font-weight:normal}
+/* Carte d'identité */
+.id-card{background:var(--white);border:1px solid var(--border);padding:1.75rem 2rem;margin-top:1.5rem}
+.legal-block.alt .id-card{background:var(--white)}
+.id-row{display:grid;grid-template-columns:200px 1fr;gap:1.25rem;padding:.75rem 0;border-bottom:1px solid var(--border);font-family:Arial,sans-serif}
+.id-row:last-child{border-bottom:none}
+.id-row dt{font-size:.72rem;letter-spacing:.15em;color:var(--gold-d);text-transform:uppercase;padding-top:.15rem}
+.id-row dd{font-size:.88rem;color:var(--muted);line-height:1.7}
+.id-row dd strong{color:var(--navy)}
+/* Email obfusqué */
+.email-protege{display:inline-flex;align-items:center;gap:.5rem;flex-wrap:wrap;margin-top:.35rem}
+.btn-email{background:var(--navy);color:var(--gold-l);border:none;padding:.55rem 1.1rem;font-family:Arial,sans-serif;font-size:.78rem;letter-spacing:.08em;cursor:pointer;transition:background .2s,transform .15s;display:inline-flex;align-items:center;gap:.5rem}
+.btn-email:hover{background:var(--gold);color:var(--white);transform:translateY(-1px)}
+.btn-email.revealed{display:none}
+.email-link{font-family:Arial,sans-serif;font-size:.88rem;color:var(--gold-d);text-decoration:none;border-bottom:1px solid rgba(184,150,62,.3);transition:border-color .2s,color .2s;display:none}
+.email-link.revealed{display:inline-block}
+.email-link:hover{color:var(--gold);border-color:var(--gold)}
+.btn-copy{background:transparent;color:var(--muted);border:1px solid var(--border);padding:.4rem .75rem;font-family:Arial,sans-serif;font-size:.7rem;letter-spacing:.05em;cursor:pointer;transition:all .2s;display:none}
+.btn-copy.revealed{display:inline-block}
+.btn-copy:hover{border-color:var(--navy);color:var(--navy)}
+.btn-copy.copied{background:var(--gold);color:var(--white);border-color:var(--gold)}
+/* Bloc info */
+.info-box{background:var(--cream);border-left:3px solid var(--gold);padding:1.1rem 1.5rem;margin:1.5rem 0;font-family:Arial,sans-serif;font-size:.83rem;color:var(--muted);line-height:1.75}
+.legal-block.alt .info-box{background:var(--white)}
+.info-box strong{color:var(--navy)}
+/* Tableau récapitulatif des traitements */
+.pc-treatments{background:var(--white);border:1px solid var(--border);margin-top:1.5rem;overflow-x:auto}
+.legal-block.alt .pc-treatments{background:var(--white)}
+.pc-treatments table{width:100%;border-collapse:collapse;font-family:Arial,sans-serif;min-width:680px}
+.pc-treatments th,.pc-treatments td{padding:1rem 1.1rem;text-align:left;border-bottom:1px solid var(--border);font-size:.82rem;vertical-align:top}
+.pc-treatments th{background:var(--cream);color:var(--gold-d);font-weight:normal;font-size:.7rem;letter-spacing:.15em;text-transform:uppercase}
+.pc-treatments tbody tr:last-child td{border-bottom:none}
+.pc-treatments td:first-child{color:var(--navy)}
+.pc-treatments td{color:var(--muted);line-height:1.65}
+/* Tableau des sous-traitants */
+.pc-subprocessors{background:var(--white);border:1px solid var(--border);margin-top:1.5rem;overflow-x:auto}
+.legal-block.alt .pc-subprocessors{background:var(--white)}
+.pc-subprocessors table{width:100%;border-collapse:collapse;font-family:Arial,sans-serif;min-width:680px}
+.pc-subprocessors th,.pc-subprocessors td{padding:1rem 1.1rem;text-align:left;border-bottom:1px solid var(--border);font-size:.82rem;vertical-align:top}
+.pc-subprocessors th{background:var(--cream);color:var(--gold-d);font-weight:normal;font-size:.7rem;letter-spacing:.15em;text-transform:uppercase}
+.pc-subprocessors tbody tr:last-child td{border-bottom:none}
+.pc-subprocessors td:first-child strong{color:var(--navy)}
+.pc-subprocessors td{color:var(--muted);line-height:1.65}
+.pc-region{display:inline-block;font-family:Arial,sans-serif;font-size:.68rem;letter-spacing:.08em;padding:.18rem .5rem;border-radius:2px;text-transform:uppercase;white-space:nowrap}
+.pc-region.eu{background:rgba(0,85,164,.1);color:#0055a4;border:1px solid rgba(0,85,164,.25)}
+.pc-region.us{background:rgba(184,150,62,.1);color:var(--gold-d);border:1px solid rgba(184,150,62,.3)}
+/* Bloc des droits RGPD (mise en valeur) */
+.pc-rights{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin:1.5rem 0}
+.pc-right-card{background:var(--white);border:1px solid var(--border);padding:1.25rem;transition:border-color .2s}
+.legal-block.alt .pc-right-card{background:var(--white)}
+.pc-right-card:hover{border-color:var(--gold)}
+.pc-right-card h4{font-family:Georgia,'Times New Roman',serif;font-size:.95rem;color:var(--navy);font-weight:normal;margin-bottom:.4rem;display:flex;align-items:center;gap:.55rem}
+.pc-right-card h4::before{content:'✓';color:var(--gold);font-size:.95rem;font-family:Arial,sans-serif}
+.pc-right-card p{font-family:Arial,sans-serif;font-size:.78rem;color:var(--muted);line-height:1.65;margin:0}
+
+{{BANDEAU_CTA_CSS}}
+{{FOOTER_CSS}}
+
+/* ── RESPONSIVE ── */
+@media(max-width:768px){
+  .breadcrumb-bar{padding-top:5rem}
+  .legal-block{padding:3rem 1.25rem}
+  .id-card{padding:1.25rem 1.25rem}
+  .id-row{grid-template-columns:1fr;gap:.25rem;padding:.85rem 0}
+  .id-row dt{font-size:.68rem}
+  .pc-rights{grid-template-columns:1fr}
+  .pc-treatments th,.pc-treatments td,
+  .pc-subprocessors th,.pc-subprocessors td{padding:.7rem .8rem;font-size:.76rem}
+  .cta-inner{grid-template-columns:1fr;text-align:center}
+  .cta-perks{justify-content:center}
+  .cta-btns{width:100%}
+  .btn-p{width:100%}
+  .ft-top{grid-template-columns:1fr;gap:2rem}
+}
+</style>
+<link rel="icon" href="/img/favicon.ico" sizes="32x32">
+<link rel="icon" href="/img/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="canonical" href="https://lamarquefrancaise.fr/politique-de-confidentialite/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="La Marque Française">
+<meta property="og:title" content="Politique de Confidentialité — La Marque Française">
+<meta property="og:description" content="Politique de confidentialité de La Marque Française : finalités, base légale, durée de conservation, sous-traitants et droits RGPD.">
+<meta property="og:url" content="https://lamarquefrancaise.fr/politique-de-confidentialite/">
+<meta property="og:image" content="https://lamarquefrancaise.fr/img/1200x630/la-marque-francaise.webp">
+<meta property="og:locale" content="fr_FR">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Politique de Confidentialité — La Marque Française">
+<meta name="twitter:description" content="Politique de confidentialité de La Marque Française : finalités, base légale, durée de conservation, sous-traitants et droits RGPD.">
+<meta name="twitter:image" content="https://lamarquefrancaise.fr/img/1200x630/la-marque-francaise.webp">
+</head>
+<body>
+{{NAV}}
+<main id="contenu-principal">
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb-bar">
+  <nav aria-label="Fil d'Ariane" class="breadcrumb">
+    <a href="/">Accueil</a><span class="breadcrumb-sep" aria-hidden="true">›</span>
+    <span class="breadcrumb-current" aria-current="page">Politique de confidentialité</span>
+  </nav>
+</div>
+
+<!-- HERO -->
+<header class="legal-hero">
+  <div class="legal-hero-inner">
+    <div class="legal-hero-badge">RGPD · Loi Informatique et Libertés</div>
+    <h1>Politique de <em>Confidentialité</em></h1>
+    <p class="legal-hero-desc">La Marque Française s'engage à protéger les données personnelles de chaque utilisateur. Cette politique détaille les traitements mis en œuvre, leurs finalités, leur base légale, leur durée et vos droits.</p>
+    <span class="legal-hero-update">Date d'entrée en vigueur : 1<sup>er</sup> mai 2026</span>
+  </div>
+</header>
+
+<!-- 1. PRÉAMBULE -->
+<section class="legal-block" id="preambule" aria-labelledby="preambule-title">
+  <div class="containeur">
+    <div class="legal-grid">
+      <div class="s-label">Article 1</div>
+      <h2 id="preambule-title">Préambule et engagements</h2>
+      <div class="s-div" aria-hidden="true"></div>
+
+      <p>La présente politique de confidentialité (ci-après la « <strong>Politique</strong> ») a pour objet d'informer toute personne dont les données à caractère personnel sont traitées par La Marque Française (ci-après le « <strong>Responsable de traitement</strong> ») sur :</p>
+      <ul>
+        <li>Les finalités pour lesquelles les données sont collectées et traitées</li>
+        <li>La base légale de chaque traitement</li>
+        <li>Les catégories de données collectées</li>
+        <li>Les durées de conservation appliquées</li>
+        <li>Les destinataires et sous-traitants susceptibles d'accéder aux données</li>
+        <li>Les droits dont disposent les personnes concernées</li>
+        <li>Les modalités d'exercice de ces droits</li>
+      </ul>
+
+      <p>La présente Politique est conforme au Règlement (UE) 2016/679 du 27 avril 2016 (« <strong>RGPD</strong> ») et à la loi n° 78-17 du 6 janvier 1978 modifiée relative à l'informatique, aux fichiers et aux libertés (« <strong>loi Informatique et Libertés</strong> »).</p>
+
+      <div class="info-box">
+        <strong>Engagement —</strong> La Marque Française s'engage à ne collecter que les données strictement nécessaires aux finalités annoncées (principe de minimisation), à les conserver le temps nécessaire et à mettre en place des mesures techniques et organisationnelles appropriées pour protéger leur sécurité et leur confidentialité.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 2. RESPONSABLE DE TRAITEMENT -->
+<section class="legal-block alt" id="responsable" aria-labelledby="responsable-title">
+  <div class="containeur">
+    <div class="legal-grid">
+      <div class="s-label">Article 2</div>
+      <h2 id="responsable-title">Responsable de traitement</h2>
+      <div class="s-div" aria-hidden="true"></div>
+
+      <p>Le responsable du traitement des données collectées sur le site lamarquefrancaise.fr (ci-après le « <strong>Site</strong> ») est :</p>
+
+      <dl class="id-card">
+        <div class="id-row">
+          <dt>Nom commercial</dt>
+          <dd><strong>La Marque Française</strong></dd>
+        </div>
+        <div class="id-row">
+          <dt>Forme juridique</dt>
+          <dd>Entrepreneur individuel</dd>
+        </div>
+        <div class="id-row">
+          <dt>Représentant légal</dt>
+          <dd><strong>Alexis LEBEGUE</strong></dd>
+        </div>
+        <div class="id-row">
+          <dt>SIRET</dt>
+          <dd>904 657 764 00026</dd>
+        </div>
+        <div class="id-row">
+          <dt>Siège social</dt>
+          <dd>94440 Villecresnes — France</dd>
+        </div>
+        <div class="id-row">
+          <dt>Contact RGPD</dt>
+          <dd>
+            <div class="email-protege">
+              <button type="button" class="btn-email" id="btnEmail" aria-label="Afficher l'adresse email de contact" aria-expanded="false">
+                ✉ Afficher l'adresse email
+              </button>
+              <a href="#" class="email-link" id="emailLink" aria-hidden="true"></a>
+              <button type="button" class="btn-copy" id="btnCopy" aria-label="Copier l'adresse email" aria-hidden="true">Copier</button>
+            </div>
+          </dd>
+        </div>
+      </dl>
+
+      <h3>Délégué à la Protection des Données (DPO)</h3>
+      <p>Compte tenu de la nature, de la portée et des finalités des traitements mis en œuvre, La Marque Française n'est pas tenue de désigner un Délégué à la Protection des Données au sens de l'article 37 du RGPD. Toute demande relative à la protection des données personnelles peut être adressée directement au Responsable de traitement à l'adresse email indiquée ci-dessus.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 3. TRAITEMENTS -->
+<section class="legal-block" id="traitements" aria-labelledby="traitements-title">
+  <div class="containeur">
+    <div class="legal-grid">
+      <div class="s-label">Article 3</div>
+      <h2 id="traitements-title">Traitements mis en œuvre</h2>
+      <div class="s-div" aria-hidden="true"></div>
+
+      <p>La Marque Française met en œuvre cinq (5) traitements de données à caractère personnel, détaillés dans le tableau ci-après et précisés dans les sections suivantes :</p>
+
+      <div class="pc-treatments" role="region" aria-label="Tableau récapitulatif des traitements">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Traitement</th>
+              <th scope="col">Finalité</th>
+              <th scope="col">Base légale</th>
+              <th scope="col">Durée</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Formulaire de contact</td>
+              <td>Répondre aux demandes des utilisateurs</td>
+              <td>Intérêt légitime</td>
+              <td>3 ans après dernier contact</td>
+            </tr>
+            <tr>
+              <td>Formulaire de référencement</td>
+              <td>Étude du dossier et gestion de la relation commerciale</td>
+              <td>Mesures précontractuelles</td>
+              <td>Durée du référencement + 3 ans</td>
+            </tr>
+            <tr>
+              <td>Newsletter</td>
+              <td>Envoi de communications éditoriales</td>
+              <td>Consentement</td>
+              <td>Jusqu'à désinscription</td>
+            </tr>
+            <tr>
+              <td>Données des marques (Supabase)</td>
+              <td>Affichage des fiches dans l'annuaire</td>
+              <td>Exécution du contrat / intérêt légitime</td>
+              <td>Durée du référencement + 3 ans</td>
+            </tr>
+            <tr>
+              <td>Mesure d'audience (Cloudflare Web Analytics)</td>
+              <td>Analyse agrégée du trafic du Site</td>
+              <td>Intérêt légitime — exempté de consentement</td>
+              <td>Données agrégées non personnelles — pas de durée applicable</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>3.1 — Formulaire de contact</h3>
+      <p><strong>Finalité —</strong> Permettre à tout utilisateur d'adresser une question, suggestion ou demande générale au Responsable de traitement et y apporter une réponse.</p>
+      <p><strong>Base légale —</strong> Intérêt légitime du Responsable de traitement à pouvoir échanger avec les utilisateurs de son site (article 6.1.f du RGPD).</p>
+      <p><strong>Données collectées —</strong> Nom, adresse email, objet du message, contenu du message.</p>
+      <p><strong>Durée de conservation —</strong> Trois (3) ans à compter du dernier contact avec l'utilisateur, conformément à la recommandation de la CNIL en matière de prospection BtoB.</p>
+      <p><strong>Caractère obligatoire —</strong> Les données marquées d'un astérisque dans le formulaire sont obligatoires. À défaut de leur communication, le Responsable de traitement ne peut traiter la demande.</p>
+
+      <h3>3.2 — Formulaire de référencement</h3>
+      <p><strong>Finalité —</strong> Étudier la demande de référencement d'une marque française dans l'annuaire du Site, vérifier son éligibilité, émettre un devis le cas échéant, et gérer la relation commerciale en cas de souscription à une offre payante.</p>
+      <p><strong>Base légale —</strong> Exécution de mesures précontractuelles prises à la demande de la personne concernée et, en cas de souscription, exécution du contrat (article 6.1.b du RGPD).</p>
+      <p><strong>Données collectées —</strong> Données relatives à la marque (raison sociale, SIRET, adresse, nature des produits, lieu de fabrication, labels) et données du représentant légal ou de la personne en charge du dossier (nom, prénom, fonction, adresse email professionnelle, téléphone professionnel).</p>
+      <p><strong>Durée de conservation —</strong> Toute la durée du référencement de la marque sur le Site, augmentée d'une durée de trois (3) ans à compter de la fin du référencement, à des fins de gestion de la relation commerciale et de preuve.</p>
+
+      <h3>3.3 — Newsletter</h3>
+      <p><strong>Finalité —</strong> Envoyer à l'utilisateur, après son inscription, des communications électroniques de nature éditoriale (présentation de marques, articles, sélections thématiques, informations sur l'évolution du Site).</p>
+      <p><strong>Base légale —</strong> Consentement libre, spécifique, éclairé et univoque de la personne concernée, recueilli au moment de l'inscription (article 6.1.a du RGPD et article L.34-5 du Code des postes et des communications électroniques).</p>
+      <p><strong>Données collectées —</strong> Adresse email exclusivement.</p>
+      <p><strong>Durée de conservation —</strong> Tant que l'inscription à la newsletter est active. À la désinscription, l'adresse email est supprimée immédiatement de la liste de diffusion.</p>
+
+      <h3>3.4 — Données des marques référencées</h3>
+      <p><strong>Finalité —</strong> Stocker dans une base de données centralisée les informations de chaque marque référencée afin de générer les fiches publiques affichées sur le Site.</p>
+      <p><strong>Base légale —</strong> Exécution du contrat de référencement (article 6.1.b du RGPD) pour les offres payantes ; intérêt légitime à mettre en valeur les marques françaises (article 6.1.f du RGPD) pour les offres gratuites.</p>
+      <p><strong>Données concernées —</strong> Données relatives à la marque (raison sociale, SIRET, description, gamme de produits, ville, département, région, lien vers le site internet, labels) et coordonnées du représentant légal ou du contact commercial.</p>
+      <p><strong>Durée de conservation —</strong> Identique à celle du formulaire de référencement (durée du référencement + 3 ans).</p>
+
+      <div class="info-box">
+        <strong>Architecture technique —</strong> Les données des marques sont stockées dans une base de données Supabase hébergée dans l'Union européenne. Le Site public en production sert exclusivement des pages HTML statiques, générées au moment de la mise en ligne. Les données des visiteurs ne transitent à aucun moment par cette base de données.
+      </div>
+
+      <h3>3.5 — Mesure d'audience (Cloudflare Web Analytics)</h3>
+      <p><strong>Finalité —</strong> Mesurer de façon agrégée le trafic du Site (pages les plus consultées, provenance géographique approximative, type d'appareil et de navigateur) afin d'améliorer l'expérience utilisateur et les performances éditoriales.</p>
+      <p><strong>Base légale —</strong> Intérêt légitime du Responsable de traitement à comprendre l'utilisation de son site (article 6.1.f du RGPD). Ce traitement est exempté de l'obligation de recueil du consentement préalable, conformément à l'article 82 de la loi Informatique et Libertés et aux lignes directrices de la CNIL relatives aux outils de mesure d'audience exemptés.</p>
+      <p><strong>Données traitées —</strong> Cloudflare Web Analytics ne collecte <strong>aucune donnée à caractère personnel</strong>. Aucun cookie n'est déposé sur le terminal de l'Utilisateur. Aucune technique de fingerprinting n'est utilisée. Seules des données statistiques agrégées et anonymisées sont transmises à Cloudflare : URL des pages visitées, provenance géographique approximative (pays/région), type d'appareil, système d'exploitation et navigateur. Ces données ne permettent à aucun moment d'identifier un Utilisateur individuel.</p>
+      <p><strong>Durée de conservation —</strong> Les données étant agrégées et non personnelles, aucune durée de conservation au sens du RGPD ne leur est applicable. Les données d'audience sont conservées par Cloudflare dans les conditions définies par la politique de confidentialité de Cloudflare, Inc.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 4. DESTINATAIRES ET SOUS-TRAITANTS -->
+<section class="legal-block alt" id="sous-traitants" aria-labelledby="sous-traitants-title">
+  <div class="containeur">
+    <div class="legal-grid">
+      <div class="s-label">Article 4</div>
+      <h2 id="sous-traitants-title">Destinataires et sous-traitants</h2>
+      <div class="s-div" aria-hidden="true"></div>
+
+      <h3>Destinataires internes</h3>
+      <p>Les données collectées sont exclusivement traitées par le Responsable de traitement, dans la stricte limite de ce qui est nécessaire à la réalisation des finalités décrites à l'article 3. Aucune donnée n'est communiquée à des tiers à des fins commerciales.</p>
+
+      <h3>Sous-traitants au sens du RGPD</h3>
+      <p>Le Responsable de traitement fait appel à plusieurs prestataires techniques agissant en qualité de sous-traitants au sens de l'article 28 du RGPD. Chaque sous-traitant intervient dans le strict cadre de sa mission, sur la base de garanties contractuelles appropriées :</p>
+
+      <div class="pc-subprocessors" role="region" aria-label="Tableau des sous-traitants">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Sous-traitant</th>
+              <th scope="col">Mission</th>
+              <th scope="col">Localisation</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>GitHub, Inc.</strong><br>(GitHub Pages)</td>
+              <td>Hébergement du Site et des pages HTML statiques</td>
+              <td><span class="pc-region us">États-Unis</span></td>
+            </tr>
+            <tr>
+              <td><strong>Cloudflare, Inc.</strong></td>
+              <td>CDN, sécurité, mise en cache, protection anti-DDoS</td>
+              <td><span class="pc-region us">États-Unis</span></td>
+            </tr>
+            <tr>
+              <td><strong>Web3Forms</strong></td>
+              <td>Traitement des soumissions de formulaires (contact et référencement)</td>
+              <td><span class="pc-region us">États-Unis</span></td>
+            </tr>
+            <tr>
+              <td><strong>Brevo</strong><br>(ex-Sendinblue)</td>
+              <td>Envoi de la newsletter et gestion des inscriptions</td>
+              <td><span class="pc-region eu">Union européenne</span></td>
+            </tr>
+            <tr>
+              <td><strong>Supabase</strong></td>
+              <td>Base de données des marques référencées</td>
+              <td><span class="pc-region eu">Union européenne</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Transferts hors Union européenne</h3>
+      <p>Trois sous-traitants sont localisés aux <strong>États-Unis</strong> (GitHub, Cloudflare, Web3Forms). Ces transferts sont encadrés par les garanties appropriées prévues par le RGPD, notamment :</p>
+      <ul>
+        <li>L'adhésion de ces sociétés au cadre <strong>Data Privacy Framework</strong> (DPF) certifié par la décision d'adéquation de la Commission européenne du 10 juillet 2023, ou à défaut</li>
+        <li>La conclusion de <strong>Clauses Contractuelles Types</strong> (CCT) approuvées par la Commission européenne</li>
+      </ul>
+
+      <h3>Communication aux autorités</h3>
+      <p>Les données personnelles peuvent également être communiquées aux autorités administratives ou judiciaires dans le cadre d'une obligation légale, d'une réquisition judiciaire ou d'une demande dûment habilitée.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 5. SÉCURITÉ -->
+<section class="legal-block" id="securite" aria-labelledby="securite-title">
+  <div class="containeur">
+    <div class="legal-grid">
+      <div class="s-label">Article 5</div>
+      <h2 id="securite-title">Sécurité des données</h2>
+      <div class="s-div" aria-hidden="true"></div>
+
+      <p>Conformément aux articles 5.1.f et 32 du RGPD, le Responsable de traitement met en œuvre les mesures techniques et organisationnelles appropriées pour garantir un niveau de sécurité adapté au risque. Ces mesures incluent notamment :</p>
+
+      <h3>Mesures techniques</h3>
+      <ul>
+        <li>Chiffrement des communications par certificat TLS (HTTPS) sur l'ensemble du Site</li>
+        <li>Pseudonymisation et minimisation des données collectées</li>
+        <li>Cloisonnement des environnements (production / staging / développement)</li>
+        <li>Activation de la sécurité au niveau des lignes (Row Level Security) sur la base de données</li>
+        <li>Stockage des secrets et clés d'API dans des fichiers d'environnement non versionnés</li>
+        <li>Protection contre les attaques par injection (validation et échappement systématiques des données affichées)</li>
+        <li>Protection anti-DDoS et filtrage des requêtes malveillantes via Cloudflare</li>
+        <li>Protection des formulaires par dispositif anti-spam (champ honeypot)</li>
+      </ul>
+
+      <h3>Mesures organisationnelles</h3>
+      <ul>
+        <li>Accès aux données strictement limité au Responsable de traitement</li>
+        <li>Sélection rigoureuse des sous-traitants au regard de leurs garanties RGPD</li>
+        <li>Mise à jour régulière des dépendances logicielles et des dispositifs de sécurité</li>
+        <li>Sauvegardes régulières de la base de données</li>
+      </ul>
+
+      <h3>Notification en cas de violation de données</h3>
+      <p>En cas de violation de données à caractère personnel susceptible d'engendrer un risque pour les droits et libertés des personnes concernées, le Responsable de traitement notifie cette violation à la CNIL dans un délai de soixante-douze (72) heures conformément à l'article 33 du RGPD. Si la violation est susceptible d'engendrer un risque élevé, les personnes concernées sont également informées dans les meilleurs délais conformément à l'article 34 du RGPD.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 6. COOKIES -->
+<section class="legal-block alt" id="cookies" aria-labelledby="cookies-title">
+  <div class="containeur">
+    <div class="legal-grid">
+      <div class="s-label">Article 6</div>
+      <h2 id="cookies-title">Cookies et traceurs</h2>
+      <div class="s-div" aria-hidden="true"></div>
+
+      <h3>Aucun cookie publicitaire ni traceur de profilage</h3>
+      <p>Le Site n'utilise <strong>aucun cookie publicitaire</strong>, <strong>aucun outil de profilage</strong> et ne recourt à <strong>aucune technique de fingerprinting</strong>. Aucune donnée comportementale individuelle n'est collectée et aucun profil utilisateur n'est constitué.</p>
+
+      <h3>Cookies techniques exemptés de consentement</h3>
+      <p>Seuls peuvent être déposés sur le terminal de l'Utilisateur des cookies strictement nécessaires au bon fonctionnement du Site, déposés par le sous-traitant Cloudflare à des fins :</p>
+      <ul>
+        <li>De sécurité (détection d'attaques, identification des navigateurs légitimes)</li>
+        <li>De mise en cache et d'optimisation de la performance</li>
+        <li>De distribution équitable de la charge entre serveurs</li>
+      </ul>
+      <p>Ces cookies sont exemptés de l'obligation de recueil du consentement préalable en application de l'article 82 de la loi Informatique et Libertés et des recommandations de la CNIL relatives aux cookies et autres traceurs.</p>
+
+      <h3>Mesure d'audience — Cloudflare Web Analytics</h3>
+      <p>Le Site utilise <strong>Cloudflare Web Analytics</strong>, un outil de mesure d'audience respectueux de la vie privée, sans cookie et sans collecte de données personnelles. Cet outil :</p>
+      <ul>
+        <li>Ne dépose <strong>aucun cookie</strong> sur le terminal de l'Utilisateur</li>
+        <li>N'utilise <strong>aucune technique de fingerprinting</strong></li>
+        <li>Ne collecte <strong>aucune donnée à caractère personnel</strong> permettant d'identifier un Utilisateur</li>
+        <li>Transmet à Cloudflare uniquement des <strong>données statistiques agrégées</strong> (pages visitées, provenance géographique approximative au niveau pays/région, type d'appareil et de navigateur)</li>
+      </ul>
+      <p>Ce traitement est exempté de l'obligation de recueil du consentement préalable, conformément à l'article 82 de la loi Informatique et Libertés et aux lignes directrices de la CNIL relatives aux outils de mesure d'audience exemptés. Le détail de ce traitement est décrit à l'article 3.5 de la présente Politique.</p>
+
+      <h3>Stockage local navigateur</h3>
+      <p>Le Site peut utiliser le mécanisme <em>localStorage</em> du navigateur pour mémoriser localement, sur le terminal de l'Utilisateur, certaines préférences d'affichage ou un cache temporaire des données de marques affichées. Aucune information personnelle n'est stockée par ce mécanisme et aucune donnée n'est transmise à un serveur tiers à cette occasion.</p>
+
+      <div class="info-box">
+        <strong>Pas de bandeau cookies —</strong> En l'absence de cookie soumis à consentement (pas de cookie publicitaire, mesure d'audience sans cookie via Cloudflare Web Analytics), aucun bandeau d'information cookies n'est affiché sur le Site, conformément aux recommandations de la CNIL.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 7. DROITS DES PERSONNES -->
+<section class="legal-block" id="droits" aria-labelledby="droits-title">
+  <div class="containeur">
+    <div class="legal-grid">
+      <div class="s-label">Article 7</div>
+      <h2 id="droits-title">Vos droits</h2>
+      <div class="s-div" aria-hidden="true"></div>
+
+      <p>Conformément aux articles 15 à 22 du RGPD et à la loi Informatique et Libertés, toute personne dont les données sont traitées dispose des droits suivants :</p>
+
+      <div class="pc-rights">
+        <div class="pc-right-card">
+          <h4>Droit d'accès</h4>
+          <p>Obtenir la confirmation que vos données sont traitées et en obtenir une copie.</p>
+        </div>
+        <div class="pc-right-card">
+          <h4>Droit de rectification</h4>
+          <p>Faire corriger toute donnée inexacte ou compléter toute donnée incomplète.</p>
+        </div>
+        <div class="pc-right-card">
+          <h4>Droit à l'effacement</h4>
+          <p>Faire supprimer vos données dans les cas prévus par l'article 17 du RGPD.</p>
+        </div>
+        <div class="pc-right-card">
+          <h4>Droit à la limitation</h4>
+          <p>Demander la suspension temporaire du traitement dans certains cas.</p>
+        </div>
+        <div class="pc-right-card">
+          <h4>Droit d'opposition</h4>
+          <p>Vous opposer à un traitement fondé sur l'intérêt légitime.</p>
+        </div>
+        <div class="pc-right-card">
+          <h4>Droit à la portabilité</h4>
+          <p>Récupérer vos données dans un format structuré et lisible.</p>
+        </div>
+        <div class="pc-right-card">
+          <h4>Retrait du consentement</h4>
+          <p>Retirer à tout moment votre consentement à un traitement qui en dépend.</p>
+        </div>
+        <div class="pc-right-card">
+          <h4>Directives post-mortem</h4>
+          <p>Définir le sort de vos données après votre décès (article 85 LIL).</p>
+        </div>
+      </div>
+
+      <h3>Modalités d'exercice des droits</h3>
+      <p>Pour exercer l'un de ces droits, vous pouvez adresser votre demande au Responsable de traitement par email à l'adresse indiquée à l'article 2 de la présente Politique. Afin de garantir la sécurité de vos données, le Responsable de traitement peut être amené à vous demander un justificatif d'identité en cas de doute sur l'identité du demandeur.</p>
+
+      <p>Une réponse vous sera apportée dans un délai maximum d'<strong>un (1) mois</strong> à compter de la réception de votre demande. Ce délai peut être prolongé de deux (2) mois supplémentaires en cas de demande complexe ou nombreuse, conformément à l'article 12.3 du RGPD.</p>
+
+      <h3>Droit de réclamation auprès de la CNIL</h3>
+      <p>Si vous estimez, après nous avoir contactés, que vos droits Informatique et Libertés ne sont pas respectés, vous avez le droit d'introduire une réclamation auprès de la Commission Nationale de l'Informatique et des Libertés (CNIL) :</p>
+      <ul>
+        <li>Par voie électronique : <a href="https://www.cnil.fr/fr/plaintes" target="_blank" rel="noopener noreferrer">www.cnil.fr/fr/plaintes</a></li>
+        <li>Par courrier postal : CNIL — 3 Place de Fontenoy, TSA 80715, 75334 PARIS CEDEX 07</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 8. MODIFICATIONS -->
+<section class="legal-block alt" id="modifications" aria-labelledby="modifications-title">
+  <div class="containeur">
+    <div class="legal-grid">
+      <div class="s-label">Article 8</div>
+      <h2 id="modifications-title">Modifications de la Politique</h2>
+      <div class="s-div" aria-hidden="true"></div>
+
+      <p>Le Responsable de traitement se réserve le droit de modifier la présente Politique à tout moment, notamment pour tenir compte des évolutions légales, jurisprudentielles, éditoriales ou techniques.</p>
+
+      <p>Toute modification de la Politique sera publiée sur la présente page, accompagnée d'une mise à jour de la date d'entrée en vigueur indiquée en tête de page. En cas de modification substantielle de la Politique affectant les droits des personnes concernées, le Responsable de traitement informera les personnes concernées par les moyens appropriés (newsletter, message au moment de la consultation du Site).</p>
+
+      <p>Les utilisateurs sont invités à consulter régulièrement la présente Politique afin de prendre connaissance des éventuelles modifications.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 9. CONTACT ET DOCUMENTS LIÉS -->
+<section class="legal-block" id="contact" aria-labelledby="contact-title">
+  <div class="containeur">
+    <div class="legal-grid">
+      <div class="s-label">Article 9</div>
+      <h2 id="contact-title">Contact et documents complémentaires</h2>
+      <div class="s-div" aria-hidden="true"></div>
+
+      <p>Pour toute question relative au traitement de vos données personnelles ou à la présente Politique, vous pouvez contacter le Responsable de traitement à l'adresse indiquée à l'article 2.</p>
+
+      <p>Cette Politique de confidentialité doit être lue conjointement avec les autres documents contractuels du Site :</p>
+      <ul>
+        <li><a href="/conditions-generales-utilisation" aria-label="Consulter les conditions générales d'utilisation">Conditions générales d'utilisation</a> du Site</li>
+        <li><a href="/conditions-generales-de-vente" aria-label="Consulter les conditions générales de vente">Conditions générales de vente</a> applicables aux offres payantes de référencement</li>
+        <li><a href="/mentions-legales" aria-label="Consulter les mentions légales">Mentions légales</a> du Site</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- CTA RÉFÉRENCER -->
+<section class="cta-referer" id="referer" aria-labelledby="cta-title">
+  <div class="cta-inner">
+    <div class="cta-content">
+      <div class="s-label">Vous êtes une marque française ?</div>
+      <h2 id="cta-title">Rejoignez l'annuaire des marques françaises</h2>
+      <p>Vous fabriquez en France ? Faites-vous connaître auprès de milliers de consommateurs engagés. Le référencement de base est gratuit et ouvert à toutes les structures, TPE et PME incluses.</p>
+      <div class="cta-perks">
+        <span class="cta-perk">Marque vérifiée et certifiée</span>
+        <span class="cta-perk">Visibilité immédiate</span>
+        <span class="cta-perk">Ouvert TPE, PME, artisans</span>
+      </div>
+    </div>
+    <div class="cta-btns">
+      <a href="/referencer-ma-marque" class="btn-p">Référencer ma marque →</a>
+      <span class="cta-note">Traitement sous 48h · Ouvert à tous</span>
+    </div>
+  </div>
+</section>
+
+{{FOOTER}}
+
+<!-- SCRIPTS -->
+<script>
+{{MENU_BURGER_JS}}
+// ── EMAIL OBFUSQUÉ ──────────────────────────────────────────
+(function(){
+  const btnEmail = document.getElementById('btnEmail');
+  const emailLink = document.getElementById('emailLink');
+  const btnCopy = document.getElementById('btnCopy');
+
+  // Fragments encodés Base64 (jamais d'email en clair)
+  const f1 = 'Ym9uam91cg==';                    // partie locale
+  const f2 = 'bGFtYXJxdWVmcmFuY2Fpc2U=';        // domaine
+  const f3 = 'ZnI=';                            // tld
+
+  const buildEmail = () => {
+    try {
+      return atob(f1) + '@' + atob(f2) + '.' + atob(f3);
+    } catch(e) {
+      return '';
+    }
+  };
+
+  const reveal = () => {
+    const email = buildEmail();
+    if (!email) return;
+    emailLink.textContent = email;
+    emailLink.setAttribute('href', 'mailto:' + email);
+    emailLink.setAttribute('aria-hidden', 'false');
+    emailLink.classList.add('revealed');
+    btnCopy.setAttribute('aria-hidden', 'false');
+    btnCopy.classList.add('revealed');
+    btnEmail.classList.add('revealed');
+    btnEmail.setAttribute('aria-expanded', 'true');
+    emailLink.focus();
+  };
+
+  btnEmail.addEventListener('click', reveal);
+
+  btnCopy.addEventListener('click', async () => {
+    const email = buildEmail();
+    if (!email) return;
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        await navigator.clipboard.writeText(email);
+      } else {
+        const tmp = document.createElement('textarea');
+        tmp.value = email;
+        tmp.setAttribute('readonly', '');
+        tmp.style.position = 'absolute';
+        tmp.style.left = '-9999px';
+        document.body.appendChild(tmp);
+        tmp.select();
+        document.execCommand('copy');
+        document.body.removeChild(tmp);
+      }
+      const original = btnCopy.textContent;
+      btnCopy.textContent = '✓ Copié';
+      btnCopy.classList.add('copied');
+      setTimeout(() => {
+        btnCopy.textContent = original;
+        btnCopy.classList.remove('copied');
+      }, 2000);
+    } catch(e) {
+      console.warn('[LMF] Impossible de copier l\'email');
+    }
+  });
+})();
+</script>
+{{ANALYTICS_JS}}
+</body>
+</html>
