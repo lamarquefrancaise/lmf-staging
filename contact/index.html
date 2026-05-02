@@ -144,19 +144,26 @@
 <body>
 {{NAV}}
 <main id="contenu-principal">
-{{BREADCRUMB}}
+  <!-- BREADCRUMB -->
+<div class="breadcrumb-bar">
+  <nav aria-label="Fil d'Ariane" class="breadcrumb">
+    <a href="/">Accueil</a>
+    <span class="breadcrumb-sep">›</span>
+    <span class="breadcrumb-current" aria-current="page">Contact</span>
+  </nav>
+</div>
 <!-- HERO LEGAL -->
 <header class="legal-hero" id="accueil">
   <div class="legal-hero-inner">
     <div class="legal-hero-badge">Une question, une suggestion, un partenariat ?</div>
     <h1>Contactez <em>La Marque Française</em></h1>
-    <p class="legal-hero-desc">Notre équipe répond à toutes les demandes — référencement, presse, partenariats ou simples questions — sous 48 heures ouvrées. Écrivez-nous via le formulaire ci-dessous.</p>
+    <p class="legal-hero-desc">Notre équipe répond à toutes les demandes — référencement, presse, partenariats ou simples questions. Écrivez-nous via le formulaire ci-dessous.</p>
   </div>
 </header>
 
 <!-- COORDONNÉES -->
 <section class="coords" id="coordonnees" aria-labelledby="coords-title">
-  <div class="container">
+  <div class="containeur">
     <div style="text-align:center;max-width:580px;margin:0 auto">
       <div class="s-label">Nos canaux</div>
       <h2 class="s-title" id="coords-title">Plusieurs façons de nous joindre</h2>
@@ -167,7 +174,7 @@
       <article class="coord-card" role="listitem">
         <div class="coord-ico" aria-hidden="true">✉</div>
         <h3>Par email</h3>
-        <p>Pour toute question générale ou demande de référencement, écrivez-nous directement par email.</p>
+        <p>Pour toute question générale, écrivez-nous directement par email.</p>
         <a href="#formulaire" class="coord-link">Utiliser le formulaire →</a>
       </article>
       <article class="coord-card" role="listitem">
@@ -188,7 +195,7 @@
 
 <!-- FORMULAIRE CONTACT -->
 <section class="form-section" id="formulaire" aria-labelledby="form-section-title">
-  <div class="container">
+  <div class="containeur">
     <div class="form-intro">
       <div class="s-label">Formulaire de contact</div>
       <h2 class="s-title" id="form-section-title">Écrivez-nous votre message</h2>
@@ -200,7 +207,6 @@
       <div class="form-header">
         <div class="form-header-txt">
           <h3>Nous contacter</h3>
-          <p>Réponse personnalisée sous 48 heures ouvrées</p>
         </div>
         <div class="form-header-ico" aria-hidden="true">✉</div>
       </div>
@@ -290,7 +296,7 @@
 
           <!-- Navigation -->
           <div class="form-nav" id="formNav">
-            <span class="form-nav-info">Réponse sous 48h ouvrées</span>
+            <span class="form-nav-info">Nous répondrons dans les plus brefs délais.</span>
             <button class="btn-submit" id="btnSubmit" type="submit">Envoyer mon message →</button>
           </div>
 
@@ -312,20 +318,12 @@
 
 <!-- FAQ -->
 <section class="faq" id="faq" aria-labelledby="faq-title">
-  <div class="container">
+  <div class="containeur">
     <div class="s-label">Questions fréquentes</div>
     <h2 class="s-title" id="faq-title">Avant de nous contacter</h2>
     <div class="s-div" aria-hidden="true"></div>
     <p class="s-sub">Beaucoup de questions trouvent leur réponse ici — un coup d'œil vous fera peut-être gagner du temps.</p>
     <div class="faq-list" role="list">
-      <div class="faq-item" role="listitem">
-        <button class="faq-q" aria-expanded="false" type="button" aria-controls="fa1" onclick="toggleFaq(this)">
-          <span class="faq-q-text">Sous quel délai obtient-on une réponse ?</span>
-          <span class="faq-toggle" aria-hidden="true">+</span>
-        </button>
-        <div class="faq-sep" id="fs1"></div>
-        <div class="faq-a" id="fa1">Notre équipe traite tous les messages sous 48 heures ouvrées (du lundi au vendredi, hors jours fériés). Les demandes liées au référencement d'une marque sont prioritaires. En cas de très forte affluence, le délai peut exceptionnellement être étendu à 72 heures.</div>
-      </div>
       <div class="faq-item" role="listitem">
         <button class="faq-q" aria-expanded="false" type="button" aria-controls="fa2" onclick="toggleFaq(this)">
           <span class="faq-q-text">Comment référencer ma marque sur l'annuaire ?</span>
@@ -340,7 +338,7 @@
           <span class="faq-toggle" aria-hidden="true">+</span>
         </button>
         <div class="faq-sep" id="fs3"></div>
-        <div class="faq-a" id="fa3">Oui, et nous vous en remercions. Sélectionnez « Signaler une erreur sur une fiche » dans le sujet du formulaire et précisez le nom de la marque concernée ainsi que l'information à corriger. Notre équipe vérifie et corrige toute information erronée sous 48 heures.</div>
+        <div class="faq-a" id="fa3">Oui, et nous vous en remercions. Sélectionnez « Signaler une erreur sur une fiche » dans le sujet du formulaire et précisez le nom de la marque concernée ainsi que l'information à corriger. Notre équipe vérifie et corrige toute information erronée dans un délai raisonnable.</div>
       </div>
       <div class="faq-item" role="listitem">
         <button class="faq-q" aria-expanded="false" type="button" aria-controls="fa4" onclick="toggleFaq(this)">
@@ -348,7 +346,7 @@
           <span class="faq-toggle" aria-hidden="true">+</span>
         </button>
         <div class="faq-sep" id="fs4"></div>
-        <div class="faq-a" id="fa4">Oui, avec plaisir. Pour les demandes presse, sélectionnez « Presse &amp; médias » dans le sujet et précisez votre publication ou support. Pour les propositions de partenariat, sélectionnez « Partenariat ». Dans les deux cas, notre équipe revient vers vous dans les 48 heures.</div>
+        <div class="faq-a" id="fa4">Oui, avec plaisir. Pour les demandes presse, sélectionnez « Presse &amp; médias » dans le sujet et précisez votre publication ou support. Pour les propositions de partenariat, sélectionnez « Partenariat ». Dans les deux cas, notre équipe revient vers vous pour vous apporter une réponse.</div>
       </div>
       <div class="faq-item" role="listitem">
         <button class="faq-q" aria-expanded="false" type="button" aria-controls="fa5" onclick="toggleFaq(this)">
