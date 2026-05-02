@@ -48,6 +48,7 @@ const organizationJsonLd = fs.readFileSync(path.join(__dirname, 'js/Organization
 const menuBurgerJs       = fs.readFileSync(path.join(__dirname, 'js/components/menu-burger.js'), 'utf8');
 const faqJs              = fs.readFileSync(path.join(__dirname, 'js/components/faq.js'), 'utf8');
 const emailObfusqueJs    = fs.readFileSync(path.join(__dirname, 'js/components/email-obfusque.js'), 'utf8');
+const analyticsJs        = fs.readFileSync(path.join(__dirname, 'js/components/analytics.js'), 'utf8');
 
 
 
@@ -648,6 +649,8 @@ async function build() {
       ['{{MENU_BURGER_JS}}',        menuBurgerJs],
       ['{{FAQ_JS}}',                faqJs],
       ['{{EMAIL_OBFUSQUE_JS}}',     emailObfusqueJs],
+      ['{{ANALYTICS_JS}}',          analyticsJs],
+      
       
       
     ];
