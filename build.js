@@ -437,7 +437,7 @@ function genererCarteProduit(p) {
   const altImg  = `${nom} — ${marque}${region ? ', ' + region : ''}`;
   return `
 <article class="p-card" role="listitem" itemscope itemtype="https://schema.org/Product">
-  <a href="${urlProd}" class="p-card-link" aria-label="${nom}" tabindex="0" target="_blank">${nom}</a>
+  <a href="${urlProd}" class="p-card-link" aria-label="${nom}" tabindex="0" target="_blank" rel="noopener">${nom}</a>
   <div class="p-img"><div class="p-img-inner">
     <picture>
       ${imgAvif ? `<source srcset="${imgAvif}" type="image/avif">` : ''}
