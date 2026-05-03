@@ -1,6 +1,6 @@
 {
   "supabase_categorie": "Epicerie fine",
-  
+
   "page_title":         "Épicerie Fine Française | Meilleures Marques Made in France",
   "page_description":   "Épicerie fine française : miels artisanaux, confitures, chocolats, charcuterie du terroir, vins de France. Meilleures marques made in France vérifiées.",
   "page_canonical":     "https://lamarquefrancaise.fr/made-in-france/epicerie-fine/",
@@ -9,44 +9,114 @@
   "collection_same_as": "https://fr.wikipedia.org/wiki/%C3%89picerie",
   "categorie_display":  "Épicerie fine française",
 
-  "section_label": "Marques d'exception",
-  "section_titre": "Marques françaises d'épicerie fine",
+  "hero_badge":     "Made in France · Terroir & Gastronomie française",
+  "hero_h1_before": "Épicerie Fine",
+  "hero_h1_em":     "Française",
+  "hero_h1_after":  "",
+  "hero_desc":      "Miels français artisanaux, confitures de France, chocolat artisanal, charcuterie du terroir, vins et huile d'olive française — les meilleures marques d'épicerie fine, au cœur de la gastronomie française.",
+
+  "sous_cat_label":      "Explorer par type de produit",
+  "sous_cat_titre":      "Sous-catégories d'épicerie fine française",
+  "sous_cat_sous_titre": "Miel français artisanal, confiture de France, chocolat artisanal, biscuits made in France, charcuterie du terroir, vin de France, huile d'olive française… explorez toutes les spécialités de l'épicerie fine française par type de produit.",
+
+  "section_label":      "Marques d'exception",
+  "section_titre":      "Marques françaises d'épicerie fine",
   "section_sous_titre": "Sélectionnées parmi les meilleures marques de gastronomie française, chaque marque d'épicerie fine est vérifiée pour son origine, sa fabrication et son ancrage dans le terroir français.",
-  "cta_texte": "Voir toutes les marques d'épicerie fine française →",
-  
-  "produits_label": "Coup de cœur",
-  "produits_titre": "Produits d'épicerie fine à la une",
+  "cta_texte":          "Voir toutes les marques d'épicerie fine française →",
+
+  "produits_label":      "Coup de cœur",
+  "produits_titre":      "Produits d'épicerie fine à la une",
   "produits_sous_titre": "Miel français, confiture artisanale, chocolat grand cru, foie gras du Périgord, vin de France… une sélection de produits d'épicerie fine issus des marques françaises référencées.",
-  "produits_cta": "Voir tous les produits d'épicerie fine française →",
-  
-  "carte_label": "Terroirs & origines",
-  "carte_titre": "Les régions françaises de l'épicerie fine",
+  "produits_cta":        "Voir tous les produits d'épicerie fine française →",
+
+  "carte_label":      "Terroirs & origines",
+  "carte_titre":      "Les régions françaises de l'épicerie fine",
   "carte_sous_titre": "Chaque région de France possède ses spécialités de gastronomie française. Survolez les points pour explorer les terroirs des marques référencées.",
-  "carte_note": "Survolez un point pour voir les spécialités régionales.",
-  
-  "faq_label": "Questions fréquentes",
-  "faq_titre": "Tout savoir sur l'épicerie fine française",
+  "carte_note":       "Survolez un point pour voir les spécialités régionales.",
+
+  "seo_texte": {
+    "label": "Guide & conseils",
+    "h2":    "L'épicerie fine française : terroir, savoir-faire et gastronomie France",
+    "sections": [
+      {
+        "h3":   "Qu'est-ce que l'épicerie fine française ?",
+        "html": "L'<strong>épicerie fine française</strong> désigne l'ensemble des produits alimentaires artisanaux de <strong>gastronomie française</strong> fabriqués sur le territoire national selon des recettes traditionnelles. Des <a href=\"/made-in-france/miel/\">miels artisanaux de France</a> aux <a href=\"/made-in-france/chocolats/\">chocolats artisanaux français</a>, des <a href=\"/made-in-france/confitures/\">confitures de France</a> aux <a href=\"/made-in-france/biscuits/\">biscuits made in France</a> — chaque terroir façonne des spécialités uniques. À la différence de l'épicerie industrielle, l'<strong>épicerie française</strong> que nous référençons privilégie des ingrédients sourcés localement et des méthodes de fabrication artisanales, garantes d'une <strong>gastronomie France</strong> d'exception."
+      },
+      {
+        "h3":   "Les labels qui garantissent l'authenticité de l'épicerie française",
+        "html": "Pour s'assurer qu'un produit d'<strong>épicerie française</strong> est authentique, plusieurs labels officiels font référence. L'AOP certifie que l'ensemble du processus se déroule dans une zone délimitée. L'IGP garantit l'ancrage territorial. Le Label Rouge atteste d'une qualité supérieure à la norme. Ces labels sont les meilleurs indicateurs de la qualité des <strong>produits du terroir français</strong> que vous trouverez sur notre annuaire."
+      },
+      {
+        "h3":   "Les meilleures régions de l'épicerie fine et de la gastronomie française",
+        "html": "La <strong>gastronomie France</strong> est riche de ses terroirs régionaux. Le <strong>Périgord</strong> rayonne avec ses <a href=\"/made-in-france/pates-rillettes/\">pâtés et rillettes</a> artisanaux. La <strong>Provence</strong> offre ses <a href=\"/made-in-france/huiles-olive/\">huiles d'olive françaises</a> AOP et ses <a href=\"/made-in-france/miel/\">miels artisanaux</a>. La <strong>Bretagne</strong> séduit avec ses <a href=\"/made-in-france/biscuits/\">biscuits de France</a> au beurre. La <strong>Bourgogne</strong> brille avec ses <a href=\"/made-in-france/vins/\">vins de France</a> et ses <a href=\"/made-in-france/vinaigres/\">vinaigres artisanaux français</a>. Le <strong>Pays Basque</strong> propose sa célèbre <a href=\"/made-in-france/charcuterie/\">charcuterie du terroir</a> avec le jambon de Bayonne IGP."
+      },
+      {
+        "h3":   "Pourquoi choisir des produits de gastronomie française made in France ?",
+        "html": "Acheter des <strong>produits du terroir français</strong> made in France, c'est soutenir des filières agricoles locales, réduire son empreinte carbone et bénéficier d'une qualité supérieure. Les marques d'<strong>épicerie fine française</strong> référencées travaillent en circuit court avec des producteurs locaux. Chaque achat préserve le patrimoine de la <strong>gastronomie française</strong> et maintient l'emploi dans nos territoires."
+      },
+      {
+        "h3":   "Miel français, chocolat, charcuterie : nos sous-catégories phares",
+        "html": "Le <a href=\"/made-in-france/miel/\"><strong>miel français</strong></a> est l'un des produits du terroir les plus recherchés : miel de lavande de Provence, miel de châtaignier des Cévennes, miel toutes fleurs des Alpes. Le <a href=\"/made-in-france/chocolats/\"><strong>chocolat artisanal français</strong></a> connaît un renouveau remarquable avec des chocolatiers bean-to-bar. La <a href=\"/made-in-france/charcuterie/\"><strong>charcuterie du terroir</strong></a> — jambon de Bayonne IGP, saucisson de l'Ardèche, pâté périgourdin — incarne le savoir-faire français. Les <strong>vins de France</strong> couvrent toutes les appellations, des rosés de Provence aux grands crus de Bourgogne. Enfin, l'<strong>huile d'olive française</strong> AOP, notamment de la Vallée des Baux, représente l'excellence de l'épicerie fine provençale."
+      }
+    ],
+    "sidebar_sous_cats_titre": "Sous-catégories populaires",
+    "sidebar_sous_cats": [
+      { "url": "/made-in-france/miel/",            "texte": "Miel artisanal français" },
+      { "url": "/made-in-france/chocolats/",       "texte": "Chocolat artisanal français" },
+      { "url": "/made-in-france/confitures/",      "texte": "Confiture de France" },
+      { "url": "/made-in-france/charcuterie/",     "texte": "Charcuterie du terroir" },
+      { "url": "/made-in-france/vins/",            "texte": "Vin de France" },
+      { "url": "/made-in-france/huiles-olive/",    "texte": "Huile d'olive française" },
+      { "url": "/made-in-france/vinaigres/",       "texte": "Vinaigre artisanal français" },
+      { "url": "/made-in-france/paniers-gourmands/", "texte": "Panier gourmand français" }
+    ],
+    "sidebar_labels_titre": "Labels à privilégier",
+    "sidebar_labels": [
+      { "icone": "🏷",  "nom": "AOP",              "description": "Appellation d'Origine Protégée — production 100% locale" },
+      { "icone": "🌍", "nom": "IGP",              "description": "Indication Géographique Protégée — lien avec le terroir" },
+      { "icone": "🔴", "nom": "Label Rouge",      "description": "Qualité supérieure certifiée par l'État français" },
+      { "icone": "🌿", "nom": "Agriculture Bio",  "description": "Production sans pesticides de synthèse" }
+    ]
+  },
+
+  "autres_cat_label":      "Explorer l'annuaire",
+  "autres_cat_titre":      "Toutes les catégories made in France",
+  "autres_cat_sous_titre": "L'épicerie française n'est qu'un volet de notre annuaire. Découvrez toutes les catégories de marques françaises.",
+
+  "cta_referer_label":       "Vous êtes producteur français ?",
+  "cta_referer_titre":       "Référencez votre marque d'épicerie fine gratuitement",
+  "cta_referer_description": "Vous fabriquez des produits d'épicerie française ou de gastronomie France ? Faites découvrir vos produits du terroir à des milliers de consommateurs engagés. Ouvert à tous les producteurs français, sans commission.",
+  "cta_referer_perks": [
+    "Marque française",
+    "Visibilité immédiate",
+    "Ouvert aux artisans, TPE, PME"
+  ],
+  "cta_referer_bouton": "Référencer ma marque →",
+  "cta_referer_note":   "Traitement sous 48h",
+
+  "faq_label":      "Questions fréquentes",
+  "faq_titre":      "Tout savoir sur l'épicerie fine française",
   "faq_sous_titre": "Vos questions sur les produits de gastronomie française.",
   "faq": [
     {
       "question": "Qu'est-ce que l'épicerie fine française ?",
-      "reponse": "L'épicerie fine française désigne des produits alimentaires artisanaux de gastronomie française fabriqués en France selon des recettes traditionnelles : miels artisanaux, confitures de France, chocolats artisanaux français, charcuterie du terroir, vins de France et condiments. Ces produits se distinguent par des ingrédients locaux et un mode de fabrication artisanal ancré dans un terroir régional précis."
+      "reponse":  "L'épicerie fine française désigne des produits alimentaires artisanaux de gastronomie française fabriqués en France selon des recettes traditionnelles : miels artisanaux, confitures de France, chocolats artisanaux français, charcuterie du terroir, vins de France et condiments. Ces produits se distinguent par des ingrédients locaux et un mode de fabrication artisanal ancré dans un terroir régional précis."
     },
     {
       "question": "Comment reconnaître une vraie épicerie fine ?",
-      "reponse": "Une épicerie française authentiquement made in France porte les labels AOP, IGP ou Label Rouge. Vérifiez l'origine des ingrédients — pas seulement le lieu de fabrication. Sur La Marque Française, chaque marque de gastronomie française a été contrôlée : origine des ingrédients, lieu de fabrication, engagement qualité."
+      "reponse":  "Une épicerie française authentiquement made in France porte les labels AOP, IGP ou Label Rouge. Vérifiez l'origine des ingrédients — pas seulement le lieu de fabrication. Sur La Marque Française, chaque marque de gastronomie française a été contrôlée : origine des ingrédients, lieu de fabrication, engagement qualité."
     },
     {
       "question": "Quelles sont les meilleures régions de gastronomie française ?",
-      "reponse": "La gastronomie France compte de nombreuses régions d'excellence : la Dordogne pour les foies gras et produits du terroir, la Provence pour les huiles d'olive françaises AOP et miels artisanaux, la Bretagne pour les biscuits made in France, la Bourgogne pour les vins de France, et l'Alsace pour les confitures de France et le pain d'épice."
+      "reponse":  "La gastronomie France compte de nombreuses régions d'excellence : la Dordogne pour les foies gras et produits du terroir, la Provence pour les huiles d'olive françaises AOP et miels artisanaux, la Bretagne pour les biscuits made in France, la Bourgogne pour les vins de France, et l'Alsace pour les confitures de France et le pain d'épice."
     },
     {
       "question": "Peut-on commander de l'épicerie française en ligne ?",
-      "reponse": "Oui, la plupart des marques d'épicerie fine française référencées proposent la vente en ligne avec livraison en France et en Europe. Acheter directement auprès du producteur garantit la fraîcheur des produits du terroir français et soutient l'économie locale."
+      "reponse":  "Oui, la plupart des marques d'épicerie fine française référencées proposent la vente en ligne avec livraison en France et en Europe. Acheter directement auprès du producteur garantit la fraîcheur des produits du terroir français et soutient l'économie locale."
     },
     {
       "question": "Comment référencer ma marque de gastronomie française ?",
-      "reponse": "Le référencement est ouvert à toutes les structures françaises. Remplissez le formulaire de référencement ci-dessous. Notre équipe vérifie votre dossier et vous recontacte sous 48 heures. Seules les marques dont les produits sont réellement fabriqués en France sont acceptées."
+      "reponse":  "Le référencement est ouvert à toutes les structures françaises. Remplissez le formulaire de référencement ci-dessous. Notre équipe vérifie votre dossier et vous recontacte sous 48 heures. Seules les marques dont les produits sont réellement fabriqués en France sont acceptées."
     }
   ]
 }

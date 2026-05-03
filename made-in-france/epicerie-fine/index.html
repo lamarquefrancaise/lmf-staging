@@ -52,131 +52,32 @@
 <link rel="manifest" href="/manifest.webmanifest">
 </head>
 <body>
-<!-- NAV -->
 {{NAV}}
 <main id="contenu-principal">
-<!-- BREADCRUMB -->
 {{BREADCRUMB}}
-<!-- HERO -->
 <header class="cat-hero">
   <div class="cat-hero-inner">
-    <div class="cat-hero-badge">Made in France · Terroir &amp; Gastronomie française</div>
-    <h1>Épicerie Fine <em>Française</em></h1>
-    <p class="cat-hero-desc">Miels français artisanal, confitures de France, chocolat artisanal, charcuterie du terroir, vins et huile d'olive française — les meilleures marques d'épicerie fine, au cœur de la gastronomie française.</p>
+    <div class="cat-hero-badge">{{HERO_BADGE}}</div>
+    <h1>{{HERO_H1_BEFORE}} <em>{{HERO_H1_EM}}</em>{{HERO_H1_AFTER}}</h1>
+    <p class="cat-hero-desc">{{HERO_DESC}}</p>
     <div class="cat-hero-stats">
       <div class="cat-stat"><strong id="sousCategCount">0</strong>&nbsp;{{SOUS_CAT_LABEL}}</div>
       <div class="cat-stat" aria-hidden="true">·</div>
-      <div class="cat-stat"><strong id="heroCount">5</strong>&nbsp;{{MARQUES_LABEL}}</div>
+      <div class="cat-stat"><strong id="heroCount">0</strong>&nbsp;{{MARQUES_LABEL}}</div>
       <div class="cat-stat" aria-hidden="true">·</div>
       <div class="cat-stat"><strong id="produitsCount">0</strong>&nbsp;{{PRODUITS_LABEL}}</div>
     </div>
   </div>
 </header>
-<!-- SOUS-CATÉGORIES — images 4:5 -->
-<section class="sous-cats" id="sous-categories" aria-labelledby="sc-title">
-  <div class="containeur">
-    <div class="s-label">Explorer par type de produit</div>
-    <h2 class="s-title" id="sc-title">Sous-catégories d'épicerie fine française</h2>
-    <div class="s-div"></div>
-    <p class="s-sub">Miel français artisanal, confiture de France, chocolat artisanal, biscuits made in France, charcuterie du terroir, vin de France, huile d'olive française… explorez toutes les spécialités de l'épicerie fine française par type de produit.</p>
-  </div>
-  <div class="sc-wrap" style="max-width:1140px;margin:0 auto;position:relative">
-    <div class="sc-grid" id="scGrid" role="list">
-      {{SOUS_CATEGORIES}}
-    </div>
-  </div>
-</section>
-<!-- MARQUES -->
+{{SOUS_CATEGORIES_SECTION}}
 {{MARQUES_SECTION}}
-<!-- PRODUITS -->
 {{PRODUITS_SECTION}}
-<!-- CARTE D3 -->
 {{CARTE_SECTION}}
-<!-- TEXTE SEO -->
-<section class="seo-section" id="guide" aria-labelledby="seo-title">
-  <div class="containeur">
-    <div class="seo-layout">
-      <div class="seo-content">
-        <div class="s-label">Guide &amp; conseils</div>
-        <h2 id="seo-title">L'épicerie fine française : terroir, savoir-faire et gastronomie France</h2>
-        <h3>Qu'est-ce que l'épicerie fine française ?</h3>
-        <p>L'<strong>épicerie fine française</strong> désigne l'ensemble des produits alimentaires artisanaux de <strong>gastronomie française</strong> fabriqués sur le territoire national selon des recettes traditionnelles. Des <a href="/made-in-france/miel/">miels artisanaux de France</a> aux <a href="/made-in-france/chocolats/">chocolats artisanaux français</a>, des <a href="/made-in-france/confitures/">confitures de France</a> aux <a href="/made-in-france/biscuits/">biscuits made in France</a> — chaque terroir façonne des spécialités uniques. À la différence de l'épicerie industrielle, l'<strong>épicerie française</strong> que nous référençons privilégie des ingrédients sourcés localement et des méthodes de fabrication artisanales, garantes d'une <strong>gastronomie France</strong> d'exception.</p>
-        <h3>Les labels qui garantissent l'authenticité de l'épicerie française</h3>
-        <p>Pour s'assurer qu'un produit d'<strong>épicerie française</strong> est authentique, plusieurs labels officiels font référence. L'AOP certifie que l'ensemble du processus se déroule dans une zone délimitée. L'IGP garantit l'ancrage territorial. Le Label Rouge atteste d'une qualité supérieure à la norme. Ces labels sont les meilleurs indicateurs de la qualité des <strong>produits du terroir français</strong> que vous trouverez sur notre annuaire.</p>
-        <h3>Les meilleures régions de l'épicerie fine et de la gastronomie française</h3>
-        <p>La <strong>gastronomie France</strong> est riche de ses terroirs régionaux. Le <strong>Périgord</strong> rayonne avec ses <a href="/made-in-france/pates-rillettes/">pâtés et rillettes</a> artisanaux. La <strong>Provence</strong> offre ses <a href="/made-in-france/huiles-olive/">huiles d'olive françaises</a> AOP et ses <a href="/made-in-france/miel/">miels artisanaux</a>. La <strong>Bretagne</strong> séduit avec ses <a href="/made-in-france/biscuits/">biscuits de France</a> au beurre. La <strong>Bourgogne</strong> brille avec ses <a href="/made-in-france/vins/">vins de France</a> et ses <a href="/made-in-france/vinaigres/">vinaigres artisanaux français</a>. Le <strong>Pays Basque</strong> propose sa célèbre <a href="/made-in-france/charcuterie/">charcuterie du terroir</a> avec le jambon de Bayonne IGP.</p>
-        <h3>Pourquoi choisir des produits de gastronomie française made in France ?</h3>
-        <p>Acheter des <strong>produits du terroir français</strong> made in France, c'est soutenir des filières agricoles locales, réduire son empreinte carbone et bénéficier d'une qualité supérieure. Les marques d'<strong>épicerie fine française</strong> référencées travaillent en circuit court avec des producteurs locaux. Chaque achat préserve le patrimoine de la <strong>gastronomie française</strong> et maintient l'emploi dans nos territoires.</p>
-
-        <h3>Miel français, chocolat, charcuterie : nos sous-catégories phares</h3>
-        <p>Le <a href="/made-in-france/miel/"><strong>miel français</strong></a> est l'un des produits du terroir les plus recherchés : miel de lavande de Provence, miel de châtaignier des Cévennes, miel toutes fleurs des Alpes. Le <a href="/made-in-france/chocolats/"><strong>chocolat artisanal français</strong></a> connaît un renouveau remarquable avec des chocolatiers bean-to-bar. La <a href="/made-in-france/charcuterie/"><strong>charcuterie du terroir</strong></a> — jambon de Bayonne IGP, saucisson de l'Ardèche, pâté périgourdin — incarne le savoir-faire français. Les <strong>vins de France</strong> couvrent toutes les appellations, des rosés de Provence aux grands crus de Bourgogne. Enfin, l'<strong>huile d'olive française</strong> AOP, notamment de la Vallée des Baux, représente l'excellence de l'épicerie fine provençale.</p>
-      </div>
-      <aside class="seo-sidebar" aria-label="Informations complémentaires">
-        <div class="seo-box">
-          <h4>Sous-catégories populaires</h4>
-          <ul>
-            <li><a href="/made-in-france/miel/" style="color:var(--muted);text-decoration:none"><h5>Miel artisanal français</h5></a></li>
-            <li><a href="/made-in-france/chocolats/" style="color:var(--muted);text-decoration:none"><h5>Chocolat artisanal français</h5></a></li>
-            <li><a href="/made-in-france/confitures/" style="color:var(--muted);text-decoration:none"><h5>Confiture de France</h5></a></li>
-            <li><a href="/made-in-france/charcuterie/" style="color:var(--muted);text-decoration:none"><h5>Charcuterie du terroir</h5></a></li>
-            <li><a href="/made-in-france/vins/" style="color:var(--muted);text-decoration:none"><h5>Vin de France</h5></a></li>
-            <li><a href="/made-in-france/huiles-olive/" style="color:var(--muted);text-decoration:none"><h5>Huile d'olive française</h5></a></li>
-            <li><a href="/made-in-france/vinaigres/" style="color:var(--muted);text-decoration:none"><h5>Vinaigre artisanal français</h5></a></li>
-            <li><a href="/made-in-france/paniers-gourmands/" style="color:var(--muted);text-decoration:none"><h5>Panier gourmand français</h5></a></li>
-          </ul>
-        </div>
-        <div class="seo-box seo-box-navy">
-          <h4>Labels à privilégier</h4>
-          <div class="lbl-badge"><div class="lbl-ico">🐄</div><div class="lbl-info"><h5>AOP</h5><p>Appellation d'Origine Protégée — production 100% locale</p></div></div>
-          <div class="lbl-badge"><div class="lbl-ico">🌍</div><div class="lbl-info"><h5>IGP</h5><p>Indication Géographique Protégée — lien avec le terroir</p></div></div>
-          <div class="lbl-badge"><div class="lbl-ico">🔴</div><div class="lbl-info"><h5>Label Rouge</h5><p>Qualité supérieure certifiée par l'État français</p></div></div>
-          <div class="lbl-badge"><div class="lbl-ico">🌿</div><div class="lbl-info"><h5>Agriculture Bio</h5><p>Production sans pesticides de synthèse</p></div></div>
-        </div>
-      </aside>
-    </div>
-  </div>
-</section>
-<!-- FAQ -->
+{{SEO_TEXTE_SECTION}}
 {{FAQ_SECTION}}
-<!-- AUTRES CATÉGORIES -->
-<section class="autres-cats" id="autres-categories" aria-labelledby="ac-title">
-  <div class="containeur">
-    <div class="s-label">Explorer l'annuaire</div>
-    <h2 class="s-title" id="ac-title">Toutes les catégories made in France</h2>
-    <div class="s-div"></div>
-    <p class="s-sub">L'épicerie française n'est qu'un volet de notre annuaire. Découvrez toutes les catégories de marques françaises.</p>
-    <div class="ac-grid" role="list">
-      <a href="/made-in-france/mode/" class="ac-card" role="listitem"><div class="ac-ph"><picture><source srcset="/img/250x310/avif/mode.avif" type="image/avif"><img src="/img/250x310/webp/mode.webp" alt="Mode française made in France" width="250" height="310" loading="lazy" decoding="async"></picture></div><div class="ac-overlay"></div><div class="ac-label"><h3 class="ac-name">Mode</h3><span class="ac-count">40+ marques françaises</span></div></a>
-      <a href="/made-in-france/beaute/" class="ac-card" role="listitem"><div class="ac-ph"><picture><source srcset="/img/250x310/avif/beaute-soins.avif" type="image/avif"><img src="/img/250x310/webp/beaute-soins.webp" alt="Beauté française made in France" width="250" height="310" loading="lazy" decoding="async"></picture></div><div class="ac-overlay"></div><div class="ac-label"><h3 class="ac-name">Beauté</h3><span class="ac-count">28 marques françaises</span></div></a>
-      <a href="/made-in-france/bijoux/" class="ac-card" role="listitem"><div class="ac-ph"><picture><source srcset="/img/250x310/avif/bijoux.avif" type="image/avif"><img src="/img/250x310/webp/bijoux.webp" alt="Bijoux français made in France" width="250" height="310" loading="lazy" decoding="async"></picture></div><div class="ac-overlay"></div><div class="ac-label"><h3 class="ac-name">Bijoux</h3><span class="ac-count">22 marques françaises</span></div></a>
-      <a href="/made-in-france/maison/" class="ac-card" role="listitem"><div class="ac-ph"><picture><source srcset="/img/250x310/avif/maison.avif" type="image/avif"><img src="/img/250x310/webp/maison.webp" alt="Maison française made in France" width="250" height="310" loading="lazy" decoding="async"></picture></div><div class="ac-overlay"></div><div class="ac-label"><h3 class="ac-name">Maison</h3><span class="ac-count">35 marques françaises</span></div></a>
-      <a href="/made-in-france/sport/" class="ac-card" role="listitem"><div class="ac-ph"><picture><source srcset="/img/250x310/avif/sport.avif" type="image/avif"><img src="/img/250x310/webp/sport.webp" alt="Sport made in France" width="250" height="310" loading="lazy" decoding="async"></picture></div><div class="ac-overlay"></div><div class="ac-label"><h3 class="ac-name">Sport</h3><span class="ac-count">18 marques françaises</span></div></a>
-      <a href="/made-in-france/technologie/" class="ac-card" role="listitem"><div class="ac-ph"><picture><source srcset="/img/250x310/avif/technologie.avif" type="image/avif"><img src="/img/250x310/webp/technologie.webp" alt="Technologie française made in France" width="250" height="310" loading="lazy" decoding="async"></picture></div><div class="ac-overlay"></div><div class="ac-label"><h3 class="ac-name">Technologie</h3><span class="ac-count">12 marques françaises</span></div></a>
-      <a href="/made-in-france/bricolage/" class="ac-card" role="listitem"><div class="ac-ph"><picture><source srcset="/img/250x310/avif/outils-bricolage.avif" type="image/avif"><img src="/img/250x310/webp/outils-bricolage.webp" alt="Bricolage made in France" width="250" height="310" loading="lazy" decoding="async"></picture></div><div class="ac-overlay"></div><div class="ac-label"><h3 class="ac-name">Bricolage</h3><span class="ac-count">15 marques françaises</span></div></a>
-      <a href="/made-in-france/chaussures/" class="ac-card" role="listitem"><div class="ac-ph"><picture><source srcset="/img/250x310/avif/chaussures.avif" type="image/avif"><img src="/img/250x310/webp/chaussures.webp" alt="Chaussures made in France" width="250" height="310" loading="lazy" decoding="async"></picture></div><div class="ac-overlay"></div><div class="ac-label"><h3 class="ac-name">Chaussures</h3><span class="ac-count">30 marques françaises</span></div></a>
-    </div>
-  </div>
-</section>
+{{AUTRES_CATEGORIES_SECTION}}
 </main>
-<!-- CTA RÉFÉRENCER -->
-<section class="cta-referer" id="referer" aria-labelledby="cta-title">
-  <div class="cta-inner">
-    <div class="cta-content">
-      <div class="s-label">Vous êtes producteur français ?</div>
-      <h2 id="cta-title">Référencez votre marque d'épicerie fine gratuitement</h2>
-      <p>Vous fabriquez des produits d'épicerie française ou de gastronomie France ? Faites découvrir vos produits du terroir à des milliers de consommateurs engagés. Ouvert à tous les producteurs français, sans commission.</p>
-      <div class="cta-perks">
-        <span class="cta-perk">Marque française</span>
-        <span class="cta-perk">Visibilité immédiate</span>
-        <span class="cta-perk">Ouvert aux artisans, TPE, PME</span>
-      </div>
-    </div>
-    <div class="cta-btns">
-      <button class="btn-p" type="button"><a href="/referencer-votre-marque/" style="text-decoration: none;">Référencer ma marque →</a></button>
-      <span class="cta-note">Traitement sous 48h</span>
-    </div>
-  </div>
-</section>
+{{CTA_REFERER_SECTION}}
 {{FOOTER}}
 <script>
 {{MENU_BURGER_JS}}

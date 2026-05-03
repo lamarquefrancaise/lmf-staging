@@ -23,7 +23,7 @@ const PAGES = [
   { fichier: 'conditions-generales-de-vente/index.html',      actif: '',              categorie: null,            sousCategorie: null,    sitemap: true },
   { fichier: 'conditions-generales-utilisation/index.html',   actif: '',              categorie: null,            sousCategorie: null,    sitemap: true },
   { fichier: 'contact/index.html',                            actif: '',              categorie: null,            sousCategorie: null,    sitemap: true },
-  
+
 ];
 
 const navCss             = fs.readFileSync(path.join(__dirname, 'css/nav.css'), 'utf8');
@@ -113,6 +113,7 @@ function genererCollectionPageJsonLd(data, heroCount) {
 
 // ─────────────────────────────────────────────
 // FONCTION : injecter les meta SEO du head depuis le JSON
+// + variables hero pilotées par le JSON
 // ─────────────────────────────────────────────
 function injecterMetaSeo(html, data, heroCount, buildDate) {
   const injections = [
@@ -122,6 +123,14 @@ function injecterMetaSeo(html, data, heroCount, buildDate) {
     ['{{OG_IMAGE}}',         data.og_image          || ''],
     ['{{OG_IMAGE_ALT}}',     data.og_image_alt      || ''],
     ['{{BUILD_DATE}}',       buildDate],
+
+    // Variables Hero pilotées par le JSON
+    ['{{HERO_BADGE}}',     data.hero_badge     || ''],
+    ['{{HERO_H1_BEFORE}}', data.hero_h1_before || ''],
+    ['{{HERO_H1_EM}}',     data.hero_h1_em     || ''],
+    ['{{HERO_H1_AFTER}}',  data.hero_h1_after  || ''],
+    ['{{HERO_DESC}}',      data.hero_desc      || ''],
+
     ['{{WEBPAGE_JSON_LD}}',          genererWebPageJsonLd(data, buildDate)],
     ['{{COLLECTION_PAGE_JSON_LD}}', genererCollectionPageJsonLd(data, heroCount)],
   ];
@@ -161,7 +170,7 @@ function genererBreadcrumb(page) {
   <nav aria-label="Fil d'Ariane" class="breadcrumb">
     <a href="/">Accueil</a><span class="breadcrumb-sep">›</span>
     <a href="/made-in-france/">Made in France</a><span class="breadcrumb-sep">›</span>
-    <a href="/made-in-france/${slugParent}">${nomParent}</a><span class="breadcrumb-sep">›</span>
+    <a href="/made-in-france/${slugParent}/">${nomParent}</a><span class="breadcrumb-sep">›</span>
     <span class="breadcrumb-current" aria-current="page">${nomSousCat}</span>
   </nav>
 </div>`;
@@ -254,7 +263,7 @@ async function genererSousCategoriesHtml(categorieSlug, sousCategorieCourante) {
   const cartes = avecContenu.map(sc => {
     const estActive    = sc.slug === sousCategorieCourante;
     const classeActive = estActive ? ' active' : '';
-    const url          = `/made-in-france/${sc.slug}`;
+    const url          = `/made-in-france/${sc.slug}/`;
 
     if (estActive) {
       return `
@@ -287,6 +296,40 @@ async function genererSousCategoriesHtml(categorieSlug, sousCategorieCourante) {
 }
 
 // ─────────────────────────────────────────────
+// FONCTION : générer la SECTION sous-catégories complète
+// (titre + sous-titre + grille pilotés par data/<categorie>.json)
+// ─────────────────────────────────────────────
+async function genererSousCategoriesSection(categorieSlug, sousCategorieCourante, data) {
+  const { html: cartesHtml, count } = await genererSousCategoriesHtml(categorieSlug, sousCategorieCourante);
+
+  // Si aucune sous-catégorie avec contenu, on ne rend rien
+  if (!cartesHtml || count === 0) {
+    return { html: '', count: 0 };
+  }
+
+  const label     = data.sous_cat_label      || 'Explorer par type de produit';
+  const titre     = data.sous_cat_titre      || 'Sous-catégories';
+  const sousTitre = data.sous_cat_sous_titre || '';
+
+  const html = `
+<section class="sous-cats" id="sous-categories" aria-labelledby="sc-title">
+  <div class="containeur">
+    <div class="s-label">${label}</div>
+    <h2 class="s-title" id="sc-title">${titre}</h2>
+    <div class="s-div" aria-hidden="true"></div>
+    ${sousTitre ? `<p class="s-sub">${sousTitre}</p>` : ''}
+  </div>
+  <div class="sc-wrap" style="max-width:1140px;margin:0 auto;position:relative">
+    <div class="sc-grid" id="scGrid" role="list">
+      ${cartesHtml}
+    </div>
+  </div>
+</section>`;
+
+  return { html, count };
+}
+
+// ─────────────────────────────────────────────
 // FONCTION : compter le total de produits de la catégorie
 // ─────────────────────────────────────────────
 async function compterProduits(nomSupabase) {
@@ -297,6 +340,23 @@ async function compterProduits(nomSupabase) {
   );
   if (!res.ok) return '0';
   return (res.headers.get('content-range') || '0/0').split('/')[1] || '0';
+}
+
+// ─────────────────────────────────────────────
+// HELPER : compter les marques d'une catégorie (pour autres-cats)
+// ─────────────────────────────────────────────
+async function compterMarquesParCategorie(nomSupabase) {
+  if (!nomSupabase || !SUPABASE_URL || !SUPABASE_KEY) return 0;
+  try {
+    const res = await fetch(
+      `${SUPABASE_URL}/rest/v1/entreprises?categories=cs.{${encodeURIComponent(nomSupabase)}}&select=id`,
+      { headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}`, Prefer: 'count=exact' } }
+    );
+    if (!res.ok) return 0;
+    return parseInt((res.headers.get('content-range') || '0/0').split('/')[1]) || 0;
+  } catch (e) {
+    return 0;
+  }
 }
 
 function resoudreNav(actif) {
@@ -522,6 +582,156 @@ function genererFaqHtml(data) {
 </section>`;
 }
 
+// ─────────────────────────────────────────────
+// FONCTION : générer la section TEXTE SEO (h2 + sections H3 + sidebar)
+// ─────────────────────────────────────────────
+function genererSeoTexteSection(data) {
+  const seo = data.seo_texte;
+  if (!seo || !seo.h2) return '';
+
+  const label = seo.label || 'Guide & conseils';
+  const h2    = seo.h2    || '';
+
+  // Sections H3 + paragraphes
+  const sectionsHtml = (seo.sections || []).map(s => `
+        <h3>${s.h3 || ''}</h3>
+        <p>${s.html || ''}</p>`).join('');
+
+  // Sidebar : sous-catégories populaires
+  const sousCatsTitre = seo.sidebar_sous_cats_titre || 'Sous-catégories populaires';
+  const sousCatsItems = (seo.sidebar_sous_cats || []).map(item => `
+            <li><a href="${item.url}">${item.texte}</a></li>`).join('');
+
+  const sidebarSousCats = (seo.sidebar_sous_cats && seo.sidebar_sous_cats.length) ? `
+        <div class="seo-box">
+          <h4>${sousCatsTitre}</h4>
+          <ul>${sousCatsItems}
+          </ul>
+        </div>` : '';
+
+  // Sidebar : labels à privilégier
+  const labelsTitre = seo.sidebar_labels_titre || 'Labels à privilégier';
+  const labelsItems = (seo.sidebar_labels || []).map(l => `
+          <div class="lbl-badge">
+            <div class="lbl-ico" aria-hidden="true">${l.icone || ''}</div>
+            <div class="lbl-info">
+              <h5>${l.nom || ''}</h5>
+              <p>${l.description || ''}</p>
+            </div>
+          </div>`).join('');
+
+  const sidebarLabels = (seo.sidebar_labels && seo.sidebar_labels.length) ? `
+        <div class="seo-box seo-box-navy">
+          <h4>${labelsTitre}</h4>${labelsItems}
+        </div>` : '';
+
+  // Aside complète : seulement si au moins un des deux blocs existe
+  const sidebarHtml = (sidebarSousCats || sidebarLabels) ? `
+      <aside class="seo-sidebar" aria-label="Informations complémentaires">${sidebarSousCats}${sidebarLabels}
+      </aside>` : '';
+
+  return `
+<section class="seo-section" id="guide" aria-labelledby="seo-title">
+  <div class="containeur">
+    <div class="seo-layout">
+      <div class="seo-content">
+        <div class="s-label">${label}</div>
+        <h2 id="seo-title">${h2}</h2>${sectionsHtml}
+      </div>${sidebarHtml}
+    </div>
+  </div>
+</section>`;
+}
+
+// ─────────────────────────────────────────────
+// FONCTION : générer le bloc "Autres catégories"
+// (auto, avec comptages live, exclut la catégorie courante et les vides)
+// ─────────────────────────────────────────────
+async function genererAutresCategoriesSection(categorieCourante, data) {
+  const label     = data.autres_cat_label      || "Explorer l'annuaire";
+  const titre     = data.autres_cat_titre      || 'Toutes les catégories made in France';
+  const sousTitre = data.autres_cat_sous_titre || '';
+
+  // Récupérer toutes les catégories sauf la courante
+  const entries = Object.entries(CATEGORIES).filter(([slug]) => slug !== categorieCourante);
+
+  // Compter en parallèle les marques de chaque catégorie
+  const cartesPromises = entries.map(async ([slug, cat]) => {
+    const count = await compterMarquesParCategorie(cat.supabase_categorie || cat.nom);
+    // On masque les catégories vides : pas d'intérêt SEO ni UX
+    if (count === 0) return null;
+
+    const ancre        = cat.ancre_autres_cat || `Marques françaises ${cat.nom}`;
+    const image        = cat.image            || slug;
+    const alt          = cat.alt              || `${cat.nom} made in France`;
+    const labelMarques = count > 1 ? `${count} marques françaises` : `${count} marque française`;
+
+    return `
+      <a href="/made-in-france/${slug}/" class="ac-card" role="listitem" aria-label="${ancre}">
+        <div class="ac-ph" role="img">
+          <picture>
+            <source srcset="/img/250x310/avif/${image}.avif" type="image/avif">
+            <img src="/img/250x310/webp/${image}.webp" alt="${alt}" width="250" height="310" loading="lazy" decoding="async">
+          </picture>
+        </div>
+        <div class="ac-overlay" aria-hidden="true"></div>
+        <div class="ac-label">
+          <h3 class="ac-name">${cat.nom}</h3>
+          <span class="ac-count">${labelMarques}</span>
+        </div>
+      </a>`;
+  });
+
+  const cartes = (await Promise.all(cartesPromises)).filter(Boolean).join('');
+
+  // Si aucune autre catégorie n'a de marques, on ne rend pas la section
+  if (!cartes) return '';
+
+  return `
+<section class="autres-cats" id="autres-categories" aria-labelledby="ac-title">
+  <div class="containeur">
+    <div class="s-label">${label}</div>
+    <h2 class="s-title" id="ac-title">${titre}</h2>
+    <div class="s-div" aria-hidden="true"></div>
+    ${sousTitre ? `<p class="s-sub">${sousTitre}</p>` : ''}
+    <div class="ac-grid" role="list">${cartes}
+    </div>
+  </div>
+</section>`;
+}
+
+// ─────────────────────────────────────────────
+// FONCTION : générer le CTA Référencer
+// ─────────────────────────────────────────────
+function genererCtaRefererSection(data) {
+  const label       = data.cta_referer_label       || 'Vous êtes une marque française ?';
+  const titre       = data.cta_referer_titre       || 'Référencez votre marque gratuitement';
+  const description = data.cta_referer_description || '';
+  const perks       = data.cta_referer_perks       || [];
+  const bouton      = data.cta_referer_bouton      || 'Référencer ma marque →';
+  const note        = data.cta_referer_note        || '';
+
+  const perksHtml = perks.map(p => `
+        <span class="cta-perk">${p}</span>`).join('');
+
+  return `
+<section class="cta-referer" id="referer" aria-labelledby="cta-title">
+  <div class="cta-inner">
+    <div class="cta-content">
+      <div class="s-label">${label}</div>
+      <h2 id="cta-title">${titre}</h2>
+      <p>${description}</p>
+      ${perks.length ? `<div class="cta-perks">${perksHtml}
+      </div>` : ''}
+    </div>
+    <div class="cta-btns">
+      <a href="/referencer-votre-marque/" class="btn-p" style="text-decoration:none;display:inline-block">${bouton}</a>
+      ${note ? `<span class="cta-note">${note}</span>` : ''}
+    </div>
+  </div>
+</section>`;
+}
+
 async function fetchProduits(categorie) {
   const url = `${SUPABASE_URL}/rest/v1/produits?categories=cs.{${categorie}}&select=id,nom_produit,marque,description,categories,prix,mis_en_avant,image_avif,image_webp,url_produit,created_at&order=created_at.desc`;
   const res = await fetch(url, { headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}` } });
@@ -682,9 +892,9 @@ async function build() {
       ['{{FAQ_JS}}',                faqJs],
       ['{{EMAIL_OBFUSQUE_JS}}',     emailObfusqueJs],
       ['{{ANALYTICS_JS}}',          analyticsJs],
-      
-      
-      
+
+
+
     ];
     for (const [marqueur, contenu] of injectionsCss) {
       if (html.includes(marqueur)) html = html.replace(marqueur, contenu);
@@ -703,25 +913,29 @@ async function build() {
       html = html.replace('{{BREADCRUMB_JSON_LD}}', genererBreadcrumbJsonLd(page));
     }
 
-    // ── Sous-catégories dynamiques ────────────────────────────
-    if (html.includes('{{SOUS_CATEGORIES}}')) {
-      const { html: sousCatsHtml, count: sousCatsCount } = await genererSousCategoriesHtml(page.categorie, page.sousCategorie);
-      html = html.replace('{{SOUS_CATEGORIES}}', sousCatsHtml);
+    // ── Chargement du data JSON (utilisé par plusieurs sections) ──
+    const dataPath = path.join(__dirname, `data/${page.actif}.json`);
+    const aDataJson = page.actif && fs.existsSync(dataPath);
+    const data = aDataJson ? JSON.parse(fs.readFileSync(dataPath, 'utf8')) : {};
 
-      // Mise à jour du nombre de sous-catégories dans le hero
+    // ── Section sous-catégories complète ─────────────────────
+    if (html.includes('{{SOUS_CATEGORIES_SECTION}}')) {
+      const { html: scSection, count: scCount } = await genererSousCategoriesSection(
+        page.categorie, page.sousCategorie, data
+      );
+      html = html.replace('{{SOUS_CATEGORIES_SECTION}}', scSection);
+
+      // Compteur dans le hero
       html = html.replace(
         /<strong id="sousCategCount">[^<]*<\/strong>/,
-        `<strong id="sousCategCount">${sousCatsCount}</strong>`
+        `<strong id="sousCategCount">${scCount}</strong>`
       );
-
-      html = html.replace('{{SOUS_CAT_LABEL}}', sousCatsCount > 1 ? 'sous-catégories' : 'sous-catégorie');
+      html = html.replace('{{SOUS_CAT_LABEL}}', scCount > 1 ? 'sous-catégories' : 'sous-catégorie');
     }
 
-    // ── Sections Supabase ─────────────────────────────────────
-    const dataPath = path.join(__dirname, `data/${page.actif}.json`);
+    // ── Sections Supabase + sections refactorées ─────────────
     if (html.includes('{{MARQUES_SECTION}}')) {
-      if (fs.existsSync(dataPath)) {
-        const data = JSON.parse(fs.readFileSync(dataPath, 'utf8'));
+      if (aDataJson && page.categorie) {
         const { marques, carte, produits, heroCount, produitsCount, itemListJsonLd, afficherVedette, afficherGrid, afficherProduits } = await genererSectionMarques(data);
 
         const afficherSection = afficherVedette || afficherGrid;
@@ -740,34 +954,45 @@ async function build() {
         html = html.replace('{{FAQ_JSON_LD}}',      genererFaqJsonLd(data));
         html = html.replace('{{FAQ_SECTION}}',      genererFaqHtml(data));
 
+        // Sections refactorées
+        html = html.replace('{{SEO_TEXTE_SECTION}}',         genererSeoTexteSection(data));
+        html = html.replace('{{AUTRES_CATEGORIES_SECTION}}', await genererAutresCategoriesSection(page.categorie, data));
+        html = html.replace('{{CTA_REFERER_SECTION}}',       genererCtaRefererSection(data));
+
         // heroCount : marques référencées
         html = html.replace(
           /<strong id="heroCount">[^<]*<\/strong>/,
           `<strong id="heroCount">${heroCount}</strong>`
         );
-
         html = html.replace('{{MARQUES_LABEL}}', parseInt(heroCount) > 1 ? 'marques référencées' : 'marque référencée');
 
-        // produitsCount : produits référencés (remplace "100% made in France vérifié")
+        // produitsCount : produits référencés
         html = html.replace(
           /<strong id="produitsCount">[^<]*<\/strong>/,
           `<strong id="produitsCount">${produitsCount}</strong>`
         );
-
         html = html.replace('{{PRODUITS_LABEL}}', parseInt(produitsCount) > 1 ? 'produits référencés' : 'produit référencé');
 
-        // ── Injection meta SEO + CollectionPage depuis le JSON ──
+        // Injection meta SEO + variables hero + JSON-LD
         const buildDate = new Date().toISOString().split('T')[0];
         html = injecterMetaSeo(html, data, heroCount, buildDate);
 
       } else {
-        const marqueurs = ['{{MARQUES_SECTION}}','{{CARTE_SECTION}}','{{PRODUITS_SECTION}}',
+        // Pages sans data JSON : on nettoie tous les marqueurs résiduels
+        const marqueurs = [
+          '{{MARQUES_SECTION}}','{{CARTE_SECTION}}','{{PRODUITS_SECTION}}',
+          '{{SEO_TEXTE_SECTION}}','{{AUTRES_CATEGORIES_SECTION}}','{{CTA_REFERER_SECTION}}',
           '{{MARQUES_SECTION_CSS}}','{{MARQUE_VEDETTE_CSS}}','{{MARQUES_GRID_CSS}}',
-          '{{CARTE_CSS}}','{{PRODUITS_CSS}}','{{ITEMLIST_JSON_LD}}','{{FAQ_JSON_LD}}','{{FAQ_SECTION}}',
-          '{{WEBPAGE_JSON_LD}}','{{COLLECTION_PAGE_JSON_LD}}','{{PAGE_TITLE}}','{{PAGE_DESCRIPTION}}','{{PAGE_CANONICAL}}',
-          '{{OG_IMAGE}}','{{OG_IMAGE_ALT}}','{{BUILD_DATE}}'];
-        marqueurs.forEach(m => { html = html.replace(m, ''); });
-        console.warn(`⚠️  Pas de fichier data/${page.actif}.json — sections supprimées.`);
+          '{{CARTE_CSS}}','{{PRODUITS_CSS}}',
+          '{{ITEMLIST_JSON_LD}}','{{FAQ_JSON_LD}}','{{FAQ_SECTION}}',
+          '{{WEBPAGE_JSON_LD}}','{{COLLECTION_PAGE_JSON_LD}}',
+          '{{PAGE_TITLE}}','{{PAGE_DESCRIPTION}}','{{PAGE_CANONICAL}}',
+          '{{OG_IMAGE}}','{{OG_IMAGE_ALT}}','{{BUILD_DATE}}',
+          '{{HERO_BADGE}}','{{HERO_H1_BEFORE}}','{{HERO_H1_EM}}','{{HERO_H1_AFTER}}','{{HERO_DESC}}',
+          '{{MARQUES_LABEL}}','{{PRODUITS_LABEL}}','{{SOUS_CAT_LABEL}}'
+        ];
+        marqueurs.forEach(m => { html = html.replaceAll(m, ''); });
+        if (page.actif) console.warn(`⚠️  Pas de fichier data/${page.actif}.json — sections supprimées.`);
       }
     }
 
