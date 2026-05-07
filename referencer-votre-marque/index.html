@@ -60,8 +60,8 @@
 .trust-item{font-family:var(--sans);font-size:.78rem;color:rgba(255,255,255,.4);display:flex;flex-direction:column;align-items:center;gap:.3rem}
 .trust-num{font-family:var(--serif);font-size:2rem;font-weight:300;color:var(--gold-l);line-height:1}
 .hero-cta-group{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
-.btn-p{background:var(--gold);color:var(--white);border:none;padding:.9rem 2.2rem;font-family:var(--sans);font-size:.85rem;letter-spacing:.1em;cursor:pointer;transition:background .2s,transform .15s;white-space:nowrap}
-.btn-p:hover{background:var(--gold-l);transform:translateY(-2px)}
+.btn-p{background:var(--gold-l);color:var(--navy);border:none;padding:.9rem 2.2rem;font-family:var(--sans);font-size:.85rem;letter-spacing:.1em;cursor:pointer;transition:background .2s,transform .15s;white-space:nowrap}
+.btn-p:hover{background:var(--gold);transform:translateY(-2px)}
 .btn-ghost-white{background:transparent;color:rgba(255,255,255,.7);border:1px solid rgba(255,255,255,.25);padding:.9rem 2rem;font-family:var(--sans);font-size:.85rem;letter-spacing:.08em;cursor:pointer;transition:all .2s;white-space:nowrap}
 .btn-ghost-white:hover{border-color:var(--gold-l);color:var(--gold-l)}
 /* ── ATOUTS ── */
@@ -71,7 +71,7 @@
 .atout-item{display:flex;gap:1.25rem;align-items:flex-start;padding:1.5rem;background:var(--white);border:1px solid var(--border);transition:border-color .25s,transform .2s,box-shadow .25s}
 .atout-item:hover{border-color:var(--gold);transform:translateX(4px);box-shadow:0 4px 20px rgba(184,150,62,.08)}
 .atout-ico{width:44px;height:44px;background:var(--navy);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1.1rem}
-.atout-txt h4{font-family:var(--serif);font-size:1.1rem;font-weight:400;color:var(--navy);margin-bottom:.4rem}
+.atout-txt h3{font-family:var(--serif);font-size:1.1rem;font-weight:400;color:var(--navy);margin-bottom:.4rem}
 .atout-txt p{font-family:var(--sans);font-size:.83rem;color:var(--muted);line-height:1.65;font-weight:300}
 .atouts-visuel{position:relative}
 .atouts-card-demo{background:var(--white);border:1px solid var(--border);padding:1.75rem;box-shadow:0 8px 40px rgba(13,27,62,.12)}
@@ -87,9 +87,9 @@
 .demo-footer{display:flex;justify-content:space-between;align-items:center}
 .demo-loc{display:flex;align-items:center;gap:.4rem}
 .demo-dot{width:6px;height:6px;background:var(--gold);border-radius:50%}
-.demo-loc-txt{font-family:var(--sans);font-size:.72rem;color:var(--gold)}
+.demo-loc-txt{font-family:var(--sans);font-size:.72rem;color:var(--gold-d)}
 .demo-link{font-family:var(--sans);font-size:.72rem;color:var(--navy);text-decoration:none;border-bottom:1px solid var(--border);padding-bottom:1px}
-.demo-featured-tag{position:absolute;top:-1px;left:-1px;background:var(--gold);color:var(--white);font-family:var(--sans);font-size:.6rem;letter-spacing:.12em;padding:.22rem .6rem}
+.demo-featured-tag{position:absolute;top:-1px;left:-1px;background:var(--gold-l);color:var(--navy);font-family:var(--sans);font-size:.6rem;letter-spacing:.12em;padding:.22rem .6rem}
 @media(max-width:900px){
   .atouts-grid{grid-template-columns:1fr;gap:2.5rem}
 }
@@ -111,7 +111,7 @@
 .badge-crit{border:1px solid rgba(184,150,62,.2);padding:1.2rem 1.4rem;display:flex;gap:.9rem;align-items:flex-start;background:rgba(255,255,255,.02);transition:border-color .25s}
 .badge-crit:hover{border-color:rgba(184,150,62,.5)}
 .badge-crit-ico{width:30px;height:30px;background:rgba(184,150,62,.1);border:1px solid rgba(184,150,62,.3);display:flex;align-items:center;justify-content:center;font-size:.85rem;flex-shrink:0}
-.badge-crit-txt h5{font-family:var(--sans);font-size:.8rem;color:var(--gold-l);font-weight:400;margin-bottom:.3rem}
+.badge-crit-txt h3{font-family:var(--sans);font-size:.8rem;color:var(--gold-l);font-weight:400;margin-bottom:.3rem}
 .badge-crit-txt p{font-family:var(--sans);font-size:.75rem;color:rgba(255,255,255,.4);line-height:1.55;font-weight:300}
 @media(max-width:900px){
   .badge-layout{grid-template-columns:1fr;gap:2.5rem}
@@ -123,9 +123,9 @@
 .eligibilite{background:var(--cream)}
 .elig-layout{display:grid;grid-template-columns:1fr 1fr;gap:4rem;margin-top:3rem;align-items:start}
 .elig-oui{background:var(--white);border:1px solid rgba(45,122,79,.25);padding:2rem}
-.elig-oui h4{font-family:var(--serif);font-size:1.2rem;color:var(--green);font-weight:400;margin-bottom:1.2rem;display:flex;align-items:center;gap:.6rem}
+.elig-oui h3{font-family:var(--serif);font-size:1.2rem;color:var(--green);font-weight:400;margin-bottom:1.2rem;display:flex;align-items:center;gap:.6rem}
 .elig-non{background:var(--white);border:1px solid rgba(220,53,69,.15);padding:2rem}
-.elig-non h4{font-family:var(--serif);font-size:1.2rem;color:#c53030;font-weight:400;margin-bottom:1.2rem;display:flex;align-items:center;gap:.6rem}
+.elig-non h3{font-family:var(--serif);font-size:1.2rem;color:#c53030;font-weight:400;margin-bottom:1.2rem;display:flex;align-items:center;gap:.6rem}
 .elig-list{list-style:none;display:flex;flex-direction:column;gap:.75rem}
 .elig-list li{font-family:var(--sans);font-size:.85rem;color:var(--text);line-height:1.55;display:flex;gap:.7rem;font-weight:300}
 .elig-list li::before{flex-shrink:0;margin-top:.05rem}
@@ -146,8 +146,8 @@
 .plan-avance:hover{border-color:var(--gold);box-shadow:0 8px 40px rgba(184,150,62,.15)}
 .plan-premium{background:var(--navy);border-color:var(--navy)}
 .plan-premium:hover{border-color:var(--gold);box-shadow:0 8px 40px rgba(184,150,62,.25)}
-.plan-recommended{position:absolute;top:-1px;left:50%;transform:translateX(-50%);background:var(--gold);color:var(--white);font-family:var(--sans);font-size:.6rem;letter-spacing:.15em;padding:.25rem 1rem;white-space:nowrap}
-.plan-label{font-family:var(--sans);font-size:.68rem;letter-spacing:.2em;color:var(--gold);text-transform:uppercase;margin-bottom:.75rem}
+.plan-recommended{position:absolute;top:-1px;left:50%;transform:translateX(-50%);background:var(--gold-l);color:var(--navy);font-family:var(--sans);font-size:.6rem;letter-spacing:.15em;padding:.25rem 1rem;white-space:nowrap}
+.plan-label{font-family:var(--sans);font-size:.68rem;letter-spacing:.2em;color:var(--gold-d);text-transform:uppercase;margin-bottom:.75rem}
 .plan-premium .plan-label{color:var(--gold-l)}
 .plan-name{font-family:var(--serif);font-size:1.6rem;color:var(--navy);font-weight:300;margin-bottom:.5rem}
 .plan-premium .plan-name{color:var(--white)}
@@ -156,9 +156,9 @@
 .plan-premium .plan-amount{color:var(--gold-l)}
 .plan-free-txt{font-family:var(--serif);font-size:3.2rem;font-weight:300;color:var(--navy);line-height:1}
 .plan-period{font-family:var(--sans);font-size:.75rem;color:var(--muted);font-weight:300}
-.plan-premium .plan-period{color:rgba(255,255,255,.4)}
+.plan-premium .plan-period{color:white;}
 .plan-desc{font-family:var(--sans);font-size:.83rem;color:var(--muted);line-height:1.65;margin-bottom:1.5rem;padding-bottom:1.5rem;border-bottom:1px solid var(--border);font-weight:300}
-.plan-premium .plan-desc{color:rgba(255,255,255,.5);border-color:rgba(255,255,255,.1)}
+.plan-premium .plan-desc{color:white;}
 .plan-features{list-style:none;display:flex;flex-direction:column;gap:.7rem;flex:1}
 .plan-features li{font-family:var(--sans);font-size:.82rem;color:var(--text);display:flex;gap:.7rem;line-height:1.45;font-weight:300}
 .plan-features li::before{content:'✓';color:var(--gold);flex-shrink:0;font-weight:500}
@@ -173,10 +173,10 @@
 .btn-plan{width:100%;padding:.85rem;font-family:var(--sans);font-size:.82rem;letter-spacing:.08em;cursor:pointer;transition:all .2s;border:none}
 .btn-plan-ghost{background:transparent;color:var(--navy);border:1px solid var(--border)!important;border:1px solid var(--border)}
 .btn-plan-ghost:hover{background:var(--cream);border-color:var(--navy)!important}
-.btn-plan-gold{background:var(--gold);color:var(--white)}
-.btn-plan-gold:hover{background:var(--gold-l)}
-.btn-plan-premium{background:var(--gold);color:var(--white)}
-.btn-plan-premium:hover{background:var(--gold-l)}
+.btn-plan-gold{background:var(--gold-l);color:var(--navy)}
+.btn-plan-gold:hover{background:var(--gold)}
+.btn-plan-premium{background:var(--gold-l);color:var(--navy)}
+.btn-plan-premium:hover{background:var(--gold)}
 .tarifs-note{font-family:var(--sans);font-size:.78rem;color:var(--muted);text-align:center;margin-top:2rem;font-weight:300}
 @media(max-width:900px){
   .tarifs-grid{display:flex;overflow-x:auto;gap:1rem;padding:0 2rem 1rem 2rem;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scroll-padding-left:2rem}
@@ -191,7 +191,7 @@
 .form-wrapper{max-width:780px;margin:3rem auto 0;background:var(--white);border:1px solid var(--border);box-shadow:0 16px 64px rgba(13,27,62,.08)}
 .form-header{background:var(--navy);padding:2rem 2.5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
 .form-header-txt h3{font-family:var(--serif);font-size:1.4rem;color:var(--white);font-weight:300;margin-bottom:.25rem}
-.form-header-txt p{font-family:var(--sans);font-size:.78rem;color:rgba(255,255,255,.45);font-weight:300}
+.form-header-txt p{font-family:var(--sans);font-size:.78rem;color:var(--muted-l);font-weight:300}
 .form-steps-indicator{display:flex;gap:.5rem;align-items:center}
 .step-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.2);transition:background .3s,transform .2s}
 .step-dot.active{background:var(--gold);transform:scale(1.3)}
@@ -319,28 +319,28 @@
         <div class="atout-item">
           <div class="atout-ico" aria-hidden="true">🎯</div>
           <div class="atout-txt">
-            <h4>Une audience qui vous recherche</h4>
+            <h3>Une audience qui vous recherche</h3>
             <p>Nos visiteurs arrivent avec une intention claire : trouver des marques françaises. Zéro bruit, zéro concurrence étrangère — uniquement des consommateurs engagés dans une démarche d'achat local.</p>
           </div>
         </div>
         <div class="atout-item">
           <div class="atout-ico" aria-hidden="true">🏆</div>
           <div class="atout-txt">
-            <h4>Le référencement est entièrement gratuit</h4>
+            <h3>Le référencement est entièrement gratuit</h3>
             <p>Toutes les structures françaises — TPE, PME, artisans, créateurs — peuvent rejoindre l'annuaire sans frais. La visibilité ne doit pas être réservée aux grandes marques.</p>
           </div>
         </div>
         <div class="atout-item">
           <div class="atout-ico" aria-hidden="true">🔍</div>
           <div class="atout-txt">
-            <h4>Optimisé pour le référencement naturel</h4>
+            <h3>Optimisé pour le référencement naturel</h3>
             <p>Chaque fiche marque est structurée avec les bonnes données Schema.org et les mots-clés pertinents pour que Qwant, Google et les autres moteurs d'indexation vous associent aux recherches de votre catégorie.</p>
           </div>
         </div>
         <div class="atout-item">
           <div class="atout-ico" aria-hidden="true" style="font-size:1.4rem;color:var(--gold-l)">✓</div>
           <div class="atout-txt">
-            <h4>Un badge de confiance reconnu</h4>
+            <h3>Un badge de confiance reconnu</h3>
             <p>Le badge "Vérifié La Marque Française" atteste l'authenticité de votre fabrication. C'est un signal de confiance fort pour les consommateurs exigeants qui refusent d'être trompés.</p>
           </div>
         </div>
@@ -400,28 +400,28 @@
         <div class="badge-crit">
           <div class="badge-crit-ico" aria-hidden="true">🏭</div>
           <div class="badge-crit-txt">
-            <h5>Fabrication en France</h5>
+            <h3>Fabrication en France</h3>
             <p>La production, l'assemblage ou la transformation principale se déroule sur le territoire français.</p>
           </div>
         </div>
         <div class="badge-crit">
           <div class="badge-crit-ico" aria-hidden="true">📋</div>
           <div class="badge-crit-txt">
-            <h5>Traçabilité des ingrédients</h5>
+            <h3>Traçabilité des ingrédients</h3>
             <p>L'origine des matières premières ou ingrédients principaux est documentée et vérifiable.</p>
           </div>
         </div>
         <div class="badge-crit">
           <div class="badge-crit-ico" aria-hidden="true">⚖️</div>
           <div class="badge-crit-txt">
-            <h5>Conditions de travail conformes</h5>
+            <h3>Conditions de travail conformes</h3>
             <p>La marque respecte le droit du travail français et peut en attester auprès de notre équipe.</p>
           </div>
         </div>
         <div class="badge-crit">
           <div class="badge-crit-ico" aria-hidden="true">🔄</div>
           <div class="badge-crit-txt">
-            <h5>Contrôle régulier</h5>
+            <h3>Contrôle régulier</h3>
             <p>Le badge peut être retiré si les critères ne sont plus respectés. C'est sa valeur : il ne s'achète pas.</p>
           </div>
         </div>
@@ -439,7 +439,7 @@
     <p class="s-sub">La Marque Française est un annuaire exclusif. Pour garantir la valeur de notre badge aux consommateurs, nous n'acceptons que les marques qui produisent véritablement en France.</p>
     <div class="elig-layout">
       <div class="elig-oui" role="region" aria-label="Marques éligibles">
-        <h4>✓ Vous êtes éligible si…</h4>
+        <h3>✓ Vous êtes éligible si…</h3>
         <ul class="elig-list">
           <li>Vos produits sont fabriqués, assemblés ou transformés sur le territoire français</li>
           <li>Vous êtes une TPE, PME, artisan, coopérative ou créateur indépendant</li>
@@ -450,7 +450,7 @@
         </ul>
       </div>
       <div class="elig-non" role="region" aria-label="Marques non éligibles">
-        <h4>✗ Vous n'êtes pas éligible si…</h4>
+        <h3>✗ Vous n'êtes pas éligible si…</h3>
         <ul class="elig-list">
           <li>Vos produits sont uniquement assemblés en France à partir de composants intégralement fabriqués à l'étranger, sans transformation significative</li>
           <li>Votre seul lien avec la France est le siège social ou le design</li>
@@ -491,7 +491,7 @@
           <li class="not-included">Lien direct vers votre site ou boutique en ligne</li>
           <li class="not-included">Référencement de produits</li>
           <li class="not-included">Support prioritaire par email</li>
-          <li class="not-included">Statistiques de visibilité mensuelles</li>
+          <!--<li class="not-included">Statistiques de visibilité mensuelles</li>-->
           <li class="not-included">Mise en avant dans les pages catégories</li>
           <li class="not-included">Mise en avant dans les pages sous-catégorie</li>
           <li class="not-included">Apparition dans la page d'accueil</li>
@@ -519,7 +519,7 @@
           <li>Lien direct vers votre site ou boutique en ligne</li>
           <li>Référencement de 5 produits</li>
           <li>Support prioritaire par email</li>
-          <li class="not-included">Statistiques de visibilité mensuelles</li>
+          <!--<li class="not-included">Statistiques de visibilité mensuelles</li>-->
           <li class="not-included">Mise en avant dans les pages catégories</li>
           <li class="not-included">Mise en avant dans les pages sous-catégorie</li>
           <li class="not-included">Apparition dans la page d'accueil</li>
@@ -548,7 +548,7 @@
           <li>Lien direct vers votre site ou boutique en ligne</li>
           <li>Référencement de 20 produits</li>
           <li>Support prioritaire par email</li>
-          <li>Statistiques de visibilité mensuelles</li>
+          <!--<li>Statistiques de visibilité mensuelles</li>-->
           <li>Mise en avant dans les pages catégories</li>
           <li>Mise en avant dans les pages sous-catégorie</li>
           <li>Apparition dans la page d'accueil</li>
@@ -887,7 +887,7 @@
     <div class="faq-list" role="list">
         <div class="faq-item" role="listitem">
           <button class="faq-q" aria-expanded="false" type="button" aria-controls="fa1" onclick="toggleFaq(this)">
-            <span class="faq-q-text">Le référencement gratuit est-il vraiment sans conditions ?</span>
+            <h3 class="faq-q-text">Le référencement gratuit est-il vraiment sans conditions ?</h3>
             <span class="faq-toggle" aria-hidden="true">+</span>
           </button>
           <div class="faq-sep" id="fs1"></div>
@@ -895,7 +895,7 @@
         </div>
         <div class="faq-item" role="listitem">
           <button class="faq-q" aria-expanded="false" type="button" aria-controls="fa2" onclick="toggleFaq(this)">
-            <span class="faq-q-text">Combien de temps prend la validation du dossier ?</span>
+            <h3 class="faq-q-text">Combien de temps prend la validation du dossier ?</h3>
             <span class="faq-toggle" aria-hidden="true">+</span>
           </button>
           <div class="faq-sep" id="fs2"></div>
@@ -903,7 +903,7 @@
         </div>
         <div class="faq-item" role="listitem">
           <button class="faq-q" aria-expanded="false" type="button" aria-controls="fa3" onclick="toggleFaq(this)">
-            <span class="faq-q-text">Puis-je changer d'offre après mon référencement ?</span>
+            <h3 class="faq-q-text">Puis-je changer d'offre après mon référencement ?</h3>
             <span class="faq-toggle" aria-hidden="true">+</span>
           </button>
           <div class="faq-sep" id="fs3"></div>
@@ -911,7 +911,7 @@
         </div>
         <div class="faq-item" role="listitem">
           <button class="faq-q" aria-expanded="false" type="button" aria-controls="fa4" onclick="toggleFaq(this)">
-            <span class="faq-q-text">Quels documents me seront demandés pour obtenir le badge Vérifié ?</span>
+            <h3 class="faq-q-text">Quels documents me seront demandés pour obtenir le badge Vérifié ?</h3>
             <span class="faq-toggle" aria-hidden="true">+</span>
           </button>
           <div class="faq-sep" id="fs4"></div>
@@ -919,7 +919,7 @@
         </div>
         <div class="faq-item" role="listitem">
           <button class="faq-q" aria-expanded="false" type="button" aria-controls="fa5" onclick="toggleFaq(this)">
-            <span class="faq-q-text">Ma marque utilise des matières premières étrangères. Suis-je éligible ?</span>
+            <h3 class="faq-q-text">Ma marque utilise des matières premières étrangères. Suis-je éligible ?</h3>
             <span class="faq-toggle" aria-hidden="true">+</span>
           </button>
           <div class="faq-sep" id="fs5"></div>
@@ -927,7 +927,7 @@
         </div>
         <div class="faq-item" role="listitem">
           <button class="faq-q" aria-expanded="false" type="button" aria-controls="fa6" onclick="toggleFaq(this)">
-            <span class="faq-q-text">L'offre Premium inclut-elle un accompagnement pour créer ma fiche ?</span>
+            <h3 class="faq-q-text">L'offre Premium inclut-elle un accompagnement pour créer ma fiche ?</h3>
             <span class="faq-toggle" aria-hidden="true">+</span>
           </button>
           <div class="faq-sep" id="fs6"></div>
@@ -935,7 +935,7 @@
         </div>
         <div class="faq-item" role="listitem">
           <button class="faq-q" aria-expanded="false" type="button" aria-controls="fa7" onclick="toggleFaq(this)">
-            <span class="faq-q-text">Le badge Vérifié peut-il être retiré ?</span>
+            <h3 class="faq-q-text">Le badge Vérifié peut-il être retiré ?</h3>
             <span class="faq-toggle" aria-hidden="true">+</span>
           </button>
           <div class="faq-sep" id="fs7"></div>
@@ -943,7 +943,7 @@
         </div>
         <div class="faq-item" role="listitem">
           <button class="faq-q" aria-expanded="false" type="button" aria-controls="fa8" onclick="toggleFaq(this)">
-            <span class="faq-q-text">Comment fonctionne la mise en avant sur les pages catégories ?</span>
+            <h3 class="faq-q-text">Comment fonctionne la mise en avant sur les pages catégories ?</h3>
             <span class="faq-toggle" aria-hidden="true">+</span>
           </button>
           <div class="faq-sep" id="fs8"></div>
