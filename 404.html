@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Page introuvable (404) — La Marque Française</title>
+<meta name="description" content="La page que vous cherchez s'est échappée. Retrouvez les meilleures marques françaises made in France sur La Marque Française.">
+<meta name="robots" content="noindex, follow">
+<meta name="author" content="La Marque Française">
+<meta name="theme-color" content="#0d1b3e">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0d1b3e;--gold:#b8963e;--gold-l:#d4af6a;--gold-d:#745300;
+  --cream:#f9f6f0;--cream-d:#f2ede4;--white:#fff;
+  --muted:#424E66;--border:#e5e0d5;--text:#1a1a2e;
+  --muted-l:#AFAFAF;--text-l:#9EA8BC;
+}
+html,body{height:100%}
+body{
+  font-family:Arial,sans-serif;
+  background:var(--navy);
+  color:var(--white);
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+}
+/* Grille décorative subtile (cohérente avec hero) */
+body::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:repeating-linear-gradient(90deg,transparent,transparent 59px,rgba(184,150,62,.05) 59px,rgba(184,150,62,.05) 60px);
+  pointer-events:none;
+}
+/* Liseré or en haut (cohérence section CTA) */
+body::after{
+  content:'';
+  position:absolute;
+  top:0;left:0;right:0;
+  height:3px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  pointer-events:none;
+}
+/* Skip link accessibilité */
+.skip-link{
+  position:absolute;
+  top:-50px;left:1rem;
+  background:var(--gold);
+  color:var(--white);
+  padding:.5rem 1rem;
+  font-family:Arial,sans-serif;
+  font-size:.85rem;
+  text-decoration:none;
+  z-index:999;
+  transition:top .2s;
+}
+.skip-link:focus{top:.5rem}
+/* Conteneur principal */
+.err-wrap{
+  position:relative;
+  z-index:1;
+  width:100%;
+  max-width:760px;
+  padding:2rem 1.5rem;
+  text-align:center;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:1.25rem;
+}
+/* Drapeau */
+.err-flag{
+  display:flex;
+  gap:6px;
+  margin-bottom:.25rem;
+}
+.err-flag span{
+  display:block;
+  width:4px;
+  height:36px;
+  border-radius:2px;
+}
+.flag-b{background:#0055a4}
+.flag-w{background:#fff}
+.flag-r{background:#ef4135}
+/* Badge eyebrow */
+.err-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:.5rem;
+  border:1px solid rgba(184,150,62,.5);
+  color:var(--gold-l);
+  font-family:Arial,sans-serif;
+  font-size:.7rem;
+  letter-spacing:.2em;
+  padding:.3rem .9rem;
+  text-transform:uppercase;
+}
+/* Le grand 404 */
+.err-404{
+  font-family:Georgia,'Times New Roman',serif;
+  font-size:clamp(5rem,16vw,11rem);
+  line-height:1;
+  font-weight:normal;
+  color:var(--white);
+  letter-spacing:.05em;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:clamp(.5rem,1.2vw,1rem);
+  user-select:none;
+}
+.err-404 .digit{
+  display:inline-block;
+}
+/* La truffe (le 0) en SVG inline pour le contrôle total */
+.err-truffle{
+  width:clamp(5rem,15vw,10rem);
+  height:clamp(5rem,15vw,10rem);
+  display:inline-block;
+  position:relative;
+  flex-shrink:0;
+  animation:truffle-float 4s ease-in-out infinite;
+}
+.err-truffle svg{
+  width:100%;
+  height:100%;
+  display:block;
+  filter:drop-shadow(0 6px 24px rgba(184,150,62,.35));
+}
+@keyframes truffle-float{
+  0%,100%{transform:translateY(0) rotate(-2deg)}
+  50%{transform:translateY(-6px) rotate(2deg)}
+}
+/* Titre H1 */
+.err-title{
+  font-family:Georgia,'Times New Roman',serif;
+  font-size:clamp(1.3rem,3vw,2rem);
+  color:var(--white);
+  font-weight:normal;
+  line-height:1.25;
+  letter-spacing:.02em;
+  max-width:600px;
+}
+.err-title em{
+  color:var(--gold-l);
+  font-style:normal;
+}
+/* Séparateur or LMF */
+.err-div{
+  width:48px;
+  height:2px;
+  background:var(--gold);
+}
+/* Sous-titre / jeu de mots */
+.err-pun{
+  font-family:Arial,sans-serif;
+  font-size:clamp(.9rem,1.6vw,1.05rem);
+  color:rgba(255,255,255,.65);
+  line-height:1.65;
+  max-width:540px;
+  font-style:italic;
+  min-height:3.3em; /* Évite le layout shift entre les jeux de mots */
+}
+/* CTA principal */
+.err-cta{
+  background:var(--gold-l);
+  color:var(--navy);
+  border:none;
+  padding:.95rem 2.2rem;
+  font-family:Arial,sans-serif;
+  font-size:.85rem;
+  letter-spacing:.1em;
+  cursor:pointer;
+  transition:background .2s,transform .15s;
+  text-decoration:none;
+  display:inline-block;
+  text-transform:uppercase;
+}
+.err-cta:hover,.err-cta:focus-visible{
+  background:var(--gold);
+  transform:translateY(-1px);
+  outline:none;
+}
+.err-cta:focus-visible{
+  box-shadow:0 0 0 3px rgba(212,175,106,.4);
+}
+/* Catégories rapides */
+.err-cats-label{
+  font-family:Arial,sans-serif;
+  font-size:.68rem;
+  letter-spacing:.25em;
+  color:var(--gold-l);
+  text-transform:uppercase;
+  margin-top:.5rem;
+}
+.err-cats{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:.4rem .55rem;
+  max-width:640px;
+  list-style:none;
+  margin:0;
+  padding:0;
+}
+.err-cats a{
+  display:inline-block;
+  padding:.4rem .85rem;
+  border:1px solid rgba(184,150,62,.25);
+  color:rgba(255,255,255,.75);
+  text-decoration:none;
+  font-family:Arial,sans-serif;
+  font-size:.78rem;
+  letter-spacing:.05em;
+  transition:border-color .2s,color .2s,background .2s;
+}
+.err-cats a:hover,.err-cats a:focus-visible{
+  border-color:var(--gold-l);
+  color:var(--gold-l);
+  background:rgba(184,150,62,.06);
+  outline:none;
+}
+/* Mini logo en bas */
+.err-mini-logo{
+  position:absolute;
+  bottom:1.25rem;
+  left:50%;
+  transform:translateX(-50%);
+  font-family:Georgia,'Times New Roman',serif;
+  color:rgba(255,255,255,.35);
+  font-size:.78rem;
+  letter-spacing:.15em;
+  z-index:1;
+  white-space:nowrap;
+}
+.err-mini-logo span{color:var(--gold-l)}
+.err-mini-logo a{
+  color:inherit;
+  text-decoration:none;
+  transition:color .2s;
+}
+.err-mini-logo a:hover{color:var(--gold-l)}
+/* Responsive — garantir zéro scroll même sur petit écran */
+@media(max-height:680px){
+  .err-wrap{gap:.85rem;padding:1rem}
+  .err-flag span{height:28px}
+  .err-404{font-size:clamp(4rem,12vw,8rem)}
+  .err-truffle{width:clamp(4rem,11vw,7rem);height:clamp(4rem,11vw,7rem)}
+  .err-pun{min-height:2.6em}
+  .err-mini-logo{bottom:.6rem}
+}
+@media(max-width:560px){
+  .err-wrap{gap:1rem;padding:1.5rem 1rem 3rem}
+  .err-cats{gap:.35rem .4rem}
+  .err-cats a{padding:.32rem .65rem;font-size:.72rem}
+  .err-pun{font-size:.88rem;min-height:4.4em}
+}
+@media(max-width:380px){
+  .err-flag{margin-bottom:0}
+  .err-404{font-size:clamp(3.5rem,18vw,5.5rem);gap:.4rem}
+  .err-truffle{width:clamp(3.5rem,17vw,5.5rem);height:clamp(3.5rem,17vw,5.5rem)}
+  .err-cta{padding:.8rem 1.6rem;font-size:.78rem}
+}
+/* Reduced motion */
+@media(prefers-reduced-motion:reduce){
+  .err-truffle{animation:none}
+  .err-cta{transition:none}
+}
+</style>
+<link rel="icon" href="/img/favicon.ico" sizes="32x32">
+<link rel="icon" href="/img/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="La Marque Française">
+<meta property="og:title" content="Page introuvable (404) — La Marque Française">
+<meta property="og:description" content="La page que vous cherchez s'est échappée. Retrouvez les meilleures marques françaises made in France.">
+<meta property="og:url" content="https://lamarquefrancaise.fr/404/">
+<meta property="og:image" content="https://lamarquefrancaise.fr/og-image.jpg">
+<meta property="og:locale" content="fr_FR">
+</head>
+<body>
+<!-- SKIP LINK accessibilité -->
+<a href="#contenu-principal" class="skip-link">Aller au contenu principal</a>
+
+<main id="contenu-principal" role="main">
+  <div class="err-wrap">
+    <div class="err-flag" aria-hidden="true">
+      <span class="flag-b"></span><span class="flag-w"></span><span class="flag-r"></span>
+    </div>
+    <div class="err-badge">Erreur 404 · Page introuvable</div>
+    <!-- Le grand 404 avec la truffe en lieu et place du 0 -->
+    <p class="err-404" aria-label="Erreur 404 : page introuvable">
+      <span class="digit" aria-hidden="true">4</span>
+      <span class="err-truffle" aria-hidden="true">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="truffleGrad" cx="40%" cy="35%" r="65%">
+              <stop offset="0%"  stop-color="#d4af6a"/>
+              <stop offset="55%" stop-color="#b8963e"/>
+              <stop offset="100%" stop-color="#5a4220"/>
+            </radialGradient>
+            <radialGradient id="truffleHL" cx="35%" cy="30%" r="25%">
+              <stop offset="0%"  stop-color="rgba(255,235,200,.55)"/>
+              <stop offset="100%" stop-color="rgba(255,235,200,0)"/>
+            </radialGradient>
+          </defs>
+          <!-- Corps irrégulier de la truffe -->
+          <path d="M50 8
+                   C 68 6, 84 18, 90 36
+                   C 96 52, 92 70, 78 84
+                   C 66 96, 44 96, 30 88
+                   C 14 80, 6 64, 8 46
+                   C 10 28, 24 12, 50 8 Z"
+                fill="url(#truffleGrad)"
+                stroke="#3a2a14"
+                stroke-width="1.2"/>
+          <!-- Highlight -->
+          <ellipse cx="38" cy="32" rx="14" ry="10" fill="url(#truffleHL)"/>
+          <!-- Verrues / aspérités caractéristiques de la truffe -->
+          <circle cx="32" cy="58" r="3.2" fill="#3a2a14" opacity=".55"/>
+          <circle cx="58" cy="42" r="2.4" fill="#3a2a14" opacity=".5"/>
+          <circle cx="68" cy="68" r="3.6" fill="#3a2a14" opacity=".55"/>
+          <circle cx="44" cy="76" r="2.8" fill="#3a2a14" opacity=".5"/>
+          <circle cx="78" cy="52" r="2.2" fill="#3a2a14" opacity=".5"/>
+          <circle cx="22" cy="42" r="2.6" fill="#3a2a14" opacity=".5"/>
+          <circle cx="52" cy="22" r="2.2" fill="#3a2a14" opacity=".5"/>
+          <circle cx="48" cy="56" r="2"   fill="#3a2a14" opacity=".4"/>
+          <!-- Petits reflets dorés -->
+          <circle cx="40" cy="34" r="1.4" fill="#f2dca0" opacity=".85"/>
+          <circle cx="62" cy="50" r="1"   fill="#f2dca0" opacity=".7"/>
+        </svg>
+      </span>
+      <span class="digit" aria-hidden="true">4</span>
+    </p>
+    <h1 class="err-title">Cette page s'est <em>évaporée</em> du terroir</h1>
+    <div class="err-div" aria-hidden="true"></div>
+    <p class="err-pun" id="errPun" aria-live="polite">
+      Introuvable comme une vraie truffe noire du Périgord en plein mois d'août.
+    </p>
+    <a href="/" class="err-cta">Retour à l'accueil →</a>
+    <p class="err-cats-label">Ou filez en cuisine, dans la garde-robe, à l'atelier…</p>
+    <ul class="err-cats" role="list">
+      <li><a href="/made-in-france/epicerie-fine/">Épicerie</a></li>
+      <!--<li><a href="/made-in-france/mode/">Mode</a></li>
+      <li><a href="/made-in-france/beaute/">Beauté</a></li>
+      <li><a href="/made-in-france/bijoux/">Bijoux</a></li>
+      <li><a href="/made-in-france/maison/">Maison</a></li>
+      <li><a href="/made-in-france/sport/">Sport</a></li>
+      <li><a href="/made-in-france/bricolage/">Bricolage</a></li>
+      <li><a href="/made-in-france/technologie/">Technologie</a></li>-->
+    </ul>
+
+  </div>
+</main>
+<div class="err-mini-logo" aria-hidden="true">
+  <a href="/">La <span>Marque</span> Française</a>
+</div>
+<script>
+(function(){
+  var puns = [
+    "Introuvable comme une vraie truffe noire du Périgord en plein mois d'août.",
+    "Cette page a pris le maquis. On l'a cherchée, même les sangliers n'en savent rien.",
+    "Elle s'est faufilée entre deux pots de confiture et personne ne l'a revue depuis.",
+    "Page volatilisée — comme l'arôme d'un grand cru qu'on aurait laissé décanter trop longtemps.",
+    "Disparue, comme la dernière part de tarte tatin un dimanche en famille.",
+    "Elle est partie cueillir des champignons en forêt. Visiblement, pas pressée de rentrer.",
+    "Cette URL a filé entre les mailles, comme un pull en laine mérinos mal rangé.",
+    "Page introuvable — elle s'est volatilisée comme un parfum de Grasse oublié sur une commode.",
+    "Disparue comme une perle d'un collier mal noué : on la retrouvera bien un jour, sous le tapis.",
+    "On dirait qu'elle est partie en vacances en Provence sans laisser d'adresse.",
+    "Cette page s'est égarée dans la boîte à outils, quelque part entre la clé de 12 et le marteau qu'on ne retrouve jamais.",
+    "Cette page a été rappelée par son terroir. Elle reviendra peut-être à la prochaine récolte."
+  ];
+  var el = document.getElementById('errPun');
+  if (el) {
+    el.textContent = puns[Math.floor(Math.random() * puns.length)];
+  }
+})();
+</script>
+</body>
+</html>

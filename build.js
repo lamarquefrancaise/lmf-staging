@@ -23,6 +23,7 @@ const PAGES = [
   { fichier: 'conditions-generales-de-vente/index.html',      actif: '',              categorie: null,            sousCategorie: null,    sitemap: true },
   { fichier: 'conditions-generales-utilisation/index.html',   actif: '',              categorie: null,            sousCategorie: null,    sitemap: true },
   { fichier: 'contact/index.html',                            actif: '',              categorie: null,            sousCategorie: null,    sitemap: true },
+  { fichier: 'notre-mission/index.html',                      actif: '',              categorie: null,            sousCategorie: null,    sitemap: true },
 
 ];
 
