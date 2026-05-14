@@ -9,10 +9,70 @@
 <meta name="author" content="La Marque Française">
 <meta name="theme-color" content="#0d1b3e">
 <style>
-{{GLOBAL_CSS}}
-{{NAV_CSS}}
-{{BREADCRUMB_CSS}}
-{{HERO_LEGAL_CSS}}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0d1b3e;--gold:#b8963e;--gold-l:#d4af6a; --gold-d:#745300; --gold-vd:#664900;
+  --cream:#f9f6f0;--cream-d:#f2ede4;--white:#fff;
+  --muted:#424E66;--border:#e5e0d5;--text:#1a1a2e; --muted-l:#AFAFAF; --text-l:#9EA8BC;
+}
+h1,h2,h3,h4,h5,h6{font-family:Georgia,'Times New Roman',serif}
+.skip-link{position:absolute;top:-50px;left:1rem;background:var(--gold);color:var(--white);padding:.5rem 1rem;font-family:Arial,sans-serif;font-size:.85rem;text-decoration:none;z-index:999;transition:top .2s}
+.skip-link:focus{top:.5rem}
+body{font-family:Georgia,'Times New Roman',serif;background:var(--white);color:var(--text);overflow-x:hidden}
+
+section{padding:5rem 2rem}
+.containeur{max-width:1100px;margin:0 auto}
+.s-label{font-family:Arial,sans-serif;font-size:.72rem;letter-spacing:.25em;color:var(--gold-d);text-transform:uppercase;margin-bottom:.75rem}
+.s-title{font-size:clamp(1.5rem,3vw,2.2rem);font-weight:normal;color:var(--navy);line-height:1.2}
+.s-div{width:48px;height:2px;background:var(--gold);margin:1.25rem 0}
+.s-sub{font-family:Arial,sans-serif;font-size:.92rem;color:var(--muted);line-height:1.75}
+/*Bouton sous les marques et sous les produits pour en voir plus, sur les pages catégories*/
+.btn-ghost{background:transparent;color:var(--navy);border:1px solid var(--border);padding:.75rem 2rem;font-family:Arial,sans-serif;font-size:.82rem;letter-spacing:.1em;cursor:pointer;transition:all .2s}
+.btn-ghost:hover{border-color:var(--navy);background:var(--navy);color:var(--gold-l)}
+nav.navig{position:fixed;width:100%;z-index:200;background:rgba(13,27,62,.97);padding:0 2rem;display:flex;flex-wrap:wrap;align-items:center;min-height:64px;box-shadow:0 1px 0 rgba(184,150,62,.15)}
+.navi-logo{color:var(--white);font-size:1.05rem;letter-spacing:.15em;font-weight:normal;white-space:nowrap;flex-shrink:0;padding:.5rem 0;text-decoration: none;}
+.navi-logo span{color:var(--gold-l)}
+.navi-links{display:flex;gap:1.5rem;list-style:none;align-items:center;flex-wrap:wrap;margin-left:auto;min-height: 64px;}
+.navi-links a{color:rgba(255,255,255,.75);text-decoration:none;font-family:Georgia,'Times New Roman',sans-serif;font-size:1rem;letter-spacing:.07em;transition:color .2s;white-space:nowrap}
+.navi-links a:hover{color:var(--gold-l)}
+.nav-cta{background:var(--gold-l)!important;color:var(--navy)!important;padding:.5rem 1.1rem!important;transition:background .2s!important}
+.nav-cta:hover{background:var(--gold)!important}
+.burger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;background:none;border:none;flex-shrink:0;margin-left:auto}
+.burger span{display:block;width:22px;height:2px;background:var(--white);transition:all .3s;transform-origin:center}
+.burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.burger.open span:nth-child(2){opacity:0}
+.burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.menu-close{display:none;position:fixed;top:1rem;right:1rem;z-index: 199;background:none;border:none;color:rgba(255,255,255,.6);font-size:1.5rem;cursor:pointer;line-height:1;padding:.25rem}
+.menu-close.open {display: block;}
+.menu-close:hover{color:var(--white)}
+.nav-overlay{display:none;position:fixed;inset:0;z-index:197;background:rgba(0,0,0,.5)}
+@media(max-width:900px){
+  nav.navig{flex-wrap:nowrap;height:64px}
+  .burger{display:flex}
+  .navi-links{position:fixed;top:0;right:-100%;bottom:0;width:85%;max-width:320px;z-index:198;background:#0d1b3e;flex-direction:column;align-items:flex-start;justify-content:flex-start;gap:0;padding:64px 0 2rem;transition:right .3s ease;display:flex;flex-wrap:nowrap;margin-left:0}
+  .navi-links.open{right:0}
+  .navi-links li{width:100%}
+  .navi-links a{display:block;width:100%;padding:.9rem 1.5rem;font-size:.95rem;letter-spacing:.08em;border-bottom:1px solid rgba(255,255,255,.07)}
+  .navi-links .nav-cta{margin:1.5rem 1.5rem 0;width:calc(100% - 3rem);padding:.75rem 1rem!important;text-align:center;display:block}
+  .menu-close{display:none}
+  .nav-overlay{display:block;opacity:0;pointer-events:none;transition:opacity .3s}
+  .nav-overlay.open{opacity:1;pointer-events:all}
+}
+.breadcrumb-bar{background:var(--navy);padding-top:64px}
+.breadcrumb{max-width:1100px;margin:0 auto;padding:.75rem 2rem;display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
+.breadcrumb a{font-family:Arial,sans-serif;font-size:.75rem;color:var(--muted-l);text-decoration:none;transition:color .2s}
+.breadcrumb a:hover{color:var(--gold-l)}
+.breadcrumb-sep{color:var(--muted-l);font-size:.7rem}
+.breadcrumb-current{font-family:Arial,sans-serif;font-size:.75rem;color:var(--gold-l);letter-spacing:.06em}
+.legal-hero{background:var(--navy);padding:3rem 2rem 4rem;position:relative;overflow:hidden;text-align:center}
+.legal-hero::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent,transparent 59px,rgba(184,150,62,.04) 59px,rgba(184,150,62,.04) 60px);pointer-events:none}
+.legal-hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.legal-hero-inner{max-width:780px;margin:0 auto;position:relative;z-index:1}
+.legal-hero-badge{display:inline-flex;align-items:center;gap:.5rem;border:1px solid rgba(184,150,62,.5);color:var(--gold-l);font-family:Arial,sans-serif;font-size:.72rem;letter-spacing:.2em;padding:.3rem .9rem;margin-bottom:1.25rem;text-transform:uppercase}
+.legal-hero h1{font-size:clamp(1.8rem,4vw,3rem);color:var(--white);font-weight:normal;line-height:1.2;letter-spacing:.02em;margin-bottom:.75rem}
+.legal-hero h1 em{color:var(--gold-l);font-style:normal}
+.legal-hero-desc{font-family:Arial,sans-serif;font-size:.95rem;color:rgba(255,255,255,.6);line-height:1.75;max-width:580px;margin:0 auto}
+.legal-hero-update{display:inline-block;margin-top:1.5rem;font-family:Arial,sans-serif;font-size:.72rem;color:rgba(255,255,255,.4);letter-spacing:.05em}
 /* ── BLOCS LÉGAUX (alternance fond clair / cream) ── */
 .legal-block{padding:4rem 2rem}
 .legal-block.alt{background:var(--cream)}
@@ -51,8 +111,39 @@
 .legal-block.alt .info-box{background:var(--white)}
 .info-box strong{color:var(--navy)}
 
-{{BANDEAU_CTA_CSS}}
-{{FOOTER_CSS}}
+.cta-referer{background:var(--navy);padding:5rem 2rem;position:relative;overflow:hidden}
+.cta-referer::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.cta-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr auto;gap:3rem;align-items:center;position:relative;z-index:1}
+.cta-content .s-label{color:var(--gold-l)}
+.cta-content h2{color:var(--white);font-size:clamp(1.3rem,3vw,1.8rem);font-weight:normal;margin:.5rem 0 .75rem}
+.cta-content p{font-family:Arial,sans-serif;font-size:.87rem;color:rgba(255,255,255,.5);line-height:1.7;max-width:520px}
+.cta-perks{display:flex;gap:1.2rem;margin-top:1.4rem;flex-wrap:wrap}
+.cta-perk{display:flex;align-items:center;gap:.4rem;font-family:Arial,sans-serif;font-size:.73rem;color:rgba(255,255,255,.5)}
+.cta-perk::before{content:'✓';color:var(--gold)}
+.cta-btns{display:flex;flex-direction:column;align-items:center;gap:.7rem;flex-shrink:0}
+.cta-note{font-family:Arial,sans-serif;font-size:.68rem;color:rgba(255,255,255,.25);letter-spacing:.05em}
+.btn-p{background:var(--gold-l);color:var(--navy);border:none;padding:.9rem 2rem;font-family:Arial,sans-serif;font-size:.85rem;letter-spacing:.1em;cursor:pointer;transition:background .2s,transform .15s}
+.btn-p:hover{background:var(--gold);transform:translateY(-1px)}
+.btn-p a{text-decoration: none;color:var(--navy);}
+@media(max-width:768px){.cta-inner{grid-template-columns:1fr;text-align:center}.cta-perks{justify-content:center}.cta-btns{width:100%}.btn-p{width:100%}}
+footer{background:#0a1428;padding:3.5rem 2rem 2rem}
+.ft{max-width:1100px;margin:0 auto}
+.ft-top{display:grid;grid-template-columns:2fr 1fr 1fr;gap:3rem;margin-bottom:2.5rem}
+.ft-brand p.logo{color:var(--white);font-size:1.1rem;letter-spacing:.1em;font-weight:normal;margin-bottom:.75rem}
+.ft-brand p.logo span{color:var(--gold-l)}
+.ft-brand p{font-family:Arial,sans-serif;font-size:.82rem;color:var(--muted-l);line-height:1.75;max-width:280px;margin-bottom:1.25rem}
+.ft-brand-tags{display:flex;gap:.5rem;flex-wrap:wrap}
+.ft-tag{border:1px solid rgba(184,150,62,.2);color:var(--muted-l);font-family:Arial,sans-serif;font-size:.68rem;padding:.2rem .55rem;letter-spacing:.07em}
+.ft-col p{color:var(--gold-l);font-size:.75rem;letter-spacing:.2em;font-family:Arial,sans-serif;font-weight:normal;text-transform:uppercase;margin-bottom:1rem}
+.ft-col ul{list-style:none}
+.ft-col ul li{margin-bottom:.5rem}
+.ft-col ul a{color:var(--muted-l);font-family:Arial,sans-serif;font-size:.82rem;text-decoration:none;transition:color .2s}
+.ft-col ul a:hover{color:var(--gold-l)}
+.ft-bot{border-top:1px solid rgba(255,255,255,.07);padding-top:1.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.75rem}
+.ft-bot p{font-family:Arial,sans-serif;font-size:.75rem;color:var(--muted-l)}
+.ft-flag{display:flex;gap:3px}
+.ft-flag span{display:block;width:3px;height:14px;border-radius:1px}
+@media(max-width:768px){.ft-top{grid-template-columns:1fr;gap:2rem}}
 
 /* ── RESPONSIVE ── */
 @media(max-width:768px){
@@ -86,7 +177,26 @@
 <meta name="twitter:image" content="https://lamarquefrancaise.fr/img/1200x630/la-marque-francaise.webp">
 </head>
 <body>
-{{NAV}}
+<nav aria-label="Navigation principale" class="navig">
+  <a href="/" class="navi-logo" title="La Marque Française — Accueil">La <span>Marque</span> Française</a>
+  <button class="menu-close" id="menuClose" aria-label="Fermer le menu">✕</button>
+  <ul class="navi-links" id="navLinks" role="list">
+    <li><a href="/made-in-france/epicerie-fine/">Épicerie</a></li>
+    <!--
+    <li><a href="/made-in-france/mode/">Mode</a></li>
+    <li><a href="/made-in-france/beaute/">Beauté</a></li>
+    <li><a href="/made-in-france/bijoux/">Bijoux</a></li>
+    <li><a href="/made-in-france/maison/">Maison</a></li>
+    <li><a href="/made-in-france/sport/">Sport</a></li>
+    <li><a href="/made-in-france/technologie/">Technologie</a></li>
+    -->
+    <li><a href="/referencer-votre-marque/" class="nav-cta">Référencer ma marque</a></li>
+  </ul>
+  <button class="burger" id="burger" aria-label="Ouvrir le menu" aria-expanded="false" type="button">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="nav-overlay" id="navOverlay"></div>
 <main id="contenu-principal">
 <!-- BREADCRUMB -->
 <div class="breadcrumb-bar">
@@ -339,12 +449,144 @@
     </div>
   </div>
 </section>
-{{FOOTER}}
+<footer role="contentinfo">
+  <div class="ft">
+    <div class="ft-top">
+      <div class="ft-brand">
+        <p class="logo">La <span>Marque</span> Française</p>
+        <p>La référence des marques françaises d'exception. Nous mettons en lumière artisans, créateurs et producteurs qui font la richesse du patrimoine made in France.</p>
+        <div class="ft-brand-tags">
+          <span class="ft-tag">Mode française</span>
+          <span class="ft-tag">Épicerie française</span>
+          <span class="ft-tag">Beauté française</span>
+          <span class="ft-tag">Made in France</span>
+        </div>
+      </div>
+      <div class="ft-col">
+        <p>Catégories</p>
+        <ul>
+          <li><a href="/made-in-france/epicerie-fine/">Marques françaises Épicerie fine</a></li>
+          <!--
+          <li><a href="/made-in-france/mode/">Marques françaises Mode</a></li>
+          <li><a href="/made-in-france/beaute/">Marques françaises Beauté</a></li>
+          <li><a href="/made-in-france/bijoux/">Marques françaises Bijoux</a></li>
+          <li><a href="/made-in-france/maison/">Marques françaises Maison</a></li>
+          <li><a href="/made-in-france/sport/">Marques françaises Sport</a></li>
+          <li><a href="/made-in-france/bricolage/">Marques françaises Bricolage</a></li>
+          <li><a href="/made-in-france/technologie/">Marques françaises Technologie</a></li>
+          -->
+        </ul>
+      </div>
+      <div class="ft-col">
+        <p>La société</p>
+        <ul>
+          <li><a href="/notre-mission/">Notre mission</a></li>
+          <li><a href="/referencer-votre-marque/">Référencer votre marque</a></li>
+          <li><a href="/contact/">Contact</a></li>
+          <li><a href="/mentions-legales/">Mentions légales</a></li>
+          <li><a href="/politique-de-confidentialite/">Politique de confidentialité</a></li>
+          <li><a href="/conditions-generales-de-vente/">Conditions Générales de Vente</a></li>
+          <li><a href="/conditions-generales-utilisation/">Conditions Générales d'Utilisation</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="ft-bot">
+      <p>© 2025 La Marque Française. Tous droits réservés. · <a href="/sitemap.xml" style="color:var(--muted-l);text-decoration:none">Sitemap</a></p>
+      <div class="ft-flag" aria-hidden="true"><span class="flag-b"></span><span class="flag-w"></span><span class="flag-r"></span></div>
+    </div>
+  </div>
+</footer>
 <!-- SCRIPTS -->
 <script>
-{{MENU_BURGER_JS}}
-{{EMAIL_OBFUSQUE_JS}}
+const burger   = document.getElementById('burger'),
+      navLinks = document.getElementById('navLinks'),
+      overlay  = document.getElementById('navOverlay'),
+      closeBtn = document.getElementById('menuClose');
+
+const closeMenu = () => {
+  navLinks.classList.remove('open');
+  burger.classList.remove('open');
+  overlay.classList.remove('open');
+  closeBtn.classList.remove('open');
+  burger.setAttribute('aria-expanded','false');
+  document.body.style.overflow = '';
+};
+const openMenu = () => {
+  navLinks.classList.add('open');
+  burger.classList.add('open');
+  overlay.classList.add('open');
+  closeBtn.classList.add('open');
+  burger.setAttribute('aria-expanded','true');
+  document.body.style.overflow = 'hidden';
+};
+burger.addEventListener('click', () => navLinks.classList.contains('open') ? closeMenu() : openMenu());
+closeBtn.addEventListener('click', closeMenu);
+overlay.addEventListener('click', closeMenu);
+navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+(function(){
+  const btnEmail = document.getElementById('btnEmail');
+  const emailLink = document.getElementById('emailLink');
+  const btnCopy = document.getElementById('btnCopy');
+
+  // Fragments encodés Base64 (jamais d'email en clair)
+  const f1 = 'Ym9uam91cg==';                    // partie locale
+  const f2 = 'bGFtYXJxdWVmcmFuY2Fpc2U=';        // domaine
+  const f3 = 'ZnI=';                            // tld
+
+  const buildEmail = () => {
+    try {
+      return atob(f1) + '@' + atob(f2) + '.' + atob(f3);
+    } catch(e) {
+      return '';
+    }
+  };
+
+  const reveal = () => {
+    const email = buildEmail();
+    if (!email) return;
+    emailLink.textContent = email;
+    emailLink.setAttribute('href', 'mailto:' + email);
+    emailLink.setAttribute('aria-hidden', 'false');
+    emailLink.classList.add('revealed');
+    btnCopy.setAttribute('aria-hidden', 'false');
+    btnCopy.classList.add('revealed');
+    btnEmail.classList.add('revealed');
+    btnEmail.setAttribute('aria-expanded', 'true');
+    emailLink.focus();
+  };
+
+  btnEmail.addEventListener('click', reveal);
+
+  btnCopy.addEventListener('click', async () => {
+    const email = buildEmail();
+    if (!email) return;
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        await navigator.clipboard.writeText(email);
+      } else {
+        const tmp = document.createElement('textarea');
+        tmp.value = email;
+        tmp.setAttribute('readonly', '');
+        tmp.style.position = 'absolute';
+        tmp.style.left = '-9999px';
+        document.body.appendChild(tmp);
+        tmp.select();
+        document.execCommand('copy');
+        document.body.removeChild(tmp);
+      }
+      const original = btnCopy.textContent;
+      btnCopy.textContent = '✓ Copié';
+      btnCopy.classList.add('copied');
+      setTimeout(() => {
+        btnCopy.textContent = original;
+        btnCopy.classList.remove('copied');
+      }, 2000);
+    } catch(e) {
+      console.warn('[LMF] Impossible de copier l\'email');
+    }
+  });
+})();
 </script>
-{{ANALYTICS_JS}}
+<script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "a5e63dfe303c40dbb794b96f11c581e7"}'></script>
 </body>
 </html>
