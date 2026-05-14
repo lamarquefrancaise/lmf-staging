@@ -45,7 +45,7 @@
 .checkbox-field input:checked + .checkbox-box::after{content:'✓';color:var(--white);font-size:.7rem;line-height:1}
 .checkbox-field input:focus-visible + .checkbox-box{box-shadow:0 0 0 3px rgba(184,150,62,.25)}
 .checkbox-label{font-family:Arial,sans-serif;font-size:.83rem;color:var(--muted);line-height:1.6;font-weight:300}
-.checkbox-label a{color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(184,150,62,.3)}
+.checkbox-label a{color:var(--gold-d);text-decoration:none;border-bottom:1px solid rgba(184,150,62,.3)}
 .checkbox-label a:hover{border-color:var(--gold)}
 
 /* Champ erreur */
@@ -54,8 +54,8 @@
 /* Navigation formulaire */
 .form-nav{display:flex;justify-content:space-between;align-items:center;margin-top:1rem;padding-top:1.5rem;border-top:1px solid var(--border);flex-wrap:wrap;gap:1rem}
 .form-nav-info{font-family:Arial,sans-serif;font-size:.75rem;color:var(--muted)}
-.btn-submit{background:var(--gold);color:var(--white);border:none;padding:.85rem 2rem;font-family:Arial,sans-serif;font-size:.88rem;letter-spacing:.08em;cursor:pointer;transition:background .2s,transform .15s}
-.btn-submit:hover{background:var(--gold-l);transform:translateY(-1px)}
+.btn-submit{background:var(--gold-l);color:var(--navy);border:none;padding:.85rem 2rem;font-family:Arial,sans-serif;font-size:.88rem;letter-spacing:.08em;cursor:pointer;transition:background .2s,transform .15s}
+.btn-submit:hover{background:var(--gold);transform:translateY(-1px)}
 .btn-submit:disabled{opacity:.6;cursor:not-allowed;transform:none}
 
 /* Succès */
@@ -79,7 +79,7 @@
 .coord-ico{width:48px;height:48px;background:var(--navy);color:var(--gold-l);display:flex;align-items:center;justify-content:center;margin:0 auto 1.25rem;font-size:1.2rem}
 .coord-card h3{font-family:Georgia,'Times New Roman',serif;font-size:1.05rem;color:var(--navy);font-weight:normal;margin-bottom:.5rem}
 .coord-card p{font-family:Arial,sans-serif;font-size:.82rem;color:var(--muted);line-height:1.65;margin-bottom:.75rem}
-.coord-link{font-family:Arial,sans-serif;font-size:.85rem;color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(184,150,62,.3);padding-bottom:1px;transition:border-color .2s}
+.coord-link{font-family:Arial,sans-serif;font-size:.85rem;color:var(--gold-d);text-decoration:none;border-bottom:1px solid rgba(184,150,62,.3);padding-bottom:1px;transition:border-color .2s}
 .coord-link:hover{border-color:var(--gold)}
 
 /* ── BANDEAU GARANTIES ── */
@@ -240,14 +240,14 @@
               <input type="email" id="contactEmail" name="email" placeholder="vous@votredomaine.fr" required autocomplete="email"/>
             </div>
             <div class="field">
-              <label class="field-label" for="contactTel">Téléphone <span style="color:var(--muted-l);font-weight:300">(facultatif)</span></label>
+              <label class="field-label" for="contactTel">Téléphone <span style="color:var(--muted);font-weight:300">(facultatif)</span></label>
               <input type="tel" id="contactTel" name="phone" placeholder="+33 6 12 34 56 78" autocomplete="tel"/>
             </div>
           </div>
 
           <!-- Société -->
           <div class="field">
-            <label class="field-label" for="contactSociete">Société ou marque <span style="color:var(--muted-l);font-weight:300">(facultatif)</span></label>
+            <label class="field-label" for="contactSociete">Société ou marque <span style="color:var(--muted);font-weight:300">(facultatif)</span></label>
             <input type="text" id="contactSociete" name="Société" placeholder="ex : Maison Fabre" autocomplete="organization"/>
           </div>
 

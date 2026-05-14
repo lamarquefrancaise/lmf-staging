@@ -2,7 +2,7 @@
 .b-card{background:var(--white);border:1px solid var(--border);padding:1.5rem;transition:border-color .2s,box-shadow .2s;cursor:pointer}
 .b-card:hover{border-color:var(--gold);box-shadow:0 4px 20px rgba(184,150,62,.1)}
 .b-card-head{display:flex;justify-content:space-between;align-items:flex-start;gap:.5rem;margin-bottom:.85rem}
-.b-ver{background:rgba(184,150,62,.08);border:1px solid rgba(184,150,62,.25);color:var(--gold);font-family:Arial,sans-serif;font-size:.58rem;letter-spacing:.1em;padding:.18rem .42rem;white-space:nowrap;flex-shrink:0;align-self:flex-start}
+.b-ver{background:var(--gold-l);border:1px solid rgba(184,150,62,.25);color:var(--navy);font-family:Arial,sans-serif;font-size:.58rem;letter-spacing:.1em;padding:.18rem .42rem;white-space:nowrap;flex-shrink:0;align-self:flex-start}
 .b-card-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:.7rem}
 .b-meta{margin-bottom:.75rem}
 .b-logo{width:42px;height:42px;background:var(--navy);display:flex;align-items:center;justify-content:center;color:var(--gold-l);font-size:.62rem;font-family:Arial,sans-serif;flex-shrink:0}

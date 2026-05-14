@@ -62,21 +62,21 @@
     ],
     "sidebar_sous_cats_titre": "Sous-catégories populaires",
     "sidebar_sous_cats": [
-      { "url": "/made-in-france/miel/",            "texte": "Miel artisanal français" },
-      { "url": "/made-in-france/chocolats/",       "texte": "Chocolat artisanal français" },
-      { "url": "/made-in-france/confitures/",      "texte": "Confiture de France" },
-      { "url": "/made-in-france/charcuterie/",     "texte": "Charcuterie du terroir" },
-      { "url": "/made-in-france/vins/",            "texte": "Vin de France" },
-      { "url": "/made-in-france/huiles-olive/",    "texte": "Huile d'olive française" },
-      { "url": "/made-in-france/vinaigres/",       "texte": "Vinaigre artisanal français" },
-      { "url": "/made-in-france/paniers-gourmands/", "texte": "Panier gourmand français" }
+      { "url": "/made-in-france/miel/",               "texte": "Miel artisanal français" },
+      { "url": "/made-in-france/chocolats/",          "texte": "Chocolat artisanal français" },
+      { "url": "/made-in-france/confitures/",         "texte": "Confiture de France" },
+      { "url": "/made-in-france/charcuterie/",        "texte": "Charcuterie du terroir" },
+      { "url": "/made-in-france/vins/",               "texte": "Vin de France" },
+      { "url": "/made-in-france/huiles-olive/",       "texte": "Huile d'olive française" },
+      { "url": "/made-in-france/vinaigres/",          "texte": "Vinaigre artisanal français" },
+      { "url": "/made-in-france/paniers-gourmands/",  "texte": "Panier gourmand français" }
     ],
     "sidebar_labels_titre": "Labels à privilégier",
     "sidebar_labels": [
-      { "icone": "🏷",  "nom": "AOP",              "description": "Appellation d'Origine Protégée — production 100% locale" },
-      { "icone": "🌍", "nom": "IGP",              "description": "Indication Géographique Protégée — lien avec le terroir" },
-      { "icone": "🔴", "nom": "Label Rouge",      "description": "Qualité supérieure certifiée par l'État français" },
-      { "icone": "🌿", "nom": "Agriculture Bio",  "description": "Production sans pesticides de synthèse" }
+      { "icone": "👨‍🌾",  "nom": "AOP",               "description": "Appellation d'Origine Protégée — production 100% locale" },
+      { "icone": "🌍", "nom": "IGP",                "description": "Indication Géographique Protégée — lien avec le terroir" },
+      { "icone": "🔴", "nom": "Label Rouge",        "description": "Qualité supérieure certifiée par l'État français" },
+      { "icone": "🌿", "nom": "Agriculture Bio",    "description": "Production sans pesticides de synthèse" }
     ]
   },
 
