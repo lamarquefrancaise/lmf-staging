@@ -1098,7 +1098,7 @@ function genererSectionOrigines(marque) {
       ${blocOrigine}${blocFabrication}
       </div>
       <div class="fm-carte-zone">
-        <div id="map-container" aria-label="Carte des sites de fabrication"></div>
+        <div id="map-container" aria-label="Carte des sites de fabrication"><div id="mapTip" class="map-tip"></div></div>
         ${legendeSites ? `<div class="fm-carte-legend">
           <span class="fm-carte-legend-dot" aria-hidden="true"></span>
           <span>${legendeSites}</span>
@@ -1387,7 +1387,12 @@ async function genererFicheMarque(marque) {
     ? `<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>`
     : '';
   const carteScript = carteAffichee
-    ? `<script src="/js/carte.js" defer></script>`
+    ? `<script src="/js/components/carte-fiche.js" defer></script>`
+    : '';
+
+  // CSS des cartes marques (.b-card) : uniquement si la section similaires est rendue
+  const marquesGridCssFiche = sectionSimilaires
+    ? marquesSectionCss + marquesGridCss
     : '';
 
   // Faux objet "page" pour réutiliser genererBreadcrumb*
@@ -1414,6 +1419,7 @@ async function genererFicheMarque(marque) {
     ['{{NAV_CSS}}',                navCss],
     ['{{BREADCRUMB_CSS}}',         breadcrumbCss],
     ['{{FICHE_HERO_CRITIQUE_CSS}}', getFicheHeroCritique()],
+    ['{{MARQUES_GRID_CSS_FICHE}}', marquesGridCssFiche],
     ['{{FOOTER_CSS}}',             footerCss],
     ['{{CARTE_PRECONNECT}}',       cartePreconnect],
     ['{{CARTE_LIBS}}',             carteLibs],
@@ -1434,7 +1440,7 @@ async function genererFicheMarque(marque) {
     ['{{MAP_DATA_SCRIPT}}',        mapDataScript],
     ['{{CARTE_SCRIPT_FICHE}}',     carteScript],
     ['{{MENU_BURGER_JS}}',         menuBurgerJs],
-    ['{{EMAIL_OBFUSQUE_JS}}',      emailObfusqueJs],
+    ['{{EMAIL_OBFUSQUE_JS}}',      ''],
     ['{{ANALYTICS_JS}}',           analyticsJs]
   ];
 
