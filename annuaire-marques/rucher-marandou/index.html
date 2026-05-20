@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{PAGE_TITLE}}</title>
+<meta name="description" content="{{PAGE_DESCRIPTION}}">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+<meta name="author" content="La Marque Française">
+<meta name="theme-color" content="#0d1b3e">
+<meta name="geo.region" content="{{GEO_REGION}}">
+<meta name="geo.placename" content="{{GEO_PLACENAME}}">
+<link rel="canonical" href="{{PAGE_CANONICAL}}">
+{{CARTE_PRECONNECT}}
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="La Marque Française">
+<meta property="og:title" content="{{OG_TITLE}}">
+<meta property="og:description" content="{{OG_DESC}}">
+<meta property="og:url" content="{{OG_URL}}">
+<meta property="og:image" content="https://www.lamarquefrancaise.fr/img/1200x630/la-marque-francaise.webp">
+<meta property="og:locale" content="fr_FR">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">[{{ORGANIZATION_JSON_LD}},{{BREADCRUMB_JSON_LD}},{{JSON_LD_MARQUE}}]</script>
+{{CARTE_LIBS}}
+<style>{{GLOBAL_CSS}}{{NAV_CSS}}{{BREADCRUMB_CSS}}{{FICHE_HERO_CRITIQUE_CSS}}{{FOOTER_CSS}}</style>
+<link rel="preload" href="/css/fiche-marque.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="/css/fiche-marque.css"></noscript>
+{{CARTE_CSS_FICHE}}
+</head>
+<body>
+<a href="#main" class="skip-link">Aller au contenu principal</a>
+{{NAV}}
+{{BREADCRUMB}}
+<main id="main">
+<section class="fm-hero" aria-labelledby="fm-titre">
+  <div class="containeur">
+    <div class="fm-hero-logo" aria-hidden="true">{{LOGO_INITIALES}}</div>
+    <div class="fm-hero-content">
+      <div class="fm-hero-tags">{{HERO_TAGS}}</div>
+      <h1 id="fm-titre">{{NOM_SOCIETE}}</h1>
+      <p class="fm-hero-sub">{{MINI_DESCRIPTIF}}</p>
+      <div class="fm-hero-meta">{{HERO_META}}</div>
+      {{HERO_CTA}}
+    </div>
+  </div>
+</section>
+{{SECTION_DESCRIPTION}}
+{{SECTION_HISTOIRE}}
+{{SECTION_ORIGINES}}
+{{SECTION_PRODUITS_MARQUE}}
+{{SECTION_LABELS}}
+{{SECTION_CTA_FINAL}}
+{{SECTION_SIMILAIRES}}
+</main>
+{{FOOTER}}
+<script defer>{{MENU_BURGER_JS}}
+{{EMAIL_OBFUSQUE_JS}}
+{{ANALYTICS_JS}}</script>
+{{MAP_DATA_SCRIPT}}
+{{CARTE_SCRIPT_FICHE}}
+{{ANALYTICS_JS}}
+</body>
+</html>

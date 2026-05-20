@@ -7,6 +7,16 @@ const path = require('path');
 const SUPABASE_URL = process.env.VITE_SUPABASE_URL;
 const SUPABASE_KEY = process.env.VITE_SUPABASE_ANON_KEY;
 
+// ─────────────────────────────────────────────
+// Configuration des fiches marque (chemin URL + libellé affiché)
+// Modifier ces 2 valeurs suffit pour renommer l'espace fiches marque
+// sur tout le site (dossier, breadcrumb, sitemap, JSON-LD, etc.).
+// ─────────────────────────────────────────────
+const FICHES_MARQUE = {
+  CHEMIN: 'annuaire-marques',
+  LABEL:  'Annuaire des marques'
+};
+
 const PAGES = [
   { fichier: 'index.html',                                    actif: '',              categorie: null,            sousCategorie: null,    sitemap: true },
   { fichier: 'made-in-france/epicerie-fine/index.html',       actif: 'epicerie-fine', categorie: 'epicerie-fine', sousCategorie: null,    sitemap: true },
@@ -23,7 +33,6 @@ const PAGES = [
   { fichier: 'conditions-generales-de-vente/index.html',      actif: '',              categorie: null,            sousCategorie: null,    sitemap: true },
   { fichier: 'conditions-generales-utilisation/index.html',   actif: '',              categorie: null,            sousCategorie: null,    sitemap: true },
   { fichier: 'contact/index.html',                            actif: '',              categorie: null,            sousCategorie: null,    sitemap: true },
-  { fichier: 'notre-mission/index.html',                      actif: '',              categorie: null,            sousCategorie: null,    sitemap: true },
 
 ];
 
@@ -45,11 +54,15 @@ const marquesSectionCss  = fs.readFileSync(path.join(__dirname, 'css/marques-sec
 const marqueVedetteCss   = fs.readFileSync(path.join(__dirname, 'css/marque-vedette.css'), 'utf8');
 const marquesGridCss     = fs.readFileSync(path.join(__dirname, 'css/marques-grid.css'), 'utf8');
 const produitsSectionCss = fs.readFileSync(path.join(__dirname, 'css/produits-section.css'), 'utf8');
-const organizationJsonLd = fs.readFileSync(path.join(__dirname, 'js/Organization-json-ld.json'), 'utf8');
+const organizationJsonLd = fs.readFileSync(path.join(__dirname, 'js/Organization-json-ld.json'), 'utf8').trim();
 const menuBurgerJs       = fs.readFileSync(path.join(__dirname, 'js/components/menu-burger.js'), 'utf8');
 const faqJs              = fs.readFileSync(path.join(__dirname, 'js/components/faq.js'), 'utf8');
 const emailObfusqueJs    = fs.readFileSync(path.join(__dirname, 'js/components/email-obfusque.js'), 'utf8');
 const analyticsJs        = fs.readFileSync(path.join(__dirname, 'js/components/analytics.js'), 'utf8');
+
+// ─── AJOUT FICHE MARQUE ───
+const ficheMarqueCss     = fs.readFileSync(path.join(__dirname, 'css/fiche-marque.css'), 'utf8');
+const pageMarqueTemplate = fs.readFileSync(path.join(__dirname, 'templates/Page_marque.html'), 'utf8');
 
 
 
@@ -86,6 +99,51 @@ function trouverNomAffichageSousCat(sousCategSlug) {
     if (found) return found.nom_affichage || found.slug;
   }
   return sousCategSlug;
+}
+
+// ─────────────────────────────────────────────
+// HELPERS FICHE MARQUE
+// ─────────────────────────────────────────────
+
+// Extraire le slug depuis l'URL Supabase
+// Ex : "https://lamarquefrancaise.fr/annuaire-marques/rucher-marandou" → "rucher-marandou"
+function extraireSlugMarque(urlSite) {
+  if (!urlSite || typeof urlSite !== 'string') return null;
+  const cleanUrl = urlSite.replace(/\/+$/, '');
+  const segments = cleanUrl.split('/').filter(Boolean);
+  return segments[segments.length - 1] || null;
+}
+
+// Générer les initiales d'une marque (2 max)
+function genererInitiales(nom) {
+  if (!nom) return '?';
+  return nom.split(/\s+/).map(w => w[0]).join('').slice(0, 2).toUpperCase();
+}
+
+// Échapper le HTML pour injection sécurisée (anti-XSS)
+function echapper(s) {
+  if (s === null || s === undefined) return '';
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+// Code département → code ISO geo.region "FR-XX"
+// Entrée : "24" → sortie : "FR-24"
+//         "1"  → sortie : "FR-01"  (padding sur 2 chiffres)
+//         "2A" → sortie : "FR-2A"  (Corse-du-Sud)
+//         "971" → sortie : "FR-971" (Guadeloupe, DOM)
+function geoRegionCode(departement) {
+  if (!departement) return 'FR';
+  const code = String(departement).trim().toUpperCase();
+  if (code === '2A' || code === '2B') return `FR-${code}`;
+  const num = parseInt(code, 10);
+  if (isNaN(num) || num < 1 || num > 976) return 'FR';
+  if (num >= 971) return `FR-${num}`;
+  return `FR-${String(num).padStart(2, '0')}`;
 }
 
 
@@ -145,6 +203,18 @@ function injecterMetaSeo(html, data, heroCount, buildDate) {
 // FONCTION : générer le fil d'ariane
 // ─────────────────────────────────────────────
 function genererBreadcrumb(page) {
+  // Cas spécial : fiche marque
+  if (page.type === 'marque' && page.marque) {
+    return `
+<div class="breadcrumb-bar">
+  <nav aria-label="Fil d'Ariane" class="breadcrumb">
+    <a href="/">Accueil</a><span class="breadcrumb-sep">›</span>
+    <a href="/${FICHES_MARQUE.CHEMIN}/">${FICHES_MARQUE.LABEL}</a><span class="breadcrumb-sep">›</span>
+    <span class="breadcrumb-current" aria-current="page">${echapper(page.marque.nom_societe)}</span>
+  </nav>
+</div>`;
+  }
+
   const { categorie, sousCategorie } = page;
 
   // Page d'accueil ou sans catégorie
@@ -189,8 +259,19 @@ function genererBreadcrumb(page) {
 }
 
 function genererBreadcrumbJsonLd(page) {
-  const { categorie, sousCategorie } = page;
   const base = 'https://lamarquefrancaise.fr';
+
+  // Cas spécial : fiche marque
+  if (page.type === 'marque' && page.marque) {
+    const items = [
+      `{"@type":"ListItem","position":1,"name":"Accueil","item":"${base}/"}`,
+      `{"@type":"ListItem","position":2,"name":"${FICHES_MARQUE.LABEL}","item":"${base}/${FICHES_MARQUE.CHEMIN}/"}`,
+      `{"@type":"ListItem","position":3,"name":"${echapper(page.marque.nom_societe)}"}`
+    ];
+    return `{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[${items.join(',')}]}`;
+  }
+
+  const { categorie, sousCategorie } = page;
 
   const items = [
     `{"@type":"ListItem","position":1,"name":"Accueil","item":"${base}/"}`,
@@ -828,14 +909,606 @@ async function genererSectionMarques(data) {
   return { marques: htmlMarques, carte: htmlCarte, produits: htmlProduits, heroCount, produitsCount, itemListJsonLd, afficherVedette, afficherGrid, afficherProduits };
 }
 
+// ═══════════════════════════════════════════════════════════════════
+// FICHES MARQUE — Génération des blocs conditionnels selon offre
+// ═══════════════════════════════════════════════════════════════════
+
+// Récupérer une marque Supabase par son slug (segment de url_site)
+async function fetchMarqueParSlug(slug) {
+  const url = `${SUPABASE_URL}/rest/v1/entreprises?url_site=like.*${encodeURIComponent('/' + slug)}&limit=1&select=*`;
+  const res = await fetch(url, {
+    headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}` }
+  });
+  if (!res.ok) return null;
+  const arr = await res.json();
+  return arr[0] || null;
+}
+
+// Récupérer les produits d'une marque (par nom_societe)
+async function fetchProduitsMarque(nomSociete, limit) {
+  const url = `${SUPABASE_URL}/rest/v1/produits?marque=eq.${encodeURIComponent(nomSociete)}&order=mis_en_avant.desc,created_at.desc&limit=${limit}&select=*`;
+  const res = await fetch(url, {
+    headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}` }
+  });
+  if (!res.ok) return [];
+  return await res.json();
+}
+
+// Récupérer les marques similaires (au moins une catégorie en commun, hors marque courante)
+async function fetchMarquesSimilaires(marque, limit = 3) {
+  if (!marque.categories || !Array.isArray(marque.categories) || !marque.categories.length) return [];
+  const cats = marque.categories.map(c => `"${c}"`).join(',');
+  const url = `${SUPABASE_URL}/rest/v1/entreprises?categories=ov.{${encodeURIComponent(cats)}}&id=neq.${marque.id}&order=verifiee.desc,vedette.desc,created_at.desc&limit=${limit}&select=id,nom_societe,description,ville,region,categories,verifiee,url_site`;
+  const res = await fetch(url, {
+    headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}` }
+  });
+  if (!res.ok) return [];
+  return await res.json();
+}
+
+// ─── Génération du HERO_TAGS (catégories + badges conditionnels) ───
+function genererHeroTags(marque) {
+  const cats = (marque.categories || []).join(' · ');
+  let html = `<span class="fm-tag fm-tag-cat">${echapper(cats)}</span>`;
+  if (marque.verifiee) html += `<span class="fm-tag fm-tag-verif">✓ Marque vérifiée</span>`;
+  if (marque.vedette)  html += `<span class="fm-tag fm-tag-vedette">★ Vedette</span>`;
+  return html;
+}
+
+// ─── Génération du HERO_META ───
+function genererHeroMeta(marque) {
+  const items = [];
+  if (marque.region)            items.push(['Région', marque.region]);
+  if (marque.ville)             items.push(['Ville', `${marque.ville}${marque.departement ? ' · ' + marque.departement : ''}`]);
+  if (marque.annee_creation)    items.push(['Fondé en', marque.annee_creation]);
+  if (marque.effectifs_societe) items.push(['Effectifs', marque.effectifs_societe]);
+
+  return items.map(([l, v]) => `
+        <div class="fm-meta-i">
+          <span class="fm-meta-l">${echapper(l)}</span>
+          <span class="fm-meta-v">${echapper(v)}</span>
+        </div>`).join('');
+}
+
+// ─── Génération du HERO_CTA (vide si Gratuit, bouton si Avancé/Premium) ───
+function genererHeroCta(marque) {
+  if (marque.offre_selectionnee === 'gratuite') return '';
+  if (!marque.url_site_internet) return '';
+  return `<div class="fm-hero-cta">
+        <a href="${echapper(marque.url_site_internet)}" class="btn-p" target="_blank" rel="noopener noreferrer">Visiter le site →</a>
+      </div>`;
+}
+
+// ─── SECTION DESCRIPTION (+ valeurs si Premium) ───
+function genererSectionDescription(marque) {
+  const desc = marque.description_page || '';
+  if (!desc.trim()) return '';
+
+  const paragraphes = desc.split(/\n\s*\n/).map(p => `<p>${echapper(p.trim())}</p>`).join('\n        ');
+
+  const isPremium = marque.offre_selectionnee === 'premium';
+  const valeurs = isPremium && Array.isArray(marque.valeurs) && marque.valeurs.length
+    ? marque.valeurs.map(v => `<li>${echapper(v)}</li>`).join('\n          ')
+    : '';
+
+  const gridClass = valeurs ? 'fm-desc-grid' : 'fm-desc-grid no-valeurs';
+  const blocValeurs = valeurs ? `
+      <aside class="fm-valeurs" aria-labelledby="fm-val-t">
+        <h3 id="fm-val-t">Valeurs de la marque</h3>
+        <ul>
+          ${valeurs}
+        </ul>
+      </aside>` : '';
+
+  return `
+<section class="fm-desc" aria-labelledby="fm-desc-t">
+  <div class="containeur">
+    <div class="s-label">À propos de la marque</div>
+    <h2 class="s-title" id="fm-desc-t">À propos de ${echapper(marque.nom_societe)}</h2>
+    <div class="s-div" aria-hidden="true"></div>
+    <div class="${gridClass}">
+      <div class="fm-desc-text">
+      ${paragraphes}
+      </div>${blocValeurs}
+    </div>
+  </div>
+</section>`;
+}
+
+// ─── SECTION HISTOIRE (Premium uniquement, si renseignée) ───
+function genererSectionHistoire(marque) {
+  if (marque.offre_selectionnee !== 'premium') return '';
+  if (!marque.histoire || !marque.histoire.trim()) return '';
+
+  const paragraphes = marque.histoire.split(/\n\s*\n/).map(p => `<p>${echapper(p.trim())}</p>`).join('\n      ');
+
+  return `
+<section class="fm-histoire" aria-labelledby="fm-hist-t">
+  <div class="containeur">
+    <div class="s-label">Notre histoire</div>
+    <h2 class="s-title" id="fm-hist-t">L'histoire de ${echapper(marque.nom_societe)}</h2>
+    <div class="s-div" aria-hidden="true"></div>
+    <div class="fm-histoire-text">
+    ${paragraphes}
+    </div>
+  </div>
+</section>`;
+}
+
+// ─── SECTION ORIGINES (Avancé + Premium) ───
+function genererSectionOrigines(marque) {
+  if (marque.offre_selectionnee === 'gratuite') return '';
+  const aOrigine = marque.origine_matieres && marque.origine_matieres.trim();
+  const aFabrication = marque.fabrication && marque.fabrication.trim();
+  if (!aOrigine && !aFabrication) return '';
+
+  let blocOrigine = '';
+  if (aOrigine) {
+    blocOrigine = `
+        <article class="fm-orig-bloc">
+          <h3>Origine des matières premières</h3>
+          <p>${echapper(marque.origine_matieres)}</p>
+        </article>`;
+  }
+
+  // Sites multiples ou fallback siège
+  let sitesHtml = '';
+  let nbSites = 0;
+  let departementsUniques = [];
+  if (Array.isArray(marque.sites_fabrication) && marque.sites_fabrication.length) {
+    sitesHtml = '<ul class="fm-sites">';
+    marque.sites_fabrication.forEach(s => {
+      sitesHtml += `
+            <li>${echapper(s.ville)}${s.departement ? ' · ' + echapper(s.departement) : ''}${s.type ? `<span class="fm-site-type">${echapper(s.type)}</span>` : ''}</li>`;
+    });
+    sitesHtml += '\n          </ul>';
+    nbSites = marque.sites_fabrication.length;
+    departementsUniques = [...new Set(marque.sites_fabrication.map(s => s.departement).filter(Boolean))];
+  } else if (marque.ville && marque.latitude && marque.longitude) {
+    sitesHtml = `<ul class="fm-sites">
+            <li>${echapper(marque.ville)}${marque.departement ? ' · ' + echapper(marque.departement) : ''}<span class="fm-site-type">Siège</span></li>
+          </ul>`;
+    nbSites = 1;
+    if (marque.departement) departementsUniques = [marque.departement];
+  }
+
+  let blocFabrication = '';
+  if (aFabrication || sitesHtml) {
+    blocFabrication = `
+        <article class="fm-orig-bloc">
+          <h3>Lieux de fabrication</h3>
+          ${aFabrication ? `<p>${echapper(marque.fabrication)}</p>` : ''}
+          ${sitesHtml}
+        </article>`;
+  }
+
+  const legendeSites = nbSites > 0
+    ? `${nbSites} site${nbSites > 1 ? 's' : ''} de fabrication${departementsUniques.length ? ' en ' + departementsUniques.join(' & ') : ''}`
+    : '';
+
+  return `
+<section class="fm-origines" aria-labelledby="fm-orig-t">
+  <div class="containeur">
+    <div class="s-label">Origines &amp; fabrication</div>
+    <h2 class="s-title" id="fm-orig-t">Origines des matières et lieux de fabrication</h2>
+    <div class="s-div" aria-hidden="true"></div>
+
+    <div class="fm-origines-grid">
+      <div class="fm-orig-blocs">
+      ${blocOrigine}${blocFabrication}
+      </div>
+      <div class="fm-carte-zone">
+        <div id="map-container" aria-label="Carte des sites de fabrication"></div>
+        ${legendeSites ? `<div class="fm-carte-legend">
+          <span class="fm-carte-legend-dot" aria-hidden="true"></span>
+          <span>${legendeSites}</span>
+        </div>` : ''}
+      </div>
+    </div>
+  </div>
+</section>`;
+}
+
+// ─── SECTION PRODUITS MARQUE (Avancé 5, Premium 20) ───
+function genererSectionProduitsMarque(marque, produits) {
+  if (marque.offre_selectionnee === 'gratuite') return '';
+  if (!produits.length) return '';
+
+  const cartes = produits.map(p => {
+    const imgWebp = p.image_webp || '';
+    const imgAvif = p.image_avif || '';
+    const imgHtml = imgWebp || imgAvif
+      ? `<picture>
+        ${imgAvif ? `<source srcset="${echapper(imgAvif)}" type="image/avif">` : ''}
+        <img src="${echapper(imgWebp || imgAvif)}" alt="${echapper(p.nom_produit)} — ${echapper(p.marque)}" width="600" height="600" loading="lazy" decoding="async" itemprop="image">
+      </picture>`
+      : `<div class="p-img-placeholder">Image à venir</div>`;
+    const prixHtml = p.prix ? `<div class="p-prix" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
+        <span itemprop="price" content="${echapper(String(p.prix).replace(/[^0-9.,]/g,'').replace(',','.'))}">${echapper(p.prix)}€</span>
+        <meta itemprop="priceCurrency" content="EUR">
+      </div>` : '';
+
+    return `
+      <article class="p-card" role="listitem" itemscope itemtype="https://schema.org/Product">
+        <a href="${echapper(p.url_produit || '#')}" class="p-card-link" target="_blank" rel="noopener noreferrer" aria-label="${echapper(p.nom_produit)}">${echapper(p.nom_produit)}</a>
+        <div class="p-img"><div class="p-img-inner">
+          ${imgHtml}
+        </div><div class="p-overlay"><span>Voir le produit →</span></div></div>
+        <div class="p-info">
+          <div class="p-brand" itemprop="brand" itemscope itemtype="https://schema.org/Brand"><span itemprop="name">${echapper(p.marque)}</span></div>
+          <h3 class="p-name" itemprop="name">${echapper(p.nom_produit)}</h3>
+          ${prixHtml}
+          ${marque.region ? `<div class="p-orig"><div class="p-orig-dot"></div><span class="p-orig-lbl">${echapper(marque.region)}</span></div>` : ''}
+        </div>
+      </article>`;
+  }).join('');
+
+  return `
+<section class="produits-section" aria-labelledby="prod-t">
+  <div class="containeur">
+    <div class="s-label">Produits phares</div>
+    <h2 class="s-title" id="prod-t">La sélection ${echapper(marque.nom_societe)}</h2>
+    <div class="s-div" aria-hidden="true"></div>
+    <p class="s-sub">Découvrez les produits directement sur le site de la marque.</p>
+    <div class="products-grid" role="list">
+      ${cartes}
+    </div>
+  </div>
+</section>`;
+}
+
+// ─── SECTION LABELS (toutes offres, si labels[] non vide) ───
+function genererSectionLabels(marque) {
+  if (!Array.isArray(marque.labels) || !marque.labels.length) return '';
+  const chips = marque.labels.map(l => `<span class="fm-chip">${echapper(l)}</span>`).join('\n        ');
+  return `
+<section class="fm-labels" aria-labelledby="fm-lab-t">
+  <div class="containeur">
+    <div class="s-label">Reconnaissance &amp; engagement</div>
+    <h2 class="s-title" id="fm-lab-t">Labels &amp; certifications</h2>
+    <div class="s-div" aria-hidden="true"></div>
+    <div class="fm-labels-grid">
+      ${chips}
+    </div>
+  </div>
+</section>`;
+}
+
+// ─── SECTION CTA FINAL (Avancé + Premium) ───
+function genererSectionCtaFinal(marque) {
+  if (marque.offre_selectionnee === 'gratuite') return '';
+  if (!marque.url_site_internet) return '';
+
+  let domaine = marque.url_site_internet;
+  try {
+    domaine = new URL(marque.url_site_internet).hostname.replace(/^www\./, '');
+  } catch(e) { /* fallback : URL brute */ }
+
+  return `
+<section class="fm-cta" aria-labelledby="fm-cta-t">
+  <div class="containeur">
+    <div class="fm-cta-content">
+      <h2 id="fm-cta-t">Découvrir <em>${echapper(marque.nom_societe)}</em> sur leur site</h2>
+      <p>Commande directe auprès de la marque. Vous soutenez une entreprise française à chaque achat.</p>
+    </div>
+    <a href="${echapper(marque.url_site_internet)}" class="btn-p" target="_blank" rel="noopener noreferrer">Visiter ${echapper(domaine)} →</a>
+  </div>
+</section>`;
+}
+
+// ─── SECTION MARQUES SIMILAIRES (toutes offres, si ≥1 résultat) ───
+function genererSectionSimilaires(similaires) {
+  if (!similaires.length) return '';
+  const cartes = similaires.map(s => {
+    const initiales = genererInitiales(s.nom_societe);
+    const slug = extraireSlugMarque(s.url_site);
+    const href = slug ? `/${FICHES_MARQUE.CHEMIN}/${slug}/` : '#';
+    const verif = s.verifiee ? `<span class="b-ver">✓ Vérifié</span>` : '';
+    const cat = (s.categories || [])[0] || '';
+    const desc = (s.description || '').slice(0, 140);
+    return `
+      <a href="${href}" class="b-card" role="listitem" itemscope itemtype="https://schema.org/Brand">
+        <div class="b-card-head">
+          <div class="b-logo" aria-hidden="true">${initiales}</div>
+          ${verif}
+        </div>
+        <div class="b-meta">
+          <p class="b-name" itemprop="name">${echapper(s.nom_societe)}</p>
+          ${cat ? `<span class="b-tag">${echapper(cat)}</span>` : ''}
+        </div>
+        <p class="b-desc">${echapper(desc)}</p>
+        <div class="b-footer">
+          <div style="display:flex;align-items:center;gap:.42rem">
+            <div class="b-dot" aria-hidden="true"></div>
+            <span class="b-loc">${echapper(s.ville || '')}${s.region ? ' — ' + echapper(s.region) : ''}</span>
+          </div>
+          <span class="b-link">Découvrir →</span>
+        </div>
+      </a>`;
+  }).join('');
+
+  return `
+<section class="fm-similaires" aria-labelledby="fm-sim-t">
+  <div class="containeur">
+    <div class="s-label">Vous aimerez aussi</div>
+    <h2 class="s-title" id="fm-sim-t">D'autres marques françaises à découvrir</h2>
+    <div class="s-div" aria-hidden="true"></div>
+    <div class="brands-grid" role="list">
+    ${cartes}
+    </div>
+  </div>
+</section>`;
+}
+
+// ─── MAP_DATA pour la carte d3 ───
+function genererMapDataScript(marque) {
+  if (marque.offre_selectionnee === 'gratuite') return '';
+  let points = [];
+  if (Array.isArray(marque.sites_fabrication) && marque.sites_fabrication.length) {
+    points = marque.sites_fabrication
+      .filter(s => s.lat && s.lng)
+      .map(s => ({
+        lon: parseFloat(s.lng),
+        lat: parseFloat(s.lat),
+        region: marque.region || '',
+        label: `${s.ville || ''}${s.type ? ' — ' + s.type : ''}`
+      }));
+  } else if (marque.latitude && marque.longitude) {
+    points = [{
+      lon: parseFloat(marque.longitude),
+      lat: parseFloat(marque.latitude),
+      region: marque.region || '',
+      label: `${marque.ville || ''} — Siège`
+    }];
+  }
+  if (!points.length) return '';
+  return `<script>const MAP_DATA = ${JSON.stringify(points)};</script>`;
+}
+
+// ─── JSON-LD marque ───
+function genererJsonLdMarque(marque, produits) {
+  const base = 'https://lamarquefrancaise.fr';
+  const slug = extraireSlugMarque(marque.url_site);
+  const pageUrl = `${base}/${FICHES_MARQUE.CHEMIN}/${slug}/`;
+
+  const localBusiness = {
+    "@context":"https://schema.org",
+    "@type":"LocalBusiness",
+    "name": marque.nom_societe,
+    "description": marque.description || marque.mini_descriptif || '',
+    "url": pageUrl,
+    "address": {
+      "@type":"PostalAddress",
+      ...(marque.ville && { "addressLocality": marque.ville }),
+      ...(marque.region && { "addressRegion": marque.region }),
+      "addressCountry": "FR"
+    },
+    "areaServed":"FR",
+    "inLanguage":"fr",
+    ...(marque.annee_creation && { "foundingDate": String(marque.annee_creation) }),
+    ...(marque.url_site_internet && { "sameAs": marque.url_site_internet })
+  };
+
+  const brand = {
+    "@context":"https://schema.org",
+    "@type":"Brand",
+    "name": marque.nom_societe,
+    ...(marque.url_site_internet && { "url": marque.url_site_internet })
+  };
+
+  const parts = [JSON.stringify(localBusiness), JSON.stringify(brand)];
+
+  if (produits.length && marque.offre_selectionnee !== 'gratuite') {
+    const itemList = {
+      "@context":"https://schema.org",
+      "@type":"ItemList",
+      "name": `Produits ${marque.nom_societe}`,
+      "itemListElement": produits.map((p, i) => ({
+        "@type":"ListItem",
+        "position": i + 1,
+        "item": {
+          "@type":"Product",
+          "name": p.nom_produit,
+          "brand": p.marque,
+          ...(p.prix && {
+            "offers": {
+              "@type":"Offer",
+              "price": String(p.prix).replace(/[^0-9.,]/g,'').replace(',', '.'),
+              "priceCurrency": "EUR"
+            }
+          })
+        }
+      }))
+    };
+    parts.push(JSON.stringify(itemList));
+  }
+
+  return parts.join(',');
+}
+
+// ─── CSS critique inline pour le hero fiche marque (LCP) ───
+function getFicheHeroCritique() {
+  return `.fm-hero{background:var(--navy);position:relative;overflow:hidden;padding:4rem 2rem}
+.fm-hero::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent,transparent 59px,rgba(184,150,62,.04) 59px,rgba(184,150,62,.04) 60px);pointer-events:none}
+.fm-hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.fm-hero .containeur{position:relative;z-index:1}
+.fm-hero-logo{position:absolute;left:-180px;top:50%;transform:translateY(-50%);width:160px;height:160px;background:rgba(255,255,255,.04);border:1px solid rgba(184,150,62,.3);display:flex;align-items:center;justify-content:center;color:var(--gold-l);font-family:Georgia,'Times New Roman',serif;font-size:3rem;letter-spacing:.05em;flex-shrink:0}
+.fm-hero-content{max-width:760px}
+.fm-hero h1{font-family:Georgia,'Times New Roman',serif;font-size:clamp(2rem,4.5vw,3.2rem);color:var(--white);font-weight:normal;line-height:1.1;letter-spacing:.02em;margin-bottom:.75rem}
+@media(max-width:1280px){.fm-hero-logo{position:relative;left:auto;top:auto;transform:none;margin-bottom:1.5rem}}
+@media(max-width:768px){.fm-hero{padding:3rem 1.25rem 2.5rem}.fm-hero-logo{width:110px;height:110px;font-size:2rem;margin-bottom:1.25rem}}
+.skip-link{position:absolute;top:-50px;left:1rem;background:var(--gold);color:var(--white);padding:.5rem 1rem;font-family:Arial,sans-serif;font-size:.85rem;text-decoration:none;z-index:999;transition:top .2s}.skip-link:focus{top:.5rem}`;
+}
+
+// ─── ORCHESTRATEUR — Génère une fiche marque complète ───
+async function genererFicheMarque(marque) {
+  const slug = extraireSlugMarque(marque.url_site);
+  if (!slug) {
+    console.warn(`⚠️  Marque ${marque.nom_societe} : url_site invalide, skip.`);
+    return null;
+  }
+
+  const offre = marque.offre_selectionnee || 'gratuite';
+  const limitProduits = offre === 'premium' ? 20 : (offre === 'avance' ? 5 : 0);
+
+  // Récupération données dépendantes en parallèle
+  const [produits, similaires] = await Promise.all([
+    limitProduits > 0 ? fetchProduitsMarque(marque.nom_societe, limitProduits) : Promise.resolve([]),
+    fetchMarquesSimilaires(marque, 3)
+  ]);
+
+  // Construction des variables SEO
+  const base = 'https://lamarquefrancaise.fr';
+  const pageUrl = `${base}/${FICHES_MARQUE.CHEMIN}/${slug}/`;
+  const titleSeo = `${marque.nom_societe} — Marque française ${(marque.categories || []).join(' · ')} | La Marque Française`;
+  const descSeo = (marque.description || marque.mini_descriptif || '').slice(0, 160);
+
+  // Construction des sections conditionnelles
+  const sectionDescription = genererSectionDescription(marque);
+  const sectionHistoire    = genererSectionHistoire(marque);
+  const sectionOrigines    = genererSectionOrigines(marque);
+  const sectionProduits    = genererSectionProduitsMarque(marque, produits);
+  const sectionLabels      = genererSectionLabels(marque);
+  const sectionCtaFinal    = genererSectionCtaFinal(marque);
+  const sectionSimilaires  = genererSectionSimilaires(similaires);
+
+  // Variables carte (chargées uniquement si origines affichées)
+  const carteAffichee = sectionOrigines !== '';
+  const mapDataScript = carteAffichee ? genererMapDataScript(marque) : '';
+  const carteLibs = carteAffichee
+    ? `<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js" defer></script>`
+    : '';
+  const carteCssLink = carteAffichee
+    ? `<link rel="preload" href="/css/carte-france-et-legende.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="/css/carte-france-et-legende.css"></noscript>`
+    : '';
+  const cartePreconnect = carteAffichee
+    ? `<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>`
+    : '';
+  const carteScript = carteAffichee
+    ? `<script src="/js/carte.js" defer></script>`
+    : '';
+
+  // Faux objet "page" pour réutiliser genererBreadcrumb*
+  const pageFictive = { type: 'marque', marque };
+
+  // Remplacements
+  let html = pageMarqueTemplate;
+  const remplacements = [
+    ['{{PAGE_TITLE}}',             echapper(titleSeo)],
+    ['{{PAGE_DESCRIPTION}}',       echapper(descSeo)],
+    ['{{PAGE_CANONICAL}}',         pageUrl],
+    ['{{OG_TITLE}}',               echapper(titleSeo)],
+    ['{{OG_DESC}}',                echapper(descSeo)],
+    ['{{OG_URL}}',                 pageUrl],
+    ['{{GEO_REGION}}',             geoRegionCode(marque.departement)],
+    ['{{GEO_PLACENAME}}',          echapper(marque.region || '')],
+    ['{{ORGANIZATION_JSON_LD}}',   organizationJsonLd],
+    ['{{BREADCRUMB}}',             genererBreadcrumb(pageFictive)],
+    ['{{BREADCRUMB_JSON_LD}}',     genererBreadcrumbJsonLd(pageFictive)],
+    ['{{JSON_LD_MARQUE}}',         genererJsonLdMarque(marque, produits)],
+    ['{{NAV}}',                    resoudreNav('')],
+    ['{{FOOTER}}',                 footerHtml],
+    ['{{GLOBAL_CSS}}',             globalCss],
+    ['{{NAV_CSS}}',                navCss],
+    ['{{BREADCRUMB_CSS}}',         breadcrumbCss],
+    ['{{FICHE_HERO_CRITIQUE_CSS}}', getFicheHeroCritique()],
+    ['{{FOOTER_CSS}}',             footerCss],
+    ['{{CARTE_PRECONNECT}}',       cartePreconnect],
+    ['{{CARTE_LIBS}}',             carteLibs],
+    ['{{CARTE_CSS_FICHE}}',        carteCssLink],
+    ['{{LOGO_INITIALES}}',         genererInitiales(marque.nom_societe)],
+    ['{{HERO_TAGS}}',              genererHeroTags(marque)],
+    ['{{NOM_SOCIETE}}',            echapper(marque.nom_societe)],
+    ['{{MINI_DESCRIPTIF}}',        echapper(marque.mini_descriptif || '')],
+    ['{{HERO_META}}',              genererHeroMeta(marque)],
+    ['{{HERO_CTA}}',               genererHeroCta(marque)],
+    ['{{SECTION_DESCRIPTION}}',    sectionDescription],
+    ['{{SECTION_HISTOIRE}}',       sectionHistoire],
+    ['{{SECTION_ORIGINES}}',       sectionOrigines],
+    ['{{SECTION_PRODUITS_MARQUE}}', sectionProduits],
+    ['{{SECTION_LABELS}}',         sectionLabels],
+    ['{{SECTION_CTA_FINAL}}',      sectionCtaFinal],
+    ['{{SECTION_SIMILAIRES}}',     sectionSimilaires],
+    ['{{MAP_DATA_SCRIPT}}',        mapDataScript],
+    ['{{CARTE_SCRIPT_FICHE}}',     carteScript],
+    ['{{MENU_BURGER_JS}}',         menuBurgerJs],
+    ['{{EMAIL_OBFUSQUE_JS}}',      emailObfusqueJs],
+    ['{{ANALYTICS_JS}}',           analyticsJs]
+  ];
+
+  for (const [marqueur, contenu] of remplacements) {
+    html = html.replaceAll(marqueur, contenu);
+  }
+
+  return { html, slug };
+}
+
+// ─── Scanner les fiches marque à (re)builder ───
+async function buildFichesMarques() {
+  const dossierRacine = path.join(__dirname, FICHES_MARQUE.CHEMIN);
+  if (!fs.existsSync(dossierRacine)) {
+    console.log(`ℹ️  Aucun dossier ${FICHES_MARQUE.CHEMIN}/, étape skipée.`);
+    return [];
+  }
+
+  const slugsTraites = [];
+  const sousDossiers = fs.readdirSync(dossierRacine, { withFileTypes: true })
+    .filter(d => d.isDirectory())
+    .map(d => d.name);
+
+  let buildes = 0;
+  let skippes = 0;
+
+  for (const slug of sousDossiers) {
+    const fichierIndex = path.join(dossierRacine, slug, 'index.html');
+    if (!fs.existsSync(fichierIndex)) {
+      console.warn(`⚠️  ${FICHES_MARQUE.CHEMIN}/${slug}/ : pas de index.html, skip.`);
+      continue;
+    }
+
+    const contenuActuel = fs.readFileSync(fichierIndex, 'utf8');
+    // Détection des marqueurs : si aucun {{...}} → on ne touche pas
+    if (!/\{\{[A-Z_]+\}\}/.test(contenuActuel)) {
+      console.log(`⏭️  ${FICHES_MARQUE.CHEMIN}/${slug}/ : déjà buildé, skip.`);
+      skippes++;
+      slugsTraites.push(slug);  // on garde pour le sitemap
+      continue;
+    }
+
+    // Récupération de la marque sur Supabase
+    const marque = await fetchMarqueParSlug(slug);
+    if (!marque) {
+      console.warn(`⚠️  ${FICHES_MARQUE.CHEMIN}/${slug}/ : marque introuvable dans Supabase.`);
+      continue;
+    }
+
+    try {
+      const result = await genererFicheMarque(marque);
+      if (!result) continue;
+      fs.writeFileSync(fichierIndex, result.html, 'utf8');
+      console.log(`✅ ${FICHES_MARQUE.CHEMIN}/${slug}/`);
+      buildes++;
+      slugsTraites.push(slug);
+    } catch (e) {
+      console.error(`❌ ${FICHES_MARQUE.CHEMIN}/${slug}/ : ${e.message}`);
+    }
+  }
+
+  console.log(`\nFiches marque : ${buildes} construite(s), ${skippes} skippée(s).`);
+  return slugsTraites;
+}
+
 // ─────────────────────────────────────────────
 // FONCTION : générer le sitemap.xml à partir des pages marquées sitemap: true
+// + des fiches marque présentes
 // ─────────────────────────────────────────────
-function genererSitemap() {
+function genererSitemap(slugsMarques = []) {
   const base = 'https://lamarquefrancaise.fr';
   const buildDate = new Date().toISOString().split('T')[0];
 
-  const urls = PAGES
+  const urlsPages = PAGES
     .filter(page => page.sitemap === true)
     .map(page => {
       // Convertir 'index.html' → '/' et 'foo/index.html' → '/foo/'
@@ -845,8 +1518,14 @@ function genererSitemap() {
     <loc>${base}${loc}</loc>
     <lastmod>${buildDate}</lastmod>
   </url>`;
-    })
-    .join('\n');
+    });
+
+  const urlsMarques = slugsMarques.map(slug => `  <url>
+    <loc>${base}/${FICHES_MARQUE.CHEMIN}/${slug}/</loc>
+    <lastmod>${buildDate}</lastmod>
+  </url>`);
+
+  const urls = [...urlsPages, ...urlsMarques].join('\n');
 
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
@@ -856,7 +1535,7 @@ ${urls}
 
   const cheminSitemap = path.join(__dirname, 'sitemap.xml');
   fs.writeFileSync(cheminSitemap, sitemap, 'utf8');
-  const nbUrls = PAGES.filter(p => p.sitemap === true).length;
+  const nbUrls = PAGES.filter(p => p.sitemap === true).length + slugsMarques.length;
   console.log(`✅ sitemap.xml généré (${nbUrls} URL${nbUrls > 1 ? 's' : ''})`);
 }
 
@@ -1002,10 +1681,13 @@ async function build() {
     succes++;
   }
 
-  console.log(`\nBuild terminé : ${succes} page(s) traitée(s).`);
+  console.log(`\nBuild terminé : ${succes} page(s) standard traitée(s).`);
 
-  // Génération du sitemap.xml
-  genererSitemap();
+  // ───── Build des fiches marque ─────
+  const slugsMarques = await buildFichesMarques();
+
+  // ───── Génération du sitemap.xml (incluant les fiches marque) ─────
+  genererSitemap(slugsMarques);
 }
 
 build();
