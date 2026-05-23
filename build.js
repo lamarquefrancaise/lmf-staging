@@ -3,6 +3,7 @@
 
 const fs   = require('fs');
 const path = require('path');
+const { execSync } = require('child_process');
 
 const SUPABASE_URL = process.env.VITE_SUPABASE_URL;
 const SUPABASE_KEY = process.env.VITE_SUPABASE_ANON_KEY;
@@ -1507,29 +1508,71 @@ async function buildFichesMarques() {
 }
 
 // ─────────────────────────────────────────────
+// FONCTION : récupérer la date du dernier commit Git pour un fichier
+// Retourne 'YYYY-MM-DD' ou null si Git indisponible / fichier non commité
+// ─────────────────────────────────────────────
+const _gitDateCache = new Map();
+function getLastModFromGit(relativePath) {
+  if (_gitDateCache.has(relativePath)) return _gitDateCache.get(relativePath);
+
+  try {
+    // %cs = committer date au format short ISO (YYYY-MM-DD)
+    // -1 = dernier commit uniquement
+    const stdout = execSync(
+      `git log -1 --format=%cs -- "${relativePath}"`,
+      { cwd: __dirname, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }
+    ).trim();
+    const date = /^\d{4}-\d{2}-\d{2}$/.test(stdout) ? stdout : null;
+    _gitDateCache.set(relativePath, date);
+    return date;
+  } catch (e) {
+    _gitDateCache.set(relativePath, null);
+    return null;
+  }
+}
+
+// ─────────────────────────────────────────────
 // FONCTION : générer le sitemap.xml à partir des pages marquées sitemap: true
 // + des fiches marque présentes
+// Le <lastmod> de chaque URL utilise la date du dernier commit Git du fichier
+// source, avec fallback sur la date du build si Git indisponible.
 // ─────────────────────────────────────────────
 function genererSitemap(slugsMarques = []) {
   const base = 'https://lamarquefrancaise.fr';
   const buildDate = new Date().toISOString().split('T')[0];
 
+  // Compteurs pour le diagnostic
+  let nbAvecGit = 0;
+  let nbFallback = 0;
+
+  // URLs des pages statiques
   const urlsPages = PAGES
     .filter(page => page.sitemap === true)
     .map(page => {
       // Convertir 'index.html' → '/' et 'foo/index.html' → '/foo/'
       let loc = page.fichier.replace(/index\.html$/, '');
       if (!loc.startsWith('/')) loc = '/' + loc;
+
+      const lastmod = getLastModFromGit(page.fichier) || buildDate;
+      if (getLastModFromGit(page.fichier)) nbAvecGit++; else nbFallback++;
+
       return `  <url>
     <loc>${base}${loc}</loc>
-    <lastmod>${buildDate}</lastmod>
+    <lastmod>${lastmod}</lastmod>
   </url>`;
     });
 
-  const urlsMarques = slugsMarques.map(slug => `  <url>
+  // URLs des fiches marque
+  const urlsMarques = slugsMarques.map(slug => {
+    const cheminSource = `${FICHES_MARQUE.CHEMIN}/${slug}/index.html`;
+    const lastmod = getLastModFromGit(cheminSource) || buildDate;
+    if (getLastModFromGit(cheminSource)) nbAvecGit++; else nbFallback++;
+
+    return `  <url>
     <loc>${base}/${FICHES_MARQUE.CHEMIN}/${slug}/</loc>
-    <lastmod>${buildDate}</lastmod>
-  </url>`);
+    <lastmod>${lastmod}</lastmod>
+  </url>`;
+  });
 
   const urls = [...urlsPages, ...urlsMarques].join('\n');
 
@@ -1542,7 +1585,10 @@ ${urls}
   const cheminSitemap = path.join(__dirname, 'sitemap.xml');
   fs.writeFileSync(cheminSitemap, sitemap, 'utf8');
   const nbUrls = PAGES.filter(p => p.sitemap === true).length + slugsMarques.length;
-  console.log(`✅ sitemap.xml généré (${nbUrls} URL${nbUrls > 1 ? 's' : ''})`);
+  console.log(`✅ sitemap.xml généré (${nbUrls} URL${nbUrls > 1 ? 's' : ''}, ${nbAvecGit} via Git, ${nbFallback} fallback build date)`);
+  if (nbFallback > 0 && nbAvecGit === 0) {
+    console.warn(`⚠️  Aucune date Git récupérée. Vérifie que le repo est cloné avec l'historique complet (fetch-depth: 0 dans GitHub Actions).`);
+  }
 }
 
 // ─────────────────────────────────────────────
