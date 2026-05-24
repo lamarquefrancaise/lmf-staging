@@ -1099,7 +1099,7 @@ function genererSectionOrigines(marque) {
       ${blocOrigine}${blocFabrication}
       </div>
       <div class="fm-carte-zone">
-        <div id="map-container" aria-label="Carte des sites de fabrication"><div id="mapTip" class="map-tip"></div></div>
+        <div id="map-container" role="img" aria-label="Carte des sites de fabrication"><div id="mapTip" class="map-tip"></div></div>
         ${legendeSites ? `<div class="fm-carte-legend">
           <span class="fm-carte-legend-dot" aria-hidden="true"></span>
           <span>${legendeSites}</span>
@@ -1338,6 +1338,12 @@ function getFicheHeroCritique() {
 .fm-hero h1{font-family:Georgia,'Times New Roman',serif;font-size:clamp(2rem,4.5vw,3.2rem);color:var(--white);font-weight:normal;line-height:1.1;letter-spacing:.02em;margin-bottom:.75rem}
 @media(max-width:1280px){.fm-hero-logo{position:relative;left:auto;top:auto;transform:none;margin-bottom:1.5rem}}
 @media(max-width:768px){.fm-hero{padding:3rem 1.25rem 2.5rem}.fm-hero-logo{width:110px;height:110px;font-size:2rem;margin-bottom:1.25rem}}
+.fm-desc{background:var(--cream);padding:5rem 2rem}
+.fm-desc-grid{display:grid;grid-template-columns:1.7fr 1fr;gap:3.5rem;align-items:start;margin-top:3rem}
+.fm-desc-grid.no-valeurs{grid-template-columns:1fr;max-width:780px}
+.fm-desc-text p{font-family:Arial,sans-serif;font-size:.95rem;color:var(--muted);line-height:1.85;font-weight:300;margin-bottom:1.1rem}
+.fm-desc-text p:last-child{margin-bottom:0}
+@media(max-width:768px){.fm-desc{padding:3.5rem 1.25rem}.fm-desc-grid{grid-template-columns:1fr;gap:2rem;margin-top:2rem}}
 .skip-link{position:absolute;top:-50px;left:1rem;background:var(--gold);color:var(--white);padding:.5rem 1rem;font-family:Arial,sans-serif;font-size:.85rem;text-decoration:none;z-index:999;transition:top .2s}.skip-link:focus{top:.5rem}`;
 }
 
@@ -1376,14 +1382,14 @@ async function genererFicheMarque(marque) {
   // Variables carte (chargées uniquement si origines affichées)
   const carteAffichee = sectionOrigines !== '';
   const mapDataScript = carteAffichee ? genererMapDataScript(marque) : '';
-  const carteLibs = carteAffichee
-    ? `<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js" defer></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js" defer></script>`
-    : '';
+  // d3 et topojson sont chargés en lazy par carte-fiche.js (via IntersectionObserver)
+  // → pas de <script src=cdnjs> dans le head, gain de ~280 Ko bloquants
+  const carteLibs = '';
   const carteCssLink = carteAffichee
     ? `<link rel="preload" href="/css/carte-france-et-legende.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link rel="stylesheet" href="/css/carte-france-et-legende.css"></noscript>`
     : '';
+  // preconnect cdnjs uniquement si la carte est affichée (anticipe le lazy load d3)
   const cartePreconnect = carteAffichee
     ? `<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>`
     : '';

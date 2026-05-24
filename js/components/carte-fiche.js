@@ -43,8 +43,8 @@
   function chargerLibs() {
     if (window.d3 && window.topojson) return Promise.resolve();
     return Promise.all([
-      loadScript('/js/d3.min.js'),
-      loadScript('/js/topojson.min.js')
+      loadScript('https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js'),
+      loadScript('https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js')
     ]);
   }
 
