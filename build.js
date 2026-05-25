@@ -106,8 +106,9 @@ function trouverNomAffichageSousCat(sousCategSlug) {
 // HELPERS FICHE MARQUE
 // ─────────────────────────────────────────────
 
-// Extraire le slug depuis l'URL Supabase
-// Ex : "https://lamarquefrancaise.fr/annuaire-marques/rucher-marandou" → "rucher-marandou"
+// Extraire le slug depuis url_site Supabase (URL relative)
+// Ex : "/annuaire-marques/rucher-marandou/" → "rucher-marandou"
+// Robuste : gère aussi les anciennes URLs absolues et les variantes avec/sans slash final
 function extraireSlugMarque(urlSite) {
   if (!urlSite || typeof urlSite !== 'string') return null;
   const cleanUrl = urlSite.replace(/\/+$/, '');
@@ -915,14 +916,22 @@ async function genererSectionMarques(data) {
 // ═══════════════════════════════════════════════════════════════════
 
 // Récupérer une marque Supabase par son slug (segment de url_site)
+// Compatible avec les formats :
+//   - "/annuaire-marques/rucher-marandou/"   (nouveau format relatif avec slash final)
+//   - "/annuaire-marques/rucher-marandou"    (sans slash final)
+//   - "https://.../annuaire-marques/rucher-marandou"  (ancien format absolu)
 async function fetchMarqueParSlug(slug) {
-  const url = `${SUPABASE_URL}/rest/v1/entreprises?url_site=like.*${encodeURIComponent('/' + slug)}&limit=1&select=*`;
+  // Pattern PostgREST "like" : matche tout ce qui contient "/{slug}/" ou se termine par "/{slug}"
+  // → on utilise "like.*${slug}*" et on filtre côté JS pour ne garder que les vraies correspondances
+  const url = `${SUPABASE_URL}/rest/v1/entreprises?url_site=like.*${encodeURIComponent('/' + slug)}*&select=*`;
   const res = await fetch(url, {
     headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}` }
   });
   if (!res.ok) return null;
   const arr = await res.json();
-  return arr[0] || null;
+  // Filtrage côté JS : on garde uniquement la marque dont le slug extrait correspond exactement
+  // (évite les faux positifs si plusieurs marques contiennent "rucher" dans leur url)
+  return arr.find(m => extraireSlugMarque(m.url_site) === slug) || null;
 }
 
 // Récupérer les produits d'une marque (par nom_societe)
