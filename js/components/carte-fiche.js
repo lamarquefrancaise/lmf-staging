@@ -153,9 +153,9 @@
         g.on('mouseenter', function(event) {
           tip.textContent = site.label || '';
           tip.style.opacity = '1';
-          positionnerTip(event);
+          positionnerTip(event, tip);
         });
-        g.on('mousemove', positionnerTip);
+        g.on('mousemove', function(event) { positionnerTip(event, tip); });
         g.on('mouseleave', () => { tip.style.opacity = '0'; });
       });
     } catch (e) {
@@ -164,7 +164,7 @@
     }
   }
 
-  function positionnerTip(event) {
+  function positionnerTip(event, tip) {
     const rect = container.getBoundingClientRect();
     let x = event.clientX - rect.left + 12;
     let y = event.clientY - rect.top - 10;
