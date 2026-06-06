@@ -1664,8 +1664,9 @@ async function genererAnnuaireData() {
   const totalMarques = items.length;
   const totalVerifiees = items.filter(m => m.verifiee).length;
   const totalAvecCoords = items.filter(m => m.longitude !== null && m.latitude !== null).length;
+  const regionsCouvertes = new Set(items.map(m => m.region).filter(Boolean)).size;
 
-  console.log(`   ↳ Annuaire : ${totalMarques} marques (${totalVerifiees} vérifiées, ${totalAvecCoords} avec coords)`);
+  console.log(`   ↳ Annuaire : ${totalMarques} marques (${totalVerifiees} vérifiées, ${totalAvecCoords} avec coords, ${regionsCouvertes} régions couvertes)`);
 
   // JSON.stringify gère lui-même l'échappement des caractères spéciaux et </script>
   // Sécurité supplémentaire : remplacer </script et <!-- au cas où
@@ -1675,7 +1676,7 @@ async function genererAnnuaireData() {
 
   return `<script>
 window.ANNUAIRE_MARQUES = ${json};
-window.ANNUAIRE_STATS = { total: ${totalMarques}, verifiees: ${totalVerifiees}, avecCoords: ${totalAvecCoords} };
+window.ANNUAIRE_STATS = { total: ${totalMarques}, verifiees: ${totalVerifiees}, avecCoords: ${totalAvecCoords}, regions: ${regionsCouvertes} };
 </script>`;
 }
 
