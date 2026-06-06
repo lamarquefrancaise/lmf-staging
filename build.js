@@ -218,6 +218,7 @@ function genererBreadcrumb(page) {
 <div class="breadcrumb-bar">
   <nav aria-label="Fil d'Ariane" class="breadcrumb">
     <a href="/">Accueil</a><span class="breadcrumb-sep">›</span>
+    <a href="/annuaire-marques/">Annuaire des marques</a><span class="breadcrumb-sep">›</span>
     <a href="/${FICHES_MARQUE.CHEMIN}/">${FICHES_MARQUE.LABEL}</a><span class="breadcrumb-sep">›</span>
     <span class="breadcrumb-current" aria-current="page">${echapper(page.marque.nom_societe)}</span>
   </nav>
