@@ -1,0 +1,1168 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Annuaire des marques françaises — La Marque Française</title>
+<meta name="description" content="Annuaire interactif des marques françaises référencées sur La Marque Française. Carte de France, filtres par catégorie et région, simulateur d'impact d'un achat made in France.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="author" content="La Marque Française">
+<meta name="theme-color" content="#0d1b3e">
+<link rel="canonical" href="https://www.lamarquefrancaise.fr/annuaire-marques/">
+
+<!-- Preconnect ressources critiques -->
+<link rel="preconnect" href="https://gqmlwvmdsvtapljpdiyh.supabase.co" crossorigin>
+
+<!-- JSON-LD minimal — page noindex -->
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[
+{"@type":"ListItem","position":1,"name":"Accueil","item":"https://www.lamarquefrancaise.fr/"},
+{"@type":"ListItem","position":2,"name":"Annuaire des marques","item":"https://www.lamarquefrancaise.fr/annuaire-marques/"}
+]}
+</script>
+
+<style>
+{{GLOBAL_CSS}}
+
+{{NAV_CSS}}
+
+{{BREADCRUMB_CSS}}
+
+/* ══════════════════════════════════════════════════════════
+   PAGE ANNUAIRE — styles spécifiques
+   ══════════════════════════════════════════════════════════ */
+
+/* Compatibilité défensive si certains tokens manquent dans global.css */
+:root{--red-l-fallback:#f87171;--green-pos:#82d4a4}
+
+html,body{overflow-x:hidden;max-width:100vw}
+
+/* ── Skip link ─────────────────────────────────────────── */
+.skip-link{position:absolute;top:-50px;left:1rem;background:var(--gold);color:var(--navy);padding:.5rem 1rem;font-family:var(--sans,Arial,sans-serif);font-size:.85rem;text-decoration:none;z-index:999;transition:top .2s}
+.skip-link:focus{top:.5rem;outline:2px solid var(--white)}
+
+/* ── HERO ANNUAIRE ─────────────────────────────────────── */
+.an-hero{background:var(--navy);padding:3rem 2rem 4rem;position:relative;overflow:hidden;text-align:center}
+.an-hero::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent,transparent 59px,rgba(184,150,62,.04) 59px,rgba(184,150,62,.04) 60px);pointer-events:none}
+.an-hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.an-hero-inner{max-width:820px;margin:0 auto;position:relative;z-index:1}
+.an-hero-badge{display:inline-flex;align-items:center;gap:.5rem;border:1px solid rgba(184,150,62,.5);color:var(--gold-l);font-family:Arial,sans-serif;font-size:.72rem;letter-spacing:.2em;padding:.3rem .9rem;margin-bottom:1.25rem;text-transform:uppercase}
+.an-hero h1{font-family:Georgia,'Times New Roman',serif;font-size:clamp(1.8rem,4vw,3rem);color:var(--white);font-weight:normal;line-height:1.2;letter-spacing:.02em;margin-bottom:.75rem}
+.an-hero h1 em{color:var(--gold-l);font-style:normal}
+.an-hero-desc{font-family:Arial,sans-serif;font-size:.95rem;color:rgba(255,255,255,.6);line-height:1.75;max-width:620px;margin:0 auto 2rem}
+.an-hero-stats{display:flex;justify-content:center;gap:2.5rem;flex-wrap:wrap}
+.an-stat{font-family:Arial,sans-serif;font-size:.75rem;color:rgba(255,255,255,.4);display:flex;align-items:center;gap:.4rem}
+.an-stat strong{color:var(--gold-l);font-size:1rem;font-weight:normal;font-family:Georgia,'Times New Roman',serif}
+
+/* ── FILTRES ───────────────────────────────────────────── */
+.an-filtres{background:var(--cream);padding:3rem 2rem;border-bottom:1px solid var(--border)}
+.an-filtres-inner{max-width:1100px;margin:0 auto}
+.an-filtres-head{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:1.5rem}
+.an-filtres-titre{font-family:Georgia,'Times New Roman',serif;font-size:1.1rem;color:var(--navy);font-weight:normal;margin:0}
+.an-filtres-reset{background:transparent;border:none;color:var(--gold-d);font-family:Arial,sans-serif;font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;padding:.4rem .6rem;transition:color .2s}
+.an-filtres-reset:hover,.an-filtres-reset:focus-visible{color:var(--navy);outline:none}
+.an-filtres-reset:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.an-filtres-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem}
+.an-fld{display:flex;flex-direction:column;gap:.4rem;min-width:0}
+.an-fld label{font-family:Arial,sans-serif;font-size:.7rem;letter-spacing:.18em;color:var(--gold-d);text-transform:uppercase}
+.an-fld select,.an-fld input{font-family:Arial,sans-serif;font-size:.92rem;color:var(--text);background:var(--white);border:1px solid var(--border);padding:.7rem .9rem;width:100%;max-width:100%;box-sizing:border-box;transition:border-color .2s;appearance:none;-webkit-appearance:none}
+.an-fld select{background-image:linear-gradient(45deg,transparent 50%,var(--muted) 50%),linear-gradient(135deg,var(--muted) 50%,transparent 50%);background-position:calc(100% - 18px) 50%,calc(100% - 12px) 50%;background-size:6px 6px,6px 6px;background-repeat:no-repeat;padding-right:2.5rem;cursor:pointer}
+.an-fld select:focus,.an-fld input:focus{border-color:var(--gold);outline:2px solid var(--gold);outline-offset:1px}
+.an-filtres-count{font-family:Arial,sans-serif;font-size:.82rem;color:var(--muted);margin-top:1.5rem}
+.an-filtres-count strong{color:var(--navy);font-family:Georgia,'Times New Roman',serif;font-weight:normal}
+@media(max-width:768px){
+  .an-filtres{padding:2rem 1rem}
+  .an-filtres-grid{grid-template-columns:1fr;gap:.85rem}
+  .an-filtres-head{flex-direction:column;align-items:flex-start;gap:.6rem}
+}
+
+/* ── CARTE + LISTE ─────────────────────────────────────── */
+.an-explorer{background:var(--white);padding:4rem 2rem}
+.an-explorer-inner{max-width:1100px;margin:0 auto}
+.an-explorer-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:2.5rem;align-items:start}
+
+.an-carte-wrap{position:relative;background:var(--cream);border:1px solid var(--border);padding:1.5rem;min-width:0;overflow:hidden}
+.an-carte-label{font-family:Arial,sans-serif;font-size:.7rem;letter-spacing:.2em;color:var(--gold-d);text-transform:uppercase;margin-bottom:1rem}
+#carteFrance{width:100%;height:auto;display:block}
+#carteFrance .reg{fill:#e5dfd3;stroke:#c5bba8;stroke-width:.8;transition:fill .25s}
+#carteFrance .reg.actif{fill:#f4ede0}
+#carteFrance .reg-label{font-family:Arial,sans-serif;font-size:7px;fill:rgba(116,83,0,.4);letter-spacing:.05em;text-transform:uppercase;pointer-events:none}
+#carteFrance .pin{cursor:pointer;transition:opacity .4s ease}
+#carteFrance .pin .halo{transition:r .2s,fill .2s}
+#carteFrance .pin:hover .halo,#carteFrance .pin:focus .halo{fill:rgba(184,150,62,.4);r:14}
+#carteFrance .pin:focus{outline:none}
+#carteFrance .pin:focus .point{stroke:var(--gold);stroke-width:2}
+#carteFrance .pulse{animation:pulsePin 2s infinite;transform-origin:center}
+@keyframes pulsePin{0%,100%{opacity:.5;transform:scale(1)}50%{opacity:.2;transform:scale(1.6)}}
+.an-carte-legende{display:flex;gap:1.25rem;flex-wrap:wrap;margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border);font-family:Arial,sans-serif;font-size:.72rem;color:var(--muted)}
+.an-leg{display:flex;align-items:center;gap:.4rem}
+.an-leg-pin{width:10px;height:10px;border-radius:50%;border:1px solid var(--white);box-shadow:0 0 0 1px var(--gold);flex-shrink:0}
+.an-leg-pin.dark{box-shadow:0 0 0 1px var(--gold-d);background:var(--gold-d)}
+.an-leg-pin.light{background:var(--gold)}
+.an-leg-pulse{width:10px;height:10px;border-radius:50%;background:rgba(184,150,62,.3);animation:pulsePin 2s infinite;flex-shrink:0}
+
+.an-liste-wrap{min-width:0}
+.an-liste-label{font-family:Arial,sans-serif;font-size:.7rem;letter-spacing:.2em;color:var(--gold-d);text-transform:uppercase;margin-bottom:1rem}
+.an-liste{display:flex;flex-direction:column;gap:.5rem;max-height:560px;overflow-y:auto;padding-right:.5rem;scrollbar-width:thin;scrollbar-color:var(--gold) var(--cream-d)}
+.an-liste::-webkit-scrollbar{width:4px}
+.an-liste::-webkit-scrollbar-track{background:var(--cream-d)}
+.an-liste::-webkit-scrollbar-thumb{background:var(--gold);border-radius:2px}
+
+.an-card{background:var(--white);border:1px solid var(--border);padding:.9rem 1rem;display:flex;gap:.75rem;cursor:pointer;transition:border-color .2s,background .2s,box-shadow .2s}
+.an-card:hover,.an-card.actif{border-color:var(--gold);background:var(--cream);box-shadow:-3px 0 0 var(--gold)}
+.an-card:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.an-logo{width:36px;height:36px;background:var(--navy);color:var(--gold-l);display:flex;align-items:center;justify-content:center;font-family:Georgia,'Times New Roman',serif;font-size:.78rem;flex-shrink:0}
+.an-card-body{flex:1;min-width:0}
+.an-card-head{display:flex;align-items:center;gap:.5rem;margin-bottom:.2rem}
+.an-card-titre{font-family:Georgia,'Times New Roman',serif;font-size:.92rem;color:var(--navy);font-weight:normal;margin:0;flex:1;min-width:0;text-decoration:none;border-bottom:1px dotted var(--border);padding-bottom:1px;transition:color .2s,border-color .2s;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;line-height:1.3}
+.an-card-titre:hover,.an-card-titre:focus-visible{color:var(--gold-d);border-bottom-color:var(--gold);outline:none}
+.an-ver{font-family:Arial,sans-serif;font-size:.55rem;letter-spacing:.08em;color:var(--gold-d);border:1px solid var(--gold);padding:.1rem .35rem;text-transform:uppercase;flex-shrink:0}
+.an-loc{font-family:Arial,sans-serif;font-size:.7rem;color:var(--muted);margin-bottom:.3rem}
+.an-dot{display:inline-block;width:4px;height:4px;background:var(--gold);border-radius:50%;margin-right:.3rem;vertical-align:middle}
+.an-tags{display:flex;gap:.3rem;flex-wrap:wrap;margin-bottom:.4rem}
+.an-tag{font-family:Arial,sans-serif;font-size:.6rem;letter-spacing:.05em;color:var(--muted);background:var(--cream);border:1px solid var(--border);padding:.1rem .35rem;text-transform:uppercase}
+.an-card-detail{font-family:Arial,sans-serif;font-size:.75rem;color:var(--muted);line-height:1.6;margin:.4rem 0}
+.an-card-actions{display:flex;gap:.4rem;flex-wrap:wrap;margin-top:.3rem}
+.an-btn-fiche{background:var(--navy);border:1px solid var(--navy);color:var(--gold-l);font-family:Arial,sans-serif;font-size:.65rem;letter-spacing:.08em;text-transform:uppercase;padding:.4rem .7rem;cursor:pointer;text-decoration:none;display:inline-block;transition:background .2s}
+.an-btn-fiche:hover,.an-btn-fiche:focus-visible{background:var(--gold-d);outline:none}
+.an-btn-fiche:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.an-btn-simul{background:transparent;border:1px solid var(--border);color:var(--navy);font-family:Arial,sans-serif;font-size:.65rem;letter-spacing:.08em;text-transform:uppercase;padding:.4rem .7rem;cursor:pointer;transition:all .2s}
+.an-btn-simul:hover,.an-btn-simul:focus-visible{border-color:var(--navy);background:var(--navy);color:var(--gold-l);outline:none}
+.an-btn-simul:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+
+.an-empty{text-align:center;padding:2.5rem 1.5rem;border:1px solid var(--border);background:var(--cream);font-family:Arial,sans-serif;font-size:.82rem;color:var(--muted)}
+.an-empty strong{display:block;font-family:Georgia,'Times New Roman',serif;font-size:1.05rem;color:var(--navy);font-weight:normal;margin-bottom:.5rem}
+
+/* Skeletons cartes */
+@keyframes shim{0%{background-position:-200% 0}100%{background-position:200% 0}}
+.sk{background:linear-gradient(90deg,var(--cream) 25%,var(--cream-d) 50%,var(--cream) 75%);background-size:200% 100%;animation:shim 1.5s infinite}
+.sk-card{border:1px solid var(--border);padding:.9rem 1rem;display:flex;gap:.75rem;background:var(--white);min-height:90px}
+.sk-logo{width:36px;height:36px;flex-shrink:0}
+.sk-lines{flex:1;display:flex;flex-direction:column;gap:.4rem}
+.sk-line{height:12px}
+.sk-line.s{width:60%}
+.sk-line.m{width:40%}
+
+@media(max-width:900px){.an-explorer-grid{grid-template-columns:1fr;gap:1.5rem}}
+@media(max-width:768px){
+  .an-explorer{padding:3rem 1rem}
+  .an-carte-wrap{padding:1rem}
+  .an-liste{max-height:none}
+}
+
+/* ══════════════════════════════════════════════════════════
+   CALCULATEUR D'IMPACT
+   ══════════════════════════════════════════════════════════ */
+.calc-section{background:var(--navy);padding:5rem 2rem;position:relative;overflow:hidden}
+.calc-section::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent,transparent 59px,rgba(184,150,62,.04) 59px,rgba(184,150,62,.04) 60px);pointer-events:none}
+.calc-section::after{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.calc-inner{max-width:1100px;margin:0 auto;position:relative;z-index:1}
+.calc-head{text-align:center;max-width:680px;margin:0 auto 3rem}
+.calc-label{font-family:Arial,sans-serif;font-size:.72rem;letter-spacing:.25em;color:var(--gold-l);text-transform:uppercase;margin-bottom:.75rem}
+.calc-title{font-family:Georgia,'Times New Roman',serif;font-size:clamp(1.6rem,3vw,2.4rem);color:var(--white);font-weight:normal;line-height:1.2;margin:0}
+.calc-title em{color:var(--gold-l);font-style:normal}
+.calc-div{width:48px;height:2px;background:var(--gold);margin:1.25rem auto}
+.calc-sub{font-family:Arial,sans-serif;font-size:.92rem;color:rgba(255,255,255,.6);line-height:1.75;margin:0}
+
+.calc-layout{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start}
+@media(max-width:900px){.calc-layout{grid-template-columns:1fr;gap:1.5rem}}
+
+/* Formulaire */
+.calc-form{background:rgba(255,255,255,.03);border:1px solid rgba(184,150,62,.2);padding:2rem;min-width:0}
+.calc-form-titre{font-family:Georgia,'Times New Roman',serif;font-size:1.15rem;color:var(--white);font-weight:normal;margin:0 0 1rem}
+
+.calc-mode{margin-bottom:1.5rem;padding:.85rem 1rem;border:1px solid rgba(184,150,62,.2)}
+.calc-mode.actif{background:rgba(184,150,62,.1);border-color:var(--gold)}
+.calc-mode.general{background:rgba(255,255,255,.04)}
+.calc-mode-label{font-family:Arial,sans-serif;font-size:.62rem;letter-spacing:.18em;color:var(--gold-l);text-transform:uppercase;margin-bottom:.3rem}
+.calc-mode-actif-head{display:flex;justify-content:space-between;align-items:flex-start;gap:.75rem}
+.calc-mode-actif-info{min-width:0;flex:1}
+.calc-mode-actif-nom{font-family:Georgia,'Times New Roman',serif;font-size:.95rem;color:var(--white);line-height:1.4}
+.calc-mode-actif-loc{font-family:Arial,sans-serif;font-size:.7rem;color:rgba(255,255,255,.55);margin-top:.2rem}
+.calc-mode-retirer{background:transparent;border:1px solid rgba(184,150,62,.4);color:var(--gold-l);font-family:Arial,sans-serif;font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;padding:.3rem .55rem;cursor:pointer;flex-shrink:0;transition:background .2s}
+.calc-mode-retirer:hover,.calc-mode-retirer:focus-visible{background:rgba(184,150,62,.2);outline:none}
+.calc-mode-retirer:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.calc-mode-general-text{font-family:Arial,sans-serif;font-size:.78rem;color:rgba(255,255,255,.65);margin:0;line-height:1.55}
+
+.calc-fld{display:flex;flex-direction:column;gap:.4rem;margin-bottom:1.25rem;min-width:0}
+.calc-fld label{font-family:Arial,sans-serif;font-size:.7rem;letter-spacing:.18em;color:var(--gold-l);text-transform:uppercase}
+.calc-fld input,.calc-fld select{font-family:Arial,sans-serif;font-size:.95rem;color:var(--white);background:rgba(0,0,0,.25);border:1px solid rgba(184,150,62,.3);padding:.75rem .9rem;width:100%;max-width:100%;box-sizing:border-box;transition:border-color .2s;appearance:none;-webkit-appearance:none}
+.calc-fld input::placeholder{color:rgba(255,255,255,.3)}
+.calc-fld select{background-image:linear-gradient(45deg,transparent 50%,var(--gold-l) 50%),linear-gradient(135deg,var(--gold-l) 50%,transparent 50%);background-position:calc(100% - 18px) 50%,calc(100% - 12px) 50%;background-size:6px 6px,6px 6px;background-repeat:no-repeat;padding-right:2.5rem;cursor:pointer}
+.calc-fld select option{background:var(--navy);color:var(--white)}
+.calc-fld input:focus,.calc-fld select:focus{border-color:var(--gold);outline:2px solid var(--gold);outline-offset:1px}
+.calc-help{font-family:Arial,sans-serif;font-size:.7rem;color:rgba(255,255,255,.4);font-style:italic;line-height:1.5}
+.calc-row{display:grid;grid-template-columns:1fr 1fr;gap:.85rem}
+.calc-erreur{margin-bottom:.75rem;padding:.6rem .85rem;background:rgba(248,113,113,.1);border:1px solid rgba(248,113,113,.4);color:var(--red-l,#f87171);font-family:Arial,sans-serif;font-size:.78rem;line-height:1.4}
+.calc-go{background:var(--gold);color:var(--navy);border:none;padding:.85rem 1.5rem;font-family:Arial,sans-serif;font-size:.85rem;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;width:100%;margin-top:.5rem;transition:background .2s,transform .15s}
+.calc-go:hover{background:var(--gold-l);transform:translateY(-1px)}
+.calc-go:focus-visible{outline:2px solid var(--gold-l);outline-offset:2px}
+
+/* Résultats */
+.calc-result{background:rgba(255,255,255,.03);border:1px solid rgba(184,150,62,.2);padding:2rem;min-height:380px;display:flex;flex-direction:column;min-width:0;overflow:hidden}
+.calc-result-empty{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:1rem;padding:2rem 1rem}
+.calc-result-empty-ico{font-size:2.5rem;opacity:.4;color:var(--gold-l);line-height:1}
+.calc-result-empty p{font-family:Arial,sans-serif;font-size:.88rem;color:rgba(255,255,255,.5);line-height:1.65;max-width:300px;margin:0}
+
+.calc-r-label{font-family:Arial,sans-serif;font-size:.7rem;letter-spacing:.18em;color:var(--gold-l);text-transform:uppercase;margin-bottom:.6rem}
+.calc-r-titre{font-family:Georgia,'Times New Roman',serif;font-size:1.35rem;color:var(--white);font-weight:normal;line-height:1.3;margin-bottom:.5rem}
+.calc-r-titre .ev-prix{color:var(--gold-l)}
+.calc-r-titre .ev-vert{color:#82d4a4}
+.calc-r-sub{font-family:Arial,sans-serif;font-size:.8rem;color:rgba(255,255,255,.55);margin-bottom:1.75rem;line-height:1.6;word-break:break-word}
+.calc-r-sub strong{color:var(--white);font-family:Georgia,'Times New Roman',serif;font-weight:normal}
+
+.calc-cards{display:flex;flex-direction:column;gap:.7rem;margin-bottom:1.5rem}
+.calc-c{background:rgba(0,0,0,.2);border:1px solid rgba(184,150,62,.15);padding:1.1rem 1.2rem}
+.calc-c-head{display:flex;align-items:baseline;justify-content:space-between;gap:.75rem;margin-bottom:.75rem}
+.calc-c-label{font-family:Arial,sans-serif;font-size:.65rem;letter-spacing:.18em;color:var(--gold-l);text-transform:uppercase}
+.calc-c-val{font-family:Georgia,'Times New Roman',serif;font-size:1.65rem;color:#82d4a4;line-height:1}
+.calc-c-text{font-family:Arial,sans-serif;font-size:.82rem;color:rgba(255,255,255,.8);line-height:1.55;margin:0 0 .85rem}
+.calc-c-text strong{color:var(--white);font-family:Georgia,'Times New Roman',serif;font-weight:normal}
+.calc-c-legende{font-family:Arial,sans-serif;font-size:.7rem;color:rgba(255,255,255,.4);margin:.7rem 0 0;line-height:1.55;font-style:italic}
+.calc-c-legende strong{color:rgba(255,255,255,.6);font-style:normal;font-weight:normal}
+
+.calc-bar-row{display:flex;align-items:center;gap:.5rem;margin-bottom:.35rem;font-family:Arial,sans-serif;font-size:.7rem;color:rgba(255,255,255,.5)}
+.calc-bar-row:last-child{margin-bottom:0}
+.calc-bar-lbl{width:28px;flex-shrink:0}
+.calc-bar-lbl.fr{color:#82d4a4}
+.calc-bar-lbl.imp{color:rgba(255,255,255,.4)}
+.calc-bar-track{flex:1;height:8px;background:rgba(255,255,255,.06);min-width:0}
+.calc-bar-fill{height:100%;transition:width .6s}
+.calc-bar-fill.fr{background:#82d4a4}
+.calc-bar-fill.imp-gris{background:rgba(255,255,255,.25)}
+.calc-bar-fill.imp-rouge{background:var(--red-l,#f87171)}
+.calc-bar-val{font-family:Georgia,'Times New Roman',serif;color:var(--white);min-width:60px;text-align:right;flex-shrink:0}
+.calc-bar-val.imp{color:rgba(255,255,255,.6)}
+.calc-bar-val.imp-rouge{color:var(--red-l,#f87171)}
+
+.calc-c-emploi{font-family:Arial,sans-serif;font-size:.78rem;color:rgba(255,255,255,.6);margin:.5rem 0 0;line-height:1.55}
+.calc-c-emploi strong{font-family:Georgia,'Times New Roman',serif;font-weight:normal}
+.calc-c-emploi strong.fr{color:#82d4a4}
+.calc-c-emploi strong.imp{color:rgba(255,255,255,.5)}
+
+.calc-c-cout{background:rgba(255,255,255,.04);border:1px solid rgba(184,150,62,.15);padding:1rem 1.2rem;margin-bottom:1.5rem}
+.calc-c-cout-text{font-family:Arial,sans-serif;font-size:.8rem;color:rgba(255,255,255,.7);margin:0;line-height:1.5}
+.calc-c-cout-text strong{color:var(--white);font-family:Georgia,'Times New Roman',serif;font-weight:normal}
+
+.calc-synthese{background:linear-gradient(135deg,rgba(184,150,62,.15),rgba(184,150,62,.04));border:1px solid var(--gold);padding:1.2rem 1.3rem;margin-top:auto}
+.calc-synthese-label{font-family:Arial,sans-serif;font-size:.65rem;letter-spacing:.2em;color:var(--gold-l);text-transform:uppercase;margin-bottom:.5rem}
+.calc-synthese-text{font-family:Georgia,'Times New Roman',serif;font-size:1.02rem;color:var(--white);line-height:1.6;margin:0;word-break:break-word}
+
+/* Méthodologie */
+.calc-meth{margin-top:2.5rem;padding-top:1.5rem;border-top:1px solid rgba(184,150,62,.15);font-family:Arial,sans-serif;font-size:.78rem;color:rgba(255,255,255,.55);max-width:820px;margin-left:auto;margin-right:auto}
+.calc-meth summary{cursor:pointer;color:var(--gold-l);letter-spacing:.15em;text-transform:uppercase;font-size:.7rem;text-align:center;list-style:none;padding:.5rem}
+.calc-meth summary::-webkit-details-marker{display:none}
+.calc-meth summary::after{content:' +';color:var(--gold)}
+.calc-meth[open] summary::after{content:' −'}
+.calc-meth-content{line-height:1.75;margin:1.5rem 0 0}
+.calc-meth-content p{margin:0 0 1rem}
+.calc-meth-content p:last-child{margin:0;color:rgba(255,255,255,.4);font-size:.74rem;font-style:italic}
+.calc-meth-content strong{color:var(--white);font-family:Georgia,'Times New Roman',serif;font-weight:normal}
+
+@media(max-width:768px){
+  .calc-section{padding:3rem 1rem}
+  .calc-form,.calc-result{padding:1.5rem 1.25rem}
+  .calc-c-val{font-size:1.4rem}
+  .calc-r-titre{font-size:1.15rem}
+  .calc-synthese-text{font-size:.95rem}
+}
+@media(max-width:480px){.calc-row{grid-template-columns:1fr}}
+
+{{FOOTER_CSS}}
+</style>
+</head>
+<body>
+
+<a href="#contenu-principal" class="skip-link">Aller au contenu</a>
+
+<!-- NAV -->
+{{NAV}}
+
+<main id="contenu-principal">
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb-bar">
+  <nav aria-label="Fil d'Ariane" class="breadcrumb">
+    <a href="/">Accueil</a><span class="breadcrumb-sep">›</span>
+    <span class="breadcrumb-current" aria-current="page">Annuaire des marques</span>
+  </nav>
+</div>
+
+<!-- HERO -->
+<header class="an-hero">
+  <div class="an-hero-inner">
+    <div class="an-hero-badge">Annuaire interne</div>
+    <h1>Annuaire des <em>marques françaises</em></h1>
+    <p class="an-hero-desc">Explorez les marques référencées directement sur la carte de France. Les filtres font apparaître et disparaître les pins en temps réel. Un simulateur d'impact mesure les retombées d'un achat made in France.</p>
+    <div class="an-hero-stats">
+      <div class="an-stat"><strong id="statAffiche">—</strong>&nbsp;sur&nbsp;<strong id="statTotal">—</strong>&nbsp;marques affichées</div>
+      <div class="an-stat" aria-hidden="true">·</div>
+      <div class="an-stat"><strong id="statVer">—</strong>&nbsp;marques vérifiées</div>
+      <div class="an-stat" aria-hidden="true">·</div>
+      <div class="an-stat"><strong>13</strong>&nbsp;régions couvertes</div>
+    </div>
+  </div>
+</header>
+
+<!-- FILTRES -->
+<section class="an-filtres" aria-labelledby="filtres-titre">
+  <div class="an-filtres-inner">
+    <div class="an-filtres-head">
+      <h2 class="an-filtres-titre" id="filtres-titre">Filtrer la carte et l'annuaire</h2>
+      <button type="button" class="an-filtres-reset" id="resetFiltres">Réinitialiser</button>
+    </div>
+    <div class="an-filtres-grid">
+      <div class="an-fld">
+        <label for="filtreCategorie">Catégorie</label>
+        <select id="filtreCategorie" aria-label="Filtrer par catégorie">
+          <option value="">Toutes les catégories</option>
+          <option value="Epicerie fine">Épicerie fine</option>
+          <option value="Mode">Mode</option>
+          <option value="Beauté">Beauté</option>
+          <option value="Bijoux">Bijoux</option>
+          <option value="Bricolage">Bricolage</option>
+          <option value="Maison">Maison</option>
+          <option value="Sport">Sport</option>
+          <option value="Technologie">Technologie</option>
+        </select>
+      </div>
+      <div class="an-fld">
+        <label for="filtreRegion">Région</label>
+        <select id="filtreRegion" aria-label="Filtrer par région">
+          <option value="">Toutes les régions</option>
+          <option value="Auvergne-Rhône-Alpes">Auvergne-Rhône-Alpes</option>
+          <option value="Bourgogne-Franche-Comté">Bourgogne-Franche-Comté</option>
+          <option value="Bretagne">Bretagne</option>
+          <option value="Centre-Val de Loire">Centre-Val de Loire</option>
+          <option value="Corse">Corse</option>
+          <option value="Grand Est">Grand Est</option>
+          <option value="Hauts-de-France">Hauts-de-France</option>
+          <option value="Île-de-France">Île-de-France</option>
+          <option value="Normandie">Normandie</option>
+          <option value="Nouvelle-Aquitaine">Nouvelle-Aquitaine</option>
+          <option value="Occitanie">Occitanie</option>
+          <option value="Pays de la Loire">Pays de la Loire</option>
+          <option value="Provence-Alpes-Côte d'Azur">Provence-Alpes-Côte d'Azur</option>
+        </select>
+      </div>
+      <div class="an-fld">
+        <label for="filtreStatut">Statut</label>
+        <select id="filtreStatut" aria-label="Filtrer par statut">
+          <option value="">Toutes les marques</option>
+          <option value="verifiee">Marques vérifiées uniquement</option>
+          <option value="vedette">Marques vedettes uniquement</option>
+        </select>
+      </div>
+    </div>
+    <p class="an-filtres-count"><strong id="filtreCount">—</strong> marque(s) correspondante(s)</p>
+  </div>
+</section>
+
+<!-- CARTE + LISTE -->
+<section class="an-explorer" aria-labelledby="explorer-titre">
+  <h2 id="explorer-titre" class="sr-only" style="position:absolute;left:-9999px">Carte et liste des marques</h2>
+  <div class="an-explorer-inner">
+    <div class="an-explorer-grid">
+
+      <!-- CARTE -->
+      <div class="an-carte-wrap">
+        <div class="an-carte-label">Carte interactive</div>
+        <svg id="carteFrance" viewBox="0 0 500 540" role="img" aria-label="Carte de France des marques référencées">
+          <!-- Le contenu (régions + pins) est injecté par carte-annuaire.js après chargement TopoJSON -->
+        </svg>
+        <div class="an-carte-legende" aria-label="Légende de la carte">
+          <span class="an-leg"><span class="an-leg-pin light" aria-hidden="true"></span>Marque vérifiée</span>
+          <span class="an-leg"><span class="an-leg-pin dark" aria-hidden="true"></span>Marque non vérifiée</span>
+          <span class="an-leg"><span class="an-leg-pulse" aria-hidden="true"></span>Marque vedette</span>
+        </div>
+      </div>
+
+      <!-- LISTE -->
+      <div class="an-liste-wrap">
+        <div class="an-liste-label">Marques affichées</div>
+        <div class="an-liste" id="liste" role="list" aria-live="polite" aria-busy="true">
+          <!-- Skeletons initiaux -->
+          <div class="sk-card"><div class="sk sk-logo"></div><div class="sk-lines"><div class="sk sk-line s"></div><div class="sk sk-line m"></div><div class="sk sk-line s"></div></div></div>
+          <div class="sk-card"><div class="sk sk-logo"></div><div class="sk-lines"><div class="sk sk-line s"></div><div class="sk sk-line m"></div><div class="sk sk-line s"></div></div></div>
+          <div class="sk-card"><div class="sk sk-logo"></div><div class="sk-lines"><div class="sk sk-line s"></div><div class="sk sk-line m"></div><div class="sk sk-line s"></div></div></div>
+          <div class="sk-card"><div class="sk sk-logo"></div><div class="sk-lines"><div class="sk sk-line s"></div><div class="sk sk-line m"></div><div class="sk sk-line s"></div></div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CALCULATEUR D'IMPACT -->
+<section class="calc-section" id="calculateur" aria-labelledby="calc-titre">
+  <div class="calc-inner">
+    <div class="calc-head">
+      <div class="calc-label">Simulateur d'impact</div>
+      <h2 class="calc-title" id="calc-titre">Mesurez les retombées d'un achat <em>made in France</em></h2>
+      <div class="calc-div" aria-hidden="true"></div>
+      <p class="calc-sub">Choisissez un produit, indiquez son prix et le pays auquel le comparer. Le simulateur montre concrètement ce que représente votre euro dépensé : ce qui reste en France, le CO₂ évité, le travail financé localement.</p>
+    </div>
+
+    <div class="calc-layout">
+
+      <!-- Formulaire -->
+      <div class="calc-form">
+        <h3 class="calc-form-titre">Vos paramètres d'achat</h3>
+
+        <!-- Bannière de mode -->
+        <div class="calc-mode general" id="calcModeGen">
+          <div class="calc-mode-label">Mode général · sans marque sélectionnée</div>
+          <p class="calc-mode-general-text">Le calcul utilisera des moyennes nationales. Pour un résultat plus précis qui tient compte de votre localisation, sélectionnez une marque sur la carte ou dans la liste ci-dessus.</p>
+        </div>
+        <div class="calc-mode actif" id="calcModeActif" hidden>
+          <div class="calc-mode-actif-head">
+            <div class="calc-mode-actif-info">
+              <div class="calc-mode-label">Mode précis · marque sélectionnée</div>
+              <div class="calc-mode-actif-nom" id="calcModeNom">—</div>
+              <div class="calc-mode-actif-loc" id="calcModeLoc">—</div>
+            </div>
+            <button type="button" class="calc-mode-retirer" id="calcRetirer">Retirer</button>
+          </div>
+        </div>
+
+        <div class="calc-fld">
+          <label for="calcCat">Type de produit</label>
+          <select id="calcCat" required aria-required="true">
+            <option value="">— Sélectionner —</option>
+            <option value="Epicerie fine">Épicerie fine (alimentaire)</option>
+            <option value="Mode">Mode &amp; textile</option>
+            <option value="Beauté">Cosmétique &amp; soin</option>
+            <option value="Bijoux">Bijou</option>
+            <option value="Maison">Maison &amp; déco</option>
+            <option value="Sport">Sport &amp; équipement</option>
+            <option value="Bricolage">Outil &amp; bricolage</option>
+            <option value="Technologie">Technologie &amp; électronique</option>
+          </select>
+        </div>
+
+        <div class="calc-row">
+          <div class="calc-fld">
+            <label for="calcPrix">Prix (€)</label>
+            <input type="number" id="calcPrix" min="1" max="100000" step="1" placeholder="80" required aria-required="true">
+          </div>
+          <div class="calc-fld">
+            <label for="calcDuree">Durée d'usage (ans)</label>
+            <input type="number" id="calcDuree" min="0.1" max="50" step="0.5" placeholder="5">
+          </div>
+        </div>
+
+        <div class="calc-fld">
+          <label for="calcPays">Comparer à un achat depuis…</label>
+          <select id="calcPays" required aria-required="true">
+            <option value="CN">Chine</option>
+            <option value="BD">Bangladesh</option>
+            <option value="TR">Turquie</option>
+            <option value="DE">Allemagne</option>
+            <option value="IT">Italie</option>
+            <option value="ES">Espagne</option>
+            <option value="US">États-Unis</option>
+            <option value="MA">Maroc</option>
+          </select>
+          <span class="calc-help">Ajuste la distance, le mode de transport et l'intensité carbone d'origine.</span>
+        </div>
+
+        <div class="calc-fld" id="calcCpWrap" hidden>
+          <label for="calcCp">Votre code postal</label>
+          <input type="text" id="calcCp" inputmode="numeric" maxlength="5" placeholder="75001" autocomplete="postal-code">
+          <span class="calc-help">Calcule la distance entre vous, la marque, et le port d'arrivée du produit importé. Optionnel — par défaut, des moyennes nationales sont utilisées.</span>
+        </div>
+
+        <div class="calc-erreur" id="calcErreur" hidden role="alert"></div>
+
+        <button type="button" class="calc-go" id="calcGo">Calculer l'impact</button>
+      </div>
+
+      <!-- Résultats -->
+      <div class="calc-result" id="calcResult" aria-live="polite">
+        <div class="calc-result-empty" id="calcResultEmpty">
+          <div class="calc-result-empty-ico" aria-hidden="true">⊕</div>
+          <p>Renseignez vos paramètres pour découvrir l'impact comparé d'un achat français.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Méthodologie -->
+    <details class="calc-meth">
+      <summary>Comment ces chiffres sont calculés&nbsp;?</summary>
+      <div class="calc-meth-content">
+        <p><strong>Économie locale.</strong> La part de votre euro qui reste en France correspond à la valeur ajoutée captée par les entreprises, salariés, et impôts français à chaque étape de la chaîne. Pour un produit fabriqué en France : 55 à 78 % selon la catégorie. Pour un produit importé : 12 à 35 %, soit la part captée par le transport, la distribution et les marges locales. Source : tableaux entrées-sorties INSEE par branche.</p>
+        <p><strong>Empreinte carbone.</strong> Le CO₂ inclut la production et le transport. Le transport maritime émet ≈ 0,015 kg CO₂ par tonne-kilomètre, le routier ≈ 0,1 kg, l'aérien ≈ 1,1 kg. Pour un achat français, la distance utilisée est la distance réelle entre vous et la marque (formule haversine). Pour un import, on ajoute le trajet pays d'origine → port d'entrée en France, puis route jusqu'à vous. Source : Base Empreinte ADEME. L'équivalent en kilomètres de voiture utilise la moyenne française de ≈ 200 g CO₂/km.</p>
+        <p><strong>Emploi en France.</strong> Le contenu en heures de travail français par tranche de 100 € varie de 1,0 h (technologie) à 1,8 h (mode et textile) pour un produit français, contre 0,35 à 0,50 h pour un produit importé (logistique et retail uniquement). Source : comptes nationaux INSEE et coefficients sectoriels de contenu en emploi.</p>
+        <p>Ces chiffres sont des moyennes sectorielles, pas des mesures marque par marque. Le simulateur donne un ordre de grandeur, pas une analyse de cycle de vie complète.</p>
+      </div>
+    </details>
+  </div>
+</section>
+
+</main>
+
+<!-- FOOTER -->
+{{FOOTER}}
+
+<!-- ═══════════════════════════════════════════════════════════
+     LIBRAIRIES — D3 + TopoJSON pour la carte
+     ═══════════════════════════════════════════════════════════ -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js" defer></script>
+
+<!-- ═══════════════════════════════════════════════════════════
+     LOGIQUE DE LA PAGE
+     ═══════════════════════════════════════════════════════════ -->
+<script defer>
+(function(){
+'use strict';
+
+/* ── Configuration Supabase ────────────────────────────── */
+const SUPABASE_URL = '{{SUPABASE_URL}}';
+const SUPABASE_KEY = '{{SUPABASE_ANON_KEY}}';
+const TABLE        = 'entreprises';
+
+/* ── Utilitaires ───────────────────────────────────────── */
+function echapper(str){
+  const d=document.createElement('div');
+  d.appendChild(document.createTextNode(str==null?'':String(str)));
+  return d.innerHTML;
+}
+function slugify(s){
+  return (s||'').toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+    .replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
+}
+function urlFiche(m){
+  // Priorité : slug stocké en BDD, sinon généré depuis le nom
+  const slug = m.slug || slugify(m.nom_societe);
+  return `/annuaire-marques/${slug}/`;
+}
+function initiales(s){
+  return (s||'').trim().substring(0,2).toUpperCase() || '··';
+}
+function formatEur(v){
+  return new Intl.NumberFormat('fr-FR',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(v);
+}
+function lireCache(cle,dureeMs){
+  try{
+    const raw=localStorage.getItem(cle);
+    if(!raw) return null;
+    const c=JSON.parse(raw);
+    if(Date.now()-c.timestamp>dureeMs) return null;
+    return c.data;
+  }catch(_){return null}
+}
+function ecrireCache(cle,data){
+  try{localStorage.setItem(cle,JSON.stringify({data,timestamp:Date.now()}))}
+  catch(_){}
+}
+
+/* ── État global ───────────────────────────────────────── */
+const etat = {
+  toutes: [],
+  filtrees: [],
+  marqueActive: null,
+  marqueSimul: null,
+  geo: null
+};
+
+/* ── Récupération Supabase ─────────────────────────────── */
+async function fetchMarques(){
+  if(!SUPABASE_KEY || SUPABASE_KEY.startsWith('{{')){
+    throw new Error('Clé Supabase manquante.');
+  }
+  const params = new URLSearchParams({
+    select: 'nom_societe,slug,categories,description,mini_descriptif,region,departement,url_site,verifiee,vedette,longitude,latitude',
+    order: 'nom_societe.asc',
+    limit: '500'
+  });
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/${TABLE}?${params}`,{
+    headers:{
+      'apikey': SUPABASE_KEY,
+      'Authorization': `Bearer ${SUPABASE_KEY}`,
+      'Accept': 'application/json'
+    }
+  });
+  if(!res.ok) throw new Error('HTTP '+res.status);
+  return res.json();
+}
+
+/* ── CARTE FRANCE (D3 + TopoJSON) ──────────────────────── */
+const REGIONS_FR_URL = '/js/regions-france.json'; // Servi depuis le dossier /js du site
+let projection = null, path = null;
+
+async function chargerCarte(){
+  // Attendre que D3 et TopoJSON soient chargés (script defer)
+  if(typeof d3 === 'undefined' || typeof topojson === 'undefined'){
+    setTimeout(chargerCarte, 100);
+    return;
+  }
+  try{
+    const topo = await fetch(REGIONS_FR_URL).then(r=>{
+      if(!r.ok) throw new Error('Topo HTTP '+r.status);
+      return r.json();
+    });
+    const objKey = Object.keys(topo.objects)[0];
+    const regions = topojson.feature(topo, topo.objects[objKey]);
+
+    const svg = d3.select('#carteFrance');
+    projection = d3.geoMercator().fitSize([500, 540], regions);
+    path = d3.geoPath().projection(projection);
+
+    // Régions
+    svg.append('g').attr('class','regions')
+      .selectAll('path')
+      .data(regions.features)
+      .enter().append('path')
+      .attr('class','reg')
+      .attr('d', path)
+      .attr('data-region', d => d.properties.nom || d.properties.NOM || '');
+
+    // Groupe pour les pins (rendus après régions)
+    svg.append('g').attr('class','pins');
+
+    // Rendre les pins quand on a les données
+    if(etat.toutes.length) rendrePins();
+  }catch(err){
+    console.warn('[LMF] Carte indispo :', err.message);
+  }
+}
+
+function rendrePins(){
+  if(!projection) return;
+  const svg = d3.select('#carteFrance .pins');
+  const visibles = new Set(etat.filtrees.map(m=>m.nom_societe));
+
+  const pins = svg.selectAll('g.pin').data(etat.toutes, d => d.nom_societe);
+
+  // Exit
+  pins.exit().remove();
+
+  // Enter
+  const enter = pins.enter().append('g')
+    .attr('class','pin')
+    .attr('tabindex', 0)
+    .attr('role','button')
+    .attr('aria-label', d => `Voir la fiche de ${d.nom_societe}, ${d.departement || ''}`)
+    .on('click', (e,d) => {
+      if(visibles.has(d.nom_societe)) window.location.href = urlFiche(d);
+    })
+    .on('keydown', (e,d) => {
+      if((e.key==='Enter'||e.key===' ') && visibles.has(d.nom_societe)){
+        e.preventDefault();
+        window.location.href = urlFiche(d);
+      }
+    })
+    .on('mouseenter', (e,d) => setActif(d.nom_societe, 'pin'))
+    .on('mouseleave', () => setActif(null, 'pin'));
+
+  // Halo pulsant pour vedettes
+  enter.filter(d => d.vedette)
+    .append('circle')
+    .attr('class','pulse')
+    .attr('r', 9)
+    .attr('fill','rgba(184,150,62,.3)');
+
+  // Halo standard
+  enter.append('circle').attr('class','halo')
+    .attr('r', 10).attr('fill','rgba(184,150,62,.18)');
+
+  // Point central
+  enter.append('circle').attr('class','point')
+    .attr('r', 4.5)
+    .attr('stroke','#fff').attr('stroke-width', 1.2);
+
+  // Cœur blanc
+  enter.append('circle').attr('class','core')
+    .attr('r', 1.5).attr('fill','#fff');
+
+  // Update (positions et visibilité)
+  const all = enter.merge(pins);
+  all.each(function(d){
+    const lat = parseFloat(d.latitude), lon = parseFloat(d.longitude);
+    if(isNaN(lat) || isNaN(lon)){ d3.select(this).style('display','none'); return; }
+    const [x, y] = projection([lon, lat]);
+    d3.select(this).style('display', null);
+    d3.select(this).selectAll('circle').attr('cx', x).attr('cy', y);
+    d3.select(this).select('.point').attr('fill', d.verifiee ? 'var(--gold)' : 'var(--gold-d)');
+    const v = visibles.has(d.nom_societe);
+    d3.select(this).style('opacity', v ? 1 : .08).style('pointer-events', v ? 'auto' : 'none');
+  });
+}
+
+/* ── Rendu liste ───────────────────────────────────────── */
+function rendreListe(){
+  const liste = document.getElementById('liste');
+  liste.setAttribute('aria-busy','false');
+
+  if(etat.filtrees.length === 0){
+    liste.innerHTML = '<div class="an-empty"><strong>Aucune marque ne correspond</strong>Modifiez vos filtres ou réinitialisez la sélection.</div>';
+    return;
+  }
+
+  liste.innerHTML = etat.filtrees.map(m => rendreCarte(m)).join('');
+
+  // Brancher événements
+  liste.querySelectorAll('.an-card').forEach(card => {
+    const nom = card.getAttribute('data-marque');
+    card.addEventListener('mouseenter', () => setActif(nom, 'liste'));
+    card.addEventListener('mouseleave', () => setActif(null, 'liste'));
+    card.addEventListener('click', e => {
+      if(e.target.closest('.an-card-titre,.an-btn-fiche,.an-btn-simul')) return;
+      setActif(nom === etat.marqueActive ? null : nom, 'click');
+    });
+    card.addEventListener('keydown', e => {
+      if(e.key === 'Enter' || e.key === ' '){
+        if(e.target.classList.contains('an-card')){
+          e.preventDefault();
+          setActif(nom === etat.marqueActive ? null : nom, 'click');
+        }
+      }
+    });
+  });
+  liste.querySelectorAll('.an-btn-simul').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      const nom = btn.getAttribute('data-marque');
+      const m = etat.toutes.find(x => x.nom_societe === nom);
+      if(m) selectionnerMarqueSimulateur(m);
+    });
+  });
+}
+
+function rendreCarte(m){
+  const nom    = echapper(m.nom_societe || '');
+  const desc   = echapper(m.mini_descriptif || m.description || '');
+  const dep    = echapper(m.departement || '');
+  const cats   = Array.isArray(m.categories) ? m.categories : (Array.isArray(m.categorie) ? m.categorie : []);
+  const tags   = cats.slice(0,2).map(c => `<span class="an-tag">${echapper(c === 'Epicerie fine' ? 'Épicerie' : c)}</span>`).join('');
+  const ver    = m.verifiee ? '<span class="an-ver">✓ Vérifiée</span>' : '';
+  const ini    = echapper(initiales(m.nom_societe));
+  const url    = urlFiche(m);
+  const actif  = etat.marqueActive === m.nom_societe;
+  const detail = actif ? `
+    <p class="an-card-detail">${desc}</p>
+    <div class="an-card-actions">
+      <a href="${echapper(url)}" class="an-btn-fiche">Voir la fiche →</a>
+      <button type="button" class="an-btn-simul" data-marque="${echapper(m.nom_societe)}">Simuler un achat</button>
+    </div>` : '';
+
+  return `
+    <article class="an-card ${actif?'actif':''}" data-marque="${echapper(m.nom_societe)}" role="listitem" tabindex="0">
+      <div class="an-logo" aria-hidden="true">${ini}</div>
+      <div class="an-card-body">
+        <div class="an-card-head">
+          <a href="${echapper(url)}" class="an-card-titre" onclick="event.stopPropagation()">${nom}</a>
+          ${ver}
+        </div>
+        <div class="an-loc"><span class="an-dot" aria-hidden="true"></span>${dep}</div>
+        <div class="an-tags">${tags}</div>
+        ${detail}
+      </div>
+    </article>`;
+}
+
+/* ── Synchronisation hover/clic carte ↔ liste ──────────── */
+function setActif(nom, source){
+  etat.marqueActive = nom;
+  // On ne re-render la liste que sur click (pour conserver l'inline détail)
+  if(source === 'click') rendreListe();
+  // Toujours synchroniser le hover visuel
+  document.querySelectorAll('.an-card').forEach(c => {
+    c.classList.toggle('actif', c.getAttribute('data-marque') === nom);
+  });
+  if(projection){
+    d3.selectAll('#carteFrance .pin').each(function(d){
+      const v = d.nom_societe === nom;
+      d3.select(this).select('.halo')
+        .attr('r', v ? 14 : 10)
+        .attr('fill', v ? 'rgba(184,150,62,.4)' : 'rgba(184,150,62,.18)');
+    });
+  }
+}
+
+/* ── Filtres ───────────────────────────────────────────── */
+function appliquerFiltres(){
+  const cat = document.getElementById('filtreCategorie').value;
+  const reg = document.getElementById('filtreRegion').value;
+  const stat = document.getElementById('filtreStatut').value;
+
+  etat.filtrees = etat.toutes.filter(m => {
+    if(cat){
+      const cats = Array.isArray(m.categories) ? m.categories : (Array.isArray(m.categorie) ? m.categorie : []);
+      if(!cats.includes(cat)) return false;
+    }
+    if(reg && m.region !== reg) return false;
+    if(stat === 'verifiee' && !m.verifiee) return false;
+    if(stat === 'vedette' && !m.vedette) return false;
+    return true;
+  });
+
+  document.getElementById('filtreCount').textContent = etat.filtrees.length;
+  document.getElementById('statAffiche').textContent = etat.filtrees.length;
+  rendreListe();
+  rendrePins();
+}
+
+/* ── Initialisation données ────────────────────────────── */
+async function init(){
+  const CACHE_KEY = 'lmf_annuaire_v1';
+  const CACHE_DUREE = 5 * 60 * 1000; // 5 min
+
+  // 1. Cache (stale-while-revalidate)
+  const cache = lireCache(CACHE_KEY, CACHE_DUREE);
+  if(cache && Array.isArray(cache)){
+    etat.toutes = cache;
+    miseAJourStats();
+    appliquerFiltres();
+  }
+
+  // 2. Requête réseau (toujours, pour rafraîchir)
+  try{
+    const data = await fetchMarques();
+    if(Array.isArray(data)){
+      etat.toutes = data;
+      ecrireCache(CACHE_KEY, data);
+      miseAJourStats();
+      appliquerFiltres();
+    }
+  }catch(err){
+    console.error('[LMF] Annuaire :', err);
+    if(!cache){
+      document.getElementById('liste').innerHTML =
+        '<div class="an-empty"><strong>Chargement impossible</strong>Veuillez réessayer dans quelques instants.</div>';
+      document.getElementById('liste').setAttribute('aria-busy','false');
+    }
+  }
+
+  // 3. Charger la carte en parallèle
+  chargerCarte();
+}
+
+function miseAJourStats(){
+  document.getElementById('statTotal').textContent = etat.toutes.length;
+  document.getElementById('statVer').textContent = etat.toutes.filter(m => m.verifiee).length;
+}
+
+/* ── Écouteurs filtres ─────────────────────────────────── */
+['filtreCategorie','filtreRegion','filtreStatut'].forEach(id => {
+  document.getElementById(id).addEventListener('change', appliquerFiltres);
+});
+document.getElementById('resetFiltres').addEventListener('click', () => {
+  document.getElementById('filtreCategorie').value = '';
+  document.getElementById('filtreRegion').value = '';
+  document.getElementById('filtreStatut').value = '';
+  appliquerFiltres();
+});
+
+/* ══════════════════════════════════════════════════════════
+   CALCULATEUR D'IMPACT
+   ══════════════════════════════════════════════════════════ */
+
+const COEFFS_CAT = {
+  'Epicerie fine': { vaFR_made:0.78, vaFR_imp:0.30, co2_made:0.30, co2_imp:0.42, h_made:1.6, h_imp:0.50, poids:5.0 },
+  'Mode':          { vaFR_made:0.65, vaFR_imp:0.22, co2_made:0.22, co2_imp:0.55, h_made:1.8, h_imp:0.40, poids:0.6 },
+  'Beauté':        { vaFR_made:0.70, vaFR_imp:0.28, co2_made:0.18, co2_imp:0.32, h_made:1.2, h_imp:0.45, poids:0.4 },
+  'Bijoux':        { vaFR_made:0.72, vaFR_imp:0.20, co2_made:0.25, co2_imp:0.60, h_made:1.4, h_imp:0.35, poids:0.05 },
+  'Maison':        { vaFR_made:0.68, vaFR_imp:0.25, co2_made:0.28, co2_imp:0.52, h_made:1.5, h_imp:0.50, poids:3.0 },
+  'Sport':         { vaFR_made:0.62, vaFR_imp:0.22, co2_made:0.30, co2_imp:0.58, h_made:1.3, h_imp:0.40, poids:1.0 },
+  'Bricolage':     { vaFR_made:0.65, vaFR_imp:0.25, co2_made:0.32, co2_imp:0.55, h_made:1.2, h_imp:0.45, poids:2.0 },
+  'Technologie':   { vaFR_made:0.55, vaFR_imp:0.18, co2_made:0.35, co2_imp:0.78, h_made:1.0, h_imp:0.35, poids:0.4 }
+};
+
+const PAYS = {
+  CN: { nom:'Chine',       km:8500, mode:'mer',   intensite:1.10, entreeFr:[49.49,0.11],  entreeNom:'Le Havre' },
+  BD: { nom:'Bangladesh',  km:8200, mode:'mer',   intensite:1.15, entreeFr:[49.49,0.11],  entreeNom:'Le Havre' },
+  TR: { nom:'Turquie',     km:2400, mode:'route', intensite:1.00, entreeFr:[43.69,7.27],  entreeNom:'Nice (frontière IT)' },
+  DE: { nom:'Allemagne',   km:900,  mode:'route', intensite:0.92, entreeFr:[48.58,7.75],  entreeNom:'Strasbourg' },
+  IT: { nom:'Italie',      km:1100, mode:'route', intensite:0.93, entreeFr:[45.13,6.83],  entreeNom:'Modane' },
+  ES: { nom:'Espagne',     km:1200, mode:'route', intensite:0.95, entreeFr:[43.36,-1.78], entreeNom:'Hendaye' },
+  US: { nom:'États-Unis',  km:7500, mode:'mer',   intensite:1.05, entreeFr:[49.49,0.11],  entreeNom:'Le Havre' },
+  MA: { nom:'Maroc',       km:2200, mode:'mer',   intensite:1.00, entreeFr:[43.30,5.37],  entreeNom:'Marseille' }
+};
+
+const FACT_TRANSPORT = { mer:0.015, route:0.10, aerien:1.10 };
+
+// Centroïdes département FR (subset). Pour version étendue, charger depuis JSON externe.
+const CENTROIDES = {
+  '01':[46.20,5.22],'02':[49.57,3.62],'03':[46.39,3.20],'04':[44.10,6.24],'05':[44.66,6.36],
+  '06':[43.93,7.10],'07':[44.74,4.42],'08':[49.59,4.66],'09':[42.96,1.61],'10':[48.31,4.16],
+  '11':[43.13,2.43],'12':[44.30,2.57],'13':[43.54,5.10],'14':[49.08,-0.32],'15':[45.05,2.66],
+  '16':[45.71,0.32],'17':[45.78,-0.62],'18':[47.07,2.50],'19':[45.34,1.86],'21':[47.47,4.85],
+  '22':[48.49,-2.93],'23':[46.07,2.02],'24':[45.13,0.74],'25':[47.16,6.36],'26':[44.74,5.16],
+  '27':[49.13,1.18],'28':[48.45,1.39],'29':[48.21,-4.10],'2A':[41.86,8.97],'2B':[42.39,9.16],
+  '30':[44.07,4.36],'31':[43.41,1.43],'32':[43.65,0.59],'33':[44.84,-0.58],'34':[43.59,3.40],
+  '35':[48.18,-1.69],'36':[46.81,1.69],'37':[47.30,0.69],'38':[45.18,5.71],'39':[46.68,5.83],
+  '40':[43.91,-0.74],'41':[47.59,1.34],'42':[45.74,4.39],'43':[45.04,3.88],'44':[47.27,-1.79],
+  '45':[47.91,2.20],'46':[44.61,1.55],'47':[44.36,0.59],'48':[44.55,3.50],'49':[47.31,-0.56],
+  '50':[49.10,-1.32],'51':[48.95,4.36],'52':[48.11,5.14],'53':[48.07,-0.77],'54':[48.69,6.18],
+  '55':[49.00,5.40],'56':[47.85,-2.78],'57':[49.13,6.65],'58':[47.04,3.50],'59':[50.52,3.06],
+  '60':[49.41,2.42],'61':[48.62,0.20],'62':[50.50,2.41],'63':[45.74,3.16],'64':[43.30,-0.76],
+  '65':[43.10,0.16],'66':[42.62,2.66],'67':[48.65,7.65],'68':[47.86,7.34],'69':[45.74,4.65],
+  '70':[47.62,6.16],'71':[46.66,4.50],'72':[48.00,0.18],'73':[45.49,6.34],'74':[46.07,6.43],
+  '75':[48.86,2.34],'76':[49.66,1.06],'77':[48.62,3.06],'78':[48.81,1.92],'79':[46.50,-0.36],
+  '80':[49.93,2.30],'81':[43.93,2.15],'82':[44.07,1.34],'83':[43.46,6.23],'84':[43.92,5.04],
+  '85':[46.67,-1.42],'86':[46.57,0.42],'87':[45.84,1.26],'88':[48.16,6.45],'89':[47.80,3.56],
+  '90':[47.62,6.86],'91':[48.55,2.18],'92':[48.83,2.24],'93':[48.92,2.45],'94':[48.78,2.46],
+  '95':[49.10,2.18]
+};
+
+const CENTROIDES_REGION = {
+  'Auvergne-Rhône-Alpes':[45.49,4.85],'Bourgogne-Franche-Comté':[47.20,4.95],
+  'Bretagne':[48.20,-3.10],'Centre-Val de Loire':[47.50,1.70],'Corse':[42.15,9.10],
+  'Grand Est':[48.70,6.20],'Hauts-de-France':[50.10,2.80],'Île-de-France':[48.85,2.35],
+  'Normandie':[49.20,0.10],'Nouvelle-Aquitaine':[45.20,-0.50],'Occitanie':[43.80,2.20],
+  'Pays de la Loire':[47.40,-0.80],"Provence-Alpes-Côte d'Azur":[43.95,6.05]
+};
+
+function distanceHaversine(lat1,lon1,lat2,lon2){
+  const R=6371, toRad = d => d*Math.PI/180;
+  const dLat=toRad(lat2-lat1), dLon=toRad(lon2-lon1);
+  const a=Math.sin(dLat/2)**2 + Math.cos(toRad(lat1))*Math.cos(toRad(lat2))*Math.sin(dLon/2)**2;
+  return 2*R*Math.asin(Math.sqrt(a));
+}
+function coordsDepuisCp(cp){
+  if(!/^\d{5}$/.test(cp)) return null;
+  let dep = cp.substring(0,2);
+  if(dep === '20') dep = cp.startsWith('201') ? '2A' : '2B';
+  return CENTROIDES[dep] || null;
+}
+function coordsMarque(m){
+  if(!m) return null;
+  const lat = parseFloat(m.latitude), lon = parseFloat(m.longitude);
+  if(isNaN(lat) || isNaN(lon)) return CENTROIDES_REGION[m.region] || null;
+  return [lat, lon];
+}
+
+/* ── Sélection marque pour simulateur ──────────────────── */
+function selectionnerMarqueSimulateur(m){
+  etat.marqueSimul = m;
+  document.getElementById('calcModeGen').hidden = true;
+  document.getElementById('calcModeActif').hidden = false;
+  document.getElementById('calcModeNom').textContent = m.nom_societe || '';
+  document.getElementById('calcModeLoc').textContent = [m.departement, m.region].filter(Boolean).join(' — ');
+  document.getElementById('calcCpWrap').hidden = false;
+
+  // Pré-remplir la catégorie si compatible
+  const cats = Array.isArray(m.categories) ? m.categories : (Array.isArray(m.categorie) ? m.categorie : []);
+  const sel = document.getElementById('calcCat');
+  for(const c of cats){
+    if(COEFFS_CAT[c]){ sel.value = c; break; }
+  }
+
+  // Scroll vers le calculateur
+  document.getElementById('calculateur').scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+document.getElementById('calcRetirer').addEventListener('click', () => {
+  etat.marqueSimul = null;
+  document.getElementById('calcModeGen').hidden = false;
+  document.getElementById('calcModeActif').hidden = true;
+  document.getElementById('calcCpWrap').hidden = true;
+  document.getElementById('calcCp').value = '';
+});
+
+/* ── Calcul d'impact ───────────────────────────────────── */
+function afficherErreur(msg){
+  const e = document.getElementById('calcErreur');
+  e.textContent = msg;
+  e.hidden = false;
+}
+function effacerErreur(){
+  document.getElementById('calcErreur').hidden = true;
+}
+
+document.getElementById('calcGo').addEventListener('click', () => {
+  const cat = document.getElementById('calcCat').value;
+  const prix = parseFloat(document.getElementById('calcPrix').value);
+  const dureeRaw = parseFloat(document.getElementById('calcDuree').value);
+  const duree = isNaN(dureeRaw) || dureeRaw <= 0 ? 1 : dureeRaw;
+  const cp = document.getElementById('calcCp').value.trim();
+  const paysCode = document.getElementById('calcPays').value;
+
+  if(!cat){ afficherErreur('Sélectionnez un type de produit.'); return; }
+  if(isNaN(prix) || prix <= 0 || prix > 100000){ afficherErreur('Renseignez un prix valide (1 à 100 000 €).'); return; }
+  if(cp && !/^\d{5}$/.test(cp)){ afficherErreur('Code postal à 5 chiffres requis.'); return; }
+  effacerErreur();
+
+  const coeffs = COEFFS_CAT[cat];
+  const pays = PAYS[paysCode];
+
+  // Position utilisateur (CP renseigné uniquement quand marque sélectionnée)
+  let userLatLon = null;
+  if(etat.marqueSimul && /^\d{5}$/.test(cp)){
+    userLatLon = coordsDepuisCp(cp);
+  }
+
+  // Distance interne FR
+  let distFr, modeFr;
+  if(etat.marqueSimul && userLatLon){
+    const cm = coordsMarque(etat.marqueSimul);
+    distFr = cm ? distanceHaversine(userLatLon[0], userLatLon[1], cm[0], cm[1]) : 350;
+    modeFr = 'precis';
+  } else if(etat.marqueSimul){
+    distFr = 350;
+    modeFr = 'marque-sans-cp';
+  } else {
+    distFr = 400;
+    modeFr = 'moyenne';
+  }
+
+  // Distance entrée FR → utilisateur (segment routier final import)
+  let distEntreeUser;
+  if(userLatLon){
+    distEntreeUser = distanceHaversine(userLatLon[0], userLatLon[1], pays.entreeFr[0], pays.entreeFr[1]);
+  } else {
+    distEntreeUser = distanceHaversine(46.5, 2.5, pays.entreeFr[0], pays.entreeFr[1]) + 200;
+  }
+
+  const poidsT = (coeffs.poids * (prix/100)) / 1000;
+  const co2TransportFr = poidsT * distFr * FACT_TRANSPORT.route;
+  const co2TransportImp = poidsT * pays.km * FACT_TRANSPORT[pays.mode] + poidsT * distEntreeUser * FACT_TRANSPORT.route;
+  const co2Fr = prix * coeffs.co2_made + co2TransportFr;
+  const co2Imp = prix * coeffs.co2_imp * pays.intensite + co2TransportImp;
+  const co2Evite = Math.max(0, co2Imp - co2Fr);
+  const eurFr = prix * coeffs.vaFR_made;
+  const eurImp = prix * coeffs.vaFR_imp;
+  const ecartEur = eurFr - eurImp;
+  const hFr = (coeffs.h_made * prix) / 100;
+  const hImp = (coeffs.h_imp * prix) / 100;
+  const minutes = Math.round((hFr - hImp) * 60);
+  const coutAnnuel = prix / duree;
+
+  let verdict;
+  if(ecartEur > 30 && co2Evite > 1){
+    verdict = `Cet achat fait gagner ${formatEur(ecartEur)} de retombées à l'économie française et évite ${co2Evite.toFixed(1)} kg de CO₂. Sur ${duree} an${duree>1?'s':''} d'usage, le coût ressort à ${formatEur(coutAnnuel)} par an.`;
+  } else if(ecartEur > 0){
+    verdict = `Un léger gain pour l'économie française (${formatEur(ecartEur)}). L'écart environnemental reste mesuré pour cette catégorie.`;
+  } else {
+    verdict = `Pour cette catégorie et ce pays de comparaison, l'écart est faible. L'arbitrage se joue davantage sur la qualité et la durabilité.`;
+  }
+
+  afficherResultats({
+    nomMarque: etat.marqueSimul?.nom_societe || null,
+    regionMarque: etat.marqueSimul?.region || null,
+    distFr, distEntreeUser, modeFr,
+    pays: pays.nom, paysKm: pays.km, paysMode: pays.mode, entreeNom: pays.entreeNom,
+    cat, eurFr, eurImp, ecartEur, co2Fr, co2Imp, co2Evite,
+    hFr, hImp, minutes, coutAnnuel, duree, prix, verdict,
+    cpRenseigne: !!userLatLon
+  });
+});
+
+function afficherResultats(r){
+  const eurFRpct = Math.round(r.eurFr / r.prix * 100);
+  const eurIMPpct = Math.round(r.eurImp / r.prix * 100);
+  const kmEvites = Math.round(r.co2Evite * 5);
+  const maxEur = Math.max(r.eurFr, r.eurImp, 1);
+  const barFR = (r.eurFr / maxEur) * 100;
+  const barIMP = (r.eurImp / maxEur) * 100;
+  const maxCo2 = Math.max(r.co2Fr, r.co2Imp, 0.1);
+  const barCo2FR = (r.co2Fr / maxCo2) * 100;
+  const barCo2IMP = (r.co2Imp / maxCo2) * 100;
+  const code = r.pays.substring(0,2).toUpperCase();
+  const catLbl = r.cat === 'Epicerie fine' ? 'Épicerie fine' : r.cat;
+
+  let sous;
+  if(r.nomMarque && r.cpRenseigne){
+    sous = `Pour cet achat chez <strong>${echapper(r.nomMarque)}</strong> (${echapper(r.regionMarque||'')}), livré jusqu'à votre adresse, comparé au même produit fabriqué en <strong>${echapper(r.pays)}</strong>.`;
+  } else if(r.nomMarque){
+    sous = `Pour cet achat chez <strong>${echapper(r.nomMarque)}</strong> (${echapper(r.regionMarque||'')}), comparé au même produit fabriqué en <strong>${echapper(r.pays)}</strong>. Distance estimée par une moyenne nationale.`;
+  } else {
+    sous = `Pour un achat de cette catégorie auprès d'une marque française moyenne, comparé au même produit fabriqué en <strong>${echapper(r.pays)}</strong>.`;
+  }
+
+  const legendeCo2 = r.cpRenseigne ?
+    `Trajet français : <strong>${Math.round(r.distFr).toLocaleString('fr-FR')} km</strong> entre la marque et chez vous, par route. Trajet import : <strong>${r.paysKm.toLocaleString('fr-FR')} km</strong> du ${echapper(r.pays)} jusqu'à ${echapper(r.entreeNom)} (${r.paysMode==='mer'?'cargo':'camion'}), puis <strong>${Math.round(r.distEntreeUser).toLocaleString('fr-FR')} km</strong> par route jusqu'à chez vous.` :
+    `Trajet français : <strong>${Math.round(r.distFr).toLocaleString('fr-FR')} km</strong> en moyenne nationale, par route. Trajet import : <strong>${r.paysKm.toLocaleString('fr-FR')} km</strong> du ${echapper(r.pays)} jusqu'à ${echapper(r.entreeNom)} (${r.paysMode==='mer'?'cargo':'camion'}), puis distribution routière.`;
+
+  const html = `
+    <div class="calc-r-label">Votre simulation</div>
+    <h3 class="calc-r-titre">
+      Sur <span class="ev-prix">${echapper(formatEur(r.prix))}</span> dépensés, <span class="ev-vert">${echapper(formatEur(r.eurFr))}</span> restent en France
+    </h3>
+    <p class="calc-r-sub">${sous}</p>
+
+    <div class="calc-cards">
+
+      <div class="calc-c">
+        <div class="calc-c-head">
+          <div class="calc-c-label">Économie locale</div>
+          <div class="calc-c-val">+${echapper(formatEur(r.ecartEur))}</div>
+        </div>
+        <p class="calc-c-text">Cet achat injecte <strong>${echapper(formatEur(r.ecartEur))} de plus</strong> dans l'économie française qu'un produit fabriqué en ${echapper(r.pays)}.</p>
+        <div class="calc-bar-row">
+          <span class="calc-bar-lbl fr">FR</span>
+          <div class="calc-bar-track"><div class="calc-bar-fill fr" style="width:${barFR}%"></div></div>
+          <span class="calc-bar-val">${eurFRpct}&nbsp;%</span>
+        </div>
+        <div class="calc-bar-row">
+          <span class="calc-bar-lbl imp">${echapper(code)}</span>
+          <div class="calc-bar-track"><div class="calc-bar-fill imp-gris" style="width:${barIMP}%"></div></div>
+          <span class="calc-bar-val imp">${eurIMPpct}&nbsp;%</span>
+        </div>
+        <p class="calc-c-legende">Part de la dépense captée par les entreprises, salaires et impôts français (production, transformation, distribution, marges).</p>
+      </div>
+
+      <div class="calc-c">
+        <div class="calc-c-head">
+          <div class="calc-c-label">Empreinte carbone</div>
+          <div class="calc-c-val">−${r.co2Evite.toFixed(1)} kg</div>
+        </div>
+        <p class="calc-c-text">Cet achat évite <strong>${r.co2Evite.toFixed(1)} kg de CO₂</strong>, soit environ <strong>${kmEvites} km</strong> en voiture thermique non parcourus.</p>
+        <div class="calc-bar-row">
+          <span class="calc-bar-lbl fr">FR</span>
+          <div class="calc-bar-track"><div class="calc-bar-fill fr" style="width:${barCo2FR}%"></div></div>
+          <span class="calc-bar-val">${r.co2Fr.toFixed(1)}&nbsp;kg</span>
+        </div>
+        <div class="calc-bar-row">
+          <span class="calc-bar-lbl imp">${echapper(code)}</span>
+          <div class="calc-bar-track"><div class="calc-bar-fill imp-rouge" style="width:${barCo2IMP}%"></div></div>
+          <span class="calc-bar-val imp-rouge">${r.co2Imp.toFixed(1)}&nbsp;kg</span>
+        </div>
+        <p class="calc-c-legende">${legendeCo2}</p>
+      </div>
+
+      <div class="calc-c">
+        <div class="calc-c-head">
+          <div class="calc-c-label">Emploi en France</div>
+          <div class="calc-c-val">+${r.minutes} min</div>
+        </div>
+        <p class="calc-c-text">Cet achat finance <strong>${r.minutes} minutes de travail supplémentaires</strong> en France : artisans, ouvriers, agriculteurs, logisticiens.</p>
+        <p class="calc-c-emploi"><strong class="fr">${r.hFr.toFixed(1)} h</strong> de travail français contre <strong class="imp">${r.hImp.toFixed(1)} h</strong> pour l'import (logistique et distribution uniquement).</p>
+        <p class="calc-c-legende">Contenu en emploi sectoriel d'après les comptes nationaux INSEE.</p>
+      </div>
+
+    </div>
+
+    <div class="calc-c-cout">
+      <div class="calc-c-label" style="margin-bottom:.3rem">Coût d'usage</div>
+      <p class="calc-c-cout-text">Sur ${r.duree} an${r.duree>1?'s':''} d'usage, l'achat revient à <strong>${echapper(formatEur(r.coutAnnuel))} par an</strong>.</p>
+    </div>
+
+    <div class="calc-synthese">
+      <div class="calc-synthese-label">À retenir</div>
+      <p class="calc-synthese-text">${echapper(r.verdict)}</p>
+    </div>
+  `;
+
+  document.getElementById('calcResult').innerHTML = html;
+}
+
+/* ── Démarrage ─────────────────────────────────────────── */
+init();
+
+})();
+</script>
+
+<!-- Nav mobile -->
+<script>
+{{MENU_BURGER_JS}}
+</script>
+
+{{ANALYTICS_JS}}
+
+</body>
+</html>

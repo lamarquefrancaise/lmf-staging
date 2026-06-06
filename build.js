@@ -8,6 +8,12 @@ const { execSync } = require('child_process');
 const SUPABASE_URL = process.env.VITE_SUPABASE_URL;
 const SUPABASE_KEY = process.env.VITE_SUPABASE_ANON_KEY;
 
+if (!SUPABASE_URL || !SUPABASE_KEY) {
+  console.warn('⚠️  Variables VITE_SUPABASE_URL ou VITE_SUPABASE_ANON_KEY non définies.');
+  console.warn('    La page /annuaire-marques/ ne pourra pas charger les marques depuis Supabase.');
+  console.warn('    Les fiches marque ne pourront pas être générées non plus.');
+}
+
 // ─────────────────────────────────────────────
 // Configuration des fiches marque (chemin URL + libellé affiché)
 // Modifier ces 2 valeurs suffit pour renommer l'espace fiches marque
@@ -19,21 +25,22 @@ const FICHES_MARQUE = {
 };
 
 const PAGES = [
-  { fichier: 'index.html',                                    actif: '',              categorie: null,            sousCategorie: null,    sitemap: true },
-  { fichier: 'made-in-france/epicerie-fine/index.html',       actif: 'epicerie-fine', categorie: 'epicerie-fine', sousCategorie: null,    sitemap: true },
-  { fichier: 'made-in-france/miel/index.html',                actif: 'miel',          categorie: 'epicerie-fine', sousCategorie: 'miel',  sitemap: true },
-  { fichier: 'made-in-france/mode/index.html',                actif: 'mode',          categorie: 'mode',          sousCategorie: null,    sitemap: true },
-  { fichier: 'made-in-france/beaute/index.html',              actif: 'beaute',        categorie: 'beaute',        sousCategorie: null,    sitemap: true },
-  { fichier: 'made-in-france/bijoux/index.html',              actif: 'bijoux',        categorie: 'bijoux',        sousCategorie: null,    sitemap: true },
-  { fichier: 'made-in-france/maison/index.html',              actif: 'maison',        categorie: 'maison',        sousCategorie: null,    sitemap: true },
-  { fichier: 'made-in-france/sport/index.html',               actif: 'sport',         categorie: 'sport',         sousCategorie: null,    sitemap: true },
-  { fichier: 'made-in-france/technologie/index.html',         actif: 'technologie',   categorie: 'technologie',   sousCategorie: null,    sitemap: true },
-  { fichier: 'referencer-votre-marque/index.html',            actif: '',              categorie: null,            sousCategorie: null,    sitemap: true },
-  { fichier: 'mentions-legales/index.html',                   actif: '',              categorie: null,            sousCategorie: null,    sitemap: true },
-  { fichier: 'politique-de-confidentialite/index.html',       actif: '',              categorie: null,            sousCategorie: null,    sitemap: true },
-  { fichier: 'conditions-generales-de-vente/index.html',      actif: '',              categorie: null,            sousCategorie: null,    sitemap: true },
-  { fichier: 'conditions-generales-utilisation/index.html',   actif: '',              categorie: null,            sousCategorie: null,    sitemap: true },
-  { fichier: 'contact/index.html',                            actif: '',              categorie: null,            sousCategorie: null,    sitemap: true },
+  { fichier: 'index.html',                                    actif: '',                  categorie: null,            sousCategorie: null,    sitemap: true },
+  { fichier: 'made-in-france/epicerie-fine/index.html',       actif: 'epicerie-fine',     categorie: 'epicerie-fine', sousCategorie: null,    sitemap: true },
+  { fichier: 'made-in-france/miel/index.html',                actif: 'miel',              categorie: 'epicerie-fine', sousCategorie: 'miel',  sitemap: true },
+  { fichier: 'made-in-france/mode/index.html',                actif: 'mode',              categorie: 'mode',          sousCategorie: null,    sitemap: true },
+  { fichier: 'made-in-france/beaute/index.html',              actif: 'beaute',            categorie: 'beaute',        sousCategorie: null,    sitemap: true },
+  { fichier: 'made-in-france/bijoux/index.html',              actif: 'bijoux',            categorie: 'bijoux',        sousCategorie: null,    sitemap: true },
+  { fichier: 'made-in-france/maison/index.html',              actif: 'maison',            categorie: 'maison',        sousCategorie: null,    sitemap: true },
+  { fichier: 'made-in-france/sport/index.html',               actif: 'sport',             categorie: 'sport',         sousCategorie: null,    sitemap: true },
+  { fichier: 'made-in-france/technologie/index.html',         actif: 'technologie',       categorie: 'technologie',   sousCategorie: null,    sitemap: true },
+  { fichier: 'referencer-votre-marque/index.html',            actif: '',                  categorie: null,            sousCategorie: null,    sitemap: true },
+  { fichier: 'mentions-legales/index.html',                   actif: '',                  categorie: null,            sousCategorie: null,    sitemap: true },
+  { fichier: 'politique-de-confidentialite/index.html',       actif: '',                  categorie: null,            sousCategorie: null,    sitemap: true },
+  { fichier: 'conditions-generales-de-vente/index.html',      actif: '',                  categorie: null,            sousCategorie: null,    sitemap: true },
+  { fichier: 'conditions-generales-utilisation/index.html',   actif: '',                  categorie: null,            sousCategorie: null,    sitemap: true },
+  { fichier: 'contact/index.html',                            actif: '',                  categorie: null,            sousCategorie: null,    sitemap: true },
+  { fichier: 'annuaire-marques/index.html',                   actif: 'annuaire-marques',  categorie: null,            sousCategorie: null,    sitemap: false },
 
 ];
 
@@ -1639,6 +1646,8 @@ async function build() {
       ['{{FAQ_JS}}',                faqJs],
       ['{{EMAIL_OBFUSQUE_JS}}',     emailObfusqueJs],
       ['{{ANALYTICS_JS}}',          analyticsJs],
+      ['{{SUPABASE_URL}}',          SUPABASE_URL || ''],
+      ['{{SUPABASE_ANON_KEY}}',     SUPABASE_KEY || ''],
 
 
 

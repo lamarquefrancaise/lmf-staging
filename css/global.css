@@ -1,8 +1,11 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
+  /* Couleurs principales */
   --navy:#0d1b3e;--gold:#b8963e;--gold-l:#d4af6a; --gold-d:#745300; --gold-vd:#664900;
   --cream:#f9f6f0;--cream-d:#f2ede4;--white:#fff;
   --muted:#424E66;--border:#e5e0d5;--text:#1a1a2e; --muted-l:#AFAFAF; --text-l:#9EA8BC;
+  --sans:Arial,sans-serif; --serif:Georgia,'Times New Roman',serif;
+  --green:#2d7a4f; --green-l:#e8f3ec; --red:#c53030; --red-l:#f87171;
 }
 h1,h2,h3,h4,h5,h6{font-family:Georgia,'Times New Roman',serif}
 .skip-link{position:absolute;top:-50px;left:1rem;background:var(--gold);color:var(--white);padding:.5rem 1rem;font-family:Arial,sans-serif;font-size:.85rem;text-decoration:none;z-index:999;transition:top .2s}
