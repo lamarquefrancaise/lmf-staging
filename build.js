@@ -1615,6 +1615,72 @@ ${urls}
 }
 
 // ─────────────────────────────────────────────
+// FONCTION : générer le bloc de données pour la page annuaire
+// Fetch TOUTES les marques (toutes catégories) avec coordonnées valides
+// Retourne un <script> contenant ANNUAIRE_MARQUES = [...] à injecter
+// via le marqueur {{ANNUAIRE_DATA}}.
+// ─────────────────────────────────────────────
+async function genererAnnuaireData() {
+  if (!SUPABASE_URL || !SUPABASE_KEY) {
+    console.warn('⚠️  Annuaire : variables Supabase manquantes, données vides.');
+    return '<script>window.ANNUAIRE_MARQUES = [];</script>';
+  }
+
+  const url = `${SUPABASE_URL}/rest/v1/entreprises?select=id,nom_societe,description,mini_descriptif,ville,region,url_site,verifiee,vedette,categories,longitude,latitude&order=nom_societe.asc&limit=2000`;
+  const res = await fetch(url, { headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}` } });
+
+  if (!res.ok) {
+    console.warn(`⚠️  Annuaire : erreur Supabase (${res.status}), données vides.`);
+    return '<script>window.ANNUAIRE_MARQUES = [];</script>';
+  }
+
+  const marques = await res.json();
+  if (!Array.isArray(marques) || !marques.length) {
+    console.warn('⚠️  Annuaire : aucune marque retournée par Supabase.');
+    return '<script>window.ANNUAIRE_MARQUES = [];</script>';
+  }
+
+  // Préparation des objets sérialisables (échappement et filtrage)
+  const items = marques.map(m => {
+    const lon = parseFloat(m.longitude);
+    const lat = parseFloat(m.latitude);
+    const coordsValides = !isNaN(lon) && !isNaN(lat);
+    const slug = extraireSlugMarque(m.url_site);
+    return {
+      nom_societe: m.nom_societe || '',
+      mini_descriptif: m.mini_descriptif || '',
+      description: m.description || '',
+      ville: m.ville || '',
+      region: m.region || '',
+      categories: Array.isArray(m.categories) ? m.categories : [],
+      verifiee: m.verifiee === true,
+      vedette: m.vedette === true,
+      slug: slug || '',
+      url_fiche: slug ? `/${FICHES_MARQUE.CHEMIN}/${slug}/` : '',
+      longitude: coordsValides ? lon : null,
+      latitude:  coordsValides ? lat : null
+    };
+  });
+
+  const totalMarques = items.length;
+  const totalVerifiees = items.filter(m => m.verifiee).length;
+  const totalAvecCoords = items.filter(m => m.longitude !== null && m.latitude !== null).length;
+
+  console.log(`   ↳ Annuaire : ${totalMarques} marques (${totalVerifiees} vérifiées, ${totalAvecCoords} avec coords)`);
+
+  // JSON.stringify gère lui-même l'échappement des caractères spéciaux et </script>
+  // Sécurité supplémentaire : remplacer </script et <!-- au cas où
+  const json = JSON.stringify(items)
+    .replace(/<\/script/gi, '<\\/script')
+    .replace(/<!--/g, '<\\!--');
+
+  return `<script>
+window.ANNUAIRE_MARQUES = ${json};
+window.ANNUAIRE_STATS = { total: ${totalMarques}, verifiees: ${totalVerifiees}, avecCoords: ${totalAvecCoords} };
+</script>`;
+}
+
+// ─────────────────────────────────────────────
 // BUILD PRINCIPAL
 // ─────────────────────────────────────────────
 async function build() {
@@ -1647,8 +1713,6 @@ async function build() {
       ['{{FAQ_JS}}',                faqJs],
       ['{{EMAIL_OBFUSQUE_JS}}',     emailObfusqueJs],
       ['{{ANALYTICS_JS}}',          analyticsJs],
-      ['{{SUPABASE_URL}}',          SUPABASE_URL || ''],
-      ['{{SUPABASE_ANON_KEY}}',     SUPABASE_KEY || ''],
 
 
 
@@ -1661,6 +1725,12 @@ async function build() {
     // Nav + Footer
     if (html.includes('{{NAV}}'))    html = html.replace('{{NAV}}',    resoudreNav(page.actif));
     if (html.includes('{{FOOTER}}')) html = html.replace('{{FOOTER}}', footerHtml);
+
+    // ── Annuaire : injection des données Supabase à build-time ───────
+    if (html.includes('{{ANNUAIRE_DATA}}')) {
+      const annuaireData = await genererAnnuaireData();
+      html = html.replace('{{ANNUAIRE_DATA}}', annuaireData);
+    }
 
     // ── Fil d'ariane ─────────────────────────────────────────
     if (html.includes('{{BREADCRUMB}}')) {
