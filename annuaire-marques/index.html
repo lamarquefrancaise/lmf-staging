@@ -21,11 +21,66 @@
 </script>
 
 <style>
-{{GLOBAL_CSS}}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  /* Couleurs principales */
+  --navy:#0d1b3e;--gold:#b8963e;--gold-l:#d4af6a; --gold-d:#745300; --gold-vd:#664900;
+  --cream:#f9f6f0;--cream-d:#f2ede4;--white:#fff;
+  --muted:#424E66;--border:#e5e0d5;--text:#1a1a2e; --muted-l:#AFAFAF; --text-l:#9EA8BC;
+  --sans:Arial,sans-serif; --serif:Georgia,'Times New Roman',serif;
+  --green:#2d7a4f; --green-l:#e8f3ec; --red:#c53030; --red-l:#f87171;
+}
+h1,h2,h3,h4,h5,h6{font-family:Georgia,'Times New Roman',serif}
+.skip-link{position:absolute;top:-50px;left:1rem;background:var(--gold);color:var(--white);padding:.5rem 1rem;font-family:Arial,sans-serif;font-size:.85rem;text-decoration:none;z-index:999;transition:top .2s}
+.skip-link:focus{top:.5rem}
+body{font-family:Georgia,'Times New Roman',serif;background:var(--white);color:var(--text);overflow-x:hidden}
 
-{{NAV_CSS}}
+section{padding:5rem 2rem}
+.containeur{max-width:1100px;margin:0 auto}
+.s-label{font-family:Arial,sans-serif;font-size:.72rem;letter-spacing:.25em;color:var(--gold-d);text-transform:uppercase;margin-bottom:.75rem}
+.s-title{font-size:clamp(1.5rem,3vw,2.2rem);font-weight:normal;color:var(--navy);line-height:1.2}
+.s-div{width:48px;height:2px;background:var(--gold);margin:1.25rem 0}
+.s-sub{font-family:Arial,sans-serif;font-size:.92rem;color:var(--muted);line-height:1.75}
+/*Bouton sous les marques et sous les produits pour en voir plus, sur les pages catégories*/
+.btn-ghost{background:transparent;color:var(--navy);border:1px solid var(--border);padding:.75rem 2rem;font-family:Arial,sans-serif;font-size:.82rem;letter-spacing:.1em;cursor:pointer;transition:all .2s}
+.btn-ghost:hover{border-color:var(--navy);background:var(--navy);color:var(--gold-l)}
 
-{{BREADCRUMB_CSS}}
+nav.navig{position:fixed;width:100%;z-index:200;background:rgba(13,27,62,.97);padding:0 2rem;display:flex;flex-wrap:wrap;align-items:center;min-height:64px;box-shadow:0 1px 0 rgba(184,150,62,.15)}
+.navi-logo{color:var(--white);font-size:1.05rem;letter-spacing:.15em;font-weight:normal;white-space:nowrap;flex-shrink:0;padding:.5rem 0;text-decoration: none;}
+.navi-logo span{color:var(--gold-l)}
+.navi-links{display:flex;gap:1.5rem;list-style:none;align-items:center;flex-wrap:wrap;margin-left:auto;min-height: 64px;}
+.navi-links a{color:rgba(255,255,255,.75);text-decoration:none;font-family:Georgia,'Times New Roman',sans-serif;font-size:1rem;letter-spacing:.07em;transition:color .2s;white-space:nowrap}
+.navi-links a:hover{color:var(--gold-l)}
+.nav-cta{background:var(--gold-l)!important;color:var(--navy)!important;padding:.5rem 1.1rem!important;transition:background .2s!important}
+.nav-cta:hover{background:var(--gold)!important}
+.burger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;background:none;border:none;flex-shrink:0;margin-left:auto}
+.burger span{display:block;width:22px;height:2px;background:var(--white);transition:all .3s;transform-origin:center}
+.burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.burger.open span:nth-child(2){opacity:0}
+.burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.menu-close{display:none;position:fixed;top:1rem;right:1rem;z-index: 199;background:none;border:none;color:rgba(255,255,255,.6);font-size:1.5rem;cursor:pointer;line-height:1;padding:.25rem}
+.menu-close.open {display: block;}
+.menu-close:hover{color:var(--white)}
+.nav-overlay{display:none;position:fixed;inset:0;z-index:197;background:rgba(0,0,0,.5)}
+@media(max-width:900px){
+  nav.navig{flex-wrap:nowrap;height:64px}
+  .burger{display:flex}
+  .navi-links{position:fixed;top:0;right:-100%;bottom:0;width:85%;max-width:320px;z-index:198;background:#0d1b3e;flex-direction:column;align-items:flex-start;justify-content:flex-start;gap:0;padding:64px 0 2rem;transition:right .3s ease;display:flex;flex-wrap:nowrap;margin-left:0}
+  .navi-links.open{right:0}
+  .navi-links li{width:100%}
+  .navi-links a{display:block;width:100%;padding:.9rem 1.5rem;font-size:.95rem;letter-spacing:.08em;border-bottom:1px solid rgba(255,255,255,.07)}
+  .navi-links .nav-cta{margin:1.5rem 1.5rem 0;width:calc(100% - 3rem);padding:.75rem 1rem!important;text-align:center;display:block}
+  .menu-close{display:none}
+  .nav-overlay{display:block;opacity:0;pointer-events:none;transition:opacity .3s}
+  .nav-overlay.open{opacity:1;pointer-events:all}
+}
+
+.breadcrumb-bar{background:var(--navy);padding-top:64px}
+.breadcrumb{max-width:1100px;margin:0 auto;padding:.75rem 2rem;display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
+.breadcrumb a{font-family:Arial,sans-serif;font-size:.75rem;color:var(--muted-l);text-decoration:none;transition:color .2s}
+.breadcrumb a:hover{color:var(--gold-l)}
+.breadcrumb-sep{color:var(--muted-l);font-size:.7rem}
+.breadcrumb-current{font-family:Arial,sans-serif;font-size:.75rem;color:var(--gold-l);letter-spacing:.06em}
 
 /* ══════════════════════════════════════════════════════════
    PAGE ANNUAIRE — styles spécifiques
@@ -291,7 +346,24 @@ html,body{overflow-x:hidden;max-width:100vw}
 }
 @media(max-width:480px){.calc-row{grid-template-columns:1fr}}
 
-{{FOOTER_CSS}}
+footer{background:#0a1428;padding:3.5rem 2rem 2rem}
+.ft{max-width:1100px;margin:0 auto}
+.ft-top{display:grid;grid-template-columns:2fr 1fr 1fr;gap:3rem;margin-bottom:2.5rem}
+.ft-brand p.logo{color:var(--white);font-size:1.1rem;letter-spacing:.1em;font-weight:normal;margin-bottom:.75rem}
+.ft-brand p.logo span{color:var(--gold-l)}
+.ft-brand p{font-family:Arial,sans-serif;font-size:.82rem;color:var(--muted-l);line-height:1.75;max-width:280px;margin-bottom:1.25rem}
+.ft-brand-tags{display:flex;gap:.5rem;flex-wrap:wrap}
+.ft-tag{border:1px solid rgba(184,150,62,.2);color:var(--muted-l);font-family:Arial,sans-serif;font-size:.68rem;padding:.2rem .55rem;letter-spacing:.07em}
+.ft-col p{color:var(--gold-l);font-size:.75rem;letter-spacing:.2em;font-family:Arial,sans-serif;font-weight:normal;text-transform:uppercase;margin-bottom:1rem}
+.ft-col ul{list-style:none}
+.ft-col ul li{margin-bottom:.5rem}
+.ft-col ul a{color:var(--muted-l);font-family:Arial,sans-serif;font-size:.82rem;text-decoration:none;transition:color .2s}
+.ft-col ul a:hover{color:var(--gold-l)}
+.ft-bot{border-top:1px solid rgba(255,255,255,.07);padding-top:1.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.75rem}
+.ft-bot p{font-family:Arial,sans-serif;font-size:.75rem;color:var(--muted-l)}
+.ft-flag{display:flex;gap:3px}
+.ft-flag span{display:block;width:3px;height:14px;border-radius:1px}
+@media(max-width:768px){.ft-top{grid-template-columns:1fr;gap:2rem}}
 </style>
 </head>
 <body>
@@ -299,7 +371,27 @@ html,body{overflow-x:hidden;max-width:100vw}
 <a href="#contenu-principal" class="skip-link">Aller au contenu</a>
 
 <!-- NAV -->
-{{NAV}}
+<nav aria-label="Navigation principale" class="navig">
+  <a href="/" class="navi-logo" title="La Marque Française — Accueil">La <span>Marque</span> Française</a>
+  <button class="menu-close" id="menuClose" aria-label="Fermer le menu">✕</button>
+  <ul class="navi-links" id="navLinks" role="list">
+    <li><a href="/made-in-france/epicerie-fine/">Épicerie</a></li>
+    <!--
+    <li><a href="/made-in-france/mode/">Mode</a></li>
+    <li><a href="/made-in-france/beaute/">Beauté</a></li>
+    <li><a href="/made-in-france/bijoux/">Bijoux</a></li>
+    <li><a href="/made-in-france/maison/">Maison</a></li>
+    <li><a href="/made-in-france/sport/">Sport</a></li>
+    <li><a href="/made-in-france/technologie/">Technologie</a></li>
+    -->
+    <li><a href="/annuaire-marques/">Annuaire des marques</a></li>
+    <li><a href="/referencer-votre-marque/" class="nav-cta">Référencer ma marque</a></li>
+  </ul>
+  <button class="burger" id="burger" aria-label="Ouvrir le menu" aria-expanded="false" type="button">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="nav-overlay" id="navOverlay"></div>
 
 <main id="contenu-principal">
 
@@ -526,7 +618,53 @@ html,body{overflow-x:hidden;max-width:100vw}
 </main>
 
 <!-- FOOTER -->
-{{FOOTER}}
+<footer role="contentinfo">
+  <div class="ft">
+    <div class="ft-top">
+      <div class="ft-brand">
+        <p class="logo">La <span>Marque</span> Française</p>
+        <p>La référence des marques françaises d'exception. Nous mettons en lumière artisans, créateurs et producteurs qui font la richesse du patrimoine made in France.</p>
+        <div class="ft-brand-tags">
+          <span class="ft-tag">Mode française</span>
+          <span class="ft-tag">Épicerie française</span>
+          <span class="ft-tag">Beauté française</span>
+          <span class="ft-tag">Made in France</span>
+        </div>
+      </div>
+      <div class="ft-col">
+        <p>Catégories</p>
+        <ul>
+          <li><a href="/made-in-france/epicerie-fine/">Marques françaises Épicerie fine</a></li>
+          <!--
+          <li><a href="/made-in-france/mode/">Marques françaises Mode</a></li>
+          <li><a href="/made-in-france/beaute/">Marques françaises Beauté</a></li>
+          <li><a href="/made-in-france/bijoux/">Marques françaises Bijoux</a></li>
+          <li><a href="/made-in-france/maison/">Marques françaises Maison</a></li>
+          <li><a href="/made-in-france/sport/">Marques françaises Sport</a></li>
+          <li><a href="/made-in-france/bricolage/">Marques françaises Bricolage</a></li>
+          <li><a href="/made-in-france/technologie/">Marques françaises Technologie</a></li>
+          -->
+        </ul>
+      </div>
+      <div class="ft-col">
+        <p>La société</p>
+        <ul>
+          <li><a href="/notre-mission/">Notre mission</a></li>
+          <li><a href="/referencer-votre-marque/">Référencer votre marque</a></li>
+          <li><a href="/contact/">Contact</a></li>
+          <li><a href="/mentions-legales/">Mentions légales</a></li>
+          <li><a href="/politique-de-confidentialite/">Politique de confidentialité</a></li>
+          <li><a href="/conditions-generales-de-vente/">Conditions Générales de Vente</a></li>
+          <li><a href="/conditions-generales-utilisation/">Conditions Générales d'Utilisation</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="ft-bot">
+      <p>© 2025 La Marque Française. Tous droits réservés. · <a href="/sitemap.xml" style="color:var(--muted-l);text-decoration:none">Sitemap</a></p>
+      <div class="ft-flag" aria-hidden="true"><span class="flag-b"></span><span class="flag-w"></span><span class="flag-r"></span></div>
+    </div>
+  </div>
+</footer>
 
 <!-- ═══════════════════════════════════════════════════════════
      LIBRAIRIE — D3 pour la carte (GeoJSON natif)
@@ -536,7 +674,10 @@ html,body{overflow-x:hidden;max-width:100vw}
 <!-- ═══════════════════════════════════════════════════════════
      DONNÉES ANNUAIRE — injectées au build depuis Supabase
      ═══════════════════════════════════════════════════════════ -->
-{{ANNUAIRE_DATA}}
+<script>
+window.ANNUAIRE_MARQUES = [{"nom_societe":"La Trinquelinette","mini_descriptif":"Confitures artisanales du Morvan, cuites lentement au chaudron en cuivre.","description":"La Trinquelinette, artisan confiturier du Morvan à Saint-Léger-Vauban, élabore des confitures traditionnelles cuites lentement au chaudron en cuivre. Fruits mûrs, sucre de canne non raffiné et savoir-faire artisanal garantissent des produits authentiques et riches en saveurs naturelles.","ville":"Saint-Léger-Vauban","region":"Bourgogne-Franche-Comté","categories":["Epicerie fine","Confiture"],"verifiee":false,"vedette":false,"slug":"la-trinquelinette","url_fiche":"/annuaire-marques/la-trinquelinette/","longitude":4.03329,"latitude":47.36154},{"nom_societe":"Maison Cassandrine","mini_descriptif":"Confitures artisanales du Béarn, fruits cuits lentement en chaudron.","description":"Maison Cassandrine, confiturerie artisanale à Nousty dans le Béarn, élabore des confitures haut de gamme depuis les années 1980. Fruits soigneusement sélectionnés, cuisson lente en chaudron et recettes variées garantissent des produits authentiques, gourmands et issus du terroir.","ville":"Nousty","region":"Nouvelle-Aquitaine","categories":["Epicerie fine","Confiture"],"verifiee":false,"vedette":false,"slug":"maison-cassandrine","url_fiche":"/annuaire-marques/maison-cassandrine/","longitude":-0.209656,"latitude":43.27185},{"nom_societe":"Maison Crétet – Les Ruchers du Gué","mini_descriptif":"Miel artisanal de Charente-Maritime, 4 générations de passion apicole depuis 1948.","description":"Depuis 1948, la famille Crétet perpétue en Charente-Maritime son savoir-faire apicole au Gué d’Alleré, près du Marais poitevin. Julien Crétet, 4e génération, gère des ruches dans un rayon de 30 km. Miels bio récoltés à la main, extraction à froid, gamme variée et locale certifiée bio.","ville":"Le Gué-d'Alleré","region":"Nouvelle-Aquitaine","categories":["Epicerie fine","Miel"],"verifiee":false,"vedette":false,"slug":"maison-cretet","url_fiche":"/annuaire-marques/maison-cretet/","longitude":-0.7103,"latitude":46.2204},{"nom_societe":"Rucher Marandou","mini_descriptif":"Miels artisanaux du Périgord, extraction à froid et apiculture locale.","description":"Le Rucher du Marandou, apiculteur en Dordogne, produit des miels artisanaux du Périgord issus de 250 ruches. Extraction à froid, respect des abeilles et production naturelle garantissent des miels authentiques, récoltés localement et issus d’un savoir-faire artisanal engagé.","ville":"Saint-Avit-De-Vialard","region":"Nouvelle-Aquitaine","categories":["Epicerie fine","Miel","Boisson","Confiserie"],"verifiee":true,"vedette":false,"slug":"rucher-marandou","url_fiche":"/annuaire-marques/rucher-marandou/","longitude":0.867298,"latitude":44.942973},{"nom_societe":"Texereau Apiculture","mini_descriptif":"Apiculteur récoltant des Deux-Sèvres, 300 colonies, miel extrait à froid 100% local","description":"Mickaël Texereau, apiculteur à Saint-Léger-de-Montbrun (Deux-Sèvres) depuis 2016, gère 300 colonies Buckfast. Il produit des miels locaux et élève des reines, en apiculture respectueuse. Miels extraits à froid, peu de transhumance, terroir poitevin. du territoire local et authentique.","ville":"Saint-Léger-de-Montbrun","region":"Nouvelle-Aquitaine","categories":["Epicerie fine","Miel"],"verifiee":false,"vedette":false,"slug":"texereau-apiculture","url_fiche":"/annuaire-marques/texereau-apiculture/","longitude":-0.0234,"latitude":46.9012}];
+window.ANNUAIRE_STATS = { total: 5, verifiees: 1, avecCoords: 5, regions: 2 };
+</script>
 
 <!-- ═══════════════════════════════════════════════════════════
      LOGIQUE DE LA PAGE
@@ -1182,10 +1323,34 @@ init();
 
 <!-- Nav mobile -->
 <script>
-{{MENU_BURGER_JS}}
+const burger   = document.getElementById('burger'),
+      navLinks = document.getElementById('navLinks'),
+      overlay  = document.getElementById('navOverlay'),
+      closeBtn = document.getElementById('menuClose');
+
+const closeMenu = () => {
+  navLinks.classList.remove('open');
+  burger.classList.remove('open');
+  overlay.classList.remove('open');
+  closeBtn.classList.remove('open');
+  burger.setAttribute('aria-expanded','false');
+  document.body.style.overflow = '';
+};
+const openMenu = () => {
+  navLinks.classList.add('open');
+  burger.classList.add('open');
+  overlay.classList.add('open');
+  closeBtn.classList.add('open');
+  burger.setAttribute('aria-expanded','true');
+  document.body.style.overflow = 'hidden';
+};
+burger.addEventListener('click', () => navLinks.classList.contains('open') ? closeMenu() : openMenu());
+closeBtn.addEventListener('click', closeMenu);
+overlay.addEventListener('click', closeMenu);
+navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
 </script>
 
-{{ANALYTICS_JS}}
+<script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "a5e63dfe303c40dbb794b96f11c581e7"}'></script>
 
 </body>
 </html>
