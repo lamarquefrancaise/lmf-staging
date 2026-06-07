@@ -24,6 +24,16 @@ const FICHES_MARQUE = {
   LABEL:  'Annuaire des marques'
 };
 
+// ─────────────────────────────────────────────
+// Valeurs exactes de l'enum offre_selectionnee dans Supabase.
+// Si tu modifies l'enum côté base, mets à jour ces valeurs ici.
+// ─────────────────────────────────────────────
+const OFFRES = {
+  GRATUITE: 'Gratuite',
+  AVANCE:   'Avancée',
+  PREMIUM:  'Premium'
+};
+
 const PAGES = [
   { fichier: 'index.html',                                    actif: '',                  categorie: null,            sousCategorie: null,    sitemap: true },
   { fichier: 'made-in-france/epicerie-fine/index.html',       actif: 'epicerie-fine',     categorie: 'epicerie-fine', sousCategorie: null,    sitemap: true },
@@ -989,7 +999,7 @@ function genererHeroMeta(marque) {
 
 // ─── Génération du HERO_CTA (vide si Gratuit, bouton si Avancé/Premium) ───
 function genererHeroCta(marque) {
-  if (marque.offre_selectionnee === 'gratuite') return '';
+  if (marque.offre_selectionnee === OFFRES.GRATUITE) return '';
   if (!marque.url_site_internet) return '';
   return `<div class="fm-hero-cta">
         <a href="${echapper(marque.url_site_internet)}" class="btn-p" target="_blank" rel="noopener noreferrer">Visiter le site →</a>
@@ -1003,7 +1013,7 @@ function genererSectionDescription(marque) {
 
   const paragraphes = desc.split(/\n\s*\n/).map(p => `<p>${echapper(p.trim())}</p>`).join('\n        ');
 
-  const isPremium = marque.offre_selectionnee === 'premium';
+  const isPremium = marque.offre_selectionnee === OFFRES.PREMIUM;
   const valeurs = isPremium && Array.isArray(marque.valeurs) && marque.valeurs.length
     ? marque.valeurs.map(v => `<li>${echapper(v)}</li>`).join('\n          ')
     : '';
@@ -1034,7 +1044,7 @@ function genererSectionDescription(marque) {
 
 // ─── SECTION HISTOIRE (Premium uniquement, si renseignée) ───
 function genererSectionHistoire(marque) {
-  if (marque.offre_selectionnee !== 'premium') return '';
+  if (marque.offre_selectionnee !== OFFRES.PREMIUM) return '';
   if (!marque.histoire || !marque.histoire.trim()) return '';
 
   const paragraphes = marque.histoire.split(/\n\s*\n/).map(p => `<p>${echapper(p.trim())}</p>`).join('\n      ');
@@ -1054,7 +1064,7 @@ function genererSectionHistoire(marque) {
 
 // ─── SECTION ORIGINES (Avancé + Premium) ───
 function genererSectionOrigines(marque) {
-  if (marque.offre_selectionnee === 'gratuite') return '';
+  if (marque.offre_selectionnee === OFFRES.GRATUITE) return '';
   const aOrigine = marque.origine_matieres && marque.origine_matieres.trim();
   const aFabrication = marque.fabrication && marque.fabrication.trim();
   if (!aOrigine && !aFabrication) return '';
@@ -1128,7 +1138,7 @@ function genererSectionOrigines(marque) {
 
 // ─── SECTION PRODUITS MARQUE (Avancé 5, Premium 20) ───
 function genererSectionProduitsMarque(marque, produits) {
-  if (marque.offre_selectionnee === 'gratuite') return '';
+  if (marque.offre_selectionnee === OFFRES.GRATUITE) return '';
   if (!produits.length) return '';
 
   const cartes = produits.map(p => {
@@ -1193,7 +1203,7 @@ function genererSectionLabels(marque) {
 
 // ─── SECTION CTA FINAL (Avancé + Premium) ───
 function genererSectionCtaFinal(marque) {
-  if (marque.offre_selectionnee === 'gratuite') return '';
+  if (marque.offre_selectionnee === OFFRES.GRATUITE) return '';
   if (!marque.url_site_internet) return '';
 
   let domaine = marque.url_site_internet;
@@ -1259,7 +1269,7 @@ function genererSectionSimilaires(similaires) {
 
 // ─── MAP_DATA pour la carte d3 ───
 function genererMapDataScript(marque) {
-  if (marque.offre_selectionnee === 'gratuite') return '';
+  if (marque.offre_selectionnee === OFFRES.GRATUITE) return '';
   let points = [];
   if (Array.isArray(marque.sites_fabrication) && marque.sites_fabrication.length) {
     points = marque.sites_fabrication
@@ -1315,7 +1325,7 @@ function genererJsonLdMarque(marque, produits) {
 
   const parts = [JSON.stringify(localBusiness), JSON.stringify(brand)];
 
-  if (produits.length && marque.offre_selectionnee !== 'gratuite') {
+  if (produits.length && marque.offre_selectionnee !== OFFRES.GRATUITE) {
     const itemList = {
       "@context":"https://schema.org",
       "@type":"ItemList",
@@ -1371,8 +1381,8 @@ async function genererFicheMarque(marque) {
     return null;
   }
 
-  const offre = marque.offre_selectionnee || 'gratuite';
-  const limitProduits = offre === 'premium' ? 20 : (offre === 'avance' ? 5 : 0);
+  const offre = marque.offre_selectionnee || OFFRES.GRATUITE;
+  const limitProduits = offre === OFFRES.PREMIUM ? 20 : (offre === OFFRES.AVANCE ? 5 : 0);
 
   // Récupération données dépendantes en parallèle
   const [produits, similaires] = await Promise.all([
